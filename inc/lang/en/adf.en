@@ -1,0 +1,9 @@
+rows_found		%d rows found.
+are_you_sure		Are you sure?
+add_now			Add Now
+create_dump		Create Dump
+show_example		Show Example
+dump_items		Dump items from %s to %s as
+datalist_fields_req	All fields are required. Number fields may not contain letters.
+datalist_record_exists	Record already exists.
+datalist_record_added	Record added with ID #%d.

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns="http://purl.org/rss/1.0/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+ xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+>
+
+<channel rdf:about="http://ipw.internet.com/news.html">
+<title>Product News</title>
+<link>http://ipw.internet.com/news.html</link>
+<description>Latest Internet product news headlines from Internet Product Watch and Internetnews.com.</description>
+<dc:language>en</dc:language>
+<dc:rights>Copyright 2002 by INT Media Group</dc:rights>
+<dc:date>2002-01-09T22:16</dc:date>
+<dc:publisher>INT Media Group (internet.com)</dc:publisher>
+<dc:creator>Daniel M. Ragle (dragle@internet.com)</dc:creator>
+<items>
+ <rdf:Seq>
+  <rdf:li rdf:resource="http://www.internetnews.com/ent-news/article/0,2171,7_951971,00.html" />
+  <rdf:li rdf:resource="http://www.internetnews.com/infra/article/0,2171,10693_951751,00.html" />
+  <rdf:li rdf:resource="http://www.hardwarecentral.com/hardwarecentral/news/3993/1/" />
+  <rdf:li rdf:resource="http://boston.internet.com/news/article/0,1928,2001_951281,00.html" />
+  <rdf:li rdf:resource="http://www.internetnews.com/ent-news/article/0,2171,7_951311,00.html" />
+  <rdf:li rdf:resource="http://www.internetnews.com/wireless/article/0,2171,10692_950541,00.html" />
+  <rdf:li rdf:resource="http://www.internetnews.com/infra/article/0,2171,10693_950411,00.html" />
+  <rdf:li rdf:resource="http://dc.internet.com/news/article/0,1934,2101_950241,00.html" />
+  <rdf:li rdf:resource="http://www.gridcomputingplanet.com/news/article/0,,3281_948981,00.html" />
+  <rdf:li rdf:resource="http://siliconvalley.internet.com/news/article/0,2198,3531_950111,00.html" />
+  <rdf:li rdf:resource="http://www.internetnews.com/ent-news/article/0,2171,7_950061,00.html" />
+  <rdf:li rdf:resource="http://siliconvalley.internet.com/news/article/0,2198,3531_950071,00.html" />
+  <rdf:li rdf:resource="http://www.internetnews.com/wireless/article/0,2171,10692_949941,00.html" />
+  <rdf:li rdf:resource="http://www.internetnews.com/dev-news/article/0,2171,10_949841,00.html" />
+ </rdf:Seq>
+</items>
+<image rdf:resource="http://ipw.internet.com/art/ipwlogo2.gif" />
+</channel>
+
+<image rdf:about="http://ipw.internet.com/art/ipwlogo2.gif">
+<title>Internet Product Watch Product News</title>
+<url>http://ipw.internet.com/art/ipwlogo2.gif</url>
+<link>http://ipw.internet.com/news.html</link>
+</image>
+
+<item rdf:about="http://www.internetnews.com/ent-news/article/0,2171,7_951971,00.html">
+<title>Broadcom, Palm Looking a Little Blue in the Tooth</title>
+<link>http://www.internetnews.com/ent-news/article/0,2171,7_951971,00.html</link>
+<description>Palm will use Broadcom transceivers to beef up its personal area network (PAN) capabilities on its handhelds.</description>
+<dc:identifier>1010614560:152679443359</dc:identifier>
+<dc:date>2002-01-09T22:16</dc:date>
+</item>
+
+<item rdf:about="http://www.internetnews.com/infra/article/0,2171,10693_951751,00.html">
+<title>Openwave to Power Cox&#39;s Messaging</title>
+<link>http://www.internetnews.com/infra/article/0,2171,10693_951751,00.html</link>
+<description>Cox chooses Openwave Email Mx messaging platform for use by Cox&#39;s 779,000 residential Internet subscribers.</description>
+<dc:identifier>1010598318:819458007811</dc:identifier>
+<dc:date>2002-01-09T17:45</dc:date>
+</item>
+
+<item rdf:about="http://www.hardwarecentral.com/hardwarecentral/news/3993/1/">
+<title>MTV Announces Line of PCs</title>
+<link>http://www.hardwarecentral.com/hardwarecentral/news/3993/1/</link>
+<description>Bearing its logo, the hardware are designed for college dorm rooms but will appear near the end of the school year.</description>
+<dc:identifier>1010591612:246398925781</dc:identifier>
+<dc:date>2002-01-09T15:53</dc:date>
+</item>
+
+<item rdf:about="http://boston.internet.com/news/article/0,1928,2001_951281,00.html">
+<title>How Long Will the Chips be Down?</title>
+<link>http://boston.internet.com/news/article/0,1928,2001_951281,00.html</link>
+<description>The semiconductor industry rebounds, it always does. Recent data, legislative action and a flurry of VC activity suggest that the current chip-dip may be easing.</description>
+<dc:identifier>1010587583:174987792968</dc:identifier>
+<dc:date>2002-01-09T14:46</dc:date>
+</item>
+
+<item rdf:about="http://www.internetnews.com/ent-news/article/0,2171,7_951311,00.html">
+<title>Sprint Rolls Out Corporate Wireless E-mail at CES</title>
+<link>http://www.internetnews.com/ent-news/article/0,2171,7_951311,00.html</link>
+<description>Nation&#39;s fourth-largest wireless provider hopes eliminating synchronization issues will push sales of new service.</description>
+<dc:identifier>1010587495:62652587890</dc:identifier>
+<dc:date>2002-01-09T14:44</dc:date>
+</item>
+
+<item rdf:about="http://www.internetnews.com/wireless/article/0,2171,10692_950541,00.html">
+<title>Microsoft Unveils Home Device Technology</title>
+<link>http://www.internetnews.com/wireless/article/0,2171,10692_950541,00.html</link>
+<description>Microsoft founder Bill Gates used his keynote address at the Consumer Electronics 2002 show to show a new set of Windows-based technologies, code-named &quot;Mira&quot; and &quot;Freestyle.&quot;</description>
+<dc:identifier>1010512757:211090087890</dc:identifier>
+<dc:date>2002-01-08T17:59</dc:date>
+</item>
+
+<item rdf:about="http://www.internetnews.com/infra/article/0,2171,10693_950411,00.html">
+<title>TiVo Adds RealOne Media Player to its DVRs</title>
+<link>http://www.internetnews.com/infra/article/0,2171,10693_950411,00.html</link>
+<description>With the agreement, TiVo customers may access tunes and other content from their DVRs, courtesy of RealNetworks&#39; technology.</description>
+<dc:identifier>1010512726:970733642577</dc:identifier>
+<dc:date>2002-01-08T17:58</dc:date>
+</item>
+
+<item rdf:about="http://dc.internet.com/news/article/0,1934,2101_950241,00.html">
+<title>Loudeye, Audible Magic Woo the Future</title>
+<link>http://dc.internet.com/news/article/0,1934,2101_950241,00.html</link>
+<description>Companies roll out digital music tracking and management solution for industry heavyweights at Future of Music Conference.</description>
+<dc:identifier>1010500678:806213378905</dc:identifier>
+<dc:date>2002-01-08T14:37</dc:date>
+</item>
+
+<item rdf:about="http://www.gridcomputingplanet.com/news/article/0,,3281_948981,00.html">
+<title>GridSim Releases Java-based Grid Computing Toolkit</title>
+<link>http://www.gridcomputingplanet.com/news/article/0,,3281_948981,00.html</link>
+<description>An Australian grid research project team has released a Java-based software toolkit designed to support modeling and simulation of worldwide grids.</description>
+<dc:identifier>1010500648:113281249999</dc:identifier>
+<dc:date>2002-01-08T14:37</dc:date>
+</item>
+
+<item rdf:about="http://siliconvalley.internet.com/news/article/0,2198,3531_950111,00.html">
+<title>Apple Flat Out Wows Them At Macworld</title>
+<link>http://siliconvalley.internet.com/news/article/0,2198,3531_950111,00.html</link>
+<description>Job&#39;s &quot;digital hub&quot; takes a new twist with the release of flat paneled iMac, a bigger iBook and launch of all new iPhoto.</description>
+<dc:identifier>1010437445:257873535155</dc:identifier>
+<dc:date>2002-01-07T21:04</dc:date>
+</item>
+
+<item rdf:about="http://www.internetnews.com/ent-news/article/0,2171,7_950061,00.html">
+<title>Microsoft Gets Cozy with DVD Players</title>
+<link>http://www.internetnews.com/ent-news/article/0,2171,7_950061,00.html</link>
+<description>In its continuing quest to promote the Windows Media Audio (WMA) format, the Redmond, Wash. software giant announces at CES that two DVD players manufacturers will include support in their home entertainment gear.</description>
+<dc:identifier>1010433739:309112548827</dc:identifier>
+<dc:date>2002-01-07T20:07</dc:date>
+</item>
+
+<item rdf:about="http://siliconvalley.internet.com/news/article/0,2198,3531_950071,00.html">
+<title>Adobe Updates To Trump Flash</title>
+<link>http://siliconvalley.internet.com/news/article/0,2198,3531_950071,00.html</link>
+<description>The San Jose, Calif.-based Web graphics company takes the &quot;anything you can do, we can do better&quot; approach with the latest GoLive and LiveMotion release.</description>
+<dc:identifier>1010433687:661529541014</dc:identifier>
+<dc:date>2002-01-07T20:01</dc:date>
+</item>
+
+<item rdf:about="http://www.internetnews.com/wireless/article/0,2171,10692_949941,00.html">
+<title>HomeRF WLANS Advance, Retreat</title>
+<link>http://www.internetnews.com/wireless/article/0,2171,10692_949941,00.html</link>
+<description>Wireless home networking is about to arrive at the flash point in which its popularity will explode and most of those home networks will be 802.11b.</description>
+<dc:identifier>1010426095:579498291015</dc:identifier>
+<dc:date>2002-01-07T17:54</dc:date>
+</item>
+
+<item rdf:about="http://www.internetnews.com/dev-news/article/0,2171,10_949841,00.html">
+<title>Macromedia to Infuse Casio with Flash Player</title>
+<link>http://www.internetnews.com/dev-news/article/0,2171,10_949841,00.html</link>
+<description>In doing combat with Adobe, Macromedia offers Flash Player for Casio&#39;s Pocket PC and other Windows CE-based PDAs.</description>
+<dc:identifier>1010426045:316925048827</dc:identifier>
+<dc:date>2002-01-07T17:54</dc:date>
+</item>
+
+</rdf:RDF>

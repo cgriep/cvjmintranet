@@ -1,0 +1,10 @@
+Export to static HTML works on Unix only and requires Apache's "rewrite engine" an well as
+the software "wget" (included in almost all Linux distributions):
+
+1. switch on rewrite engine in awf/.htaccess:
+        RewriteEngine On
+        RewriteRule !\.(png|jpg|gif|php|css)$ /local/path/to/awf
+2. Change to an empty directory of your choice and type that:
+3. wget -r -np -E -L -l 0 domain.com/path/index.html
+4. rm -R ?*.html
+5. rm -R *html?*

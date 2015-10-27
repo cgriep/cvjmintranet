@@ -1,0 +1,5 @@
+# search.inc (advanced search)
+search_phrase	exact phrase
+search_all	all terms
+search_any	any term
+

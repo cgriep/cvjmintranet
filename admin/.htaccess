@@ -1,0 +1,10 @@
+AuthUserFile /var/www/vhosts/s18380850.onlinehome-server.info/.htpasswd
+AuthGroupFile  /var/www/vhosts/cvjm-intranet.de/.htgroups
+AuthName Verwaltung-Adminbereich
+AuthType Basic
+<Limit GET>
+require user hruhl cgriep
+require group admin
+</Limit>
+DirectoryIndex users.php
+

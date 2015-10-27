@@ -1,0 +1,33 @@
+SUBMIT	Speichern
+NEUERSTATUS	Neuer<br />Status
+STATUS	Status
+PRIORITAET	Priorität
+DATUMAUTOR	Datum<br />Autor
+BEZEICHNUNG_SORTIEREN	Nach Bezeichnung sortieren
+BEZEICHNUNG	Bezeichnung
+AUFTRAGBEARBEITEN	Auftrag bearbeiten
+BEARBEITER	Bearbeiter
+MEHREREBEARBEITER	Mehrere Bearbeiter bei gedrückter Strg-Taste anwählen
+BESCHREIBUNG	Beschreibung
+TITEL	Titel
+ORT	Ort
+OHNEORT	-ohne Angabe-
+BEMERKUNGEN	Bemerkungen
+LOESCHEN	Auftrag löschen
+HINZUFUEGEN	Auftrag hinzufügen
+ALLEORTE	Alle Orte anzeigen
+OFFEN	offen
+INARBEIT	in Arbeit
+UNTERBRECHUNG	Unterbrechung
+ERLEDIGT	erledigt
+SOFORT	sofort
+HATZEIT	hat Zeit
+DRINGEND	dringend
+WICHTIG	wichtig
+NORMAL	normal
+DELETED	gelöscht
+AUFTRAG	Auftrag
+ERTEILT	erteilt
+LISTEANZEIGEN	Auftragsliste anzeigen
+NEUEBUCHUNG	Neue Buchung
+BUCHUNGSLISTE	Buchungsliste anzeigen

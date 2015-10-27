@@ -1,0 +1,4 @@
+# Lokale Umleitung für XAJax und Overlib
+RewriteEngine On
+RewriteRule xajax_js/(.*) /xajax_js/$1 [L]
+RewriteRule javascript/(.*) /javascript/$1 [L]

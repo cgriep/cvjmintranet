@@ -1,0 +1,17 @@
+- Statische Seiten erzeugen
+
+Um mit AWF statische Seiten zu generieren sind diese Schritte notwendig:
+
+1. in awf/.htaccess die RewriteEngine einschalten:
+	<files awf>
+	SetHandler application/x-httpd-php
+	</files>
+	RewriteEngine On
+	RewriteRule !\.(png|jpg|gif|php|css)$ /lokaler/pfad/awf/awf
+2. In ein leeres Verzeichnis wechseln
+3. wget -r -np -E -L -l 0 domain.com/awf/index.html
+4. rm -R ?*.html
+5. rm -R *html?*
+
+Bitte nicht vergessen, vorher Design und Sprach Module sowie interaktive Elemente wie Forum, Guest Book oder online
+Liste zu entfernen (diese werden auf der statischen Site natuerlich nicht funktionieren).

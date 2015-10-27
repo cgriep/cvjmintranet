@@ -1,0 +1,55 @@
+#!/bin/sh
+
+if test -z "$1"; then
+  { echo "A directory must be provided: try 'update_awf [dir]'"; exit 1; }
+fi
+
+if test -n "$1"; then
+  { 
+
+echo Updating $1...
+cp awf/adimage.php $1/
+cp awf/adlink.php $1/
+cp awf/awf $1/
+cp awf/index.php $1/
+cp awf/message.php $1/
+cp awf/redirect.php $1/
+echo base \[OK\]
+cp -a awf/admin/* $1/admin/
+echo admin \[OK\]
+cp -a awf/docs/* $1/docs/
+echo docs \[OK\]
+cp -a awf/css/* $1/css/
+echo css \[OK\]
+cp -a awf/apps/* $1/apps/
+echo apps \[OK\]
+cp -a awf/inc/caching.inc $1/inc/
+cp -a awf/inc/content.inc $1/inc/
+cp -a awf/inc/functions.inc $1/inc/
+cp -a awf/inc/sessions.inc $1/inc/
+cp -a awf/inc/css.inc $1/inc/
+cp -a awf/inc/design.inc $1/inc/
+cp -a awf/inc/header.inc $1/inc/
+cp -a awf/inc/footer.inc $1/inc/
+cp -a awf/inc/popup.inc $1/inc/
+cp -a awf/inc/shutdown.inc $1/inc/
+cp -a awf/inc/config.inc $1/inc/
+cp -a awf/inc/db_tables.inc $1/inc/
+cp -a awf/inc/init.inc $1/inc/
+cp -a awf/inc/rdf.inc $1/inc/
+echo inc \[OK\]
+cp -a awf/inc/lang/* $1/inc/lang/
+echo lang \[OK\]
+cp -a awf/inc/modules/* $1/inc/modules/
+echo modules \[OK\]
+cp -a awf/inc/cmodules/* $1/inc/cmodules/
+echo cmodules \[OK\]
+cp -a awf/inc/misc/* $1/inc/misc/
+echo misc \[OK\]
+cp -a awf/inc/design/* $1/inc/design/
+echo designs \[OK\]
+echo Finished :\)
+
+ }
+fi
+

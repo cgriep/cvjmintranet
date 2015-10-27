@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns="http://my.netscape.com/rdf/simple/0.9/">
+
+<channel>
+  <title>heise online news</title>
+  <link>http://www.heise.de/newsticker/</link>
+  <description>Brandneue Nachrichten aus der Welt des Computers</description>
+</channel>
+
+<item>
+ <title>Nvidia bringt Athlon-Chipsatz ohne Grafik</title>
+ <link>http://www.heise.de/newsticker/data/jow-09.01.02-001/</link>
+</item>
+
+<item>
+ <title>Verfügung gegen SuSE ist vom Tisch</title>
+ <link>http://www.heise.de/newsticker/data/odi-09.01.02-003/</link>
+</item>
+
+<item>
+ <title>Hohe Verluste für Telekom bis 2004 befürchtet</title>
+ <link>http://www.heise.de/newsticker/data/anw-09.01.02-006/</link>
+</item>
+
+<item>
+ <title>Kodak verselbständigt die Sparte Wireless Technology</title>
+ <link>http://www.heise.de/newsticker/data/anw-09.01.02-005/</link>
+</item>
+
+<item>
+ <title>Landgericht Augsburg weist Schadenersatzklage gegen Infomatec ab</title>
+ <link>http://www.heise.de/newsticker/data/anw-09.01.02-004/</link>
+</item>
+
+<item>
+ <title>US-Forscher bemängeln laschen Umgang mit der Sicherheit</title>
+ <link>http://www.heise.de/newsticker/data/anw-09.01.02-003/</link>
+</item>
+
+<item>
+ <title>Gesichter zum Schießen</title>
+ <link>http://www.heise.de/newsticker/data/cgl-09.01.02-001/</link>
+</item>
+
+<item>
+ <title>Xeon-CPUs für Workstations mit 2,2 GHz und größerem Cache</title>
+ <link>http://www.heise.de/newsticker/data/jow-09.01.02-000/</link>
+</item>
+
+<item>
+ <title>Solaris für Intel-CPUs vor dem Aus?</title>
+ <link>http://www.heise.de/newsticker/data/odi-09.01.02-002/</link>
+</item>
+
+<item>
+ <title>CES: Royal kündigt (mal wieder) Linux-PDA an</title>
+ <link>http://www.heise.de/newsticker/data/vza-09.01.02-000/</link>
+</item>
+
+<item>
+ <title>Fujitsu-Siemens installiert Tiscali-Internetzugang auf allen PCs</title>
+ <link>http://www.heise.de/newsticker/data/axv-09.01.02-000/</link>
+</item>
+
+<item>
+ <title>Red Hat Linux für Alpha-Prozessoren</title>
+ <link>http://www.heise.de/newsticker/data/odi-09.01.02-001/</link>
+</item>
+
+<item>
+ <title>Linux-Verband wehrt sich gegen Open-Source-Kritik des VSI</title>
+ <link>http://www.heise.de/newsticker/data/odi-09.01.02-000/</link>
+</item>
+
+<item>
+ <title>Playstation 2 weltweit ein Erfolg</title>
+ <link>http://www.heise.de/newsticker/data/daa-09.01.02-001/</link>
+</item>
+
+</rdf:RDF>

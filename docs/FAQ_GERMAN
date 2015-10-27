@@ -1,0 +1,119 @@
+Allgemeine AWF FAQ
+==================
+
+UPDATED 10/06/2002
+
+- Warum PHP?
+
+PHP ist Open Source, leistungsfaehig, einfach zu benutzen, auf Internet-Anwendungen optimiert und verbreitet.  
+Alternativen wie C++, Kylix, Java, Perl oder Python scheitern bei mindestens einem dieser Punkte, auch wenn sie
+sicher das eine oder andere wueschenswerte Feature bieten.
+
+- Welche PHP/MySQL Version ist Voraussetzung?
+
+Liquid Bytes empfielt grundsaetzlich immer die neuesten stabilen Versionen zu verwenden, da mit diesen auch
+entwickelt wird. Insbesondere die PHP Versionen vor 4.0.6 hatten teilweise kritische Memory-Leaks, die im Ernstfall
+zum Stillstand des Servers gefuehrt haben. Bei MySQL wird in absehbarer Zukunft der Sprung auf die 4er Version
+erfolgen - ab diesem Zeitpunkt wird die Verwendung von aelteren Versionen moeglicherweise zu Problemen fuehren.
+
+Das momentane Release benoetigt mindestens die PHP Version 4.1.0.
+
+- Funktioniert AWF nur mit Apache?
+
+Unter Umstaenden koennen mit anderen Web-Servern bei einzelnen Funktionen Probleme auftreten. Ueber diesbezuegliche
+Rueckmeldungen sind wir dankbar.
+
+- Wann werden die Vorteile von MySQL 4 genutzt?
+
+Sobald sich MySQL 4 auf breiter Basis durchgesetzt hat und entsprechend stabil funktioniert, werden die
+Datenbank-Abfragen von AWF auf die neuen Moeglichkeiten (insbesondere Subselects) optimiert.
+
+- Werden in Zukunft auch andere Datenbanken unterstuetzt?
+
+Gerne :-) MySQL wurde im Wesentlichen wegen der problemlosen Bedienung und der weiten Verbreitung als erstes
+Datenbank-System unterstuetzt. Da AWF inzwischen auch zunehmend fuer umfangreichere Websites/Intranets eingesetzt
+wird, macht die Unterstuetzung weiterer Systeme wie DB2 oder Oracle Sinn. Wann das der Fall sein wird, haengt
+insbesondere noch von den entsprechenden Herstellern ab (bis jetzt wurden die Anfragen nicht beantwortet...).
+
+- Kann man mit AWF einen online Shop betreiben?
+
+Sofern man ueber die entsprechende Erfahrung verfuegt um das notwendige "Shop-Modul" in Eigenarbeit zu erstellen bzw.
+eine externe Loesung eingebunden wird, kann man die Frage bereits jetzt mit ja beantworten. Wann ein solches Modul in
+der Standard-Konfiguration enthalten sein wird, haengt zum einen von unseren Entwicklungs-Kapazitaeten und zum
+anderen von der Nachfrage ab.
+
+- Koennen MS Office Dokumente importiert werden?
+
+Geplant ist dieses Feature fuer das Jahr 2002. Der Import wird voraussichtlich zusammen mit OC4 entwickelt
+und laeuft ueber Docbook XML und entsprechende Konverter/Filter.
+
+- Gibt es weiterfuehrende Dokumentation/Buecher?
+
+Momentan ist die Dokumentation leider auf das unter http://liquidbytes.net/awf/ verfuegbare (und etwas knappe) 
+PDF Dokument beschraenkt. Jede Unterstuetzung in diesem Bereich wird gerne angenommen.
+
+- Darf man AWF kommerziell einsetzen?
+
+Selbstverstaendlich. Sofern die Nutzung mit der GPL zu vereinbaren ist, gibt es keine weitergehenden Beschraenkungen.
+
+- Wie kann man Support erhalten?
+
+Kostenlosen Support gibt es zum einen im AWF Forum auf http://liquidbytes.net/, zum anderen auf der AWF Mailing List
+(auf der momentan sehr selten etwas los ist). Weitergehende persoenliche Unterstuetzung beim Einrichten, dem
+Entwickeln zusaetzlicher Module etc. kann man kostenpflichtig von Liquid Bytes erhalten.
+
+- Welche Vorteile hat freie Software?
+
+Ohne hier viele Worte zu verschwenden sei direkt auf die Website der FSF verwiesen: 
+http://fsfeurope.org/documents/freesoftware.html
+
+- Warum ist Funktion X so schlecht geloest? Warum ist Grafik Y so haesslich?
+
+Verbesserungen sind jederzeit willkommen und werden dankend entgegengenommen... siehe auch "Welche Vorteile hat freie
+Software?".
+
+- Wird Windows als Server unterstuetzt?
+
+Von Liquid Bytes selber werden keine Tests durchgefuehrt, allerdings scheint AWF auch unter den Win32 Versionen von
+Apache, PHP und MySQL problemlos zu funktionieren. Falls uns ein entsprechend vorkonfigurierter Windows 2000/XP
+Server zur Verfuegung gestellt wird (siehe "Wie kann man die Weiterentwicklung unterstuetzen?"), werden wir versuchen
+AWF auch auf den MS IIS und den MS SQL Server anzupassen.
+
+- Mit welchen Browsern ist AWF kompatibel?
+
+Bis auf die bekannten Darstellungs-Schwaechen der 4er Browser von Netscape (besonders die Windows Versionen), sind
+bis jetzt bei eingeschaltetem Cookie/JavaScript Support keine Schwierigkeiten aufgetreten. Ohne JavaScript werden
+lediglich keine Pop-Up Fenster unterstuetzt - das betrifft im Wesentlichen das Versenden von Nachrichten an andere
+User.
+
+- Gibt es aehnliche Produkte?
+
+Bis jetzt sind mir leider keine bekannt geworden ;-) In eine ansatzweise aehnliche Richtung gehen Zope, PHP-Nuke,
+Post-Nuke, Midgard, PHP CMS bis hin zu kommerziellen CMS wie SixCMS und noch teurere Loesungen. Jedes dieser Systeme
+hat jedoch seine "Schwaechen", sei es nun die Performance, die Soft/Hardware Voraussetzungen, der Preis, das in sich
+nicht stimmige Konzept, fehlende PHP Unterstuetzung, mangelnde Erweiterbarkeit, nicht vorhandene Community-Funktionen
+etc.
+
+- Was macht AWF im Vergleich zu PHP-Nuke?
+
+AWF ist "mehr" als ein Web-Portal-System. Es ist eine sowohl fuer Anwender wie auch Programmierer einfach zu
+bedienende Komplett-Loesung zum Erstellen von (aber nicht nur) personalisierten Web-Sites. Im Vordergrund stehen
+Content-Management, Erweiterbarkeit, Kommunikation mit anderen Systemem (Content-Sharing, Import/Export von
+Dokumenten, ...) und Community-Funktionen. Trotz diesem erweiterten Fokus, soll AWF noch Anfang/Mitte 2002 mit allen
+Features aufwarten, die auch in PHP-Nuke verfuegbar sind.
+
+- Wie kann man die Weiterentwicklung unterstuetzen?
+
+Um die Entwicklung von AWF beschleunigen zu koennen gibt es mehrere Moeglichkeiten:
+
+1. Regelmaessiges Testen der Development Releases (welche Bugs gibt es noch? was kann man wie verbessern?)
+
+2. Entwickeln von zusaetzlichen Modulen und Designs. Von Liquid Bytes wird gerne ein Hinweis/Link auf entsprechende
+Downloads eingerichtet. Unter Umstaenden findet der Code auch gleich den Weg in das offizielle Package ;-)
+
+3. Schreiben von HOWTOs, FAQs und sonstiger Dokumentation. Alles was Neulingen den Einstieg erleichtert...
+
+4. Support fuer andere Anwender/Programmierer anbieten. Entweder direkt oder ueber entsprechende Foren/Mailing Listen. 
+
+5. Geld und Sachspenden, besonders von Soft- und Hardware Herstellern oder Firmen die selber AWF einsetzen, und somit
+ein Eigeninteresse haben.

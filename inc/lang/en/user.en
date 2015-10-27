@@ -1,0 +1,30 @@
+# user.inc
+no_nickname		No nickname.
+email_in_use		Sorry, your email address is already in use.
+wrong_email		Wrong email address.
+passwd_too_short	Your password has to be at least 6 characters long.
+passwd_matchup		Your password fields do not matchup.
+choose_passwd		Choose a password (must be at least 6 characters)
+retype_passwd		Retype password
+register		Register
+settings_updated	Your account settings have been successfully updated.
+have_to_relogin		You changed your email address or password and have to relogin now.
+update_error		There was an error while updating your settings.
+unique_nickname_req	Unique nickname required.
+
+# ext. info
+website			Homepage
+icq_no			ICQ #
+interests		Interests
+country			Country
+picture			Picture (JPEG; max. 200 KB)
+gender			Gender
+birthday		Birthday
+birthday_format		(MM/DD/YYYY)
+additional_info		Additional Information
+
+# friends.inc
+no_friends		There are no friends on your list yet.
+no_user_results		No users found.
+user_results		There are %s users.
+member_since		Member since

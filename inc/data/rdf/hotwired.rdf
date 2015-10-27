@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+
+      <!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"
+		      "http://my.netscape.com/publish/formats/rss-0.91.dtd">
+
+      <rss version="0.91">
+
+	<channel>
+		<title>Webmonkey</title>
+		<description>A How-to Guide for Web Developers</description>
+    		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://www.webmonkey.com</link>
+		<language>en-us</language>
+	<image>
+		<title>Webmonkey</title>
+		<url>http://www.hotwired.com/webmonkey/images/monkey_8831.gif</url>
+	    <link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://www.webmonkey.com</link>
+	</image>
+
+
+	<item>
+		<title>Forms, Files, and ASP</title>
+<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/51/index2a.html</link>
+		<description>Adam shows you ways to make the user info you glean from those query strings, HTML forms, and other text files really rock using ASP.</description> 	
+	</item>
+	
+		<item>
+		<title>XHTML Overview </title>
+<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/50/index2a.html</link>
+		<description>We all love XML, but the world just isn't ready for it. What we really need is a baby-step between HTML and XML. Sven gives us the run-down on XHTML.</description> 	
+	</item>
+	
+		<item>
+		<title>Creating a User Login Feature with ColdFusion</title>
+<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/48/index2a.html</link>
+		<description>Want to know what your users are using? Let Cameron show you how to build a site login, authorization tools, and how to track your users with ColdFusion.</description> 	
+	</item>
+	
+		<item>
+		<title>Threaded Discussion with ColdFusion</title>
+<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/48/index0a.html</link>
+		<description>Robert shows you how to put those ColdFusion chops to work building a message board.</description> 	
+	</item>
+
+	<item>
+		<title>Streaming Audio Tutorial </title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/45/index3a.html</link>
+		<description>You want to DJ, but don't want to hang out in clubs with all those annoying raver types? Let the Fezguys show you how to stream audio to the world right from a home PC.</description> 	
+	</item>
+	
+	
+	<item>
+		<title>PHP4 Installation Overview</title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/44/index4a.html</link>
+		<description>Whether you're a Windows or Non-Windows type, Julie shows you everything you need to know to get PHP4 up and running using Apache as the base Web server software.</description>
+	</item>
+	
+	<item>
+		<title>Streaming For Dollars</title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/42/index3a.html</link>
+		<description>The MP3 blues got you down? Let the Fez Guys pick you up with their scrupulous survey of streaming media options.</description>
+	</item>
+	
+	<item>
+		<title>SMIL: Multimedia for the Masses </title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/41/index4a.html</link>
+		<description>Synchronized multimedia? Are you nuts? Steve shows us how to use SMIL to stream like a dream.</description>
+	</item>
+	
+	<item>
+		<title>DHCP Primer </title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/39/index3a.html</link>
+		<description>Fixing to do some home networking? Mike shows and tells about the advantages of DHCP, and gives a tour of software and hardware options.</description>
+	</item>
+
+	<item>
+		<title>CD Burning Basics</title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/38/index4a.html</link>
+		<description>CD burners are a great way to preserve music, data, pictures, and videos. But getting all the right hardware and software in place can be a chore. Ben will show you how.</description>
+	</item>
+	
+	<item>
+		<title>Death of the Websafe Color Palette?</title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/37/index2a.html</link>
+		<description>The websafe color palette has long been the only choice for the conscientious web designer. But now that computers offer thousands and millions of colors, has the need to limit our designs to only 216 colors become passe? </description>
+	</item>
+	
+	
+	<item>
+		<title>File-Sharing Primer</title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://hotwired.lycos.com/webmonkey/00/35/index2a.html</link>
+		<description>The FezGuys give you a tour of Napster and some of its file-trading cousins, and take a look at the pop cultural consequences of these programs.</description>
+	</item>
+		
+	<item>
+		<title>Encryption Tutorial</title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://www.webmonkey.com/programming/php/tutorials/tutorial1.html</link>
+		<description>Julie dishes up the why and how of real-life data encryption, covering PGP and GnuPG, and using PHP and the mcrypt and mhash libraries.</description>
+	</item>
+
+	<item>
+		<title>XSS, Trust, and Barney</title>
+		<link>http://r.hotwired.com/r/hw_wm_r_mynscp/http://www.webmonkey.com/00/18/index3a.html</link>
+		<description>Steven takes a gander at the threat of cross-site scripting (XSS) and then shows you some ways to keep the XSS wolves at bay.</description>
+	</item>
+
+		</channel>
+
+</rss>
+
+
+
+

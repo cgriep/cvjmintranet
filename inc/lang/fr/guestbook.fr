@@ -1,0 +1,5 @@
+guestbook_postedat		Post&eacute; &agrave;
+guestbook_homepage		HomePage
+guestbook_invalid		Email ou Pseudo invalides.
+guestbook_page			Page:
+guestbook_signin		S'inscrire

@@ -1,0 +1,13 @@
+buglist_submitter	Inlämnaren
+buglist_assignedto	Skyflat över till
+buglist_type	Typ
+buglist_status	Status
+buglist_severity	Allvarlighetsgrad
+buglist_version	Version
+buglist_os	OS
+buglist_platform	Plattform
+buglist_reproducibility	Reproducerbarhet
+buglist_browser	Browser
+buglist_lastchange	Senste ändring
+buglist_summary	Sammanfattning
+buglist_ok	OK

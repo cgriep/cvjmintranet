@@ -1,0 +1,13 @@
+buglist_submitter	Auteur
+buglist_assignedto	Assign&eacute; &agrave;
+buglist_type	Type
+buglist_status	Etat
+buglist_severity	Severit&eacute;
+buglist_version	Version
+buglist_os	OS
+buglist_platform	Plateforme
+buglist_reproducibility	Reproductibilit&eacute;
+buglist_browser	Navigateur
+buglist_lastchange	Dernier Changement
+buglist_summary	R&eacute;sum&eacute;
+buglist_ok	Ok

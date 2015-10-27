@@ -1,0 +1,104 @@
+yes			Ja
+no			Nein
+back			Zur&uuml;ck
+send_to_a_friend	Via eMail versenden
+no_content		Es gibt noch keinen Inhalt.
+comment			Kommentar
+comments		Kommentare
+published_by		<i>Ver&ouml;ffentlicht von %s am %s</i>
+remove			Entfernen
+comment_about		Kommentar &uuml;ber <i>%s</i>, ver&ouml;ffentlicht von %s am %s:
+comment_intro		<b>Hier k&ouml;nnen Sie einen Kommentar &uuml;ber <i>%s</i> ver&ouml;ffentlichen</b>
+html_converted		HTML Tags werden zu normalem Text konvertiert.
+there_are_x_news	Anzahl der News: %d.
+more			mehr
+no_comments		Bis jetzt gibt es noch keine Kommentare.
+to_add_a_comment	Um einen Kommentar anzuh&auml;ngen, sollten Sie eingeloggt sein.
+more_news		Weitere News
+send_this_document	Dieses Dokument versenden an:
+multiple_recipients	Anmerkung: mehrere Empf&auml;nger einfach durch ein Komma trennen.
+your_email_address	Ihre eMail
+message			Nachricht
+email_address		eMail
+password		Passwort
+doc_sent_to		Dokument versendet an:
+views			Klicks
+comments_low		Kommentare
+show_complete_doc	Das ganze Dokument anzeigen
+nickname		Vor- und Zuname
+choose_passwd		Ein Passwort aussuchen (sollte mindestens 6 Zeichen enthalten)
+retype_passwd		Passwort wiederholen
+register		Registrieren
+settings_updated	Ihre Einstellungen wurden erfolgreich gespeichert.
+have_to_relogin		Sie haben Ihre eMail Adresse oder das Passwort ge&auml;ndert und m&uuml;ssen sich nun erneut anmelden.
+update_error		Es gab einen Fehler beim Speichern Ihrer Einstellungen.
+welcome_message		Willkommen bei %%site%%!
+instant_message		Instant Message
+send_message		%s senden
+sent_message		%s gesendet
+anonymous_user		Unbekannter Benutzer
+email_sent_by		Diese eMail wurde Ihnen gesendet von
+original_doc		Das ursprüngliche Dokument kann hier gefunden werden:
+sent_by			von
+to			an
+on			gesendet am
+add_comment		Kommentar hinzuf&uuml;gen
+next			N&auml;chste
+page			Seite
+vote			Abtimmen
+reply			Antworten
+email			eMail
+icq_message		ICQ Message
+anonymous_message	Anonymous Message
+close			Schliessen
+source			Quelle
+dot			punkt
+publish			Ver&ouml;ffentlichen
+send			Senden
+title			Titel
+stranger		Fremder
+save			Speichern
+delete			L&ouml;schen
+new			neu
+ssl_required		Nur mit SSL (https) m&ouml;glich.
+
+# browser.inc
+document		Dokument
+download		Download
+directory		Verzeichnis
+directory_exists	Dieses Verzeichnis existiert bereits. Sorry.
+directoty_no_dots	Verzeichnisnamen d&uuml;rfen keine "." (Punkte) enthalten.
+browse_used		%d KB sind in diesem Verzeichnis belegt.
+browse_nofiles		Keine Dateien gefunden.
+browse_files		%d Dokumente und %d Verzeichnisse.
+browse_upload		In dieses Verzeichnis <b>Uploaden</b>
+browse_sendfile		Datei uploaden
+browse_create		Anlegen
+browse_createdir	Neues Verzeichnis <b>anlegen</b>
+browse_delete		L&ouml;schen
+
+# login.inc
+logged_in		%%email%%<br />Eingeloggt
+logout			Ausloggen
+login			Login
+bad_password		Falsches Passwort.
+recover_passwd		Hier klicken, um das Passwort per eMail zu erhalten.
+bad_email		Falsche eMail.
+passwd_sent		Das Passwort wurde per eMail versendet.
+
+# user.inc
+no_nickname		Kein Spitzname.
+email_in_use		Sorry, aber Ihre eMail ist schon in Gebrauch.
+wrong_email		Falsche eMail.
+passwd_too_short	Ihr Passwort sollte mindestens 6 Zeichen enthalten.
+passwd_matchup		Die eingegebenen Passw&ouml;rter stimmen nicht &uuml;berein.
+
+# search.inc
+search			Suche
+not_found		Keine Dokumente mit dem Suchbegriff <b>%s</b> wurden gefunden.
+searched_this_site	Suchte auf dieser Homepage nach %s.
+result_count		Anzahl der Treffer: %d. Die Suche dauerte: %s Sekunden.
+result_created_by	Erstellt von %s am
+SEARCH_PHRASE		exakte Übereinstimmung
+SEARCH_ALL		alle Wörter
+SEARCH_ANY		irgendein Wort

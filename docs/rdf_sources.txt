@@ -1,0 +1,247 @@
+BSD
+
+Name: BSD Today 
+URI: http://www.bsdtoday.com/backend/bt.rdf
+
+Name: Daily Daemon News 
+URI: http://daily.daemonnews.org/ddn.rdf.php3
+
+Name: FreeBSD Diary 
+URI: http://www.freebsddiary.org/news.php3
+
+Name: Maximum BSD 
+URI: http://www.maximumbsd.com/backend/weblog.rdf
+
+
+Development
+
+Name: CodeFactory 
+URI: http://www.codefactory.se/cf_rdf.php
+
+Name: Developer Shed 
+URI: http://www.devshed.com/devshednews.rdf
+
+Name: Perl.com 
+URI: http://www.perl.com/pace/news.rss
+
+Name: PHP Builder 
+URI: http://www.phpbuilder.com/rss_feed.php?type=articles&limit=20
+
+Name: Python.org 
+URI: http://www.python.org/channews.rdf
+
+Name: W3.org 
+URI: http://www.w3.org/2000/08/w3c-synd/home.rss
+
+Name: Web Reference 
+URI: http://www.webreference.com/webreference.rdf
+
+Name: XML.com 
+URI: http://xml.com/xml/xmlnews.rdf
+
+Name: XML Hack 
+URI: http://www.xmlhack.com/rsscat.php
+
+Name: Zope 
+URI: http://www.zope.org/SiteIndex/news.rss
+
+
+Entertainment 
+
+Name: Beyond 2000 
+URI: http://beyond2000.com/b2k.rdf
+
+Name: Digital Theatre 
+URI: http://www.dtheatre.com/backend.php3?xml=yes
+
+Name: Dictionary.com 
+URI: http://www.dictionary.com/wordoftheday/wotd.rss
+
+Name: DVD Review 
+URI: http://www.dvdreview.com/rss/newschannel.rss
+
+Name: Linux Games 
+URI: http://linuxgames.com/bin/mynetscape.pl
+
+Name: Pigdog 
+URI: http://www.pigdog.org/pigdog.rdf
+
+Name: Quotes of the Day 
+URI: http://www.quotationspage.com/data/mqotd.rss
+
+
+Finance 
+
+Name: The Motley Fool 
+URI: http://www.fool.com/about/headlines/rss_headlines.asp
+
+
+Goods 
+
+Name: Think Geek 
+URI: http://www.thinkgeek.com/thinkgeek.rdf
+
+
+Linux 
+
+Name: Just Linux 
+URI: http://www.justlinux.com/backend/features.rdf
+
+Name: Linux.com 
+URI: http://www.linux.com/mrn/front_page.rss
+
+Name: Lin-x-pert 
+URI: http://www.lin-x-pert.com/linxpert_apps.rdf
+
+Name: Linux Central 
+URI: http://linuxcentral.com/backend/lcnew.rdf
+
+Name: Linux Freak 
+URI: http://www.linuxfreak.org/backend/linuxfreak.rdf
+
+Name: Linux Jobs 
+URI: http://linux.com/mrn/jobs/latest_jobs.rss
+
+Name: Linux Planet 
+URI: http://www.linuxplanet.com/rss
+
+Name: Linux Today 
+URI: http://linuxtoday.com/backend/my-netscape.rdf
+
+Name: Linux Weekly News 
+URI: http://lwn.net/headlines/rss
+
+
+News 
+
+Name: Advogato 
+URI: http://advogato.org/rss/articles.xml
+
+Name: AppWatch 
+URI: http://www.appwatch.com/appwatch.rdf
+
+Name: CNet 
+URI: http://www.newsisfree.com/export.php3?_f=rss91&_w=f&_i=1443
+
+Name: CNN 
+URI: http://www.cnn.com/cnn.rss
+
+Name: Geeknik 
+URI: http://www.geeknik.net/backend/weblog.rdf
+
+Name: Hotwired 
+URI: http://www.hotwired.com/webmonkey/meta/headlines.rdf
+
+Name: inessential.com 
+URI: http://www.inessential.com/xml/rss.xml
+
+Name: Internet.com 
+URI: http://headlines.internet.com/internetnews/prod-news/news.rss
+
+Name: Kuro5hin 
+URI: http://www.kuro5hin.org/backend.rdf
+
+Name: Librenix 
+URI: http://librenix.com/rss/
+
+Name: Macintosh News Network 
+URI: http://www.macnn.com/macnn.rdf
+
+Name: Morons 
+URI: http://morons.org/morons.rss
+
+Name: Newsforge 
+URI: http://www.newsforge.com/newsforge.rss
+
+Name: Nanotech News 
+URI: http://www.nanotechnews.com/nano/rdf
+
+Name: OS Opinion 
+URI: http://www.osopinion.com/OSOlinks2.xml
+
+Name: The Register 
+URI: http://www.theregister.co.uk/tonys/slashdot.rdf
+
+Name: Reuters Health 
+URI: http://www.reutershealth.com/eline.rss
+
+Name: RootPrompt 
+URI: http://www.rootprompt.org/rss/
+
+Name: Salon 
+URI: http://www.salon.com/feed/RDF/salon_use.rdf
+
+Name: Scripting News 
+URI: http://scriptingnews.userland.com/xml/scriptingnews2.xml
+
+Name: Segfault 
+URI: http://www.segfault.org/stories.xml
+
+Name: Slashdot 
+URI: http://www.slashdot.org/slashdot.rdf
+
+Name: Sun Help 
+URI: http://www.sunhelp.org/backend/sunhelp.rdf
+
+Name: Solaris Central 
+URI: http://www.SolarisCentral.org/news/SolarisCentral.rdf
+
+Name: Tomalak's Realm 
+URI: http://www.tomalak.org/recentTodaysLinks.xml
+
+Name: Wired 
+URI: http://www.wired.com/news_drop/netcenter/netcenter.rdf
+
+
+Security 
+
+Name: AtStake 
+URI: http://www.atstake.com/security_news/misc/snn1.xml
+
+Name: Linux Security 
+URI: http://www.linuxsecurity.com/linuxsecurity_hybrid.rdf
+
+Name: Security Focus 
+URI: http://www.securityfocus.com/topnews-rss.html
+
+Name: Security Portal 
+URI: http://securityportal.com/sportal.rdf
+
+
+Software 
+
+Name: Dot.Kde.org 
+URI: http://dot.kde.org/rdf
+
+Name: Eazel 
+URI: http://news.eazel.com/eazel.rss
+
+Name: Freshmeat 
+URI: http://freshmeat.net/backend/fm.rdf
+
+Name: Gabber: The GNOME Jabber Client
+URI: http://gabber.sourceforge.net/gabber.rss
+
+Name: GNOME News 
+URI: http://news.gnome.org/gnome-news/rdf 
+
+Name: Jabber.org DevZone 
+URI: http://jabber.org/syndication/news.rss
+
+Name: JabberCentral 
+URI: http://www.jabbercentral.org/syndicate/news.rss
+
+Name: KDE News 
+URI: http://www.kde.org/news/kdenews.rdf
+
+Name: Mozilla 
+URI: http://www.mozilla.org/news.rdf
+
+Name: MozillaZine 
+URI: http://www.mozillazine.org/contents.rdf
+
+
+Sports 
+
+Name: AthlonSports.com 
+URI: http://www.athlonsports.com/backend.php3?view=rss91&d=0&max=5

@@ -1,0 +1,9 @@
+AuthUserFile /homepages/29/d75704292/htdocs/.htpasswd
+AuthGroupFile  /homepages/29/d75704292/htdocs/.htgroups
+AuthName Adminbereich
+AuthType Basic
+<Limit GET>
+require user poddel cgriep
+require group admin
+</Limit>
+DirectoryIndex users.php

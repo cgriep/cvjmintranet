@@ -1,0 +1,23 @@
+<font size="-1">
+<p>CVJM Feriendorf
+<br>
+Ernst-Klotz-Weg 1
+<br>
+36358 Herbstein
+<br>
+Tel 06643 582
+<br>
+Fax - 7385
+<br>
+<a href="?id=16">Impressum</a>
+<br>
+<script language=javascript>
+  <!--
+  var aka = "Email"
+  var prefix = "info"
+  var domain = "cvjm-feriendorf.de"
+  document.write("<a href=" + "mail" + "to:" + prefix + "@" + domain + ">" + aka + "</a>" + ".")
+  //-->
+</script>
+</p>
+</font>

@@ -1,0 +1,2125 @@
+
+<html><head>
+<link rel="stylesheet" type="text/css" href="api.css" />
+<title>AWF API functions</title></head><body bgcolor="#ffffff">
+<h1>AWF API functions</h1>
+<pre>
+&lt;?php
+/*
+        Copyright (C) 2000-2002 Liquid Bytes (R), Germany. All rights reserved.
+        http://www.liquidbytes.net/
+ 
+        This file is part of the liquidbytes.net Adaptive Website Framework (AWF)
+        The author is Michael Mayer (michael@liquidbytes.net)
+        Last update: 07.11.2002
+*/
+
+<a name="getmicrotime"></a>function <b>getmicrotime</b> () {
+	list($usec, $sec) = explode(&quot; &quot;, microtime());	
+	return ((float)$usec + (float)$sec);
+	}
+
+// uncomment this, to log page creation time
+define('START', getmicrotime ());
+
+<a name="htmlchars"></a>function <b>htmlchars</b> ($string) {
+		return htmlentities($string);
+		}
+	return htmlspecialchars($string, ENT_QUOTES, CHARSET);
+	}
+
+<a name="random_id"></a>function <b>random_id</b> () {
+	}
+
+<a name="cross_sum"></a>function <b>cross_sum</b> ($number) {
+	$number = (string) $number;
+	for($i = 0; $i &lt; strlen($number); $i++) {
+		$sum += (integer) $number{$i};
+		}
+
+	if($sum &gt; 9) {
+		$sum = cross_sum($sum);
+		}
+
+	return $sum;
+	}
+
+<a name="insert_char"></a>function <b>insert_char</b> ($input, $char, $pos) {
+	$input = (string) $input;
+	return substr($input, 0, $pos).$char.substr($input, $pos);
+	}
+
+<a name="replace_wildcards"></a>function <b>replace_wildcards</b> ($text, $array) {
+	if(!is_array($array)) return $text;
+	global $profile;
+	if(DISABLE_WILDCARDS == 1 || $profile['editor'] == 1) return $text;
+	reset($array);
+	while (list ($key, $value) = each ($array)) {
+		$text = str_replace('%%'.$key.'%%', $value, $text);
+		}
+	return $text;
+	}
+
+<a name="replace_pattern"></a>function <b>replace_pattern</b> ($text, $array, $override = false, $mode = 'fast') {
+	if(!is_array($array)) return $text;
+        global $profile;
+        if((DISABLE_WILDCARDS == 1 || $profile['editor'] == 1) &amp;&amp; $override = false) return $text;
+	reset($array);
+	if($mode == 'fast') {
+		$text = strtr($text, $array);
+		}
+	else {
+		while (list ($key, $value) = each ($array)) {
+			// variable?
+			if($value[0] == '$') {
+				if(strstr($value, ']')) {
+					$reg = substr(strstr(substr($value, 1), '['), 1, -1);
+					$value = $GLOBALS[substr($value, 1, -1 * (strlen($reg) + 2))][$reg];
+					}
+				else {
+					$value = $GLOBALS[substr($value, 1)];
+					}
+				}
+			// replace!
+			$text = ereg_replace($key, $value, $text);
+			}
+		}
+	return $text;
+	}
+
+<a name="email_to_string"></a>function <b>email_to_string</b> ($email) {
+	if($email == '') return '';
+	$search  = array (&quot;.&quot; =&gt; ' '.LANG_DOT.' ', &quot;@&quot; =&gt; &quot; at &quot;);
+	return strtr($email, $search);
+	}
+
+<a name="timestamp_to_string"></a>function <b>timestamp_to_string</b> ($timestamp = -1, $mode = 'datetime') {
+	if($timestamp == -1) $timestamp = time();
+	if($mode == 'datetime') return date(DATETIME_FORMAT, $timestamp);
+	if($mode == 'time') return date(TIME_FORMAT, $timestamp);
+	if($mode == 'date') return date(DATE_FORMAT, $timestamp);
+	}
+
+<a name="isemail"></a>function <b>isemail</b> ($email, $override = false) {
+	if(DISABLE_EMAIL_CHECK == 1 &amp;&amp; !$override) { return true; }
+	if(strpos ($email, '@') == false) { return false; }
+	if(getmxrr (substr(strstr($email, '@'),1), $mxhosts) == false) { return false; }
+	return true;
+	}
+
+<a name="url_to_link"></a>function <b>url_to_link</b> ($in, $override = false) {
+	if(DISABLE_URL_TO_LINK == 1 &amp;&amp; !$override) return $in;
+	$out = eregi_replace( &quot;([[:alnum:]]+)://([^[:space:]]*)([[:alnum:]#?/&amp;=])&quot;,
+                &quot;&lt;a href=\&quot;\\1://\\2\\3\&quot; target=\&quot;_blank\&quot;&gt;\\1://\\2\\3&lt;/a&gt;&quot;, $in);
+        $out = eregi_replace( &quot;(([a-z0-9_]|\\-|\\.)+@([^[:space:]]*)([[:alnum:]-]))&quot;,
+                &quot;&lt;a href=\&quot;mailto:\\1\&quot;&gt;\\1&lt;/a&gt;&quot;, $out);
+        return $out;
+	}
+
+<a name="add_user"></a>function <b>add_user</b> ($email, $password, $valid=1) {
+
+	// enforce secure db queries
+	if(!is_numeric($valid)) return false;
+	$email = addslashes($email);
+	$password = addslashes($password);
+
+	$qres = sql_query (&quot;SELECT email FROM &quot;.TABLE_USERS.&quot; WHERE email='$email'&quot;);
+	if(sql_num_rows($qres) == 0) {
+          sql_free_result($qres);
+          sql_query (&quot;INSERT INTO &quot;.TABLE_USERS.&quot; (email, password, valid, views, last_login, registered)&quot;.
+			&quot; VALUES ('$email','$password', $valid, 0, &quot;.time().&quot;, &quot;.time().&quot;)&quot;);
+	  return sql_insert_id();
+	  } else { sql_free_result($qres); return false; }
+	}
+
+<a name="update_user"></a>function <b>update_user</b> ($email, $password='', $old_email=SESSION_EMAIL, $valid=1) {
+
+	// enforce secure db queries
+	if(!is_numeric($valid)) return false;
+	$email = addslashes($email);
+	$old_email = addslashes($old_email);
+	$password = addslashes($password);
+
+	if($password == '') {
+		$qres = sql_query (&quot;UPDATE &quot;.TABLE_USERS.&quot; SET email='$email', valid=$valid WHERE email='$old_email'&quot;);
+		}
+	else {
+		$qres = sql_query (&quot;UPDATE &quot;.TABLE_USERS.&quot; SET email='$email', password='$password', valid=$valid WHERE email='$old_email'&quot;);
+		}	
+        sql_free_result($qres);
+	if(sql_affected_rows() &gt; 0) {
+	  	return true; 
+		}
+	else { 
+		$res = sql_query(&quot;SELECT id FROM &quot;.TABLE_USERS.&quot; WHERE email='$old_email'&quot;);
+		if(sql_num_rows($res) &gt; 0) { return true; }
+		else { return false; }
+		}
+	}
+
+<a name="get_user_email"></a>function <b>get_user_email</b> ($user_id = -1) {
+
+	// enforce secure db queries
+	if(!is_numeric($user_id)) return false;
+
+	if($user_id == -1) {
+		if(!defined(&quot;SESSION_DBID&quot;)) { return false; }
+		$user_id = SESSION_DBID;
+		}
+	$email = sql_query (&quot;SELECT email FROM &quot;.TABLE_USERS.&quot; WHERE id=&quot;.$user_id);
+                if(sql_num_rows($email) &gt; 0) {
+                	$prow = sql_fetch_row($email);
+                	sql_free_result($email);
+			return stripslashes($prow[0]);
+                	}
+	return &quot;&quot;;
+	}
+
+<a name="get_user_id"></a>function <b>get_user_id</b> ($email) {
+	if(defined(SESSION_EMAIL) &amp;&amp; SESSION_EMAIL == $email) return SESSION_DBID;
+	$user_id = sql_query (&quot;SELECT id FROM &quot;.TABLE_USERS.&quot; WHERE email='&quot;.addslashes($email).&quot;'&quot;);
+                if(sql_num_rows($user_id) &gt; 0) {
+                	$prow = sql_fetch_row($user_id);
+                	sql_free_result($user_id);
+			return $prow[0];
+                	}
+	return -1;
+	}
+
+<a name="get_user_nickname"></a>function <b>get_user_nickname</b> ($user_id = -1) {
+
+	// enforce secure db queries
+	if(!is_numeric($user_id)) return false;
+
+	if($user_id == -1 || (defined(SESSION_DBID) &amp;&amp; $user_id == SESSION_DBID)) {
+		global $profile;
+		if(!isset($profile['nickname'])) $profile['nickname'] = LANG_STRANGER;
+		return htmlchars($profile[nickname]);
+		}
+	$nickname = sql_query (&quot;SELECT value FROM &quot;.TABLE_USERDATA.&quot; WHERE user_id=&quot;.$user_id.&quot; AND name='nickname'&quot;);
+                if(sql_num_rows($nickname) &gt; 0) {
+                	$prow = sql_fetch_row($nickname);
+	               	sql_free_result($nickname);
+			return stripslashes($prow[0]);
+                	}
+	return email_to_string(get_user_email($user_id));
+	}
+
+<a name="is_unique_nickname"></a>function <b>is_unique_nickname</b> ($name, $user_id = -1) {
+
+	// enforce secure db queries
+	if(!is_numeric($user_id) || $user_id == -1) $user_id = 0;
+	$name = addslashes($name);
+
+	$nickname = sql_query (&quot;SELECT count(*) FROM &quot;.TABLE_USERDATA.&quot; WHERE name='nickname' AND value='$name' AND user_id != $user_id&quot;);
+	$row = sql_fetch_row($nickname);
+	sql_free_result($nickname);
+	if(is_numeric($row[0]) &amp;&amp; $row[0] &gt; 0) { return false; }
+	else { return true; }
+	}
+
+<a name="remove_user"></a>function <b>remove_user</b> ($user_id) {
+	
+	// enforce secure db queries
+	if(!is_numeric($user_id)) return false;
+
+	// Delete all messages
+	sql_query (&quot;DELETE FROM &quot;.TABLE_MESSAGES.&quot; WHERE user_id=$user_id&quot;);
+	// Delete profile
+	sql_query (&quot;DELETE FROM &quot;.TABLE_USERDATA.&quot; WHERE user_id=$user_id&quot;);
+	// Delete user
+	sql_query (&quot;DELETE FROM &quot;.TABLE_USERS.&quot; WHERE id=$user_id&quot;);
+	remove_file(get_dir_name('users/public', $user_id, false));
+	remove_file(get_dir_name('users/private', $user_id, false));
+	// ok?
+	if(sql_affected_rows() == 0) { return false; } else { return true; }
+	}
+
+<a name="set_profile"></a>function <b>set_profile</b> ($name, $value, $user_id = -1) {
+
+	// enforce secure db queries
+	if (($name == '' &amp;&amp; $value == '') || !is_numeric($user_id)) return false;
+
+	if (SESSION_STATUS != 'ok' &amp;&amp; $user_id == -1) {
+                return false;
+                }
+
+	if($user_id == -1 || $user_id == SESSION_DBID) {
+		$user_id = SESSION_DBID;
+		$GLOBALS['profile'][$name] = $value;
+		}
+
+	$value = addslashes($value);
+	$name = addslashes($name);
+	if ($value == '' &amp;&amp; $name != '') { 
+		sql_query(&quot;DELETE FROM &quot;.TABLE_USERDATA.&quot; WHERE name='&quot;.$name.&quot;' AND user_id=&quot;.$user_id);
+		return true; 
+		}
+	$qresult = sql_query (&quot;UPDATE &quot;.TABLE_USERDATA.&quot; SET value='&quot;.$value.&quot;' WHERE name='&quot;.$name.&quot;' AND user_id=&quot;.$user_id);
+        if(sql_affected_rows() == 0) {
+		$res = sql_query(&quot;SELECT id FROM &quot;.TABLE_USERDATA.&quot; WHERE name='&quot;.$name.&quot;' AND user_id=&quot;.$user_id);
+		if(sql_num_rows($res) &gt; 0) { 
+			return true; }
+		else {
+        		sql_query (&quot;INSERT INTO &quot;.TABLE_USERDATA.&quot; (name, value, user_id) VALUES ('&quot;.$name.&quot;', '&quot;.$value.&quot;', &quot;.$user_id.&quot;)&quot;);
+			}
+        	}
+        return true;
+        } 
+
+<a name="remove_profile"></a>function <b>remove_profile</b> ($name, $user_id = -1) {
+
+	// enforce secure db queries
+	if ($name == '' || !is_numeric($user_id)) return false;
+        $name = addslashes($name);
+
+        if (SESSION_STATUS != 'ok' &amp;&amp; $user_id == -1) {
+                return false;
+                }
+	if($user_id == -1) {
+		$user_id = SESSION_DBID;
+		global $profile;
+		unset ($profile[$name]);
+		}
+
+        $qresult = sql_query (&quot;DELETE FROM &quot;.TABLE_USERDATA.&quot; WHERE name='&quot;.$name.&quot;' AND user_id=&quot;.$user_id);
+
+        return true;
+        }
+
+<a name="update_nodedata"></a>function <b>update_nodedata</b> ($node_id, $name, $value, $flavour_id, $datatype = 'notrans') {
+
+	// enforce secure db queries
+	if(!is_numeric($node_id) || !is_numeric($flavour_id)) return false;
+
+	global $cache_refresh;
+	sql_query(&quot;UPDATE &quot;.TABLE_NODEDATA.&quot; SET value='&quot;.addslashes($value).&quot;', datatype='&quot;.addslashes($datatype).&quot;' WHERE 
+		name='&quot;.addslashes($name).&quot;' AND node_id=$node_id AND flavour_id=$flavour_id&quot;);        
+	$aff_rows = sql_affected_rows();
+	switch($aff_rows) {
+		case -1: return false;
+		case 0 : $res = sql_query(&quot;SELECT id FROM &quot;.TABLE_NODEDATA.&quot; WHERE name='&quot;.addslashes($name).&quot;' AND node_id=$node_id AND
+			(flavour_id=$flavour_id OR flavour_id=0)&quot;);
+			if(sql_num_rows($res) &gt; 0) { return true; }
+			else { return false; }
+		default: $cache_refresh[$node_id] = true; return true;
+		}
+        }
+
+<a name="add_nodedata"></a>function <b>add_nodedata</b> ($node_id, $name, $value, $flavour_id, $datatype = 'notrans') {
+
+	// enforce secure db queries
+	if(!is_numeric($node_id) || !is_numeric($flavour_id)) return false;
+
+	if(update_nodedata($node_id, $name, $value, $flavour_id, $datatype) == false) {
+		sql_query(&quot;INSERT INTO &quot;.TABLE_NODEDATA.&quot; (flavour_id,value,name,node_id,datatype) VALUES 
+		($flavour_id, '&quot;.addslashes($value).&quot;', '&quot;.addslashes($name).&quot;', $node_id, '&quot;.addslashes($datatype).&quot;')&quot;);
+		global $cache_refresh;
+		$cache_refresh[$node_id] = true;
+		return sql_insert_id();
+		}
+	}
+
+<a name="delete_nodedata"></a>function <b>delete_nodedata</b> ($node_id, $name, $value, $flavour_id, $datatype = 'notrans') {
+
+	// enforce secure db queries
+	if(!is_numeric($node_id) || !is_numeric($flavour_id)) return false;
+
+	sql_query(&quot;DELETE FROM &quot;.TABLE_NODEDATA.&quot; WHERE name='&quot;.addslashes($name).&quot;' AND node_id=$node_id AND flavour_id=$flavour_id&quot;);
+
+	global $cache_refresh;
+	$cache_refresh[$node_id] = true;
+
+	return true;
+	}
+
+<a name="create_node"></a>function <b>create_node</b> ($parent_id, $type_id, $sort_order, $enabled, $published, $description, $key_id=-1, $searchable=1, $cacheable=1, $release_date=0, $members_only=0, $expiration_date=0) {
+
+	// enforce secure db queries
+	if(!is_numeric($parent_id) || !is_numeric($type_id) || !is_numeric($sort_order) 
+	|| !is_numeric($key_id) || !is_numeric($release_date) || !is_numeric($expiration_date)) return false;
+
+	if($key_id == -1 &amp;&amp; isset($GLOBALS['default_key_id'])) { 
+		$key_id = $GLOBALS['default_key_id'];
+		}
+	else {
+		$key_id = 0;
+		}
+
+	if($searchable != 1) 	 $searchable 	= 0;
+        if($cacheable  != 1) 	 $cacheable  	= 0;
+	if($published  != 1) 	 $published  	= 0;
+        if($enabled    != 1)	 $enabled    	= 0;
+	if($members_only != 1) 	 $members_only 	= 0;
+	if($release_date &lt; 0) 	 $release_date 	= 0;
+	if($expiration_date &lt; 0) $expiration_date = 0;
+	sql_query(&quot;INSERT INTO &quot;.TABLE_NODES.&quot; (created, last_change, sort_order, parent_id, enabled, published, 
+	type_id, description, key_id, searchable, cacheable, release_date, expiration_date, members_only) VALUES 
+	(&quot;.time().&quot;, &quot;.time().&quot;, $sort_order, $parent_id, $enabled, $published, $type_id, '&quot;.addslashes($description).&quot;', $key_id, 
+	$searchable, $cacheable, $release_date, $expiration_date, $members_only)&quot;);
+	return sql_insert_id();
+	}
+
+<a name="destroy_node"></a>function <b>destroy_node</b> ($id) {
+
+	// enforce secure db queries
+	if(!is_numeric($id)) return false;
+
+	$qresult = sql_query(&quot;SELECT id FROM &quot;.TABLE_NODES.&quot; WHERE parent_id=$id&quot;);
+	if(sql_num_rows($qresult) &gt; 0) {
+                while($row = sql_fetch_row($qresult)) {
+			destroy_node ($row[0]);
+                        }
+                sql_free_result($qresult);
+                }
+	sql_query(&quot;DELETE FROM &quot;.TABLE_NODES.&quot; WHERE id=$id&quot;);
+	sql_query(&quot;DELETE FROM &quot;.TABLE_NODEDATA.&quot; WHERE node_id=$id&quot;);
+	remove_file(get_dir_name('files', $id, false));
+	remove_file(get_dir_name(BASE_PATH.INC_PATH.DATA_PATH.'nodes', $id, false));
+	global $cache_refresh;
+	$cache_refresh[$id] = true;
+
+	return true;
+	}
+
+<a name="update_node"></a>function <b>update_node</b> ($node_id, $parent_id, $type_id, $sort_order, $enabled, $published, $description, $key_id=0, $searchable=1, $cacheable=1, $release_date=-1, $members_only=-1, $expiration_date=-1) {
+
+	// enforce secure db queries
+	if(!is_numeric($parent_id) || !is_numeric($type_id) || !is_numeric($sort_order) || !is_numeric($node_id)
+	|| !is_numeric($key_id) || !is_numeric($release_date) || !is_numeric($expiration_date) || !is_numeric($members_only)
+	|| !is_numeric($release_date) || !is_numeric($expiration_date)) return false;
+
+	if($searchable != 1) $searchable   = 0;
+	if($cacheable  != 1) $cacheable    = 0;
+	if($published  != 1) $published    = 0;
+	if($enabled    != 1) $enabled	   = 0;
+	$optional = '';
+	if($members_only != -1) { $optional = &quot;, members_only=$members_only&quot;; }
+	if($release_date &gt; -1) { $optional = &quot;, release_date=$release_date&quot;; }
+	if($expiration_date &gt; -1) { $optional = &quot;, expiration_date=$expiration_date&quot;; }
+        sql_query(&quot;UPDATE &quot;.TABLE_NODES.&quot; SET last_change=&quot;.time().&quot;, sort_order=$sort_order, parent_id=$parent_id, enabled=$enabled,
+                        published=$published, type_id=$type_id, description='&quot;.addslashes($description).&quot;',
+			key_id=$key_id, searchable=$searchable, cacheable=$cacheable $optional WHERE id=$node_id&quot;);
+	if(sql_affected_rows() &lt; 1) { 
+		$res = sql_query(&quot;SELECT id FROM &quot;.TABLE_NODES.&quot; WHERE id=$node_id&quot;);
+		if(sql_num_rows($res) &gt; 0) { return true; }
+		else { return false; }
+		} 
+	else { 
+		global $cache_refresh;
+		$cache_refresh[$node_id] = true;
+		return true; }
+	}
+
+<a name="get_nodedata"></a>function <b>get_nodedata</b> ($id, $flavour_id) {
+
+	// enforce secure db queries
+	if(!is_numeric($id) || !is_numeric($flavour_id)) return false;
+
+	$qresult = sql_query(&quot;SELECT name, value, datatype FROM &quot;.TABLE_NODEDATA.&quot; WHERE node_id=$id AND (flavour_id=$flavour_id OR flavour_id=0)&quot;);
+	if(sql_num_rows($qresult) &gt; 0) {
+        	while($row = sql_fetch_row($qresult)) {
+			$document[stripslashes($row[0])] = stripslashes($row[1]);
+			$document['datatype'][stripslashes($row[0])] = $row[2];
+                	}
+        	sql_free_result($qresult);
+        	}
+
+	return $document;
+	}
+
+<a name="get_node"></a>function <b>get_node</b> ($id, $flavour_id, $counter_inc = true) {
+	global $enabled_filter;
+
+	// enforce secure db queries
+	if($counter_inc == true) { global $count_views; }
+	if(!isset($count_views) || !is_numeric($count_views)) $count_views = 0;
+	if(!is_numeric($id) || !is_numeric($flavour_id)) return false;
+
+	$qresult = sql_query(&quot;SELECT parent_id, type_id, published, description, sort_order, enabled, searchable, cacheable, key_id,
+				release_date, expiration_date, members_only, ssl_only, views, created, last_change FROM &quot;.TABLE_NODES.&quot; 
+				WHERE id=$id $enabled_filter&quot;);
+ 
+	if(sql_num_rows($qresult) &gt; 0) {
+        	$row = sql_fetch_array($qresult);
+        	sql_free_result($qresult);
+
+		while(list($key, $value) = each($row)) {
+			$document[$key] = stripslashes($value);
+			}
+
+        	if($count_views == 1 &amp;&amp; $id == $GLOBALS['id']) sql_query(&quot;UPDATE &quot;.TABLE_NODES.&quot; SET views=views+1 WHERE id=$id&quot;);
+		$docdata = get_nodedata ($id, $flavour_id);
+		return array_merge($document, $docdata);
+		}
+	else {
+		return false;
+		}
+	}
+
+<a name="count_children"></a>function <b>count_children</b> ($type_id = -1, $flavour_id = -1, $item_id = -1) {
+	global $enabled_filter;
+
+	// enforce secure db queries
+	if(!is_numeric($type_id) || !is_numeric($flavour_id) || !is_numeric($item_id)) return false;
+
+	if($item_id &gt; 0) { $id = $item_id; } else { $id = $GLOBALS['id']; }
+
+	if($type_id &gt;= 0) { $filter = &quot;AND type_id = $type_id&quot;; } else { $filter = ''; }
+
+	if($flavour_id != -1) {
+		$qresult = sql_query(&quot;SELECT count(*) FROM &quot;.TABLE_NODES.&quot;, &quot;.TABLE_NODEDATA.&quot; WHERE &quot;.TABLE_NODEDATA.&quot;.node_id=&quot;.TABLE_NODES.&quot;.id &quot;.
+		&quot;AND parent_id = $id AND (flavour_id = $flavour_id OR flavour_id = 0) AND name='title' $filter $enabled_filter&quot;);
+		} 
+	else {
+		$qresult = sql_query(&quot;SELECT count(*) FROM &quot;.TABLE_NODES.&quot; WHERE parent_id = $id $filter $enabled_filter&quot;);  
+		}
+
+	if(sql_num_rows($qresult) &gt; 0) {
+		$row = sql_fetch_row($qresult);
+		sql_free_result($qresult);	
+		return $row[0];
+		}
+	else {
+		return 0;
+		}
+	}
+
+<a name="get_children"></a>function <b>get_children</b> ($offset, $count, $type_id = -1, $key_only = false, $sort_order = 'DESC', $published = false, $item_id = -1) {
+	global $flavour;
+	global $enabled_filter;
+
+	if(!isset($flavour)) $flavour = DEFAULT_FLAVOUR;
+	
+	// enforce secure db queries
+	if(!is_numeric($type_id) || !is_numeric($flavour) || !is_numeric($offset) || !is_numeric($count) || !is_numeric($item_id)
+	|| !is_bool($published)) return false;
+	if($sort_order != 'DESC') $sort_order = 'ASC';
+
+	$filter = '';
+	if($type_id &gt;= 0) $filter .= &quot;AND type_id = $type_id&quot;; 
+	if($published) $filter .= &quot;AND published = 1 &quot;; 
+	if($item_id &gt;= 0) { $id = $item_id; } else { $id = $GLOBALS['id']; }
+	
+	// just return one specific key/value pair of the document properties?
+	if($key_only === true) {
+		// hack to make it compative with older code
+		if(is_bool($key_only)) $key_only = 'title';
+		$qresult = sql_query(&quot;SELECT DISTINCT node_id, value, type_id, published, key_id FROM &quot;.TABLE_NODES.
+        	&quot;, &quot;.TABLE_NODEDATA.&quot; WHERE parent_id=$id AND name='&quot;.addslashes($key_only).&quot;' $filter AND node_id=&quot;.TABLE_NODES.&quot;.id AND
+        	(flavour_id=$flavour OR flavour_id=0) $enabled_filter ORDER BY sort_order $sort_order &quot;.sql_limit($count,$offset));
+		if(sql_num_rows($qresult) &gt; 0) {
+	        while($row = sql_fetch_row($qresult)) {
+        	        $children[$row[0]]['type_id'] = $row[2];
+                	$children[$row[0]]['published'] = $row[3];
+                	$children[$row[0]][$key_only] = stripslashes($row[1]);
+                	$children[$row[0]]['key_id'] = $row[4];
+                	}
+        	sql_free_result($qresult);
+		return $children;
+        	}
+		}
+	else {
+		$qresult = sql_query(&quot;SELECT parent_id, type_id, published, description, sort_order, enabled, searchable,
+					cacheable, key_id, id, release_date, expiration_date, members_only, ssl_only, 
+					views, created, last_change FROM &quot;.TABLE_NODES.&quot; WHERE parent_id=$id $enabled_filter $filter 
+					ORDER BY sort_order $sort_order &quot;.sql_limit($count,$offset));
+ 
+        	if(sql_num_rows($qresult) &gt; 0) {
+                	while($row = sql_fetch_array($qresult)) {
+
+				while(list($key, $value) = each($row)) {
+					$document[$key] = stripslashes($value);
+					}
+
+	                $children[$row['id']] = array_merge(get_nodedata($row['id'], $flavour), $document);
+			}
+		sql_free_result($qresult);
+                return $children;
+		}
+		}
+	}
+
+<a name="get_sorted_children"></a>function <b>get_sorted_children</b> ($offset, $count, $name, $type_id = -1, $item_id = -1, $sort_order = 'DESC', $published = false) {
+
+	global $flavour;
+	global $search_time;	
+
+	if(!isset($flavour)) $flavour = DEFAULT_FLAVOUR;
+	
+	// enforce secure db queries
+	if(!is_numeric($type_id) || !is_numeric($flavour) || !is_numeric($offset) || !is_numeric($count) || !is_numeric($item_id)
+	|| !is_bool($published)) return false;
+	if($sort_order != 'DESC') $sort_order = 'ASC';
+
+	$where = &quot;name='$name'&quot;;
+	if($type_id != -1) { $where .= &quot; AND type_id=&quot;.$type_id; }
+	if($published == true) { $where .= &quot; AND published=1&quot;; }
+	$where .= &quot; ORDER BY value &quot;.$sort_order;
+	$start = getmicrotime();
+	if($item_id != -1) { $id = $item_id; } else { $id = $GLOBALS['id']; }
+
+ 	$qresult=sql_query(&quot;SELECT DISTINCT node_id FROM &quot;.TABLE_NODEDATA.&quot;, &quot;.TABLE_NODES.&quot; WHERE 
+	node_id = &quot;.TABLE_NODES.&quot;.id AND (flavour_id = $flavour OR flavour_id=0) AND parent_id = $id AND $where 
+	&quot;.sql_limit($count,$offset));
+        while($row = sql_fetch_row($qresult)) {
+                $result = get_node($row[0], $flavour, 0);
+	       	if($result != false) $results[$row[0]] = $result;
+		}
+        sql_free_result($qresult);
+ 	$search_time = number_format(getmicrotime() - $start, 4, ',', '');
+	
+	if(isset($results)) {
+		return $results;
+		}
+	else {
+		return false;
+		}
+	}
+
+<a name="get_siblings"></a>function <b>get_siblings</b> ($offset, $count, $type = -1, $title_only = false, $published = false, $parent_id = -1, $no_filter = false) {
+	global $document;
+	global $flavour;
+	global $enabled_filter;
+	global $id;
+
+	if(!isset($flavour)) $flavour = DEFAULT_FLAVOUR;
+	
+	if($parent_id &lt; 0) { $parent_id = $document['parent_id']; }
+
+	// enforce secure db queries
+	if(is_numeric($id) || !is_numeric($type_id) || !is_numeric($flavour) || !is_numeric($offset) || !is_numeric($count) || !is_numeric($parent_id)
+	|| !is_bool($published) || !is_bool($title_only)) return false;
+	if($sort_order != 'DESC') $sort_order = 'ASC';
+
+	$filter = '';
+	if($type_id &gt;= 0) $filter .= &quot;AND type_id = $type_id &quot;; 
+	if($published) $filter .= &quot;AND published = 1 &quot;; 
+
+	if($title_only) {
+		$qresult = sql_query(&quot;SELECT DISTINCT node_id, value, type_id, published, key_id FROM &quot;.TABLE_NODES.&quot;,
+        	&quot;.TABLE_NODEDATA.&quot; WHERE parent_id=$parent_id AND name='title' $filter AND
+		node_id=&quot;.TABLE_NODES.&quot;.id AND (flavour_id=$flavour OR flavour_id=0) $enabled_filter ORDER BY sort_order DESC &quot;.sql_limit($count,$offset));
+		if(sql_num_rows($qresult) &gt; 0) {
+	        while($row = sql_fetch_array($qresult)) {
+			if($row['id'] != $id || $no_filter) {
+				while(list($key, $value) = each($row)) {
+					$related[$key] = stripslashes($value);
+					}
+				}
+                	}
+        	sql_free_result($qresult);
+		return $related;
+        	}
+		}
+	else {
+		$qresult = sql_query(&quot;SELECT parent_id, type_id, published, description, sort_order, enabled, searchable, &quot;.
+					&quot;cacheable, key_id, id, release_date, expiration_date, members_only, ssl_only, views, created, last_change &quot;.
+					&quot;FROM &quot;.TABLE_NODES.&quot; WHERE parent_id=$parent_id $enabled_filter $filter AND &quot;.
+					&quot;NOT (id = $id) ORDER BY sort_order DESC	&quot;.sql_limit($count,$offset));
+ 
+        	if(sql_num_rows($qresult) &gt; 0) {
+                	while($row = sql_fetch_array($qresult)) {
+				while(list($key, $value) = each($row)) {
+					$doc[$key] = stripslashes($value);
+					}
+		                $related[$row['id']] = array_merge(get_nodedata($row['id'], $flavour), $doc);
+				}
+			sql_free_result($qresult);
+	                return $related;
+			}
+		}
+	}
+
+<a name="init_published_children"></a>function <b>init_published_children</b> () {
+	if($done) return true;
+	static $done = true;
+	global $id;
+	global $flavour;
+	global $enabled_filter;
+	global $published_children;
+
+	$published_children = array();
+
+	// enforce secure db queries
+	if(is_numeric($id) || !is_numeric($flavour)) return false;
+
+	$qresult = sql_query(&quot;SELECT node_id, name, value, type_id, published, datatype FROM &quot;.TABLE_NODES.&quot;,
+        &quot;.TABLE_NODEDATA.&quot; WHERE parent_id=$id AND name='title' AND node_id=&quot;.TABLE_NODES.&quot;.id AND
+        (flavour_id=$flavour OR flavour_id=0) AND published=1 $enabled_filter ORDER BY sort_order DESC&quot;);
+	if(sql_num_rows($qresult) &gt; 0) {
+        while($row = sql_fetch_array($qresult)) {
+		while(list($key, $value) = each($row)) {
+			$published_children[$row['node_id']][$key] = stripslashes($value);
+			}
+                }
+        sql_free_result($qresult);
+        }
+	
+	return true;
+	}
+
+<a name="init_published_roots"></a>function <b>init_published_roots</b> () {
+	if($done) return true;
+	static $done = true;
+	global $enabled_filter;
+	global $flavour;
+	global $published_roots;
+
+	$published_roots = array();
+
+	// enforce secure db queries
+	if(!is_numeric($flavour)) return false;
+
+	$qresult = sql_query(&quot;SELECT &quot;.TABLE_NODES.&quot;.id, name, value, type_id, datatype FROM &quot;.TABLE_NODES.&quot;,
+        &quot;.TABLE_NODEDATA.&quot; WHERE parent_id=0 AND node_id=&quot;.TABLE_NODES.&quot;.id AND published=1
+        AND (flavour_id=$flavour OR flavour_id=0) AND name='title' $enabled_filter ORDER BY sort_order DESC&quot;);
+ 
+	if(sql_num_rows($qresult) &gt; 0) {
+        	while($row = sql_fetch_row($qresult)) {
+                	$published_roots[$row[0]]['title'] = stripslashes($row[2]);
+                	$published_roots[$row[0]]['datatype']['title'] = stripslashes($row[4]);
+                	}
+        	sql_free_result($qresult);
+          	}
+
+	return true;
+	}
+
+<a name="init_parents"></a>function <b>init_parents</b> () {
+	if($done) return true;
+	static $done = true;
+	global $document;
+	global $id;
+	global $root_parent_id;
+	global $parents;
+	global $flavour;
+	$parents = array();
+
+	if($document['parent_id'] == 0) { 
+		$root_parent_id = $id; 
+		return true;
+		}
+
+	$parent_id = $document['parent_id'];
+
+	// enforce secure db queries
+	if(!is_numeric($flavour) || !is_numeric($parent_id)) return false;
+
+	while($parent_id != 0) {
+	        $qresult = sql_query(&quot;SELECT &quot;.TABLE_NODES.&quot;.id, name, value, parent_id, type_id, datatype FROM 
+			&quot;.TABLE_NODES.&quot;, &quot;.TABLE_NODEDATA.&quot; WHERE &quot;.TABLE_NODES.&quot;.id=$parent_id 
+			AND node_id=$parent_id AND (flavour_id=$flavour OR flavour_id=0) AND name='title'&quot;);
+	        if(sql_num_rows($qresult) &gt; 0) {
+	                while($row = sql_fetch_row($qresult)) {
+	                        $parents[$row[0]]['title'] = stripslashes($row[2]);
+        	                $parents[$row[0]]['datatype']['title'] = stripslashes($row[5]);
+                	        $root_parent_id = $row[0];
+                        	$parents[$row[0]]['parent_id'] = $row[3];
+				if($parent_id != $row[3]) { $parent_id = $row[3]; }
+				else { $parent_id = 0; }
+	                        }
+                	sql_free_result($qresult);
+        	        }
+	        else { 
+			$parent_id = 0; 
+			}
+        }
+
+	return true;
+	}
+
+<a name="init_published_related"></a>function <b>init_published_related</b> () {
+	if($done) return true;
+	static $done = true;
+	global $document;
+	global $published_related;
+        global $flavour;
+	global $enabled_filter;
+
+	$published_related = array();
+	$parent_id = $document['parent_id'];
+
+	// enforce secure db queries
+	if(!is_numeric($flavour) || !is_numeric($parent_id)) return false;
+
+	if($document['parent_id'] &gt; 0) {
+	$qresult = sql_query(&quot;SELECT node_id, value, type_id, published, datatype  FROM &quot;.TABLE_NODES.&quot;,
+                                &quot;.TABLE_NODEDATA.&quot; WHERE parent_id=$parent_id AND node_id=&quot;.TABLE_NODES.&quot;.id AND
+                                (flavour_id=$flavour OR flavour_id=0) AND name='title' $enabled_filter ORDER BY sort_order DESC&quot;);
+ 
+        if(sql_num_rows($qresult) &gt; 0) {
+                while($row = sql_fetch_row($qresult)) {
+                        $published_related[$row[0]]['type_id'] = $row[2];
+                        $published_related[$row[0]]['published'] = $row[3];
+                        $published_related[$row[0]]['title'] = stripslashes($row[1]);
+                        $published_related[$row[0]]['datatype']['title'] = stripslashes($row[4]);
+                        }
+                sql_free_result($qresult);
+        	return true;
+		}
+        }
+	}
+
+<a name="init_doctypes"></a>function <b>init_doctypes</b> () {
+	if($done) return true;
+	static $done = true;
+	global $doctypes;
+	global $docnames;
+	global $doctemplates;
+	global $docparents;
+	global $docvisible;
+
+	$doctypes = array();
+	$docnames = array();
+	$doctemplates = array();
+	$docparents = array();
+	$docvisible = array();
+
+	global $profile;
+
+	if($profile['editor'] == 1) {
+		$editor = ', description';
+		global $docdescriptions;
+		$docdescriptions = array();
+		}
+	else { $editor = ''; }
+	
+	$qresult = sql_query(&quot;SELECT type_id, name, template, parent_id, visible $editor FROM &quot;.TABLE_TYPEDATA.&quot;,
+	&quot;.TABLE_TYPES.&quot; WHERE &quot;.TABLE_TYPES.&quot;.id=&quot;.TABLE_TYPEDATA.&quot;.type_id AND platform='phpweb' ORDER BY name&quot;);
+ 
+	if(sql_num_rows($qresult) &gt; 0) {
+        	while($row = sql_fetch_row($qresult)) {
+                	$doctypes[stripslashes($row[1])] = $row[0];
+                	$docnames[$row[0]] = stripslashes($row[1]);
+                	$doctemplates[$row[0]] = stripslashes($row[2]);
+                	$docvisible[$row[0]] = $row[4];
+                	$docparents[$row[0]] = $row[3];
+			if($editor != '') { $docdescriptions[$row[0]] = stripslashes($row[5]); }
+			}
+        	sql_free_result($qresult);
+        	}
+
+	}
+
+<a name="update_node_sortorder"></a>function <b>update_node_sortorder</b> ($node_id, $sort_order) {
+
+	// enforce secure db queries
+	if(!is_numeric($node_id) || !is_numeric($sort_order)) return false;
+
+        sql_query(&quot;UPDATE &quot;.TABLE_NODES.&quot; SET sort_order=$sort_order WHERE id=$node_id&quot;);
+
+	return true;
+        }
+
+<a name="get_profile"></a>function <b>get_profile</b> ($user_id = -1, $use_groups = true) {
+
+	// enforce secure db queries
+	if(!is_numeric($user_id) || !is_bool($use_groups)) return false;
+
+	if($user_id == -1) {
+		if(!defined(&quot;SESSION_DBID&quot;)) { return false; }
+		$user_id = SESSION_DBID;
+		}
+	$qprofile = sql_query (&quot;SELECT name, value FROM &quot;.TABLE_USERDATA.&quot; WHERE user_id=&quot;.$user_id);
+               if(sql_num_rows($qprofile) &gt; 0) {
+               	while($prow = sql_fetch_row($qprofile)) {
+                       	$profile[stripslashes($prow[0])] = stripslashes($prow[1]);
+			if(substr($prow[0], 0, 6) == 'group_' &amp;&amp; $prow[1] == '1' &amp;&amp; $use_groups) {
+				$profile = array_merge(get_group_profile (substr($prow[0], 6)), $profile);
+				}
+                       	}
+               	sql_free_result($qprofile);
+               	}
+	
+	return $profile;
+	}
+
+<a name="caching"></a>function <b>caching</b> ($buffer) {
+	if(!defined('CACHE_FILENAME')) return false;
+	global $cache_refresh;
+	global $id;
+	if(CACHE_TIME == 0 || isset($cache_refresh[$id])) {
+		return false;
+		}
+	$fp = fopen (CACHE_FILENAME, &quot;w&quot;);
+	fwrite($fp,$buffer);
+	fclose($fp);
+	return true;
+	}
+
+<a name="init_modules"></a>function <b>init_modules</b> () {
+	if($done) return true;
+	static $done = true;
+	global $modules;
+	$modules = array();
+	global $flavour;
+	global $root_parent_id;
+	global $parents;
+	global $profile;
+	global $id;
+	if(!isset($parents)) init_parents();		
+
+	if($profile['editor'] &amp;&amp; SESSION_STATUS == 'ok') { $cond = 3; } 
+	elseif(SESSION_STATUS == 'ok') { $cond = '2'; } 
+	else { $cond = '1'; }
+
+	// enforce correct data types
+	if(!is_numeric($flavour) || !is_numeric($root_parent_id) || !is_numeric($id)) return false;
+
+	// add modules to array
+	$qresult = sql_query(&quot;SELECT name, placement, id, visible, removeable, flavour_id, section_id, document_id, caption FROM
+                        &quot;.TABLE_MODULES.&quot; WHERE (target = $cond) OR (target = 0) ORDER BY sort_order&quot;);
+ 
+	if ($qresult) {
+        while($row = sql_fetch_row($qresult)) {
+                if($row[0] &amp;&amp; $row[1] &amp;&amp; ($row[5] == -1 || $row[5] == $flavour) &amp;&amp; ($row[6] == -1
+                || $row[6] == $root_parent_id) &amp;&amp; ($row[7] == -1 || $row[7] == $id)) {
+                        $modules[$row[2]]['id'] = $row[2];
+                        $modules[$row[2]]['position'] = stripslashes($row[1]);
+                        $modules[$row[2]]['visible'] = $row[3];
+                        $modules[$row[2]]['removeable'] = $row[4];
+                        $modules[$row[2]]['name'] = stripslashes($row[0]);
+                        $modules[$row[2]]['flavour_id'] = $row[5];
+                        $modules[$row[2]]['section_id'] = $row[6];
+                        $modules[$row[2]]['document_id'] = $row[7];
+                        $modules[$row[2]]['caption'] = stripslashes($row[8]);
+                        }
+                }
+	sql_free_result($qresult);
+	}
+
+	return true;
+	}
+
+<a name="search_nodes"></a>function <b>search_nodes</b> ($where, $limit = 100, $offset = 0) {
+	$start = getmicrotime();
+	global $search_time;	
+	if(!$where) {
+		return false;
+		$search_time = 0;
+		}
+	global $flavour;
+
+	// enforce secure db queries
+	if(!is_numeric($flavour) || !is_numeric($limit)|| !is_numeric($offset)) return false;
+
+ 	$qresult=sql_query(&quot;SELECT DISTINCT node_id FROM &quot;.TABLE_NODEDATA.&quot; WHERE $where &quot;.sql_limit($limit,$offset));
+        while($row = sql_fetch_row($qresult)) {
+                $result = get_node($row[0], $flavour);
+	       	if($result != false &amp;&amp; $result['searchable'] == 1 &amp;&amp; isset($result['title'])) $results[$row[0]] = $result;
+		}
+        sql_free_result($qresult);
+ 	$search_time = Number_format(getmicrotime() - $start, 4, ',', '');
+	
+	if(isset($results)) {
+		return $results;
+		}
+	else {
+		return false;
+		}
+	}
+
+<a name="search_children"></a>function <b>search_children</b> ($where, $limit = 100, $offset = 0, $item_id = -1) {
+	$start = getmicrotime();
+	global $search_time;	
+	if(!$where) {
+		return false;
+		$search_time = 0;
+		}
+	if($item_id &gt; 0) { $id = $item_id; } else { $id = $GLOBALS['id']; }
+	global $flavour;
+
+	if(!is_numeric($flavour) || !is_numeric($limit)|| !is_numeric($offset) || !is_numeric($item_id)) return false;
+
+ 	$qresult=sql_query(&quot;SELECT DISTINCT node_id FROM &quot;.TABLE_NODEDATA.&quot;, &quot;.TABLE_NODES.&quot; WHERE 
+	node_id = &quot;.TABLE_NODES.&quot;.id AND parent_id = $id AND $where &quot;.sql_limit($limit,$offset));
+        while($row = sql_fetch_row($qresult)) {
+                $result = get_node($row[0], $flavour);
+	       	if($result != false &amp;&amp; $result['searchable'] == 1 &amp;&amp; isset($result['title'])) $results[$row[0]] = $result;
+		}
+        sql_free_result($qresult);
+ 	$search_time = number_format(getmicrotime() - $start, 4, ',', '');
+	
+	if(isset($results)) {
+		return $results;
+		}
+	else {
+		return false ;
+		}
+	}
+
+<a name="cmp_nodes"></a>function <b>cmp_nodes</b> ($a, $b) {
+	global $cmp_key_name;
+	
+	// enforce correct parameter type
+	if(!is_array($a) || !is_array($b)) return false;
+
+	if ($a[$cmp_key_name] == $b[$cmp_key_name]) return 0;
+	return ($a[$cmp_key_name] &lt; $b[$cmp_key_name]) ? -1 : 1;
+	}
+
+<a name="sort_nodes"></a>function <b>sort_nodes</b> ($nodes, $name, $reverse = false) {
+	global $cmp_key_name;
+   	$cmp_key_name = $name;
+	uasort($nodes, &quot;cmp_nodes&quot;);
+	if($reverse) { $nodes = array_reverse($nodes); }
+
+	return $nodes;
+	}
+
+<a name="remove_message"></a>function <b>remove_message</b> ($message_id, $user_id = -1) {
+
+	// enforce secure db queries
+	if(!is_numeric($message_id)) return false;
+
+	if($user_id &gt; 0 &amp;&amp; is_numeric($user_id)) { $where = 'AND user_id = '.$user_id; }
+	else { $where = ''; }
+
+	sql_query(&quot;DELETE FROM &quot;.TABLE_MESSAGES.&quot; WHERE id = $message_id $where&quot;);
+
+	return true;
+	}
+
+<a name="mark_message"></a>function <b>mark_message</b> ($message_id, $user_id = -1) {
+
+	// enforce secure db queries
+	if(!is_numeric($message_id)) return false;
+
+	if($user_id &gt; 0 &amp;&amp; is_numeric($user_id)) { $where = 'AND user_id = '.$user_id; }
+	else { $where = ''; }
+
+	sql_query(&quot;UPDATE &quot;.TABLE_MESSAGES.&quot; SET delivered = &quot;.time().&quot;, status = 1 WHERE id = $message_id $where&quot;);
+
+	return true;
+	}
+
+<a name="count_messages"></a>function <b>count_messages</b> ($user_id = -1, $type = '', $status = -1, $release_date = 0, $sender_id = -1, $sender = '', $text = '', $expiration_date = 0) {
+
+	// enforce secure db queries
+	if(!is_numeric($user_id) || !is_numeric($status) || !is_numeric($release_date) || !is_numeric($sender_id) || !is_numeric($expiration_date)) return false;
+
+	$where = '';
+	$pre = '';
+	if($user_id != -1) { $where .= &quot;user_id = $user_id&quot;; $pre = ' AND '; }
+	if($type != '') { $where .= $pre.&quot;type = '&quot;.addslashes($type).&quot;'&quot;; $pre = ' AND '; }
+	if($status != -1) { $where .= $pre.&quot;status = $status&quot;; $pre = ' AND '; }
+	if($release_date &gt; 0) { $where .= $pre.&quot;release_date &lt; $release_date&quot;; $pre = ' AND '; }
+	if($expiration_date &gt; 0) { $where .= $pre.&quot;(expiration_date &gt; $expiration_date OR expiration_date = 0)&quot;; $pre = ' AND '; }
+	if($sender_id != -1) { $where .= $pre.&quot;sender_id = $sender_id&quot;; $pre = ' AND '; }
+	if($sender != '') { $where .= $pre.&quot;sender = '&quot;.addslashes($sender).&quot;'&quot;; $pre = ' AND '; }
+	if($text != '') { $where .= $pre.&quot;text LIKE '%&quot;.addslashes($text).&quot;%' OR subject LIKE '%&quot;.addslashes($text).&quot;'%)&quot;; $pre = ' AND '; }
+	if($where != '') { $where = 'WHERE '.$where; }
+	$message_query = sql_query(&quot;SELECT count(*) FROM &quot;.TABLE_MESSAGES.&quot; $where&quot;);
+	$row = sql_fetch_row($message_query);
+	sql_free_result($message_query);
+	return $row[0];
+	}
+
+<a name="search_messages"></a>function <b>search_messages</b> ($user_id = -1, $type = '', $status = -1, $release_date = 0, $sender_id = -1, $sender = '', $text = '', $mark = false, $sort_dir = 'ASC', $expiration_date = 0) {
+
+	// enforce secure db queries
+	if(!is_numeric($user_id) || !is_numeric($status) || !is_numeric($release_date) || !is_numeric($sender_id) || !is_numeric($expiration_date) 
+		|| !is_bool($mark)) return false;
+
+	$where = '';
+	$pre = '';
+	if($sort_dir != 'ASC') $sort_dir = 'DESC';
+	if($user_id != -1) { $where .= &quot;user_id = $user_id&quot;; $pre = ' AND '; }
+	if($type != '') { $where .= $pre.&quot;type = '&quot;.addslashes($type).&quot;'&quot;; $pre = ' AND '; }
+	if($status != -1) { $where .= $pre.&quot;status = $status&quot;; $pre = ' AND '; }
+	if($release_date &gt; 0) { $where .= $pre.&quot;release_date &lt; $release_date&quot;; $pre = ' AND '; }
+	if($expiration_date &gt; 0) { $where .= $pre.&quot;(expiration_date &gt; $expiration_date OR expiration_date = 0)&quot;; $pre = ' AND '; }
+	if($sender_id != -1) { $where .= $pre.&quot;sender_id = $sender_id&quot;; $pre = ' AND '; }
+	if($sender != '') { $where .= $pre.&quot;sender = '&quot;.addslashes($sender).&quot;'&quot;; $pre = ' AND '; }
+	if($text != '') { $where .= $pre.&quot;(message LIKE '%&quot;.addslashes($text).&quot;%' OR subject LIKE '%&quot;.addslashes($text).&quot;'%)&quot;; $pre = ' AND '; }
+	if($where != '') { $where = 'WHERE '.$where; }
+	$message_query = sql_query(&quot;SELECT id, user_id, subject, message, sender, sender_id, type, status, created, 
+		delivered, release_date, expiration_date FROM &quot;.TABLE_MESSAGES.&quot; $where ORDER BY created $sort_dir&quot;);
+	while($row = sql_fetch_array($message_query)) {
+		while(list($key, $value) = each($row)) {
+			$messages[$row['id']][$key] = stripslashes($value);
+			}
+		if($mark) mark_message($row['id']);
+                }	
+	sql_free_result($message_query);
+	return $messages;
+	}
+
+<a name="get_message"></a>function <b>get_message</b> ($message_id, $mark = true) {
+	
+	// enforce secure db queries
+        if(!is_numeric($message_id) || !is_bool($mark)) return false;
+
+	$message_query = sql_query(&quot;SELECT id, user_id, subject, message, sender, sender_id, type, status, created, 
+		delivered, release_date, expiration_date FROM &quot;.TABLE_MESSAGES.&quot; WHERE id = $message_id ORDER BY created&quot;);
+	$row = sql_fetch_array($message_query);
+	while(list($key, $value) = each($row)) {
+		$message[$key] = stripslashes($value);
+		}
+	sql_free_result($message_query);
+	if($mark) mark_message($message_id);
+	return $message;
+	}
+
+<a name="send_message"></a>function <b>send_message</b> ($user_id, $message, $sender_id = -1, $sender = '', $subject = '', $type = 'default', $release_date = 0, $expiration_date = 0) {
+
+        // enforce correct parameter type
+        if(!is_numeric($user_id) || !is_numeric($sender_id) || !is_numeric($release_date) || !is_numeric($expiration_date)) return false;
+	
+	$profile = get_profile($user_id);
+	if($type == 'default') {
+		if(!isset($profile['im_default']) || $profile['im_default'] == '') { 
+			$type = 'instant';
+			}
+		else {
+			$type = $profile['im_default'];
+			}
+		}
+	switch ($type) {
+		case 'sms' : break;
+		case 'icq' : 
+			if($sender_id != -1) {
+				$from = 'From: '.get_user_nickname($sender_id).' &lt;'.get_user_email($sender_id).'&gt;';
+				}
+			else {
+				$from = 'From: Unknown User &lt;unknown_user@'.$_SERVER['SERVER_NAME'].'&gt;';
+				}
+			if(isset($profile['icq']) &amp;&amp; is_numeric($profile['icq'])) {
+				mail($profile['icq'].'@pager.icq.com', $subject, $message, $from);
+				break;
+				}
+		case 'instant' :
+			// secure db query enforced by using addslashes()
+			sql_query(&quot;INSERT INTO &quot;.TABLE_MESSAGES.&quot; (user_id, subject, message, sender, sender_id, type, 
+			status, created, release_date, expiration_date) VALUES ($user_id, '&quot;.addslashes($subject).&quot;', 
+			'&quot;.addslashes($message).&quot;', '&quot;.addslashes($sender).&quot;', $sender_id, 'instant', 0, &quot;.time().&quot;, 
+			$release_date, $expiration_date)&quot;);
+			if(!isset($profile['im_as_email']) || !$profile['im_as_email'] != '1') break;
+		case 'email' :
+			if($sender_id != -1) {
+				$from = 'From: '.get_user_nickname($sender_id).' &lt;'.get_user_email($sender_id).'&gt;';
+				}
+			else {
+				$from = 'From: Unknown User &lt;unknown_user@'.$_SERVER['SERVER_NAME'].'&gt;';
+				}
+			if($time &lt; 1) mail(get_user_email($user_id), $subject, $message, $from);
+			break;
+		}
+	}
+
+<a name="receive_content"></a>function <b>receive_content</b> () {
+	// establish trust relationship
+
+	// insert as XML
+	// type can be SMTP and HTTP...maybe something else in the future
+
+
+	// 25.05.2002: *smile* should start working on that [michael@liqudibytes.net]
+	}
+
+<a name="send_content"></a>function <b>send_content</b> () {
+	// establish trust relationship
+	// maybe we can send all content for free!?
+	
+	// send as XML over SMTP or HTTP
+	}
+
+<a name="init_groups"></a>function <b>init_groups</b> () {
+	if($done) return true;
+	static $done = true;
+	global $groups;
+	$groups = array();
+	global $groups_ids;
+	$groups_ids = array();
+	$qresult = sql_query(&quot;SELECT id, group_name FROM &quot;.TABLE_GROUPS.&quot; ORDER BY group_name&quot;);
+	if(sql_num_rows($qresult) == 0) { 
+		sql_free_result($qresult);
+		return false; 
+		}
+        while($row = sql_fetch_row($qresult)) {
+		$groups[$row[0]] = stripslashes($row[1]);
+		$groups_ids[stripslashes($row[1])] = $row[0];
+		}
+        sql_free_result($qresult);
+	return true;
+	}
+
+<a name="get_group_profile"></a>function <b>get_group_profile</b> ($group_id, $recursive = true) {
+
+	// enforce secure db queries
+	if(!is_numeric($group_id) || !is_bool($recursive)) return false;	
+
+	$qresult = sql_query(&quot;SELECT name, value FROM &quot;.TABLE_GROUPDATA.&quot; WHERE group_id = $group_id&quot;);
+	if(sql_num_rows($qresult) == 0) { 
+		sql_free_result($qresult);
+		return false; 
+		}
+        while($row = sql_fetch_row($qresult)) {
+		$profile[stripslashes($row[0])] = stripslashes($row[1]);
+		if(substr($row[0], 0, 6) == 'group_' &amp;&amp; $row[1] == '1' &amp;&amp; $recursive) {
+			$profile = array_merge(get_group_profile (substr($row[0], 6)), $profile);
+			}
+		}
+        sql_free_result($qresult);
+
+	return $profile;
+	}
+
+<a name="add_group"></a>function <b>add_group</b> ($group_name) {
+
+	// secure db query enforced by using addslashes()	
+	sql_query(&quot;INSERT INTO &quot;.TABLE_GROUPS.&quot; (group_name) VALUES ('&quot;.addslashes($group_name).&quot;')&quot;);
+
+	return sql_insert_id();
+	}
+
+<a name="remove_group"></a>function <b>remove_group</b> ($group_id, $send_info = true) {
+	global $groups;
+
+	// enforce secure db queries
+	if(!is_numeric($group_id) || !is_bool($send_info)) return false;	
+
+	$qresult = sql_query(&quot;SELECT user_id FROM &quot;.TABLE_USERDATA.&quot; WHERE name='group_&quot;.$group_id.&quot;' AND value != '0'&quot;);
+	if(sql_num_rows($qresult) &gt; 0) {
+       		while($row = sql_fetch_row($qresult)) {
+			// Remove user from group
+			remove_user_from_group ($row[0], $group_id);
+			if($send_info) { 
+				// send message to all group members
+				send_message ($row[0], 'Group '.$groups[$group_id].' was removed.', 1);
+				}
+			}
+	        sql_free_result($qresult);
+		}
+	sql_query(&quot;DELETE FROM &quot;.TABLE_GROUPS.&quot; WHERE id=$group_id&quot;);
+	sql_query(&quot;DELETE FROM &quot;.TABLE_GROUPDATA.&quot; WHERE group_id=$group_id&quot;);
+
+	return true;
+	}
+
+<a name="add_user_to_group"></a>function <b>add_user_to_group</b> ($user_id, $group_id, $send_info = true) {
+	global $groups;
+
+	// enforce correct parameter type
+	if(!is_numeric($user_id) || !is_numeric($group_id) || !is_bool($send_info)) return false;	
+
+	set_profile('group_'.$group_id, '1', $user_id);
+	if($send_info) send_message ($user_id, 'You were added to group '.$groups[$group_id].'.', 1);
+
+	return true;
+	}
+
+<a name="remove_user_from_group"></a>function <b>remove_user_from_group</b> ($user_id, $group_id, $send_info = true) {
+	global $groups;
+
+	// enforce correct parameter type
+	if(!is_numeric($user_id) || !is_numeric($group_id) || !is_bool($send_info)) return false;
+
+	remove_profile('group_'.$group_id, $user_id);
+	if($send_info) send_message ($user_id, 'You were removed from group '.$groups[$group_id].'.', 1);
+
+	return true;
+	}
+
+<a name="set_group_profile"></a>function <b>set_group_profile</b> ($name, $value, $group_id) {
+
+	// enforce secure db queries
+	if(!is_numeric($group_id)) return false;	
+
+	if ($value == '' &amp;&amp; $name != '') { 
+		sql_query(&quot;DELETE FROM &quot;.TABLE_GROUPDATA.&quot; WHERE name='&quot;.addslashes($name).&quot;' AND group_id=&quot;.$group_id);
+		return true; 
+		}
+	$qresult = sql_query (&quot;UPDATE &quot;.TABLE_GROUPDATA.&quot; SET value='&quot;.addslashes($value).&quot;' WHERE name='&quot;.addslashes($name).&quot;' AND group_id=&quot;.$group_id);
+        if(sql_affected_rows($qresult) &lt; 1) {
+		$res = sql_query(&quot;SELECT id FROM &quot;.TABLE_GROUPDATA.&quot; WHERE name='&quot;.addslashes($name).&quot;' AND group_id=&quot;.$group_id);
+		if(sql_num_rows($res) &gt; 0) {
+			return true; }
+		else {
+			sql_query(&quot;INSERT INTO &quot;.TABLE_GROUPDATA.&quot; (name, value, group_id) VALUES ('&quot;.addslashes($name).&quot;', '&quot;.addslashes($value).&quot;', $group_id)&quot;);
+			}
+        	}
+
+        return true;
+	}
+
+<a name="remove_group_profile"></a>function <b>remove_group_profile</b> ($name, $group_id) {
+
+	// enforce secure db queries
+	if(!is_numeric($group_id)) return false;	
+
+	sql_query(&quot;DELETE FROM &quot;.TABLE_GROUPDATA.&quot; WHERE name='&quot;.addslashes($name).&quot;' AND group_id = $group_id&quot;);
+
+	return true;
+	}
+
+<a name="load_lang"></a>function <b>load_lang</b> ($name, $lang = '') {
+
+	// for security reasons, there shoudn't be more than one dot
+	if(!(strpos($name.' '.$lang, '..') === false)) return false;
+
+	if($lang == '') global $lang;
+	if(file_exists(LANG_PATH.$lang.'/'.$name.'.'.$lang)) {
+		$filename = LANG_PATH.$lang.'/'.$name.'.'.$lang;
+        	}
+	elseif(file_exists(LANG_PATH.$lang.'/'.$name.'.'.DEFAULT_LANG)) {
+		$filename = LANG_PATH.$lang.'/'.$name.'.'.DEFAULT_LANG;
+		}
+	else {
+		return flase;
+		}
+        $lines = file($filename);
+	// parse file
+        while (list ($line_num, $line) = each ($lines)) {
+		$buffer = split(&quot;\t&quot;, $line);
+		if(!strstr('#', $buffer[0])) {
+			$text   = trim(strstr($line, &quot;\t&quot;));
+			if(!defined('LANG_'.strtoupper($buffer[0]))) define('LANG_'.strtoupper($buffer[0]), $text);
+			}
+	        }
+
+	return true;
+	}
+
+<a name="html2txt"></a>function <b>html2txt</b> ($content) {
+
+	if(!is_string($content)) return false;
+
+	$trans = array_flip(get_html_translation_table(HTML_ENTITIES));
+
+	$search = array (&quot;'&lt;script[^&gt;]*?&gt;.*?&lt;/script&gt;'si&quot;,  // Strip out javascript
+                 &quot;'&lt;[\/\!]*?[^&lt;&gt;]*?&gt;'si&quot;,           // Strip out html tags
+                 &quot;'([\r\n])[\s]+'&quot;,                 // Strip out white space
+                 &quot;'&amp;(quot|#34);'i&quot;,                 // Replace html entities
+                 &quot;'&amp;(amp|#38);'i&quot;,
+                 &quot;'&amp;(lt|#60);'i&quot;,
+                 &quot;'&amp;(gt|#62);'i&quot;,
+                 &quot;'&amp;(nbsp|#160);'i&quot;,
+                 &quot;'&amp;(iexcl|#161);'i&quot;,
+                 &quot;'&amp;(cent|#162);'i&quot;,
+                 &quot;'&amp;(pound|#163);'i&quot;,
+                 &quot;'&amp;(copy|#169);'i&quot;);
+
+	$replace = array (&quot;&quot;,
+                  &quot;&quot;,
+                  &quot;\\1&quot;,
+                  &quot;\&quot;&quot;,
+                  &quot;&amp;&quot;,
+                  &quot;&lt;&quot;,
+                  &quot;&gt;&quot;,
+                  &quot; &quot;,
+                  chr(161),
+                  chr(162),
+                  chr(163),
+                  chr(169),
+                  &quot;chr(\\1)&quot;);
+
+	if(file_exists('inc/data/html_replace.conf')) {
+	        $lines = file('inc/data/html_replace.conf');
+        	while (list ($line_num, $line) = each ($lines)) {
+                	$buffer = split('	', $line);
+	                $wildcards[$buffer[0]] = trim($buffer[1]);
+	                }
+        	}
+
+	$content = str_replace(&quot;\n&quot;, &quot;&quot;, $content);
+	$content = strtr($content, $wildcards);
+	$content = str_replace('\tab', &quot;	&quot;, $content);
+	$content = preg_replace ($search, $replace, $content);
+	$content = str_replace('\nl', &quot;\n&quot;, $content);
+	$content = strtr($content, $trans);
+	$content = wordwrap($content);
+
+	return $content;
+	}
+
+<a name="write_log"></a>function <b>write_log</b> () {
+	// format:
+	// host timestamp id time user lang flavour design
+	$fp = fopen('logs/'.date(&quot;Y_m&quot;).'.log', 'a');
+	while(!$fp &amp;&amp; is_writable('logs/'.date(&quot;Y_m&quot;).'.log')) {
+		$fp = fopen('logs/'.date(&quot;Y_m&quot;).'.log', 'a');
+		usleep(20);
+		}
+	if(defined('START')) {
+		$time = substr((string) (getmicrotime() - START), 0, 6);
+		}
+	if(SESSION_DBID &gt; 0) { $user = SESSION_DBID; }
+	else { $user = '-'; }
+	global $design;
+	fwrite($fp, $_SERVER['REMOTE_ADDR'].&quot;\t&quot;.time().&quot;\t&quot;.$GLOBALS['id'].&quot;\t$time\t$user&quot;.
+		&quot;\t&quot;.$GLOBALS['lang'].&quot;\t&quot;.$GLOBALS['flavour'].&quot;\t&quot;.$design['name'].&quot;\n&quot;);
+	fclose($fp);
+
+	return true;
+	}
+
+<a name="awf_error_handler"></a>function <b>awf_error_handler</b> ($errno, $errstr, $errfile, $errline) {
+	$errorlevel = error_reporting(1);
+	global $id;
+	static $mail_sent = false;
+	switch($errno) {
+		case 1:
+			echo '&lt;p&gt;&lt;b&gt;Fatal Error. Mail sent to webmaster...&lt;/b&gt;&lt;/p&gt;';
+			error_log($_SERVER['REMOTE_ADDR'].&quot;\t&quot;.time().&quot;\t&quot;.$id.
+			&quot;\tFATAL\t$errno\t$errstr $errline\t$errfile\n&quot;, 3, 'log/'.date(&quot;Y_m&quot;).'_error.log');
+			if(!$mail_sent) {
+				// send email
+				$sent_mail = true;
+				error_log(&quot;FATAL ERROR:\nhttp://&quot;.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].&quot;?id=$id\n\nDate:&quot;.date(DATETIME_FORMAT).
+				&quot;\nError: $errstr\nFile: $errfile\nLine: $errline\n\nhave a nice day ;-)&quot;, 1, WEBMASTER_MAIL);
+				}
+			break;
+		case 2:
+		case 3:
+		case 4:
+			error_log($_SERVER['REMOTE_ADDR'].&quot;\t&quot;.time().&quot;\t&quot;.$id.&quot;\tERROR\t$errno\t$errstr $errline\t$errfile\n&quot;, 3, 'log/'.date(&quot;Y_m&quot;).'_error.log');
+			break;
+		case 5:
+		case 6:
+		case 7:
+			error_log($_SERVER['REMOTE_ADDR'].&quot;\t&quot;.time().&quot;\t&quot;.$id.
+			&quot;\tWARNING\t$errno\t$errstr $errline\t$errfile\n&quot;, 3, 'log/'.date(&quot;Y_m&quot;).'_error.log');
+		default: break;
+		}
+	error_reporting($errorlevel);
+
+	return true;
+	}
+
+<a name="transform"></a>function <b>transform</b> ($value, $datatype) {
+	global $id;
+	global $document;
+	global $profile;
+	global $wildcards;
+
+	switch ($datatype) {
+	case 'notrans': return $value;
+	case 'image_hide': return '';
+	case 'image':
+		if(file_exists($value)) return get_image_tag($value);
+		return '';
+	case 'image_left':
+		if(file_exists($value)) return get_image_tag($value, '','', 10, 1, 'left');
+		return '';
+	case 'image_right':
+		if(file_exists($value)) return get_image_tag($value, '', '', '10', '1', 'right');
+		return '';
+	case 'image_popup':
+		if(file_exists($value)) include(BASE_PATH.INC_PATH.'misc/show_image.inc'); return '';
+		return '';
+	case 'clean': return trim(strip_tags(replace_pattern(replace_wildcards($value, $profile), $wildcards)));
+	case 'text': return nl2br(subst_document_refs(url_to_link(replace_pattern(replace_wildcards(htmlchars($value), $profile)), $wildcards)));
+	case 'usertext': return nl2br(url_to_link(replace_pattern(htmlchars($value), $wildcards)));
+	case 'html': return subst_document_refs(replace_pattern(replace_wildcards($value, $profile), $wildcards));
+	case 'extrans': return nl2br(subst_document_refs(replace_pattern(replace_wildcards($value, $profile), $wildcards)));
+	case 'php': return replace_pattern(eval($value), $wildcards);
+	case 'datetime': return timestamp_to_string ($value, $mode = 'datetime');
+	case 'date': return timestamp_to_string ($value, $mode = 'date');
+	case 'time': return timestamp_to_string ($value, $mode = 'time');
+	case 'user_id': if($value == '-1') { return LANG_ANONYMOUS_USER; } 
+		else { return '&lt;a href=&quot;javascript:sendmessage('.$value.')&quot;&gt;'.get_user_nickname($value).'&lt;/a&gt;'; }
+	case 'external': readfile(trim($value)); return '';
+	case 'html2txt': return html2txt($value);
+	case 'country': return code_to_country($value);
+	case 'currency': return number_format($value, DECIMALS, DEC_POINT, THOUSANDS_SEP).' '.CURRENCY_SYM;
+	case 'xml': return ($value); // TODO!!!
+	case 'dir_icons': include(BASE_PATH.INC_PATH.'misc/dir_icons.inc'); return '';
+	case 'dir_list': include(BASE_PATH.INC_PATH.'misc/dir_list.inc'); return '';
+	default: 
+		// this allows us to dynamically add new datatypes...
+		$code = get_code('transform', $datatype);
+		if($code != '') {
+			return eval($code);
+			}
+	}
+
+	return $value;
+	}
+
+<a name="create_editor_input"></a>function <b>create_editor_input</b> ($title, $value, $type) {
+	global $id;
+	global $document;
+	global $profile;
+	global $wildcards;
+
+	include(BASE_PATH.INC_PATH.'misc/'.$type.'.inc');
+
+	return true;
+	}
+
+<a name="remove_file"></a>function <b>remove_file</b> ($filename) {
+
+	$name = str_replace(array('&lt;','&gt;',':',&quot;\\&quot;,'/','|','*','?','&quot;','..'), '_', $name);
+
+	if(!file_exists(BASE_PATH.$filename)) return false;
+        if(is_dir(BASE_PATH.$filename)) {
+                $handle=opendir(BASE_PATH.$filename);
+                while (false != ($file = readdir($handle))) {
+			if($file != '..' &amp;&amp; $file != '.') remove_file ($filename.'/'.$file);
+                        }
+                rmdir(BASE_PATH.$filename); }
+        else {
+                unlink(BASE_PATH.$filename);
+                }
+
+	return true;
+	}
+
+<a name="clear_cache"></a>function <b>clear_cache</b> ($id) {
+	if(!is_numeric($id) || CACHE_TIME == '0') return false;
+
+	remove_file(get_dir_name('cache', $id, false));
+
+	return true;
+	}
+
+<a name="get_age"></a>function <b>get_age</b> ($birthday) {
+	if(!is_numeric($birthday)) return false;
+
+	return floor((time() - $birthday) / 31536000);
+	}
+
+<a name="get_online_users"></a>function <b>get_online_users</b> ($time = 10) {
+
+	if(!is_numeric($time)) return false;
+
+	$time = time() - ($time * 60);
+	
+	$qres = sql_query(&quot;SELECT AVG(views), AVG(registered) FROM &quot;.TABLE_USERS);
+	$row = sql_fetch_row($qres);
+	sql_free_result($qres);
+
+	$avg_views    = $row[0];
+	$avg_reg_time = time() - $row[1];
+	
+	$avg_activity = ($avg_views / $avg_reg_time);
+			
+	$qres = sql_query(&quot;SELECT id, email, views, registered, last_login FROM &quot;.TABLE_USERS.&quot; WHERE last_login &gt;= &quot;.date(YmdHis, $time).&quot; ORDER BY last_login DESC&quot;);
+
+	while($row = sql_fetch_row($qres)) {
+
+		$users[$row[0]]['email'] 	= stripslashes($row[1]);
+		$users[$row[0]]['views'] 	= $row[2];
+		$users[$row[0]]['registered'] 	= $row[3];
+		$users[$row[0]]['online'] 	= true;
+		$users[$row[0]]['activity'] 	= round((($row[2] / (time() - $row[3])) / (($row[2] / (time() - $row[3])) + $avg_activity)) * 100);
+		
+		$qres2 = sql_query(&quot;SELECT name, value FROM &quot;.TABLE_USERDATA.&quot; WHERE user_id = $row[0] AND 
+					( name = 'gender' OR name = 'nickname' OR name = 'birthday' OR name = 'icq')&quot;);
+		while($row2 = sql_fetch_row($qres2)) {
+			$users[$row[0]][stripslashes($row2[0])] = stripslashes($row2[1]);
+			}
+		
+		sql_free_result($qres2);
+
+		if(!isset($users[$row[0]]['nickname']) || $users[$row[0]]['nickname'] == '') 
+			$users[$row[0]]['nickname'] = email_to_string($users[$row[0]]['email']);
+		}
+
+	sql_free_result($qres);
+	
+	return $users;
+	}
+
+<a name="save_var"></a>function <b>save_var</b> ($name, $var, $user_id = -1) {
+
+	if(!is_numeric($user_id)) return false;
+	$name = str_replace(array('&lt;','&gt;',':',&quot;\\&quot;,'/','|','*','?','&quot;','..'), '_', $name);
+	
+	if($user_id != -1) {
+		$dir = get_dir_name('users/private', $user_id);
+		}
+	else {
+		$dir = BASE_PATH.INC_PATH.DATA_PATH.'vars';
+		}
+	$fp = fopen($dir.'/'.$name, 'w');
+	if(!$fp) return false;
+	fwrite($fp, serialize($var));
+	fclose($fp);
+
+	return true;
+	}
+
+<a name="load_var"></a>function <b>load_var</b> ($name, $user_id = -1) {
+
+	if(!is_numeric($user_id)) return false;
+	$name = str_replace(array('&lt;','&gt;',':',&quot;\\&quot;,'/','|','*','?','&quot;','..'), '_', $name);
+
+	if($user_id != -1) {
+		$dir = get_dir_name('users/private', $user_id);
+		}
+	else {
+		$dir = BASE_PATH.INC_PATH.DATA_PATH.'vars';
+		}
+	if(!file_exists($dir.'/'.$name)) return NULL;
+	$fp = fopen($dir.'/'.$name, 'r');
+	if(!$fp) return false;
+	$var = unserialize(fread($fp, filesize($dir.'/'.$name)));
+	fclose($fp);
+
+	return $var;
+	}
+
+<a name="get_users"></a>function <b>get_users</b> ($userlist, $time = 10) {
+
+	if(!is_numeric($time)) return false;
+
+	$time = time() - ($time * 60);
+	
+	$qres = sql_query(&quot;SELECT AVG(views), AVG(registered) FROM &quot;.TABLE_USERS);
+	$row = sql_fetch_row($qres);
+	sql_free_result($qres);
+
+	$avg_views    = $row[0];
+	$avg_reg_time = time() - $row[1];
+	
+	$avg_activity = ($avg_views / $avg_reg_time);
+	
+	while(list($key, $value) = each($userlist)) {		
+		$qres = sql_query(&quot;SELECT id, email, views, registered, last_login FROM &quot;.TABLE_USERS.&quot; WHERE id = $key&quot;);
+	
+		$row = sql_fetch_row($qres);
+		$users[$row[0]]['email'] 	= stripslashes($row[1]);
+		$users[$row[0]]['views'] 	= $row[2];
+		$users[$row[0]]['registered'] 	= $row[3];
+		$users[$row[0]]['online'] 	= ($row[4] &gt;= date(YmdHis, $time));
+		$users[$row[0]]['activity'] 	= round((($row[2] / (time() - $row[3])) / (($row[2] / (time() - $row[3])) + $avg_activity)) * 100);
+		
+		$qres2 = sql_query(&quot;SELECT name, value FROM &quot;.TABLE_USERDATA.&quot; WHERE user_id = $row[0] AND 
+					( name = 'gender' OR name = 'nickname' OR name = 'birthday' OR name = 'icq')&quot;);
+		while($row2 = sql_fetch_row($qres2)) {
+			$users[$row[0]][stripslashes($row2[0])] = stripslashes($row2[1]);
+			}
+		
+		sql_free_result($qres2);
+
+		if(!isset($users[$row[0]]['nickname']) || $users[$row[0]]['nickname'] == '') 
+			$users[$row[0]]['nickname'] = email_to_string($users[$row[0]]['email']);
+
+		sql_free_result($qres);
+		}
+	
+	return $users;
+	}
+
+<a name="search_users"></a>function <b>search_users</b> ($search = '', $time = 10) {
+
+	if(!is_numeric($time)) return false;
+
+	if($search != '') {
+		$qres = sql_query(&quot;SELECT user_id FROM &quot;.TABLE_USERDATA.&quot; WHERE (name='nickname' OR name='interests' OR name='country') AND value LIKE '%&quot;.addslashes($search).&quot;%'&quot;);
+		}	
+	else {
+		$qres = sql_query(&quot;SELECT id FROM &quot;.TABLE_USERS.&quot; WHERE valid = 1 ORDER BY last_login&quot;);
+		}	
+
+	while($row = sql_fetch_row($qres)) {
+		$userlist[$row[0]] = 1;
+		}
+	
+	return get_users ($userlist, $time);	
+	}
+
+<a name="get_dir_name"></a>function <b>get_dir_name</b> ($basedir, $id, $create_dir = true) {
+
+	if(!is_numeric($id) || !is_bool($create_dir)) return false;
+
+	if(defined(CONFIG_CREATE_MASK)) { $CONFIG_CREATE_MASK = CONFIG_CREATE_MASK; }
+	else { $CONFIG_CREATE_MASK = 0700; }
+	if(!file_exists($basedir) &amp;&amp; $create_dir) mkdir($basedir, $CONFIG_CREATE_MASK);
+	if(!is_numeric($id) || $id &lt; 0) { 
+		if(!file_exists($basedir.'/default') &amp;&amp; $create_dir) mkdir($basedir.'/default', $CONFIG_CREATE_MASK);
+		return ($basedir.'/default'); 
+		} 
+	else { 
+		// A maximum of 2^15 files per directory should be allowed on 32 bit os, but we want to split up
+		// after 3.000 for performance reasons (this means max. 96.000.000 files):
+		$dir = $basedir.'/'.floor($id / 3000);
+		if(!file_exists($dir) &amp;&amp; $create_dir) mkdir($dir, $CONFIG_CREATE_MASK);
+		$dir .= '/'.$id;
+		if(!file_exists($dir) &amp;&amp; $create_dir) mkdir($dir, $CONFIG_CREATE_MASK);
+		return $dir; 
+		}
+	
+	}
+
+<a name="is_online"></a>function <b>is_online</b> ($user_id, $time = 10) {
+
+	if(!is_numeric($user_id) || !is_numeric($time)) return false;
+	
+	if(!is_numeric($user_id)) return false;
+	$time = time() - ($time * 60);
+
+	$qres = sql_query(&quot;SELECT last_login FROM &quot;.TABLE_USERS.&quot; WHERE id = $user_id&quot;);
+
+	$row = sql_fetch_row($qres);
+	sql_free_result($qres);
+	return ($row[0] &gt;= date(YmdHis, $time));
+	}
+
+<a name="user_since"></a>function <b>user_since</b> ($user_id) {
+	if(!is_numeric($user_id)) return false;
+
+	$qres = sql_query(&quot;SELECT registered FROM &quot;.TABLE_USERS.&quot; WHERE id = $user_id&quot;);
+
+	$row = sql_fetch_row($qres);
+	sql_free_result($qres);
+	return $row[0];
+	}
+
+<a name="include_modules"></a>function <b>include_modules</b> ($position) {
+        global $modules;
+        global $profile;
+        if(isset($modules)){
+                reset($modules);
+                if(SESSION_STATUS != 'ok') {
+                        while (list ($modid, $value) = each ($modules)) {
+                                include_module($value, 1, $position);
+                                }
+                        }
+                else {
+                        while (list ($modid, $value) = each ($modules)) {
+                                if($value['removeable'] == 1 &amp;&amp; isset($profile['module_'.$modid])) {
+                                        $value['visible'] = $profile['module_'.$modid];
+                                        }
+                                if(!isset($profile['module_size_'.$modid])) { $profile['module_size_'.$modid] = 1; }
+                                include_module($value, $profile['module_size_'.$modid], $position);
+                                }
+                        }
+                }
+        }
+
+<a name="get_base_url"></a>function <b>get_base_url</b> () {
+	else { $result = 'http://'; }
+
+	$result .= $_SERVER['SERVER_NAME'];
+	if(dirname($_SERVER['SCRIPT_NAME']) != '/') {
+		$result .= dirname($_SERVER['SCRIPT_NAME']);
+		}
+	$result .= '/';
+	return $result;
+	}
+
+<a name="get_url"></a>function <b>get_url</b> ($id, $params = '', $add_base_url = false) {
+
+	if(!is_numeric($id)) return false;
+
+	if($add_base_url) {
+		$result = get_base_url();
+		}
+	else {
+		$result = '';
+		}
+
+	if(is_array($params)) {
+		$param_str = '';
+		$pre = '';
+		while(list($key, $value) = each($params)) {
+			$param_str .= $pre.urlencode($key).'='.urlencode($value);
+			$pre = '&amp;';
+			}
+		unset($params);
+		$params = $param_str;
+		}
+
+	if(defined('URL_REWRITE')) {
+		if($params != '') $params = '?'.$params;
+		if($id == '') return $result.&quot;index.html$params&quot;;
+		return $result.&quot;$id.html$params&quot;;
+		}
+	else {
+		if($id == '') {
+			if($params != '') $params = '?'.$params;
+			return $result.'index.php'.$params;
+			}
+		if($params != '') $params = '&amp;'.$params;
+		return $result.'index.php'.'?id='.$id.$params;
+		}
+	}
+
+<a name="get_cmodule_id"></a>function <b>get_cmodule_id</b> ($doctype) {
+	global $doctypes;
+	static $cmodules = array();
+	if(count($cmodules == 0)) $cmodules = load_var('common_cmodules');
+	if(isset($cmodules[$doctype])) {
+		return $cmodules[$doctype];
+		}
+	else {
+		$qres = sql_query(&quot;SELECT id FROM &quot;.TABLE_NODES.&quot; WHERE type_id = &quot;.$doctypes[$doctype].&quot; ORDER BY sort_order LIMIT 1&quot;);
+		if(sql_num_rows($qres) &gt; 0) {
+			$row = sql_fetch_row($qres);
+			sql_free_result($qres);
+			$cmodules[$doctype] = $row[0];
+			save_var('common_cmodules', $cmodules);
+			return $row[0];
+			}
+		else {
+			return -1;
+			}
+		}
+	}
+
+<a name="mkdirs"></a>function <b>mkdirs</b> ($path, $create_mask) {
+	while(list($key, $value) = each($dirs)) {
+		$tmp_path .= $value.'/';
+		if(!file_exists($tmp_path)) mkdir($tmp_path, $create_mask);
+		}
+	}
+
+<a name="get_document_id"></a>function <b>get_document_id</b> ($title, $flavour = -1) {
+	
+	if($flavour == -1) global $flavour;
+	if(!is_numeric($flavour)) $flavour = 0;
+
+	$qres = sql_query(&quot;SELECT node_id FROM &quot;.TABLE_NODEDATA.&quot; WHERE name='title' AND value='&quot;.addslashes($title).&quot;' AND (flavour_id = $flavour OR flavour_id = 0)&quot;);
+
+	if(sql_num_rows($qres) &gt; 0) {
+		$row = sql_fetch_row($qres);
+		sql_free_result($qres);
+		return $row[0];
+		}
+	else {
+		return false;
+		}	
+	}
+
+<a name="get_document_title"></a>function <b>get_document_title</b> ($id, $flavour = -1) {
+
+	if($flavour == -1) global $flavour;
+	if(!is_numeric($flavour)) $flavour = 0;
+
+	$qres = sql_query(&quot;SELECT value FROM &quot;.TABLE_NODEDATA.&quot; WHERE name='title' AND node_id=&quot;.$id.&quot; AND (flavour_id = $flavour OR flavour_id = 0)&quot;);
+	if(sql_num_rows($qres) &gt; 0) {
+		$row = sql_fetch_row($qres);
+		sql_free_result($qres);
+		return stripslashes($row[0]);
+		}
+	else {
+		return false;
+		}	
+	}
+
+<a name="subst_document_refs"></a>function <b>subst_document_refs</b> ($htmlcode) {
+	$htmlcodelist = array();
+	$htmlcodelist = explode('%%', $htmlcode);
+	$res = $htmlcodelist[0];
+	for($i = 1; $i &lt; count($htmlcodelist); $i = $i + 2) {
+		$id = $htmlcodelist[$i];
+		if(ereg(&quot;^[[:digit:]]+$&quot;, $id)) {
+			$ref_id		= $id;
+			$ref_name	= get_document_title($id);
+			}		
+		else {
+			$ref_id		= get_document_id($id);
+			$ref_name	= $id;
+			} 
+		$res = $res.'&lt;a href=&quot;'.get_url($ref_id).'&quot;&gt;'.$ref_name.'&lt;/a&gt;'.$htmlcodelist[$i+1];
+		}
+	return $res;
+	}
+
+<a name="get_image_tag"></a>function <b>get_image_tag</b> ($filename, $alt_text = '', $link = '', $hspace = 0, $vspace = 0, $align = '', $width = -1, $height = -1) {
+	
+	// accept valid parameters only
+	if($filename == '' || !is_numeric($hspace) || !is_numeric($vspace) || !is_numeric($height) || !is_numeric($width)) return false;
+	
+	// define image size
+	$size = '';
+	if($width  != -1) $size = 'width=&quot;'.$width.'&quot;';
+	if($height != -1) $size .= ' height=&quot;'.$height.'&quot;';
+	if($width == -1 &amp;&amp; $height == -1) {
+		$image_size = @getimagesize($filename);
+		if($image_size !== NULL) $size = $image_size[3];
+		}
+
+	$filename = htmlentities($filename);
+	if($alt_text != '') {
+		$alt_text = htmlchars($alt_text);
+		$alt_text = ' alt=&quot;'.$alt_text.'&quot;';
+		}
+
+	if($align != '') {
+		$align = ' align=&quot;'.htmlchars($align).'&quot;';
+		}
+
+	$result = '&lt;img src=&quot;'.$filename.'&quot;'.$alt_text.$align.' hspace=&quot;'.$hspace.'&quot; vspace=&quot;'.$vspace.'&quot; '.$size.' border=&quot;0&quot; /&gt;';
+	if($link != '') $result = '&lt;a href=&quot;'.$link.'&quot; style=&quot;text-decoration: none&quot;&gt;'.$result.'&lt;/a&gt;';
+
+	return $result;	
+	}
+
+<a name="get_code"></a>function <b>get_code</b> ($category, $name = '') {
+
+	static $code;
+
+	if($name != '') {
+
+		// caching
+		if(isset($code[$category][$name])) {
+			return $code[$category][$name];
+			}
+
+		$where_name = &quot;AND name = '&quot;.addslashes($name).&quot;'&quot;;
+		}
+
+	$qres = sql_query(&quot;SELECT code, type, filename, serial FROM &quot;.TABLE_CODE.&quot; WHERE category='&quot;.addslashes($category).&quot;' $where_name AND active = 1&quot;);
+
+	while($row = sql_fetch_array($qres)) {
+		switch($row['type']) {
+			case 'db':
+				$result .= $row['code'];
+				break;
+			case 'file':
+				$result .= join('', file($row['filename']));
+				break;
+			case 'remote':
+				$result .= join('', file($row['filename']));
+				break;
+			}
+		}
+	sql_free_result($qres);
+
+	if($name != '') {
+		$code[$category][$name] = $result;
+		}
+
+	return $result;
+
+	}
+
+<a name="load_code"></a>function <b>load_code</b> ($category, $name = '') {
+
+	$code = get_code($category, $name);
+	
+	if($code != '') {
+		return eval($code);
+		}
+	}
+
+<a name="create_random_password"></a>function <b>create_random_password</b> ($num_chars) {
+
+        return substr(md5(uniqid(rand(),1)), 0, $num_chars);
+        }
+
+<a name="code_to_country"></a>function <b>code_to_country</b> ($code) {
+
+        static $countries = array();
+        if(count($countries) === 0) {
+                $countries = unserialize(join('', file(BASE_PATH.INC_PATH.DATA_PATH.'countries.ser')));
+                }
+        return $countries[$code];
+        }
+
+<a name="items_get_item_string"></a>function <b>items_get_item_string</b> ($item_id) {
+
+	if(!is_numeric($item_id)) return false;
+
+	$qres = sql_query(&quot;SELECT caption FROM &quot;.TABLE_ITEMS.&quot; WHERE id = $item_id&quot;);
+	
+	if(sql_num_rows($qres) &gt; 0) {
+		$row = sql_fetch_row($qres);
+		sql_free_result($qres);
+		return stripslashes($row[0]);
+		}
+	else {
+		return '';
+		}
+	
+	}
+
+<a name="items_get_array"></a>function <b>items_get_array</b> ($category, $target, $target_id) {
+
+	if($category == '' || $target == '' || !is_numeric($target_id)) return false;
+
+	$result = array();
+
+	$qres = sql_query(&quot;SELECT caption FROM &quot;.TABLE_ITEMS.&quot;,&quot;.TABLE_ITEMMAP.&quot; WHERE item_id=&quot;.TABLE_ITEMS.&quot;.id AND target='&quot;.addslashes($target).&quot;' AND &quot;.
+			&quot;target_id=$target_id AND category='&quot;.addslashes($category).&quot;' ORDER BY sort_order&quot;);
+
+	while($row = sql_fetch_row($qres)) {
+		$result[] = stripslashes($row[0]);
+		}
+	return $result;
+	}
+
+<a name="items_get_id_array"></a>function <b>items_get_id_array</b> ($category, $target, $target_id) {
+
+	if($category == '' || $target == '' || !is_numeric($target_id)) return false;
+
+	$result = array();
+
+	$qres = sql_query(&quot;SELECT 1_items.id FROM &quot;.TABLE_ITEMS.&quot;,&quot;.TABLE_ITEMMAP.&quot; WHERE item_id=&quot;.TABLE_ITEMS.&quot;.id AND target='&quot;.addslashes($target).&quot;' AND &quot;.
+			&quot;target_id=$target_id AND category='&quot;.addslashes($category).&quot;' ORDER BY sort_order&quot;);
+
+	while($row = sql_fetch_row($qres)) {
+		$result[] = $row[0];
+		}
+	return $result;
+	}
+
+<a name="items_get_items"></a>function <b>items_get_items</b> ($category) {
+
+	if($category == '') return false;
+
+	$result = array();
+
+	$qres = sql_query(&quot;SELECT id, caption FROM &quot;.TABLE_ITEMS.&quot; WHERE category='&quot;.addslashes($category).&quot;' ORDER BY sort_order&quot;);
+
+	while($row = sql_fetch_row($qres)) {
+		$result[$row[0]] = stripslashes($row[1]);
+		}
+	return $result;
+	}
+
+<a name="items_get_string"></a>function <b>items_get_string</b> ($category, $target, $target_id) {
+
+	if($category == '' || $target == '' || !is_numeric($target_id)) return false;
+
+	return join(', ', items_get_array($category, $target, $target_id));
+	}
+
+<a name="items_save_docinput"></a>function <b>items_save_docinput</b> ($select, $target, $target_id, $category) {
+
+	if($target == '' || !is_numeric($target_id)) return false;
+	if(!is_array($select)) $select = array();
+
+	$query = '';
+	$pre = '';
+	
+	$qres = sql_query(&quot;SELECT id FROM &quot;.TABLE_ITEMS.&quot; WHERE category='&quot;.addslashes($category).&quot;'&quot;);
+
+	while($row = sql_fetch_row($qres)) {
+		$query = $query.$pre.' item_id='.$row[0];
+		$pre = ' OR ';
+		}
+	
+	sql_query(&quot;DELETE FROM &quot;.TABLE_ITEMMAP.&quot; WHERE target='&quot;.addslashes($target).&quot;' AND target_id=$target_id AND (&quot;.$query.&quot;)&quot;);
+	while(list($key, $value) = each($select)) {
+		if(is_numeric($value)) {
+			sql_query(&quot;INSERT INTO &quot;.TABLE_ITEMMAP.&quot; SET item_id=$value, target='&quot;.addslashes($target).&quot;', target_id=$target_id&quot;);
+			}
+		}
+	return true;
+	}
+
+<a name="items_create_docinput"></a>function <b>items_create_docinput</b> ($category, $target = '', $target_id = 0, $type = 'dropdown', $autosave = false) {
+		
+	// secure db query
+	if(!is_numeric($target_id)) return false;
+
+	if($autosave == true) items_save_docinput($_REQUEST['docinput'][$category], $target, $target_id, $category);
+
+	$qres = sql_query(&quot;SELECT item_id FROM &quot;.TABLE_ITEMMAP.&quot; WHERE target='&quot;.addslashes($target).&quot;' AND target_id=$target_id&quot;);
+	while($row = sql_fetch_row($qres)) {
+		$preselected[$row[0]] = true;
+		}
+	sql_free_result($qres);
+
+	$qres = sql_query(&quot;SELECT id, caption FROM &quot;.TABLE_ITEMS.&quot; WHERE category='&quot;.addslashes($category).&quot;' AND active = 1 ORDER BY sort_order&quot;);
+	
+	if($type == 'dropdown') {
+		echo '&lt;select name=&quot;docinput['.$category.'][]&quot;&gt;'.&quot;\n&quot;;
+		while($row = sql_fetch_row($qres)) {
+			echo '  &lt;option value=&quot;'.$row[0].'&quot;';
+			if(isset($preselected[$row[0]])) echo ' selected=&quot;true&quot;';
+			echo '&gt;'.htmlchars($row[1]).&quot;&lt;/option&gt;\n&quot;;
+			}
+		echo &quot;&lt;/select&gt;\n&quot;;
+		}
+
+	elseif($type == 'multi_select') {
+		echo '&lt;select size=&quot;5&quot; multiple=&quot;true&quot; name=&quot;docinput['.$category.'][]&quot;&gt;'.&quot;\n&quot;;
+		while($row = sql_fetch_row($qres)) {
+			echo '  &lt;option value=&quot;'.$row[0].'&quot;';
+			if(isset($preselected[$row[0]])) echo ' selected=&quot;true&quot;';
+			echo '&gt;'.htmlchars($row[1]).&quot;&lt;/option&gt;\n&quot;;
+			}
+		echo &quot;&lt;/select&gt;\n&quot;;
+		}
+
+	elseif($type == 'radio') {
+		while($row = sql_fetch_row($qres)) {
+			echo '  &lt;input type=&quot;radio&quot; name=&quot;docinput['.$category.'][]&quot; value=&quot;'.$row[0].'&quot;';
+			if(isset($preselected[$row[0]])) echo ' checked=&quot;true&quot;';
+			echo ' /&gt; '.htmlchars($row[1]).&quot;\n&quot;;
+			}
+		}
+
+	elseif($type == 'radio_br') {
+		while($row = sql_fetch_row($qres)) {
+			echo '  &lt;input type=&quot;radio&quot; name=&quot;docinput['.$category.'][]&quot; value=&quot;'.$row[0].'&quot;';
+			if(isset($preselected[$row[0]])) echo ' checked=&quot;true&quot;';
+			echo ' /&gt; '.htmlchars($row[1]).&quot;&lt;br /&gt;\n&quot;;
+			}
+		}
+
+	elseif($type == 'checkbox') {
+		while($row = sql_fetch_row($qres)) {
+			echo '  &lt;input type=&quot;checkbox&quot; name=&quot;docinput['.$category.'][]&quot; value=&quot;'.$row[0].'&quot;';
+			if(isset($preselected[$row[0]])) echo ' checked=&quot;true&quot;';
+			echo ' /&gt; '.htmlchars($row[1]).&quot;\n&quot;;
+			}
+		}
+
+	elseif($type == 'checkbox_br') {
+		while($row = sql_fetch_row($qres)) {
+			if($row[1] == '') { 
+				echo '&lt;br /&gt;'; 
+				}
+			else {
+				echo '  &lt;input type=&quot;checkbox&quot; name=&quot;docinput['.$category.'][]&quot; value=&quot;'.$row[0].'&quot;';
+				if(isset($preselected[$row[0]])) echo ' checked=&quot;true&quot;';
+				echo ' /&gt; '.htmlchars($row[1]).&quot;&lt;br /&gt;\n&quot;;
+				}
+			}
+		}
+
+	sql_free_result($qres);
+
+	return true;
+	}
+
+<a name="add_blob"></a>function <b>add_blob</b> ($file, $mime, $filename, $target, $target_id) {
+
+        if(isset($file) &amp;&amp; file_exists($file) &amp;&amp; is_numeric($target_id)) {
+                $fp = fopen($file, &quot;rb&quot;);
+                $file_contents = fread($fp, filesize($file));
+                fclose($fp);
+                $result = md5(uniqid(rand(), 1));
+                sql_query(&quot;INSERT INTO &quot;.TABLE_BLOBS.&quot; SET sid = '&quot;.$result.&quot;', data = '&quot;.addslashes(base64_encode($file_contents)).&quot;', &quot;.
+                        &quot;mime = '&quot;.addslashes($mime).&quot;', filename = '&quot;.addslashes($filename).&quot;', target = '&quot;.addslashes($target).&quot;', &quot;.
+                        &quot;target_id = $target_id, created = &quot;.time().&quot;, last_change = &quot;.time());
+                return $result;
+                }
+        return false;
+        }
+
+<a name="get_blob"></a>function <b>get_blob</b> ($sid) {
+
+        $qres = sql_query(&quot;SELECT data FROM &quot;.TABLE_BLOBS.&quot; WHERE sid = '&quot;.addslashes($sid).&quot;'&quot;);
+        if(sql_num_rows($qres) &gt; 0) {
+                $row = sql_fetch_row($qres);
+                sql_free_result($qres);
+                return base64_decode(stripslashes($row[0]));
+                }
+        return false;
+        }
+
+<a name="output_blob"></a>function <b>output_blob</b> ($sid) {
+
+        $qres = sql_query(&quot;SELECT data, mime FROM &quot;.TABLE_BLOBS.&quot; WHERE sid = '&quot;.addslashes($sid).&quot;'&quot;);
+        if(sql_num_rows($qres) &gt; 0) {
+                $row = sql_fetch_row($qres);
+                sql_free_result($qres);
+                if(!headers_sent()) header(&quot;Content-type: &quot;.stripslashes($row[1]));
+                echo base64_decode(stripslashes($row[0]));
+                }
+	return false;
+        }
+
+if(file_exists('inc/custom/custom_functions.inc')) include('inc/custom/custom_functions.inc');
+
+?&gt;
+</pre></body></html>

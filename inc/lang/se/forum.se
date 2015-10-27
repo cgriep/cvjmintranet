@@ -1,0 +1,31 @@
+forum_new					ny
+forum_addnew					Lägg till ett nytt inlägg
+forum_page					Sida:
+forum_forum					Forum
+forum_description				Beskrivning
+forum_topics					Kattegorier
+forum_subject                   Ämne
+forum_author					Författare
+forum_replies					Svar
+forum_latest					Senste svar
+forum_jumpto					Hoppa till
+forum_go					Gå
+forum_reply					Svara
+forum_quote					Citera
+forum_sendcomplete				Skicka fullständiga tråden med e-post
+forum_sendbyemail				Skicka svaren med e-post
+forum_message					Meddelande
+forum_sreply					Skicka svar
+forum_allrequired				Alla fält är obligatoriska.
+forum_emailverified				Din e-post adress har verifierats.
+forum_nick					Signatur
+forum_email					e-post
+forum_addposting				Lägg till ett inlägg
+forum_havetobeloggedin          Du måste vara inloggad för att infoga nya inlägg.
+forum_dontsendanymore				Skicka inte nya inlägg med e-post längre.
+forum_submitch					Skicka iväg ändringar.
+forum_changedsucc				Förändringar i dokumentet lyckades.
+forum_changedfail				Förändringar i dokumentet misslyckades. (Alla fält är obligatoriska)
+forum_edit					Redigera
+forum_sent					Fullständig tråd har skickats till dig med e-post.
+forum_refreshtimestamp				Hantera som ett nytt svar.

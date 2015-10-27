@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns="http://my.netscape.com/rdf/simple/0.9/">
+
+<channel>
+ <title>Telepolis News</title>
+ <link>http://www.telepolis.de/</link>
+ <description>Aktuelle Telepolis News Artikel</description>
+</channel>
+
+<item>
+ <title>Aufrüstung im Kampf gegen den Terrorismus</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11522/1.html</link>
+</item>
+<item>
+ <title>Aufnahme von einem Braunen Zwerg mit neuer Technik</title>
+ <link>http://www.heise.de/tp/deutsch/special/raum/11521/1.html</link>
+</item>
+<item>
+ <title>Ein ET-Rätsel für die Menschen</title>
+ <link>http://www.heise.de/tp/deutsch/special/raum/11519/1.html</link>
+</item>
+<item>
+ <title>Wie es beliebt</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11518/1.html</link>
+</item>
+<item>
+ <title>Zwischen Konvergenz und Konfusion</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11515/1.html</link>
+</item>
+<item>
+ <title>Überwachung willkommen</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11514/1.html</link>
+</item>
+<item>
+ <title>Brauchen wir eine eigene Nordallianz?</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/glosse/11512/1.html</link>
+</item>
+<item>
+ <title>Open Source Literatur</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/konf/11491/1.html</link>
+</item>
+<item>
+ <title>Richtig oder Falsch?</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/lis/11483/1.html</link>
+</item>
+<item>
+ <title>Osama bin Laden the pop star?</title>
+ <link>http://www.heise.de/tp/english/inhalt/co/11517/1.html</link>
+</item>
+<item>
+ <title>Supernova zerstörte Ozonschicht</title>
+ <link>http://www.heise.de/tp/deutsch/special/raum/11511/1.html</link>
+</item>
+<item>
+ <title>Handy-Diebstahl treibt die Kriminalstatistik nach oben</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11510/1.html</link>
+</item>
+<item>
+ <title>Sie #?*$%!&amp;§, kommen Sie sofort zum Chef!</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11436/1.html</link>
+</item>
+<item>
+ <title>Computerspiel mit Hirnströmen steuern</title>
+ <link>http://www.heise.de/tp/deutsch/special/auf/11509/1.html</link>
+</item>
+<item>
+ <title>Microsoft oder Linux? Ein Diplom-Informatiker im Bundestag</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11508/1.html</link>
+</item>
+<item>
+ <title>Parabolische Leidenschaften</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11505/1.html</link>
+</item>
+<item>
+ <title>The excess of control</title>
+ <link>http://www.heise.de/tp/english/inhalt/buch/11504/1.html</link>
+</item>
+<item>
+ <title>Lust auf Verbindungsdaten</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11493/1.html</link>
+</item>
+<item>
+ <title>Der neue iMac ist da</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/glosse/11507/1.html</link>
+</item>
+<item>
+ <title>Ein großer Asteroid flog heute nahe an der Erde vorbei</title>
+ <link>http://www.heise.de/tp/deutsch/special/raum/11506/1.html</link>
+</item>
+<item>
+ <title>Nachahmung des terroristischen Aufmerksamkeitsspektakels</title>
+ <link>http://www.heise.de/tp/deutsch/special/auf/11503/1.html</link>
+</item>
+<item>
+ <title>Usama, der Mann des Jahres</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11502/1.html</link>
+</item>
+<item>
+ <title>Weiter Spannungen um Kaschmir</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11500/1.html</link>
+</item>
+<item>
+ <title>Keine halben Sachen</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/glosse/11498/1.html</link>
+</item>
+<item>
+ <title>Wir wollen die Nummer zwei werden</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11492/1.html</link>
+</item>
+<item>
+ <title>Gesichtserkennungssystem machte nur Fehler</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11499/1.html</link>
+</item>
+<item>
+ <title>USA drängen auf biometrische Daten in EU-Pässen</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11484/1.html</link>
+</item>
+<item>
+ <title>Und morgen die ganze Welt</title>
+ <link>http://www.heise.de/tp/deutsch/kolumnen/mar/11497/1.html</link>
+</item>
+<item>
+ <title>Glücksfee mit Bluescreen</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/glosse/11495/1.html</link>
+</item>
+<item>
+ <title>Mohammed als Mustermann</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11494/1.html</link>
+</item>
+<item>
+ <title>Sterben für die Forschung oder Sterben im ewigen Eis</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/lis/11487/1.html</link>
+</item>
+<item>
+ <title>Billy Parcel Service Doll</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/glosse/11496/1.html</link>
+</item>
+<item>
+ <title>Klon-Schweine vor, noch ein Tor!</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/lis/11486/1.html</link>
+</item>
+<item>
+ <title>Die dunklen Saiten der Seele</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/musik/11482/1.html</link>
+</item>
+<item>
+ <title>Nukleare Ramjets auf kosmischen Startbahnen</title>
+ <link>http://www.heise.de/tp/deutsch/special/raum/11473/1.html</link>
+</item>
+<item>
+ <title>Computerstudien</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11481/1.html</link>
+</item>
+<item>
+ <title>Neuer Materiezustand</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/lis/11480/1.html</link>
+</item>
+<item>
+ <title>Quo vadis Argentina?</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11479/1.html</link>
+</item>
+<item>
+ <title>Die perfekte Kryptographie-Maschine</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/lis/11478/1.html</link>
+</item>
+<item>
+ <title>Wo blieb die Feuerwehr?</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/co/11477/1.html</link>
+</item>
+<item>
+ <title>Grünalgen als Wasserstoffproduzenten</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/lis/11440/1.html</link>
+</item>
+<item>
+ <title>Communities für Frauen: Feminist spaces</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11419/1.html</link>
+</item>
+<item>
+ <title>Das WWW beginnt zu schrumpfen</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11476/1.html</link>
+</item>
+<item>
+ <title>Napsterisierung vs. Venterisierung</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11475/1.html</link>
+</item>
+<item>
+ <title>Neue Lügendetektor-Technologie zur Terroristenabwehr</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/lis/11474/1.html</link>
+</item>
+<item>
+ <title>Hacker und FBI gemeinsam gegen den Terror?</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11472/1.html</link>
+</item>
+<item>
+ <title>Gasmasken für den Vatikan</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11469/1.html</link>
+</item>
+<item>
+ <title>Baryometer zur Dichtemessung im Universum</title>
+ <link>http://www.heise.de/tp/deutsch/special/raum/11463/1.html</link>
+</item>
+<item>
+ <title>Brückenbauer für zwischendurch</title>
+ <link>http://www.heise.de/tp/deutsch/special/game/11446/1.html</link>
+</item>
+<item>
+ <title>Unter Hackern</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/konf/11467/1.html</link>
+</item>
+<item>
+ <title>Patentrezept für eine sichere Zukunft</title>
+ <link>http://www.heise.de/tp/deutsch/inhalt/te/11465/1.html</link>
+</item>
+<item>
+ <title>Auf Tauchfahrt zu Unterwasservulkanen, Röhrenwürmern   und außerirdischen Mikroben</title>
+ <link>http://www.heise.de/tp/deutsch/special/robo/11449/1.html</link>
+</item>
+<item>
+ <title>Die große Flying Saucer Verschwörung - Informationskrieg gegen extraterrestrische Präsenz?</title>
+ <link>http://www.heise.de/tp/deutsch/special/raum/11406/1.html</link>
+</item>
+</rdf:RDF>

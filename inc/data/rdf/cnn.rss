@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+  <!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"
+  "http://my.netscape.com/publish/formats/rss-0.91.dtd">
+
+  <rss version="0.91">
+
+  <channel>
+
+  <title>News from CNN.com</title>
+  <link>http://cnn.com/index.html</link>
+  <description>The world's news leader</description>
+  <language>en-us</language>
+      
+  <image>
+    <title>CNN.com</title>
+    <url>http://cnn.com/images/1999/07/cnn.com.logo.gif</url>
+    <link>http://CNN.com/index.html</link>
+    <width>144</width>
+    <height>34</height>
+    <description>The world's news leader</description>
+   </image>
+
+      <item>
+        <title>New York remembers firefighters in first funerals - September 16, 2001</title>
+        <link>http://cnn.com/2001/US/09/15/vic.terror.funerals/index.html</link>
+      </item>
+
+      <item>
+        <title>CNN.com Specials</title>
+        <link>http://cnn.com/SPECIALS/2001/trade.center/victims/pentagon.victims.html</link>
+      </item>
+
+</channel>
+  </rss>

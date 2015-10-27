@@ -1,0 +1,9 @@
+rows_found		%d Eintr&auml;ge
+are_you_sure		Sind Sie sicher?
+add_now			Hinzuf&uuml;gen
+create_dump		Exportieren
+show_example		Beispiel anzeigen
+dump_items		Exportiere Datens&auml;tze von %s bis %s als
+datalist_fields_req	Alle Felder werden ben&ouml;tigt. Nummern-Felder d&uuml;rfen keine Buchstaben enthalten.
+datalist_record_exists	Eintrag existiert schon.
+datalist_record_added	Eintrag mit der ID %d hinzugef&uuml;gt.

@@ -1,0 +1,215 @@
+Adaptive Website Framework (AWF) Changelog
+
+* 2.00-beta
+- Major improvements in l10n (l10n settings now depend on flavour)
+- PHP content type is disabled by default (can be enabled in 
+admin/config.php)
+- If a SQL query takes more than 5s, the admin gets a warning message by email 
+- Pictures of users are now stored in img/users/ instead of users/public/
+- Redesigned admin area
+- Removed banner management from admin area (now available as commercial module)
+- Improved User Management
+- Users now can choose between username and email for login
+
+* 1.11
+- fixed some bugs in forum cmodules [Christoph Stickel]
+- removed an empty line from spaw/class/lang.class.php, that caused 
+  redirection not to work ("headers already sent")
+
+* 1.10
+- corrected some problems with default design
+- fixed delete function for browser.inc cmodule
+- improved demo content
+
+* 1.10rc2
+- added Spanish language support
+- some small bugfixes
+
+* 1.10rc1
+- code cleanup
+- new demo content
+- improved setup script
+- added Spaw WYSIWYG editor
+- new simple edit mode
+- updated installation guide
+- new design for admin area
+- added Liquid Installer to admin area
+- optional Designs/Themes now moved to installer packages
+- new advanced search cmodule [Paul Maxwell]
+- new log analysis cmodule
+
+* 1.05
+- added ADF cmodule
+- added hlinfo module [Jonas Lindau <jol@tjohoo.se>]
+- added "Folders" design
+- many bugfixes
+- better support for character sets other than iso-8859-1
+
+* 1.04
+- now runs with register_globals = off (php.ini)
+- "send to friend" can be diabled (inc/cmodules/text_doc.inc)
+- improved security for db queries (inc/functions.inc)
+- tested with PHP 4.2.1 and requires PHP >= 4.1.0 (!)
+- fixed bug in inc/cmodules/user.inc
+- added admin/tools/update_im.php to limit number of instant messages
+- added admin/tools/export_rdf.php to export news as RDF
+- improved some API functions (load_var(), save_var(), get_node(), get_children(), get_sorted_children())
+- new get_document_id(), get_document_title() and subst_document_refs() API functions
+- %%id%% and %%title%% wildcards will be replaced with document URLs
+- editor may switch between edit and normal mode ('editmode' parameter)
+- added created and last_change cols to 1_nodes
+- renamed get_related() to get_siblings() (functions.inc)
+- improved setup script
+- changed default sort order in admin/modules.php
+- new sql_fetch_array() API function
+- adapted to "XHTML 1.0 Transitional" standard
+- new get_image_tag() API function
+- get_url() now accepts an array as second parameter, and adds base URL when setting the optional 3rd paramter to true
+- new get_base_url() API function (useful in combination with URL rewrinting)
+- added inc/cmodules/plain_content.inc content module
+
+* 1.03
+- changed parameter in get_children(): title_only (boolean) -> key_only (string)
+- %%email%% can be used as wildcard in "LOGGED_IN" string (language files)
+- some small bugfixes and enhancements
+- comments need to have a title now (otherwise they won't be accepted)
+- Dutch (NL) Translations of lang files [Jacco van Koll]
+- New feedback form (admin/feedback.php)
+
+* 1.02
+- improved replace_pattern() API function
+- new admin scripts: admin/userdump_html.php and admin/docdump_html.php
+- new send_message() API function
+- improved forum [Christoph Stickel]
+- new "send to a friend" button for topics and newsitems
+- new feature: flavour_id = 0 means that content is lang independent (example in inc/cmodules/newsitem.inc)
+- <?php echo $var; ?> replaced by <?=$var?>
+- all array indexes should now be quoted like this $array['index']
+- fixed some API bugs
+- added date/time l10n (inc/config.inc)
+- added i18n support (inc/lang/XX/)
+- added instant messaging (using JavaScript :-( for the pop-up windows)
+- new load_lang() API function
+- new send_message() API function
+- new get_message() API function
+- new search_messages() API function
+- new count_messages() API function
+- added new db table: 1_messages
+- modified 1_flavours db table
+- new remove_message() API function
+- new mark_message() API function
+- added support for external documents using 'external' node property
+- added simple banner management (admin/ads.php, adlink.php and adimage.php)
+- defined CONFIG_CREATE_MASK in inc/config.inc
+- added upload feature for *editor-mode* using $docupload[] (works like $docdata[]):
+  Examples:
+  <input type="file" name="published/*">
+  <input type="file" name="public/image.jpg">
+  <input type="file" name="private.xml">
+- improved newsitem.inc
+- improved stylesheet definition files (css/ subdirectory)
+- new redirect property for nodes (links document to a URL)
+- new external property for nodes (loads external file)
+- added support for user groups (admin/groups.php)
+- new user group related API functions (add_group(), get_group_profile(), ...)
+- website specific functions can now be stored in inc/custom_functions.inc
+- uncommenting "define('START', getmicrotime ());" in functions.inc
+- new apps/ subdirectory
+- included Phorum 3.3.1a (11.12.2001)
+- included AeroMail 1.40 IMAP Mail Client
+- added phorum.inc cmodule
+- fixed some security bugs (anyone wants to help searching for more?)
+- new html2text() API function
+- new write_log() API function
+- new access log (logs are stored in the log/ subdirectory)
+- new dberror log (logs are stored in the log/ subdirectory)
+- new error log (logs are stored in the log/ subdirectory)
+- added datatype column to 1_nodedata
+- new transform() API function
+- new create_editor_input() API function
+- new remove_file() API function
+- improved input elements for editor mode incl. file upload
+- option to add an image to a node
+- renamed $design_table_col_bright/dark to $design_table_row_bright/dark (makes more sense...)
+- added "show published files" feature to cmodules/newsitem.inc and cmodules/text_doc.inc
+- new clear_cache() API function
+- improved admin/polls.php and inc/modules/polls.inc (multiple polls are now possible)
+- new get_online_users() API function
+- new get_age() API function (returns an integer with the time since x in years)
+- new "latest news" module (inc/modules/news.inc)
+- added new admin scripts: admin/flavours.php and admin/l10n.php 
+- updated admin/config.php, admin/setup.php and admin/modules.php
+- removed support for DBM files (too slow)
+- optional url rewriting using mod_rewrite
+- added "auto refresh" option in modules/docoptions.inc
+- new get_cmodule_id() API function
+- new cmodules: messages.inc, preferences.inc
+- updated cmodules/mod_prefs.inc
+- added rdf parser
+- new module: newsticker.inc
+- added new options to inc/modules/docoptions.inc: "Show document only", "Hide left column", "Hide right column"
+- new "Expiration Date", "Unique nicknames", "Force SSL", "Show document only", "Hide left column" and "Hide right 
+  column" options in admin/config.php
+- improved admin/users.php
+- added admin/phpinfo.php
+- new design for admin area
+- added db update script (1.00 -> 1.02)
+- added new options in admin/setup.php
+- new "admin/tools" directory (used for additional php/shell scripts)
+- added inc/css.inc which enables you to use different stylesheets for different browsers (e.g. "default.msie.css" for IE)
+- added short help texts for some elements in editor mode
+- renamed set_doctypes() to init_doctypes(), set_parents() to init_parents() and so on (same for init_modules(), 
+  init_groups(), init_published_related(), init_published_children(), init_published_roots ()).
+- improved caching functions (auto-detection of document updates)
+- improved security
+- new delete_nodedata() API function
+- added column 'expiration_date' to nodes table
+- renamed 'send_time' to 'release_date' and added 'expiration_date' to messages table
+- added admin/tools/create_document.php: this script allows to add documents on the command line
+- support for http authetication (try index.php?docinput[login]=true)
+- added database update script
+- added API documentation (awf/docs/api/)
+
+* 1.00 final
+
+- new url_to_link() API function
+- new timestamp_to_string() API function
+- more secure password handling (cookie now associated with IP address)
+- improved news cmodule (new icon option)
+- new replace_wildcards($text, $array) API function
+- new replace_pattern($text, $array) API function
+- text areas are now wrap=virtual
+- nickname can be used in text paragraphs (just use the %%nickname%% wildcard)
+- fixed all known bugs
+- new forum cmodule [Christoph Stickel]
+
+* 1.00rc3
+
+- Various caching bug fixes
+- Easier code structure of modules
+- More abstract code in inc/content.inc
+- Added module inclusion functions to inc/design.inc
+- New "Caption" field in admin/modules.php
+- Improved navigation module (alpha version)
+- Download/link counter (admin/stats.php) - just a first version
+- English documentation [Michael Staedler]
+- Added support for PostgreSQL (95% done)
+- Bug fixes in admin/setup.php
+- Added registration option in admin/setup.php
+- More complex editor rights management
+- new Strawberry Design ;)
+- Public AWF Users Forum
+- Public AWF Mailing List
+- AWF_VERSION is now defined (< 100 for RC versions)
+- Smarter editor forms
+- Added release_date option -> allows scheduled release of documents
+- Added members_only flag to nodes table (only registered users will see these documents)
+- Added 'What to do, if document access is denied?' to admin/config.php
+- Added mailing list checkbox to admin/setup.php
+- Added get_sorted_children(), sort_nodes() and search_chirldren() functions
+- More designs (50% done)
+- improved navigation module
+- Thumbnail Viewer and Guest Book [Christoph Stickel]
+- forum cmodule [Christoph Stickel]
+- updated GERMAN documentation incl. HTML version
+- fixed all known bugs

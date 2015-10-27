@@ -1,0 +1,101 @@
+yes			Ja
+no			Nej
+back			Tiillbaka
+send_to_a_friend	Skicka till en vän
+no_content		Sorry, det finns inget innehåll på ditt språk än.
+comment			Kommentar
+comments		Kommentarer
+published_by		<i>Publicerad av %s den %s</i>
+comment_about		Kommentar om <i>%s</i>, publicerad av %s den %s:
+comment_intro		<b>Här kan du publicera din kommentar om <i>%s</i></b>
+html_converted		HTML-taggar kommer att konerteras till vanlig text.
+remove			Ta bort
+there_are_x_news	Det finns %d nyheter.
+more			mera
+no_comments		Det finns inga kommentarer än.
+to_add_a_comment	Du måste vara inloggad för att lägga till kommentarer.
+more_news		Mera nyheter
+send_this_document	Skicka detta dokument till
+multiple_recipients	Note: Multipla mottagare måste separeras med komma.
+your_email_address	Din e-post adress
+message			Meddelande
+email_address		e-post adress
+password		Lösenord
+doc_sent_to		Dokumentet skickat till
+views			besökare
+comments_low		kommentarer
+show_complete_doc	Visa hela dokumentet
+nickname		Signatur
+choose_passwd		Välj ett lösenord (minst 6 tecken)
+retype_passwd		Knappa in lösenrodet en gång till
+register		Registrera dig
+settings_updated	Dina kontoinställninhg har uppdaterats (felfritt).
+have_to_relogin		Du måste logga in på nytt efter ändring ev e-post eller lösenord.
+update_error		Det blev fel när dina inställningar uppdaterades.
+welcome_message		Välkommen till %%site%%!
+instant_message		Direktmeddelande
+send_message		Skickad %s
+sent_message		Skickat %s
+anonymous_user		Anonym användare
+email_sent_by		Den här e-posten har skickats till dig från
+original_doc		Orginaldokumentet finns här:
+sent_by			skickat av
+to			till
+on			den
+add_comment		Lägg till kommntar
+next			Nästa
+page			Sida
+vote			Rösta
+reply			Svar
+email			e-post
+icq_message		ICQ meddelande
+anonymous_message	Anonymt meddelande
+close			Stäng
+source			Källa
+dot			dot
+publish			Publicera
+send			Skicka
+title			Titel
+stranger		främling
+save			Spara
+delete			Ta bort
+new			ny
+ssl_required		SSL (https) krävs för att logga in.
+
+# browser.inc
+document		Dokument
+download		Ladda ner/nerladdning
+directory		Mapp
+directory_exists	Mapen finns redan. Sorry.
+directoty_no_dots	Mappens namn får inte innehålla "."
+browse_used		%d KB använda i den här mappen.
+browse_nofiles		&nbsp;Inga filer hittades.
+browse_files		Det finns %d dokuments och %d mappar.
+browse_upload		<b>Ladda upp</b> till den här mappen
+browse_sendfile		Skicka fil
+browse_create		Skapa
+browse_createdir	<b>Skapa</b> ny mapp
+browse_delete		Ta bort
+
+# login.inc
+logged_in		INLOGGAD
+logout			Logga ut
+login			Logga in
+bad_password		Fel lösenord.
+recover_passwd		Klicka här för att återställa ditt lösenord.
+bad_email		Felaktig e-post adress.
+passwd_sent		Ditt lösenord har skickats till dig med e-post.
+
+# user.inc
+no_nickname		Ingen signatur.
+email_in_use		Sorry, din e-post adress används redan.
+wrong_email		Ogiltig e-post adress.
+passwd_too_short	Lösenordet måste vara mint 6 tecken långt.
+passwd_matchup		Du har skrivit olika lösenord i fälten.
+
+# search.inc
+search			Sök
+not_found		Sorry, inga dokument med <b>%s</b> hittades.
+searched_this_site	Sök denna site för %s.
+result_count		%d resultat. Sökning tog %s sekunder.
+result_created_by	Skapad av %s den

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns="http://purl.org/rss/1.0/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+ xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+ xmlns:osdn="http://www.osdn.com/rss/osdn"
+>
+
+<channel rdf:about="http://www.kuro5hin.org/">
+<title>kuro5hin.org</title>
+<link>http://www.kuro5hin.org/</link>
+<description>technology and culture, from the trenches</description>
+<dc:language>en-us</dc:language>
+<dc:rights>Copyright 1999-2001 - Kuro5hin.org</dc:rights>
+<dc:date>2002-01-09T22:00:16Z</dc:date>
+<dc:publisher>Kuro5hin.org</dc:publisher>
+<dc:creator>The readers of Kuro5hin.org</dc:creator>
+<items>
+ <rdf:Seq>
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/9/492/31918" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/9/63620/05210" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/223553/0690" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/182955/8270" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/185019/5483" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/14057/86493" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/122920/9442" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/122039/2944" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/7/17352/74190" />
+  <rdf:li rdf:resource="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/7/103113/7619" />
+ </rdf:Seq>
+</items>
+<image rdf:resource="http://www.kuro5hin.org/images/kuro5hin.png" />
+<textinput rdf:resource="http://www.kuro5hin.org/search/" />
+</channel>
+
+<image rdf:about="http://www.kuro5hin.org/images/kuro5hin.png">
+<title>kuro5hin.org</title>
+<url>http://www.kuro5hin.org/images/kuro5hin.png</url>
+<link>http://www.kuro5hin.org/</link>
+</image>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/9/492/31918">
+<title>Who Is Your Neighbor?</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/9/492/31918</link>
+<description>Would you like to meet fellow K5'ers?  Consider this proposal.</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/9/63620/05210">
+<title>What a Blacklisting Brings to Light</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/9/63620/05210</link>
+<description>This past Sunday, AOL blacklisted my public Jabber server, Theoretic.com, making it only the third Jabber server to be blocked from accessing the AIM and ICQ networks, after the two "official" public Jabber servers of Jabber.ORG and Jabber.COM. I found out by coming home from a relaxing day out to see neither AIM or ICQ was working on my server. Very odd. I had received no emails from AOL, no error messages in the server logs, just an abrupt rejection from the AIM and ICQ servers.    This story takes everyone from reasoning out my own options to ending up understanding my solution is easy, but the cures for the greater symptoms are much more difficult to obtain, and asks how prodigy projects can hope to face corporate titans and forces of nature.</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/223553/0690">
+<title>Spokes on the Digital Hub: Apple's iTunes and iPhoto</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/223553/0690</link>
+<description>Having recently become an Apple owner after being a Unix / Windows diehard for years, I've become increasingly interested in Apple's strategy of becoming the center of the futuristic digital hub that was hyped at this year's MacWorldExpo. Read on for my thoughts about two of Apple's core technologies for the digital hub.</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/182955/8270">
+<title>23 Myths of the Internet</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/182955/8270</link>
+<description>Over on PostGet, I ran across an interesting myth/fact piece about business on the Internet, business, and the cynicism following the .com fallout.</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/185019/5483">
+<title>Latest PETA plan fails in a blaze orange disaster.</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/185019/5483</link>
+<description>PETA has once again had a spectacular failure. This time they were trying to protect the deer in Ohio from being shot during the hunting season. Their plan was to take advantage of Ohio law requiring Ohio hunters to wear at least 400 square inches of bright orange on their body to help prevent hunting accidents.   </description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/14057/86493">
+<title>Gun Control and the Civil Rights Movement....</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/14057/86493</link>
+<description>Okay, this topic will probably either get voted down or creamed by another gun-nuts vs anti-gun-nuts fire fight, but here goes nothing.  If you check out the right wing web site newsmax you will find an article on how a group of black veterans used army-surplus arms to defend their neighborhoods from the KKK. Strange that I never heard this story before....</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/122920/9442">
+<title>Economics of Intellectual Property</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/122920/9442</link>
+<description>Information wants to be free.  Free copying of music will destroy music.             Those two statements don't fit together very well.  Discussions   of   intellectual      property and its ownership often come up on the Internet.       However, the   basics   of the economics of intellectual property are   rarely   understood,   by either   side.  Economics supports  both arguments   and neither  argument.</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/122039/2944">
+<title>Dave Thomas, Dead at 69</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/8/122039/2944</link>
+<description>Dave Thomas, founder of Wendy's fast food stores, died today (Tuesday 01/08/02) of an undisclosed cause. For those not in the US, Wendy's is one of the 3 main burger+ chains in the US, and for decades we've seen Dave Thomas, himself, pitching new styles of sandwich on tv, giving Wendy's this we're-not-really-just-here-to-take-your-money feel, which, as most anyone can attest, always made Wendy's feel like more of a down-to-earth place to eat.    I was hoping i'd be able to enjoy Dave Thomas' commercials with my children, and their children, but I will never have the chance to do so. The closest I've ever gotten was watching a commercial describing the bacon cheddar melt with my dog. And it wasn't even my dog.    Dave, sir, you'll be missed.</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/7/17352/74190">
+<title>Nader v. Microsoft...who is to blame?</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/7/17352/74190</link>
+<description>Thanks to this story the readers of K5 now have something new to argue about, Ralph Nader and Tax Law.</description>
+</item>
+
+<item rdf:about="http://www.kuro5hin.org/?op=displaystory;sid=2002/1/7/103113/7619">
+<title>The Ten Commandments for C Programmers</title>
+<link>http://www.kuro5hin.org/?op=displaystory;sid=2002/1/7/103113/7619</link>
+<description>The Ten Commandments for C Programmers, by Henry Spencer. An old, but still highly useful, guide for those who wish to write stable programs in C, C++, and other Important and Useful Languages.  The short form:      </description>
+</item>
+
+<textinput rdf:about="http://www.kuro5hin.org/search/">
+<title>Search kuro5hin.org</title>
+<description></description>
+<name>string</name>
+<link>http://www.kuro5hin.org/search/</link>
+</textinput>
+
+</rdf:RDF>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns="http://my.netscape.com/rdf/simple/0.9/">
+
+<channel>
+  <title>10.0.0.1 News</title>
+  <link>http://liquidbytes.net/2.html</link>
+  <description>Unknown</description>
+</channel>
+
+<item>
+  <title>Bla</title>
+  <link>http://liquidbytes.net/177.html</link>
+</item>
+
+<item>
+  <title>Chapter 15. Error Handling</title>
+  <link>http://liquidbytes.net/3.html</link>
+</item>
+
+</rdf:RDF>

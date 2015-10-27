@@ -1,0 +1,102 @@
+yes			Yes
+no			No
+back			Back
+send_to_a_friend	Send to a friend
+no_content		Sorry, there's no content in your flavour yet.
+comment			Comment
+comments		Comments
+published_by		<i>Published by %s on %s</i>
+comment_about		Comment about <i>%s</i>, published by %s on %s:
+comment_intro		<b>Here you can publish your comment about <i>%s</i></b>
+html_converted		HTML tags will be converted to normal text.
+remove			Remove
+there_are_x_news	There are %d news.
+more			more
+no_comments		There are no comments yet.
+to_add_a_comment	To add a comment, you have to be logged in.
+more_news		More news
+send_this_document	Send this document to
+multiple_recipients	Note: Multiple recipients must be comma separated.
+your_email_address	Your Email address
+message			Message
+email_address		Email address
+password		Password
+doc_sent_to		Document sent to
+views			views
+comments_low		comments
+show_complete_doc	Show complete document
+nickname		Nickname
+choose_passwd		Choose a password (must be at least 6 characters)
+retype_passwd		Retype password
+register		Register
+settings_updated	Your account settings have been successfully updated.
+have_to_relogin		You changed your email address or password and have to relogin now.
+update_error		There was an error while updating your settings.
+welcome_message		Welcome to %%site%%!
+instant_message		Instant Message
+send_message		Send %s
+sent_message		Sent %s
+anonymous_user		Anonymous User
+email_sent_by		This email was sent to you by
+original_doc		The original document can be found at:
+sent_by			sent by
+to			to
+on			on
+add_comment		Add comment
+next			Next
+page			Page
+vote			Vote
+reply			Reply
+email			Email
+icq_message		ICQ Message
+anonymous_message	Anonymous Message
+close			Close
+source			Source
+dot			dot
+publish			Publish
+send			Send
+title			Title
+stranger		stranger
+save			Save
+delete			Delete
+new			new
+ssl_required		SSL (https) is required for login.
+
+# browser.inc
+document		Document
+download		Download
+directory		Directory
+directory_exists	Directory already exists. Sorry.
+directoty_no_dots	Directory name may not contain "."
+browse_used		%d KB used in this directory.
+browse_nofiles		&nbsp;No files found.
+browse_files		There are %d documents and %d directories.
+browse_upload		<b>Upload</b> to this directory
+browse_sendfile		Send File
+browse_create		Create
+browse_createdir	<b>Create</b> new directory
+browse_delete		Delete
+
+# login.inc
+logged_in		LOGGED IN
+logout			Logout
+login			Login
+bad_password		Bad password.
+recover_passwd		Click here to recover your password.
+bad_email		Bad email address.
+passwd_sent		Your password was sent to you by email.
+
+# user.inc
+no_nickname		No nickname.
+email_in_use		Sorry, your email address is already in use.
+wrong_email		Wrong email address.
+passwd_too_short	Your password has to be at least 6 characters long.
+passwd_matchup		Your password fields do not matchup.
+
+# search.inc
+search			Search
+not_found		Sorry, no documents with <b>%s</b> were found.
+searched_this_site	Searched this web site for %s.
+result_count		%d result(s). Search took %s seconds.
+result_created_by	Created by %s on
+

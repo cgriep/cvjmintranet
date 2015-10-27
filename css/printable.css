@@ -1,0 +1,229 @@
+body, td, p
+        {
+        color : black;
+        font-style: normal;
+        font-variant: normal;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: normal;
+        }
+.title
+        {
+        color : black;
+        font-style: normal;
+        font-variant: normal;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        }
+
+.text
+        {
+        color : black;
+        font-style: normal;
+        font-variant: normal;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: normal;
+        }
+
+.newsDate {
+        color : black;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 10px;
+        font-weight: normal;
+        }
+
+.justify {
+        color : black;
+        font-family: arial, helvetica, sans-serif;
+        text-align:justify;
+        font-size:12px;
+        }
+h1
+	{
+	font-family: arial, helvetica, sans-serif;
+	font-size: 16px;
+	font-weight :  bold;
+	}
+h2
+	{
+	font-family: arial, helvetica, sans-serif;
+	font-size: 16px;
+	font-weight :  bold;
+	}
+h3
+	{
+	font-family: arial, helvetica, sans-serif;
+	font-size: 16px;
+	font-weight :  bold;
+	margin-right : 25px;
+	}
+
+h4
+	{
+	font-family: arial, helvetica, sans-serif;
+	font-size: 11px;
+	}
+
+h5
+	{
+	color: White;
+	font: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	padding-top: 10px;
+	padding-right: 5px;
+	text-align : right;
+	}
+
+p
+	{
+	margin-right : 0px;
+	font-style: normal;
+        font-variant: normal;
+	color : black;
+	font-family : helvetica, arial, sans-serif;
+	font-size : 12px;
+	}
+
+form
+	{
+	margin-right : 0px;
+	font-style: normal;
+        font-variant: normal;
+	color : black;
+	font-family : helvetica, arial, sans-serif;
+	font-size : 12px;
+	}
+
+strong
+	{
+	font-weight : bold;
+	margin-right : 0px;
+	font-style: normal;
+        font-variant: normal;
+	color : black;
+	font-family : helvetica, arial, sans-serif;
+	font-size : 12px;
+	}
+
+ul
+	{
+	color : black;
+	font-family : arial, helvetica, sans-serif;
+	font-size : 12px;
+	font-weight :  normal;
+	}
+li
+	{
+	font-family : arial, helvetica, sans-serif;
+	font-size: 12px;
+	}
+
+ol
+	{
+	margin-right : 25px;
+	color : black;
+	font-family : arial, helvetica, sans-serif;
+	font-size : 14px;
+	font-weight :  normal;
+	margin-left :  0px;
+	}
+
+news_archiv
+	{
+	color : #000000;
+	font-family : arial, helvetica, sans-serif;
+	font-size : 14px;
+	letter-spacing : 1px;
+	text-decoration : none;
+	}
+
+a:link
+	{
+	color : #000000;
+	font-family : arial, helvetica, sans-serif;
+	text-decoration : none;
+	}
+
+a:visited
+	{
+	color : #000000;
+	font-family : arial, helvetica, sans-serif;
+	text-decoration : none;
+	}
+
+a:hover
+	{
+	color : #000000;
+	font-family : arial, helvetica, sans-serif;
+	text-decoration : none;
+	}
+
+plaintext
+	{
+	margin-right : 25px;
+	color : black;
+	font-family : arial, helvetica, sans-serif;
+	font-size : 14px;
+	line-height : 15px;
+	}
+
+formtext
+	{
+	color : black;
+	font-family : arial, helvetica, sans-serif;
+	font-size : 14px;
+	}
+td
+	{
+	margin-right : 0px;
+	font-style: normal;
+        font-variant: normal;
+	color : black;
+	font-family : helvetica, arial, sans-serif;
+	font-size : 12px;
+	}
+
+table.tabelle {
+  padding: 0pt;
+  margin: 0pt;
+  border-spacing: 0pt;
+  border-collapse: collapse;
+}
+table.tabelle td {
+         border-style: solid;
+         border-color: black;
+         border-width: 1px;
+         margin: 0pt;
+         padding: 1pt;
+}
+table.tabelle th {
+         border-style: solid;
+         border-color: black;
+         border-width: 1px;
+         margin: 0pt;
+         padding: 1pt;
+}
+@media print {
+.noprint { display: none; }
+table.drucklinien {
+	empty-cells: show;
+	border-collapse: collapse;
+	}
+table.drucklinien td { 
+	border-width: 1pt;
+	border-style: solid;
+	border-color: black;
+	margin: 0pt;
+}
+	table.drucklinien th { 
+	border-width: 1pt;
+	border-style: solid;
+	border-color: black;
+	margin: 0pt;
+	
+}
+}

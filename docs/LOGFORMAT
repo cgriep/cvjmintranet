@@ -1,0 +1,13 @@
+* Format description
+
+yyyy_mm.log:
+host | timestamp | id | page creation time in seconds | user id | language | flavour id | design
+
+yyyy_mm_error.log
+host | timestamp | id | type | level | description | line no | file
+
+yyyy_mm_dberror.log
+host | timestamp | id | server | database
+
+have fun,
+michael at liquidbytes.net

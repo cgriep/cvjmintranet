@@ -1,0 +1,1 @@
+<center><script language="JavaScript1.2" src="http://www.altavista.com/r?entr"></script>

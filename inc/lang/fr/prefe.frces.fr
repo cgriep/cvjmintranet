@@ -1,0 +1,4 @@
+subscribe_newsletter	S'inscrire &agrave; la NewsLetter
+disable_im_popup	D&eacute;sactiver les messages instantan&eacute;s
+default_message_type	Type du message par d&eacute;faut
+y

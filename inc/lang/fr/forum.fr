@@ -1,0 +1,31 @@
+forum_new					nouveau
+forum_addnew					Nouveau post
+forum_page					Page :
+forum_forum					Forum
+forum_description				Description
+forum_topics					Topics
+forum_subject					Sujet
+forum_author					Auteur
+forum_replies					R&eacute;ponses
+forum_latest					Derni&egrave;re R&eacute;ponse
+forum_jumpto					Aller &agrave; 
+forum_go					Go
+forum_reply					R&eacute;pondre
+forum_quote					Quote
+forum_sendcomplete				Envoyer le fil (thread) complet par email
+forum_sendbyemail				Envoyer les r&eacute;ponses par email	
+forum_message					Message
+forum_sreply					Envoyer une r&eacute;ponse
+forum_allrequired				Tous les champs sont requis.
+forum_emailverified				Votre addresse email sera v&eacute;rifi&eacute;e.
+forum_nick					Pseudo
+forum_email					E-mail
+forum_addposting				Ajouter un post
+forum_havetobeloggedin				Pour contribuer vous devez &ecirc;tre identifi&eacute;s.
+forum_dontsendanymore				Ne plus envoyer  de posts par email
+forum_submitch					Appliquer les modifications
+forum_changedsucc				Le document &agrave; &eacute;t&eacute; modifi&eacute; avec succ&eacute;s.
+forum_changedfail				Le document n'a pas pu &ecirc;tre modifi&eacute; . (Tous les champs sont requis)
+forum_edit					Editer
+forum_sent					Le fil complet (thread) vous &agrave; &eacute;t&eacute; envoy&eacute; par email.
+forum_refreshtimestamp				Traiter comme une nouvelle r&eacute;ponse.

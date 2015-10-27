@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns="http://my.netscape.com/rdf/simple/0.9/">
+
+<channel>
+<title>Slashdot</title>
+<link>http://slashdot.org/</link>
+<description>News for nerds, stuff that matters</description>
+</channel>
+
+<image>
+<title>Slashdot</title>
+<url>http://images.slashdot.org/topics/topicslashdot.gif</url>
+<link>http://slashdot.org/</link>
+</image>
+
+<item>
+<title>Regarding the WWII Meeting of Bohr &amp;amp; Heisenberg</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1730244</link>
+</item>
+
+<item>
+<title>Defamation, Free Speech, Jurisdiction and the Net?</title>
+<link>http://slashdot.org/article.pl?sid=02/01/07/1952229</link>
+</item>
+
+<item>
+<title>Michael Robertson Interview about Lindows</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1732257</link>
+</item>
+
+<item>
+<title>9-Track Open Reel Tape Production Ends This Year</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1349231</link>
+</item>
+
+<item>
+<title>Microsoft Caught Rigging ZD Net Poll</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1621256</link>
+</item>
+
+<item>
+<title>TiVo Introduces Series2</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1549254</link>
+</item>
+
+<item>
+<title>Name The MySql Dolphin</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1253212</link>
+</item>
+
+<item>
+<title>First Official CD Release of FreeBSD</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1344238</link>
+</item>
+
+<item>
+<title>Texas Instruments Announces New Calculator</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1246231</link>
+</item>
+
+<item>
+<title>No Solaris 9 for x86</title>
+<link>http://slashdot.org/article.pl?sid=02/01/09/1245237</link>
+</item>
+
+<textinput>
+<title>Search Slashdot</title>
+<description>Search Slashdot stories</description>
+<name>query</name>
+<link>http://slashdot.org/search.pl</link>
+</textinput>
+
+</rdf:RDF>

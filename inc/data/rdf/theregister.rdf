@@ -1,0 +1,49 @@
+<?xml version="1.0"?><rdf:RDF
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns="http://my.netscape.com/rdf/simple/0.9/">
+<channel>
+<title>The Register</title>
+<link>http://www.theregister.co.uk</link>
+<description>The IT newssite with attitude</description>
+</channel>
+<item>
+<title>Google calls time on AIMSearch prank</title>
+<description>Cheating spouses and computer neophytes - relax</description>
+<link>http://www.theregister.co.uk/content/28/23610.html</link></item>
+<item>
+<title>iPlanet security flaws unmasked</title>
+<description>More annoying than serious</description>
+<link>http://www.theregister.co.uk/content/55/23609.html</link></item>
+<item>
+<title>Hush - do you want to store a secret?</title>
+<description>Online secure storage service </description>
+<link>http://www.theregister.co.uk/content/55/23604.html</link></item>
+<item>
+<title>Kodak discount camera fiasco</title>
+<description>Legal minefield</description>
+<link>http://www.theregister.co.uk/content/23/23608.html</link></item>
+<item>
+<title>One.Tel to rebrand iomart DSL service  </title>
+<description>Major player in five years</description>
+<link>http://www.theregister.co.uk/content/22/23605.html</link></item>
+<item>
+<title>UK to follow broadband lead  of S Korea - Hewitt</title>
+<description>Or not, as the case may  be</description>
+<link>http://www.theregister.co.uk/content/22/23607.html</link></item>
+<item>
+<title>DRAM recovery means higher PC prices -Time</title>
+<description>Time warns</description>
+<link>http://www.theregister.co.uk/content/54/23603.html</link></item>
+<item>
+<title>Moody's downgrades Gateway credit status</title>
+<description>Junk status</description>
+<link>http://www.theregister.co.uk/content/54/23602.html</link></item>
+<item>
+<title>Mobile phone thefts hit kids</title>
+<description>Let's be careful out there</description>
+<link>http://www.theregister.co.uk/content/5/23601.html</link></item>
+<item>
+<title>Fujitsu Siemens to pre-load Tiscali on PCs</title>
+<description>Going a bundle</description>
+<link>http://www.theregister.co.uk/content/6/23600.html</link></item>
+</rdf:RDF>

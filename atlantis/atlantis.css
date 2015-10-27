@@ -1,0 +1,350 @@
+/* Standardeinstellungen */
+body {
+    font-size : 10pt;
+	font-weight : 400;
+	font-family : "Verdana", Arial, Geneva,sans-serif;
+	color : #000000;
+	background-color : #FFFF80;
+	/*background-image : url(hintergrund.jpg); 
+	background-repeat: no-repeat;*/
+}
+div.Popup {
+  font-size: 6pt;
+  height: 10pt;
+  overflow: hidden;
+}
+div.Popup:hover {
+  height: 50pt;
+  overflow: scroll;
+}
+/* Die gesamte Seite für den Inhalt, mitsamt Navigations- und sonstigen Menüs 
+   Container für content* und right*
+// unnötig, muss getestet werden!
+*/
+.Seite {
+	width: 100%;
+	background-color : #FFFF80;
+	clear: left;
+	
+}
+/* Die Box für den eigentlichen Inhalt wenn der Kalender angezeigt wird */
+.content {
+	margin-left: 15px;
+	background-color: lightblue;
+	width: 690px;
+	max-width: 66%;
+	float: left;
+    padding-left: 3px;
+    padding-right: 3px;
+    overflow: auto;
+  	height: 400px;
+}
+/* Kalenderinformationen am rechten Rand neben dem content. */
+.contentRight {
+	float: right;
+	width: 32%;
+	max-width: 32%;
+	padding: 3px;
+	overflow: auto;
+	background-color : #FFFF80;
+}
+div.Kasten h1 {
+	position:relative;
+	border-bottom:2px solid Green; /* #FEDB93;*/
+	margin:0;
+	padding:0.2em 0.5em;
+	background:Green;
+	color:white;
+	font-size: 10pt;
+    font-weight: bold;
+  	line-height:1.5em;
+	letter-spacing:0.1ex;
+	text-align:center;
+}
+div.Kasten {
+	width: 95%;
+	border:1px solid #B2B2B2;
+	padding:0 0 2px 0;
+	margin:0px 3px 0px 3px;
+	/* width:14em; */
+	background:  #eeeeee; /* #EAF3FE;*/
+	color:#000;
+	font-size:0.9em;
+	overflow: auto;
+}
+div.Kasten1 {
+  background-color: transparent; /*#804000;*/
+  height: 240px;
+}
+div.Kasten2 {
+  background-color: transparent; /*#FF8000;*/
+  height: 200px;
+}
+div.KastenGross {
+  background-color: #FF8000;
+  height: 400px;
+}
+div.kleinerKasten {
+	border:1px solid #B2B2B2;
+	padding:3px 3px 3px 3px;
+	margin:0px 3px 0px 3px;
+	background:  #eeeeee; 
+	color:#000;
+	font-size:0.9em;
+	float: right;
+}
+
+.text {
+	float: left;
+	min-width: 85%;
+	max-width: 85%;
+}
+
+/* Die Kopfzeile */
+.header {
+  width: 700px;
+  background-color : #FFFF80;
+  height: 85px;
+  font-size: 10pt;
+  vertical-align:middle;
+  float: left;
+}
+.headerRechts {
+  width: 350px;
+  background-color : #FFFF80;
+  height: 50px;
+  font-size: 10pt;
+  float: left;
+  vertical-align:middle;
+}
+.footer {
+	clear: both;
+	float: none;
+	width: 100%;
+	/* background-color : #FFFF80; */
+	text-align: right;
+	font-size: 8pt;
+}
+.nebeneinander {
+  float: left;
+}
+.abschluss {
+	clear: both;
+	width: 100%;
+	height: 2px;
+}
+
+/* Warnhinweis, weiße Schrift auf rotem Hintergrund */
+.Fehler {
+  background-color: red;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+.Meldung {
+	margin:0;
+	padding:0.2em 0.5em;
+	background:Green;
+	color:white;
+	font-size: 10pt;
+    font-weight: bold;
+	text-align:center;
+}
+/* Normaler Hinweis, weiße Schrift auf grünem Hintergrund */
+.Hinweis {
+  background-color: green;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+/* Wichtiger Hinweis, Hintergrund gelb
+.Wichtig {
+  background-color: yellow;
+  font-weight: bold;
+}
+/* Schrftfarben für Statushinweise */
+/* grüne Schrift */
+.Ok {
+  color: green;
+}
+/* orange Schrift */
+.Warnung {
+  color: #FF8000;
+}
+/* rote Schrift */
+.Achtung {
+  color: red;
+}
+
+/* Image als Link: Hintergrund wird weiß wenn Maus drauf steht */
+a img:hover {
+	background-color: white;
+}
+a:hover {
+	background-color: white; /*#ababab;*/
+	color: #804000;
+}
+a {
+	color : #804000; /*#6699cc;*/
+	text-decoration : none;
+}
+a:visited  {
+	color : #804000; /*#6699cc;*/
+	text-decoration : none;
+}
+a:active  {
+	color : #804000; /*#6699cc;*/
+	text-decoration : none;
+}
+a:focus  {
+	color : #804000; /*#6699cc;*/
+	text-decoration : none;
+}
+a[href^="http:"] {
+  background: transparent url('offsite.gif') 100% 50% no-repeat;
+  padding-right: 10px;
+  /* #haupt a[href^="http://"] {
+	background: url(../images/offsite.gif) no-repeat center right;
+	padding-right: 8px; }*/
+}
+a.ohneLabel  {
+  background: transparent url() 100% 50% no-repeat;
+  padding-right: 10px;
+  /* #haupt a[href^="http://"] {
+	background: url(../images/offsite.gif) no-repeat center right;
+	padding-right: 8px; }*/
+}
+
+/* Bilder haben standardmaäßig keinen sichtbaren Rand */
+img {
+  border-width: 0pt;
+}
+
+/* Tabelle, die Daten auflistet
+ * Nimmt fast die ganze verfügbare Breite ein
+ */
+table.Liste {
+  border-collapse: collapse;
+  margin: 5pt;
+}
+table.Liste caption{
+ font-weight: bold;
+ font-size: 110%;
+}
+
+table.Liste td {
+/*  background-color:#f3f3f3;*/
+  border-width:1px 1px 1px 1px;
+  border-style:solid;
+  border-color:#6699cc;
+}
+table.Liste th {
+  background-color:#e9e9e9;
+  border-width:1px 1px 1px 1px;
+  border-style:solid;
+  border-color:#6699cc;
+}
+
+/* Formular: Erhält einen Rand und einen abweichenden Hintergrund */
+form.Formular {
+  background-color: #e9e9e9;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #6699cc;
+  padding: 3px;
+  margin: 3px;
+}
+form.Formular br { /* Umbruch im Formular */
+	clear: left;
+}
+form.Formular label, Form.Formular input, Form.Formular select { 
+  /* Alle Labels UND Formularelemente auswählen */
+  display: block;
+  float: left;
+  width: 200px; /* Breite.*/
+  margin: 2px;  
+}
+form.Formular select {
+  font-size: 80%;
+}
+form.Formular input[type=hidden] { 
+  float: left;
+  width: 0px; /* Breite.*/
+}
+form.Formular input[type=radio] {
+	width: 20px;
+}
+form.Formular label.markiert, 
+Form.Formular input.markiert, 
+Form.Formular select.markiert { /* Alle Labels UND Formularelemente auswählen */
+  border-width: 2px;
+  border-style: solid;
+  border-color: red;
+}
+form.Formular label {
+ text-align: right; 
+ padding-right: 1em; 
+}
+form.Formular input[type=text]:focus, 
+form.Formular input[type=password]:focus, 
+form.Formular input[type=radio]:focus,
+form.Formular textarea:focus, 
+form.Formular select:focus
+{
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-color: #6699cc;
+}
+form.Formular input[type=submit], 
+form.Formular input[type=reset]
+{
+  float: none;
+  width: auto;
+    background-color: #BFBFBF;
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;   
+    color: rgb(34, 34, 34);
+    border-width: 1px;
+    border-style: outset;
+    border-color: rgb(204, 204, 204);
+    padding-top: 0.1em;
+    padding-right: 0.5em;
+    padding-bottom: 0.1em;
+    padding-left: 0.5em;
+}
+form.Formular input[type=submit]:hover, 
+form.Formular input[type=reset]:hover
+{
+    background-color: rgb(204, 204, 187);
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+}
+form.Formular input.kurz {
+  width: 50px;
+}
+
+@media print {
+  .footer {
+	  visibility: hidden;
+  }
+  Form.Formular {
+	  visibility: hidden;
+	  height: 0px;
+	  width: 0px;
+  }
+  .nichtDrucken {
+    visibility: hidden;
+  }
+  table.Liste td {
+    font-size: 8pt;
+  }  
+  table.Liste th {
+    font-size: 10pt;
+  }
+}

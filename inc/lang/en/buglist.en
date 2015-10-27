@@ -1,0 +1,13 @@
+buglist_submitter	Submitter
+buglist_assignedto	Assigned to
+buglist_type	Type
+buglist_status	Status
+buglist_severity	Severity
+buglist_version	Version
+buglist_os	OS
+buglist_platform	Platform
+buglist_reproducibility	Reproducibility
+buglist_browser	Browser
+buglist_lastchange	Last Change
+buglist_summary	Summary
+buglist_ok	Ok

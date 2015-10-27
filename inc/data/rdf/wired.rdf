@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://www.wired.com/news_drop/rss-0_91.dtd">
+
+<rss version="0.91">
+
+<channel>
+
+<title>Wired News</title>
+<link>http://www.wired.com/</link>
+<description>
+Technology, and the way we do business, is changing the world we know. Wired News is a technology - and business-oriented news service feeding an intelligent, discerning audience. What role does technology play in the day-to-day living of your life? Wired News tells you. How has evolving technology changed the face of the international business world? Wired News puts you in the picture.
+</description>
+<language>en-us</language>
+<pubDate>Wed, 09 January 2002 13:22 PST</pubDate>
+<image>
+<title>Wired News</title>
+<url>http://static.wired.com/news/images/netcenterb.gif</url>
+<link>http://www.wired.com/</link>
+</image>
+
+
+<item>
+<title>Online CD Sales May Suffer Static</title>
+<link>http://www.wired.com/news/mp3/0,1285,49539,00.html</link>
+<description>
+ Consumers may be paying less for CDs these days, but still might shy away from buying albums online thanks to new copy protections that limit where someone can listen to a song. By Brad King.   </description>
+</item>
+
+<item>
+<title>The Round Mound of iMac Rebound</title>
+<link>http://www.wired.com/news/mac/0,2125,49565,00.html</link>
+<description>
+ Everyone's going cock-a-hoop for Apple's new iMac. Mac users love it and so do PC people. One analyst thinks it will be the best-selling computer ever made. Leander Kahney reports from Macworld in San Francisco. </description>
+</item>
+
+<item>
+<title>Maine Students Hit the IBooks</title>
+<link>http://www.wired.com/news/school/0,1383,49046,00.html</link>
+<description>
+ In what is believed to be the largest educational technology deal of its kind, Maine chooses Apple to equip all of its seventh- and eighth-grade students and teachers with wireless laptops. By Katie Dean.</description>
+</item>
+
+<item>
+<title>Lot to Learn About School Laptops</title>
+<link>http://www.wired.com/news/school/0,1383,49576,00.html</link>
+<description>
+ With the introduction of Apple iBooks into all seventh grade classrooms, Maine teachers have a huge task ahead of them -- learning how to integrate one-to-one computing into their classes. Teachers are both anxious and excited about the change. By Katie Dean.</description>
+</item>
+
+<item>
+<title>ImClone Problems Multiply</title>
+<link>http://www.wired.com/news/medtech/0,1286,49609,00.html</link>
+<description>
+ The lawsuits pile up while stock price plummets for pharmaceutical company ImClone. A leaked FDA document shows the company didn't do its homework when seeking governmental approval of a cancer treatment. Kristen Philipkoski reports from San Francisco. </description>
+</item>
+
+<item>
+<title>Xbox Assault Only Starting</title>
+<link>http://www.wired.com/news/technology/0,1282,49600,00.html</link>
+<description>
+ Microsoft's first foray into gaming is selling well -- but not as well as Sony's Playstation. Also: Sirius Satellite Radio prepares to launch ... all-purpose DVD players ... as Andy Patrizio reports from the Consumer Electronics Show in Las Vegas.</description>
+</item>
+
+<item>
+<title>Pillow Fight in the Living Room</title>
+<link>http://www.wired.com/news/business/0,1367,49585,00.html</link>
+<description>
+ The TV or the PC: Which should rule home entertainment? Bitter rivals RealNetworks and Microsoft have a lot at stake over the answer. Elisa Batista and Brad King report from the Consumer Electronics Show in Las Vegas.</description>
+</item>
+
+<item>
+<title>3-D Models Give Proteins Shape</title>
+<link>http://www.wired.com/news/medtech/0,1286,49555,00.html</link>
+<description>
+ With a glut of data created by the mapping of the human genome, biotech companies are turning to computational models to render the complex forms of proteins. Some question whether simulations can replace actual on-the-bench experiments. By Kristen Philipkoski.</description>
+</item>
+
+<item>
+<title>Hepatitis C Research Gets a Boost</title>
+<link>http://www.wired.com/news/medtech/0,1286,49584,00.html</link>
+<description>
+ New computer-based technologies, which enable better analysis of protein structures, have resulted in what could be the basis for better treatment of hepatitis C. Kristen Philipkoski reports from San Francisco.</description>
+</item>
+
+<item>
+<title>Quantum Leap: Seize the Light</title>
+<link>http://www.wired.com/news/technology/0,1282,49448,00.html</link>
+<description>
+ Two papers present frameworks that could speed up progress in quantum computing, including one concerning a method of stopping, storing and retrieving light pulses. By Mark K. Anderson.</description>
+</item>
+
+<item>
+<title>Phones, Phones and More Phones</title>
+<link>http://www.wired.com/news/business/0,1367,49499,00.html</link>
+<description>
+ Cell phone manufacturers were out in full force at this year's Consumer Electronics Show in Las Vegas. Also: Cell phones are responsible for declining chocolate sales in Britain.... Truckers are angered by wireless ad.... and more in Elisa Batista's Unwired News.</description>
+</item>
+</channel>
+</rss>

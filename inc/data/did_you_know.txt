@@ -1,0 +1,4 @@
+With activated cache, AWF can compile a complete web page in about 1/100 s.
+The development of AWF has started in summer 2000.
+AWF supports unlimited users, languages and documents.
+AWF has comprehensive security features, that restrict editor rights to one IP only, for example.

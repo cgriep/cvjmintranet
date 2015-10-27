@@ -1,0 +1,19 @@
+Simple guide for updating you existing design files:
+
+1. rename all "$design_something = 'foo';" styled vars to "$design['something'] = 'foo';"
+2. add "include(INC_PATH.'misc/design_functions.inc');" or write you own module functions
+3. add the lines (adapted to your needs):
+	$design['table_cellpadding']    =  2;
+	$design['table_cellspacing']    =  2;
+	$design['table_border']         =  0;
+	$design['input_size']           = 65;
+	$design['input_rows']           = 15;
+	$design['nav_bullet']           = 'img/default_nav.gif';
+	$design['arrow_bullet']         = 'img/default_arrow.gif';
+	$design['table_begin']          = '<table width="100%" cellpadding="'.$design['table_cellpadding']....';
+	$design['table_end']		= '</table>';
+4. if you use "set_parents()" in you header file (inc/design/header/), rename it to "init_parents()"
+
+That's all for now....
+
+michael@liquidbytes.net

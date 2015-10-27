@@ -1,0 +1,31 @@
+forum_new					neu
+forum_addnew					Neues Thema hinzuf&uuml;gen
+forum_page					Seite:
+forum_forum					Forum
+forum_description				Beschreibung
+forum_topics					Themen
+forum_subject					Thema
+forum_author					Verfasser
+forum_replies					Antworten
+forum_latest					Letzte Antwort
+forum_jumpto					Springe zu
+forum_go					Los
+forum_reply					Antworten
+forum_quote					Quoten
+forum_sendcomplete				Ganzes Thema als E-mail schicken
+forum_sendbyemail				Antworten als E-mail schicken.
+forum_message					Nachricht
+forum_sreply					Antwort absenden
+forum_allrequired				Alle Felder m&uuml;ssen ausgef&uuml;llt werden.
+forum_emailverified				Ihre Email-Adresse wird &uuml;berpr&uuml;ft.
+forum_nick					Spitzname
+forum_email					E-mail Adresse
+forum_addposting				Thema hinzuf&uuml;gen
+forum_havetobeloggedin				Um ein neues Thema hinzu zu f&uuml;gen m&uuml;ssen sie eingeloggt sein.
+forum_dontsendanymore				Neue Antworten nicht mehr als E-mail zuschicken
+forum_submitch					&Auml;nderungen vornehmen
+forum_changedsucc				Das Dokument wurde erfolgreich ge&auml;ndert.
+forum_changedfail				Das Dokument konnte nicht ge&auml;ndert werden, pr&uuml;fen sie, ob sie alle Felder ausgef&uuml;llt haben.
+forum_edit					Editieren
+forum_sent					Das ganze Thema wurde ihnen als E-mail geschickt.
+forum_refreshtimestamp				Wie ein neue Antwort behandeln.

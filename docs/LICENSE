@@ -1,0 +1,17 @@
+AWF is free software; the _source_ can be redistributed and/or modified
+under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+ATTENTION: The GPL does NOT apply for all the images included in AWF. 
+The "Liquid Bytes" logo for example is protected as trademark
+(this means you may not use it for your own products/projects, modify 
+it and so on). It may only be redistributed with AWF if not modified.
+The same is true for some content (e.g. news headlines included in RDF 
+files - they are copyrighted by the respective source). Documentation 
+may be used under the terms of the GNU Free Documentation License.

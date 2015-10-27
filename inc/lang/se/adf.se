@@ -1,0 +1,9 @@
+rows_found		%d rows found.
+are_you_sure		Är du säker?
+add_now			Lägg till nu
+create_dump		Skapa en dump
+show_example		Visa exempel
+dump_items		Dumpa artiklar från %s till %s som
+datalist_fields_req	Alla fälr är obligatoriska. Nummerfält får inte inehålla bokstäver.
+datalist_record_exists	Posten finns redan.
+datalist_record_added	Posten adderad med ID #%d.

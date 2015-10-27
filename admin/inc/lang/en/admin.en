@@ -1,0 +1,116 @@
+# Date and Time
+admin_date_separator	/
+admin_date_format	d/m/Y
+admin_datetime_format	d/m/Y H:i
+
+admin_export		Export
+admin_users		Users
+admin_add_user		Add User
+admin_groups		Groups
+admin_add_group		Add Group
+page			Page
+rows_found		%s rows found
+admin_links		Links
+admin_id		ID
+admin_email		E-Mail
+admin_valid		Valid
+admin_views		Views
+admin_options		Options
+admin_last_login	Last Login/Update
+are_you_sure		Are you sure?
+admin_edit_user		Edit User
+admin_name		Name
+admin_edit		Edit
+admin_delete		Delete
+admin_category		Category
+admin_author		Author
+admin_version		Version
+admin_username		Username
+admin_expires		Expires
+admin_registered	Registered
+admin_unknown		Unknown
+admin_never		Never
+
+# Edit User Popup
+admin_main		Main
+admin_address		Address
+admin_picture		Picture
+admin_groups		Groups
+admin_profile		Profile
+admin_password		Password
+admin_save		Save Changes
+admin_reset		Reset
+admin_login		Login
+admin_pageviews		Page Views
+admin_close		Close
+admin_name_exists	Name already in use!
+admin_username_exists	Username already in use!
+admin_email_exists	E-Mail address already in use!
+admin_password_short	To increase the strength of your password, consider using at least six characters.
+
+admin_firstname		First Name
+admin_lastname		Last Name
+admin_address		Address
+admin_address1		Address Line 1
+admin_address2		Address Line 2
+admin_country		Country
+admin_phone		Phone
+admin_fax		Fax
+admin_mobile		Mobile
+admin_icq		ICQ
+admin_upload		Upload
+admin_delete_image	Delete Image
+
+admin_key		Key
+admin_value		Value
+admin_add_update	Add / Update
+admin_search		Search
+admin_details		Details
+admin_birthday		Birthday
+admin_contact		Contact
+admin_gender		Gender
+admin_male		Male
+admin_female		Female
+admin_homepage		Home Page
+admin_notes		Notes
+admin_company		Company
+admin_add_user		Add User
+admin_ok		OK
+admin_group_added	The following group has been successfully added:
+admin_user_added	The following user has been successfully added:
+admin_name_required	Name is required!
+admin_username_required	Username is required!
+admin_email_required	E-Mail is required!
+admin_members		Members
+admin_add_group		Add Group
+admin_yes		Yes
+admin_no		No
+admin_as		as
+admin_users_with_names	All Users with Real Names
+admin_users_with_passwd	All Users with Password
+admin_expired_users	Expired Users
+admin_birthday_list	Birthday List
+admin_contact_list	Contact List
+
+# Statistics
+admin_overview		Overview
+admin_downloads		Downloads / Links
+admin_documents		Documents
+admin_title		Title
+admin_created		Created
+admin_last_change	Last Change
+admin_published		Published
+admin_enabled		Enabled
+admin_referer		Referer
+admin_url		URL
+
+admin_doctypes		Document Types
+admin_add_doctype	Add Document Type
+admin_label		Label
+admin_filename		Filename
+admin_visible		Visible
+admin_type		Type
+admin_version		Version
+admin_license		License
+admin_refresh		Refresh
+admin_fields		Fields

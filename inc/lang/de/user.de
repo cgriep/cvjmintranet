@@ -1,0 +1,38 @@
+# user.inc
+no_nickname	Kein Spitzname.
+email_in_use	Sorry, aber Ihre eMail ist schon in Gebrauch.
+wrong_email	Falsche eMail.
+passwd_too_short	Ihr Passwort sollte mindestens 6 Zeichen enthalten.
+passwd_matchup	Die eingegebenen Passw&ouml;rter stimmen nicht &uuml;berein.
+choose_passwd	Ein Passwort aussuchen (sollte mindestens 6 Zeichen enthalten)
+retype_passwd	Passwort wiederholen
+register	Registrieren
+settings_updated	Ihre Einstellungen wurden erfolgreich gespeichert.
+have_to_relogin	Sie haben Ihre eMail Adresse oder das Passwort ge&auml;ndert und m&uuml;ssen sich nun erneut anmelden.
+update_error	Es gab einen Fehler beim Speichern Ihrer Einstellungen.
+unique_nickname_req	Dieser Nickname ist bereits vergeben.
+
+# ext. info
+website	Home Page
+icq_no	ICQ #
+interests	Interessen
+country	Land
+picture	Bild (JPEG; max. 200 KB)
+gender	Geschlecht
+birthday	Geburtstag
+birthday_format	(MM/DD/YYYY)
+additional_info	Zus&auml;tzliche Angaben
+
+# friends.inc
+no_friends	Es sind noch keine Eintr&auml;ge in Ihrer Liste vorhanden.
+no_user_results	Keine User gefunden.
+user_results	%s User gefunden.
+member_since	Mitglied seit
+
+MITGLIED_IN	Mitglied in
+klasse	Klasse/Kurs
+USERZUSATZ_INFO	Weitere Informationen (für Conanmeldung)
+USERZUSATZ_INFO_SUCHT	Weitere Informationen	
+Name	Name
+Vorname	Vorname
+

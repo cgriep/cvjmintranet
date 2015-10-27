@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns="http://my.netscape.com/rdf/simple/0.9/"
+>
+  <channel>
+    <title>freshmeat.net</title>
+    <link>http://freshmeat.net/</link>
+    <description>freshmeat.net maintains the Web's largest index of Unix and cross-platform open source software. Thousands of applications are meticulously cataloged in the freshmeat.net database, and links to new code are added daily.</description>
+  </channel>
+  <image>
+    <title>freshmeat.net</title>
+    <url>http://freshmeat.net/img/fmII-button.gif</url>
+    <link>http://freshmeat.net/</link>
+</image>
+
+  <item>
+    <title>dataMiner 0.4.0</title>
+    <link>http://freshmeat.net/projects/dataminer/</link>
+  </item>
+  <item>
+    <title>FreeBSD-boot-rescue 1.0.7</title>
+    <link>http://freshmeat.net/projects/freebsd-boot-rescue/</link>
+  </item>
+  <item>
+    <title>Genes 0.1.1</title>
+    <link>http://freshmeat.net/projects/genes/</link>
+  </item>
+  <item>
+    <title>WormScan 1.4</title>
+    <link>http://freshmeat.net/projects/wormscan/</link>
+  </item>
+  <item>
+    <title>Mondo Rescue 1.23 (Stable)</title>
+    <link>http://freshmeat.net/projects/mondorescue/</link>
+  </item>
+  <item>
+    <title>Mindi Linux 0.52</title>
+    <link>http://freshmeat.net/projects/mindi/</link>
+  </item>
+  <item>
+    <title>StepTalk 0.4.0</title>
+    <link>http://freshmeat.net/projects/steptalk/</link>
+  </item>
+  <item>
+    <title>SandSurfer 1.6.0 (Stable)</title>
+    <link>http://freshmeat.net/projects/sandsurfer/</link>
+  </item>
+  <item>
+    <title>WMwfu 1.2</title>
+    <link>http://freshmeat.net/projects/wmwfu/</link>
+  </item>
+  <item>
+    <title>The Linux Bootdisk HOWTO 4.5</title>
+    <link>http://freshmeat.net/projects/bootdisk-howto/</link>
+  </item>
+  <textinput>
+    <title>Search freshmeat.net</title>
+    <description>Search freshmeat.net projects</description>
+    <name>q</name>
+    <link>http://freshmeat.net/search/</link>
+  </textinput>
+</rdf:RDF>

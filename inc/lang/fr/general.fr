@@ -1,0 +1,102 @@
+yes			Oui
+no			Non
+back			Retour
+send_to_a_friend	Envoyer &agrave; un ami
+no_content		D&eacute;sol&eacute;, votre langue ne comporte pas encore de contenu.
+comment			Commentaire
+comments		Commentaires
+published_by		<i>Publi&eacute; par %s le %s</i>
+comment_about		Commentaire sur  <i>%s</i>, publi&eacute; par %s le %s:
+comment_intro		<b>Ici, vous pouvez laisser vos commentaires sur  <i>%s</i></b>
+html_converted		Les tags HTML seront convertis en texte normal.
+remove			Supprimer
+there_are_x_news	Il y a %d news.
+more			+ de d&eacute;tail
+no_comments		Il n'y a pas encore de commentaires.
+to_add_a_comment	Pour ajouter un commentaire, vous devez &ecirc;tre inscrit.
+more_news		Plus de news
+send_this_document	Envoyer ce document &agrave;
+multiple_recipients	Note: Des destinataires multiples doivent &ecirc;tre s&eacute;par&eacute;s par des virgules.
+your_email_address	Votre addresse email
+message			Message
+email_address		Addresse Email
+password		Mot de passe
+doc_sent_to		Document envoy&eacute; &agrave;
+views			visites
+comments_low		commentaires
+show_complete_doc	Montrer le document entier	
+nickname		Pseudo
+choose_passwd		Choisissez un Mot de Passe (au moins 6 caract&egrave;res)
+retype_passwd		Retapez votre mot de Passe
+register		S'enregister
+settings_updated	Les r&eacute;glages de votre compte ont &eacute;t&eacute; mis &agrave; jour.
+have_to_relogin		You changed your email address or password and have to relogin now.
+update_error		There was an error while updating your settings.
+welcome_message		Bienvenue sur %%site%%!
+instant_message		Instant Message
+send_message		Envoyer %s
+sent_message		Envoyer %s
+anonymous_user		Anonyme
+email_sent_by		Cet email vous &agrave; &eacute;t&eacute; envoy&eacute; par :
+original_doc		Le document originial peut &ecirc;tre trouv&eacute; sur :
+sent_by			envoy&eacute; par
+to			&agrave;
+on			sur
+add_comment		Commenter
+next			Suivant
+page			Page
+vote			Vote
+reply			R&eacute;ponse
+email			Email
+icq_message		Message ICQ
+anonymous_message	 Message Anonyme
+close			Fermer
+source			Source
+dot			point
+publish			Publier
+send			Envoyer
+title			Titre
+stranger		&eacute;tranger
+save			Enregistrer
+delete			Effacer
+new			nouveau
+ssl_required		SSL (https) est requis pour s'indentifier.
+
+# browser.inc
+document		Document
+download		T&eacute;l&eacute;chargement
+directory		R&eacute;pertoire
+directory_exists	Le r&eacute;pertoire existe d&eacute;j&agrave;
+directoty_no_dots	Le nome du r&eacute;pertoire ne peut pas contenir de  "."
+browse_used		%d KB utilis&eacute;s dans ce r&eacute;pertoire.
+browse_nofiles		&nbsp;Pas de fichiers trouv&eacute;s.
+browse_files		Il y a %d documents et %d r&eacute;pertoires.
+browse_upload		<b>Upload</b> dans ce r&eacute;pertoire
+browse_sendfile		Envoyer un fichier
+browse_create		Cr&eacute;er
+browse_createdir	<b>Cr&eacute;er</b> nouveau r&eacute;pertoire
+browse_delete		Effacer
+
+# login.inc
+logged_in		VOUS ETES IDENTIFIE
+logout			Logout
+login			Login
+bad_password		Mauvais mot de passe.
+recover_passwd		Cliquez ici si vous avez oubli&eacute; votre mot de passe.
+bad_email		Mauvaise addresse email.
+passwd_sent		Votre mot de passe vous &agrave; &eacute;t&eacute; envoy&eacute; par email.
+
+# user.inc
+no_nickname		Pas de Pseudo.
+email_in_use		Votre addresse Amail est d&eacute;ja utilis&eacute;e.
+wrong_email		Mauvaise addresse email.
+passwd_too_short	Votre mot de passe doit faire au moins 6 caract&egrave;res.
+passwd_matchup		Les mots de passe ne correspondent pas.
+
+# search.inc
+search			Rechercher
+not_found		Aucun document contenant  <b>%s</b> n'a &eacute;t&eacute; trouv&eacute;.
+searched_this_site	La recherche &agrave; port&eacute; sur %s.
+result_count		%d r&eacute;ponse(s). La recherche &agrave; pris %s secondes.
+result_created_by	Cr&eacute;&eacute; par %s le
+

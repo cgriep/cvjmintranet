@@ -1,0 +1,30 @@
+# user.inc
+no_nickname		Pas de pseudo.
+email_in_use		Votre addresse email est d&eacute;ja utilis&eacute;e.
+wrong_email		Mauvaise addresse email.
+passwd_too_short	Votre mot de passe doit compoter au moins 6 caract&egrave;res.
+passwd_matchup		Vos mots de passe ne concordent pas.
+choose_passwd		Choisissez un mot de passe (d'au moins 6 caract&egrave;res)
+retype_passwd		Retapez votre mot de passe
+register		S'enregistrer
+settings_updated	Les r&eacute;glages de votre compte ont &eacute;t&eacute; mis &agrave; jour.
+have_to_relogin		Vous avez chang&eacute; votre email ou mot de passe, vous devez vous logger a nouveau.
+update_error		Une erreur s'est produite en mettant a jour vos r&eacute;glages.
+unique_nickname_req	Les pseudos doivent &ecirc;tre uniques (choisissez en un autre).
+
+# ext. info
+website			Website
+icq_no			ICQ #
+interests		Centres d'int&eacute;ret
+country			Pays
+picture			Photo (JPEG; max. 200 KB)
+gender			Sexe (M/F)
+birthday		Anniversaire
+birthday_format		(DD/MM/YYYY)
+additional_info		Autres Infos.
+
+# friends.inc
+no_friends		Vous n'avez pas encore d'amis dans votre liste.
+no_user_results		Je n'ai pas trouv&eacute; d'utilisateurs.
+user_results		Il y a  %s utilisateur(s).
+member_since		Membres depuis

@@ -1,0 +1,2 @@
+unsub_yes	 , has been removed from newsletter subscription<br />
+unsub_no	Sorry, that was an invalid request. Please verify the URL or unsubscribe manually.

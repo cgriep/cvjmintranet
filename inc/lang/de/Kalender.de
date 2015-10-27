@@ -1,0 +1,26 @@
+JANUARY	Januar
+FEBRUARY	Februar
+MARCH	März
+APRIL	April
+MAY	Mai
+JUNE	Juni
+JULY	Juli
+AUGUST	August
+SEPTEMBER	September
+OCTOBER	Oktober
+NOVEMBER	November
+DECEMBER	Dezember
+ANZEIGE	Anzeige
+ONEDAY	1 Tag
+SEVENDAYS	7 Tage
+NINEDAYS	9 Tage
+MONTH	1 Monat
+THREEMONTH	3 Monate
+YEAR	Jahr
+NORIGHT	Sie haben nicht die Berechtigung, diesen Termin anzusehen!
+MEMOSEND	Erinnerungen gesendet.
+TERMINUPDATE	Termin geändert.
+TITLE_REQUIRED	Der Titel muss angegeben werden!
+ANZEIGE_BESCHRAENKT_PERSON	Anzeige beschränkt auf persönliche Termine von %%WER%%.
+ANZEIGE_BESCHRAENKT_BETROFFEN	Anzeige beschränkt auf Termine, von denen %%WER%% betroffen ist.
+ANZEIGE_BESCHRAENKT_GRUPPE	Anzeige beschränkt auf Termine der Gruppe %%WER%%.

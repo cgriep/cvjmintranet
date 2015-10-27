@@ -1,0 +1,31 @@
+forum_new					new
+forum_addnew					Add new posting
+forum_page					Page:
+forum_forum					Forum
+forum_description				Description
+forum_topics					Topics
+forum_subject					Subject
+forum_author					Author
+forum_replies					Replies
+forum_latest					Latest Reply
+forum_jumpto					Jump to
+forum_go					Go
+forum_reply					Reply
+forum_quote					Quote
+forum_sendcomplete				Send complete thread by email
+forum_sendbyemail				Send replies by email	
+forum_message					Message
+forum_sreply					Send Reply
+forum_allrequired				All fields are required.
+forum_emailverified				Your email-adress will be verified.
+forum_nick					Nick
+forum_email					E-mail
+forum_addposting				Add Posting
+forum_havetobeloggedin				To add a new posting, you have to be logged in.
+forum_dontsendanymore				Don't send new postings by email anymore
+forum_submitch					Submit changes
+forum_changedsucc				Document changed successfully.
+forum_changedfail				Document change failed. (All fields are required)
+forum_edit					Edit
+forum_sent					Complete thread has been sent to you by email.
+forum_refreshtimestamp				Handle like a new reply.

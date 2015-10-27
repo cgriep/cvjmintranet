@@ -1,0 +1,46 @@
+UPDATED 09/18/2003
+
+6 easy steps for a successful Adaptive Website Framework (AWF) installation:
+
+1) Untar the archive (should be awf-1.XX.tar.gz) in the directory of 
+your choice. The http server (normally Apache) needs to have read AND 
+write access (if you don't know how to do this, try "man chmod", "man chgrp" 
+and "man chown" on UNIX systems). The files should belong to your Web server 
+(httpd) and/or PHP safe_mode should be disabled, in order to make the upload
+features work.
+
+2) PHP 4.3.0 (or better) and an installed MySQL server are required. 
+For security and performance reasons, I recommend PHP 4.3.2 or any later version.
+You can enable register_globals, but should set magic_quotes_gpc = Off in your
+php.ini (default location is /usr/local/lib/php.ini). If unsure, ask your
+hosting service provider or have a look at http://php.net/docs.php.
+
+3) If not yet done, create a database user with read/write permissions and 
+a database (CREATE DATABASE [name]) in MySQL. If you need help, have a look
+at http://www.mysql.com/ or ask your hosting service provider.
+
+4) If not yet done, start your Web server and verify, that you can connect ;)
+On Linux, this can be normally done with "/etc/init.d/httpd start" or 
+"/etc/init.d/apache start" (you must have root privileges!)
+
+5) If you want to use the Spaw WYSIWYG editor, adapt spaw/config/spaw_control.config.php to your needs.
+
+6) Finally, you can continue using the installation script admin/setup.php.
+
+That's all.
+
+AWF should then be available at http://www.domain.com/index.php. The initial default 
+users are "a" and "b" (passwords are "a" and "b" too). "a" is editor and "b" normal 
+user. Changes can and should be made using the User Management script (/admin/users.php).
+
+Please don't forget to protect the directories admin, cache, inc and 
+users with .htaccess files!
+
+You can distribute AWF as free software, according to the GNU General Public License (Version 2).
+For more information, see http://www.fsf.org/.
+
+If you want to contact the development team, you'll find all names in docs/AUTHORS. 
+Some help in development of new versions and designs/themes is always welcome!
+
+take care and have fun,
+michael at liquidbytes dot net

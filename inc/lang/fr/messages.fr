@@ -1,0 +1,2 @@
+messages_im_sent_by	Message Instantan&eacute; envoy&eacute; par %s &agrave; %s
+no_messages		Vous n'avez pas de messages.

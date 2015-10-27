@@ -1,0 +1,4 @@
+RemoveHandler .php .asp .shtml .php3 .pl .asp .phtml
+RemoveType .cgi .php .php3 .pl .asp .phtml .shtml
+XBitHack off
+Options -Indexes

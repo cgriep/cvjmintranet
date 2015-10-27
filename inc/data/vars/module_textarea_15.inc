@@ -1,0 +1,1 @@
+SSL stands for <i>secure socket layer</i>. It uses a public key and private key system. This system allows for the encryption of data between the Web server and you, the client. Encrypted data greatly reduces the chances of a malicious third party intercepting and wrongfully using your transmitted information.

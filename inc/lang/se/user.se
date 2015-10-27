@@ -1,0 +1,30 @@
+# user.inc
+no_nickname		Ingen signatur.
+email_in_use		Sorry, din e-post adress används redan.
+wrong_email		Ogiltig e-post adress.
+passwd_too_short    Lösenordet måste vara mint 6 tecken långt.
+passwd_matchup		Du har skrivit olika lösenord i fälten.
+choose_passwd		Välj ett lösenord (minst 6 tecken)
+retype_passwd		Knappa in lösenrodet en gång till
+register		Registrera dig
+settings_updated	Dina kontoinställninhg har uppdaterats (felfritt).
+have_to_relogin		Du måste logga in på nytt efter ändring ev e-post eller lösenord.
+update_error		Det blev fel när dina inställningar uppdaterades.
+unique_nickname_req	Unik signatur krävs.
+
+# ext. info
+website			Hemsida
+icq_no			ICQ #
+interests		Intressen
+country			Land
+picture			Bild (JPEG; max. 200 KB)
+gender			Kön
+birthday		Födelsedata
+birthday_format		(MM/DD/YYYY)
+additional_info		Extra information
+
+# friends.inc
+no_friends		Det finns inga vännewr i din lista än.
+no_user_results		Inga användare hittades.
+user_results		Det finns %s användare.
+member_since		medlem sedan
