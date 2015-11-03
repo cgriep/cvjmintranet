@@ -126,11 +126,11 @@ $DokArten[3] = 'Bestätigung';
 
 // Alterswerte
 $Alterswerte[1] = 'unter 2';
-$Alterswerte[2] = '2-5';
-$Alterswerte[3] = '6-14';
-$Alterswerte[4] = '15-27';
-$Alterswerte[5] = '28-64';
-$Alterswerte[6] = 'ab 65';
+$Alterswerte[2] = '2-6';
+$Alterswerte[3] = '7-14';
+$Alterswerte[4] = 'ab 15';
+//$Alterswerte[5] = '28-64';
+//$Alterswerte[6] = 'ab 65';
 
 $Steuerarten[0] = 'befreit';
 $Steuerarten[7] = 'Zweckbetrieb';
