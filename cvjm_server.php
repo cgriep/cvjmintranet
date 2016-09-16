@@ -601,6 +601,7 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 						$mail.= $Text."\n";
 						$mail.= 'Anhang: '.implode(',',$dateien);
 						$datei  = fopen($Buchung->Adresse->getAdressenAnhangLink($Buchung->Buchung_Nr, '.txt','Mail',date('dmyHi')),'w');
+                        fwrite($datei, $mail);
 						fclose($datei);
 					}
 				}
