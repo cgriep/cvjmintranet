@@ -14,7 +14,7 @@ class Buchung extends DBEntity
 	 * der Kunde der Buchung
 	 */
 	var $Adresse;
-	// Liste mit den Buchungen, die Artikel enthalten, die beim letzten Buchen hinzugefügt wurden
+	// Liste mit den Buchungen, die Artikel enthalten, die beim letzten Buchen hinzugefuegt wurden
 	var $Fehlerliste = array();
 	var $Smilycard = null;
 	// Konstruktor
@@ -27,7 +27,7 @@ class Buchung extends DBEntity
 			if ( $Adressen_id <= 0)
 			{
 				$this->Adresse = null;
-				//throw new Exception('Keine gültige Adressen_id bei neuer Buchung angegeben!');
+				//throw new Exception('Keine gueltige Adressen_id bei neuer Buchung angegeben!');
 				$this->F_Adressen_id = -1;
 			}
 			else
@@ -96,7 +96,7 @@ class Buchung extends DBEntity
 		}
 		else
 		{
-			throw new Exception ('KundeAendern: '.$Adressen_id.' ist keine gültige Angabe.');
+			throw new Exception ('KundeAendern: '.$Adressen_id.' ist keine gueltige Angabe.');
 		}
 	}
 	/**
@@ -106,7 +106,7 @@ class Buchung extends DBEntity
 	 */
 	function bisherigeKunden()
 	{
-		// auf Kundenwechsel prüfen
+		// auf Kundenwechsel pruefen
 		$kunden = array($this->Adresse->Kunden_Nr);
 		$text = $this->Logtext;
 		while ( $i = strpos($text, ' KuNr '))
@@ -125,7 +125,7 @@ class Buchung extends DBEntity
 		return $kunden;
 	}
 	/**
-	 * liefert eine Zeichenkette mit der History, wobei Sonderfunktionen berücksichtigt sind. Die Zeichenkette
+	 * liefert eine Zeichenkette mit der History, wobei Sonderfunktionen beruecksichtigt sind. Die Zeichenkette
 	 * enthält HTML-Querverweise.
 	 * @param string $url die URL an die verwiesen wird. Sie wird um die Adressen_id ergänzt und sollte mit "=" enden.
 	 * @return string die History mit HTML-Verlinkungen
@@ -224,8 +224,8 @@ class Buchung extends DBEntity
 		// TODO!
 	}
 	/**
-	 * Storniert die Buchung und entfernt alle Buchungseinträge. Diese werden unter Internes aufgeführt. 
-	 * @param boolean $nurLeeren true, wenn die Einträge entfernt werden sollen, die Buchung aber unberührt bleibt, true wenn die Buchung storniert werden soll
+	 * Storniert die Buchung und entfernt alle Buchungseinträge. Diese werden unter Internes aufgefuehrt. 
+	 * @param boolean $nurLeeren true, wenn die Einträge entfernt werden sollen, die Buchung aber unberuehrt bleibt, true wenn die Buchung storniert werden soll
 	 */
 	function stornieren($nurLeeren = false)
 	{
@@ -315,7 +315,7 @@ class Buchung extends DBEntity
 		{
 			$this->Kuechenhilfe = 1;
 		}
-		// Status prüfen. Sobald ein Eingang vorliegt, ist es eine Reservierung
+		// Status pruefen. Sobald ein Eingang vorliegt, ist es eine Reservierung
 		if ($this->Eingang != 0)
 		{
 			if ($this->BStatus < BUCHUNG_RESERVIERUNG)
@@ -330,7 +330,7 @@ class Buchung extends DBEntity
 		}
 		if (! $this->isNeu() )
 		{
-			// Prüfen, ob sich die Personenanzahl geändert hat.
+			// Pruefen, ob sich die Personenanzahl geändert hat.
 			if ($this->personenAnzahl() != $this->OriginalPersonenanzahl)
 			{
 				// wenn ja, Essen und Programm anpassen
@@ -372,17 +372,17 @@ class Buchung extends DBEntity
 			$sql .= ',AnzahlungsBemerkung="' . mysql_real_escape_string($this->AnzahlungsBemerkung) . '"';
 			$sql .= ',F_Aufenthaltsraum_id=' . $this->F_Aufenthaltsraum_id;
 			$sql .= ',F_Adressen_id=' . $this->F_Adressen_id;
-			// Prüfen ob Speiseraum sich geändert hat
+			// Pruefen ob Speiseraum sich geändert hat
 			if ($this->F_Aufenthaltsraum_id != $this->OriginalGruppenRaum_id)
 			{
 				$this->logAction('Gruppenraum geändert von '.$this->OriginalGruppenRaum_id.' nach '.$this->F_Aufenthaltsraum_id);
 			}			
-			// Prüfen ob Speiseraum sich geändert hat
+			// Pruefen ob Speiseraum sich geändert hat
 			if ($this->F_Speiseraum_id != $this->OriginalSpeiseraum_id)
 			{
 				// Speiseraum setzen.
 				$sql .= ',F_Speiseraum_id=' . $this->F_Speiseraum_id;
-				// Wichtig: Buchung vollführen!
+				// Wichtig: Buchung vollfuehren!
 				// 1. Alten Speiseraum entfernen
 				sql_query("DELETE FROM " . TABLE_BUCHUNGSEINTRAEGE . " WHERE F_Buchung_Nr=" .
 				$this->Buchung_Nr . " AND F_Artikel_Nr=" . $this->OriginalSpeiseraum_id);
@@ -465,7 +465,7 @@ class Buchung extends DBEntity
 			}
 			$this->Buchung_Nr = sql_insert_id();
 		}
-		// Originalinformation sichern für spätere Anpassungen
+		// Originalinformation sichern fuer spätere Anpassungen
 		$this->OriginalPersonenanzahl = $this->personenAnzahl();
 		$this->OriginalSpeiseraum_id = $this->F_Speiseraum_id;
 		$this->OriginalGruppenRaum_id = $this->F_Aufenthaltsraum_id;
@@ -505,7 +505,7 @@ class Buchung extends DBEntity
 		return $this->standardMenge($a->getAbrechnungstyp());
 	}
 	/**
-	 * gibt die Altersgruppe in lesbarer Form zurück
+	 * gibt die Altersgruppe in lesbarer Form zurueck
 	 * @return String der Name der Altersgruppe
 	 */
 	function getAltersgruppe()
@@ -521,7 +521,7 @@ class Buchung extends DBEntity
 		}
 	}
 	/**
-	 * gibt den Inhalt des Felder zurück. Hier können auch berechnete Inhalte
+	 * gibt den Inhalt des Felder zurueck. Hier können auch berechnete Inhalte
 	 * abgefragt werden.
 	 * @param String $feld der Feldname des gesuchten Feldes
 	 * @return String der Inhalt des Feldes oder eine leere Zeichenkette
@@ -555,7 +555,7 @@ class Buchung extends DBEntity
 	}
 	/**
 	 * liefert den Namen der Altersgruppe mit der angegebenen Nummer
-	 * @param int $nr die Nummer der gewünschten Altersgruppe (von 1 bis 6)
+	 * @param int $nr die Nummer der gewuenschten Altersgruppe (von 1 bis 6)
 	 * @return String der Name der Altersgruppe
 	 */
 	function getAlterswertName($nr)
@@ -564,17 +564,17 @@ class Buchung extends DBEntity
 		{
 			case 1: return 'unter 2';
 			case 2: return '2-6';
-			case 3: return '7-14';
-			case 4: return 'ab 15';
-			case 5: return '28-64';
-			case 6: return 'ab 65';
+			case 3: return '7-15';
+			case 4: return '16-18';
+			case 5: return '19-27';
+			case 6: return 'ab 28';
 			default:
 				return '-unbekannt-';
 		}
 	}
 	/**
-	 *  gibt eine Liste mit den Anzahlen der Personen zurück
-	 * @return array ein nummeriertes Feld für die Altersgruppen. Indizes sind m und w sowie Anzeige mit dem Namen der Altersgruppe
+	 *  gibt eine Liste mit den Anzahlen der Personen zurueck
+	 * @return array ein nummeriertes Feld fuer die Altersgruppen. Indizes sind m und w sowie Anzeige mit dem Namen der Altersgruppe
 	 */
 	function getPersonenListe()
 	{

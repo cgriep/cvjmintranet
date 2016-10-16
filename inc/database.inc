@@ -56,7 +56,7 @@ $db_table_prefix= "awf_";
  
 if(function_exists("mysql_connect")) {
 	mysql_connect($db_host,$db_username,$db_password);
-	define(SQL_CONNECTION, mysql_select_db($db_name));
+	define("SQL_CONNECTION", mysql_select_db($db_name));
 	}
 
 ?>

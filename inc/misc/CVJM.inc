@@ -4,20 +4,20 @@
 load_lang('CVJM');
 
 // Bezeichnung der Mitteilung aus der Putzmaske
-define('CVJMPUTZMITTEILUNG','Mitteilung der Putzkräfte');
-define('CVJMSCHLUESSELMITTEILUNG', 'Besondere Schlüssel ausgegeben');
+define('CVJMPUTZMITTEILUNG','Mitteilung der PutzkrÃ¤fte');
+define('CVJMSCHLUESSELMITTEILUNG', 'Besondere SchlÃ¼ssel ausgegeben');
 
 // Endung der Korrespondenzdateien
 define('CVJM_ENDUNG', '.sxw');
 define('CVJM_ENDUNG_PDF', '.pdf');
 
-// Name des Verzeichnisses, in dem Anhänge zu Adressen gelagert werden
+// Name des Verzeichnisses, in dem AnhÃ¤nge zu Adressen gelagert werden
 define('CVJM_ADRESSEN_DIR', 'Adressen');
 
 // Name des Verzeichnisses, in dem Vorlagen gelagert werden
 define('CVJM_VORLAGEN_DIR', 'Vorlagen');
 
-// Kategorien für Artikel -> cvjm_Artikelarten
+// Kategorien fÃ¼r Artikel -> cvjm_Artikelarten
 define('CVJMART_ORT', 5);
 define('CVJMART_VERPFLEGUNG', 2);
 define('CVJMART_PROGRAMM', 3);
@@ -35,9 +35,9 @@ define('CVJM_SELBSTVERPFLEGUNG', '350');
 define('CVJM_VEGETARIER', '391');
 // Artikelnummer von Pauschale 'Schweinefleischlos'
 define('CVJM_SCHWEINEFLEISCHLOS', '1496');
-// Artikelnummer von Pauschale 'ohne Hilfe' in der Küche
+// Artikelnummer von Pauschale 'ohne Hilfe' in der KÃ¼che
 define('CVJM_OHNEMITHILFE', '390');
-// Artikelnummer von Pauschale 'allgemein' in der Küche
+// Artikelnummer von Pauschale 'allgemein' in der KÃ¼che
 define('CVJM_PAUSCHALE', '501');
 
 // Name der Buchungsgruppe, die e-Mails bei Bemerkungen bekommt.
@@ -96,7 +96,7 @@ $Abrechnungstypen[ABRECHNUNGSTYP_KOPFNACHT] = 'pro Kopf und Nacht';
 $Abrechnungstypen[ABRECHNUNGSTYP_VERPFLEGUNG] = 'Verpflegung (Altersgruppen)';
 $Abrechnungstypen[ABRECHNUNGSTYP_VERPFLEGUNGPAUSCHAL] = 'Verpflegung (Altergruppen) pauschal';
 $Abrechnungstypen[ABRECHNUNGSTYP_VERPFLEGUNGNACHT] = 'Verpflegung (Altergruppen)/pro Nacht pauschal';
-$Abrechnungstypen[ABRECHNUNGSTYP_PAUSCHAL] = 'pauschal (zeitunabhängig)';
+$Abrechnungstypen[ABRECHNUNGSTYP_PAUSCHAL] = 'pauschal (zeitunabhÃ¤ngig)';
   // Verpflegung mit Altersgruppen und als Pauschale (egal wann gebucht)
 
 // Status der Buchung
@@ -110,36 +110,36 @@ DEFINE('BUCHUNG_INTERN', 40);
 $Buchungsstatus[0] = 'Vorreservierung';
 $Buchungsstatus[1] = '1. Nachfrage';
 $Buchungsstatus[BUCHUNG_VORRESERVIERUNG] = '2. Nachfrage';  // < 2 ist vorreserviert
-$Buchungsstatus[BUCHUNG_GELOESCHT] = 'Vorreservierung gelöscht';
+$Buchungsstatus[BUCHUNG_GELOESCHT] = 'Vorreservierung gelÃ¶scht';
 $Buchungsstatus[BUCHUNG_RESERVIERUNG] = 'Reservierung';
 $Buchungsstatus[BUCHUNG_FERTIG] = 'Abgerechnet'; // > 20 ist abgerechnet
 $Buchungsstatus[BUCHUNG_STORNIERT] = 'Storniert';
 $Buchungsstatus[BUCHUNG_STORNIERTABGERECHNET] = 'Storniert, abgerechnet';
 $Buchungsstatus[BUCHUNG_INTERN] = 'Intern';
 
-// Dokumentarten für Vorlagen
-// Bei Änderung in cvjmAbrechnung und cvjmWiedervorlagen anpassen
+// Dokumentarten fÃ¼r Vorlagen
+// Bei Ã„nderung in cvjmAbrechnung und cvjmWiedervorlagen anpassen
 $DokArten[0] = 'Angebot';
 $DokArten[1] = 'Rechnung';
 //$DokArten[2] = 'Vorreservierung';
-$DokArten[3] = 'Bestätigung';
+$DokArten[3] = 'BestÃ¤tigung';
 
 // Alterswerte
 $Alterswerte[1] = 'unter 2';
 $Alterswerte[2] = '2-6';
-$Alterswerte[3] = '7-14';
-$Alterswerte[4] = 'ab 15';
-//$Alterswerte[5] = '28-64';
-//$Alterswerte[6] = 'ab 65';
+$Alterswerte[3] = '7-15';
+$Alterswerte[4] = '16-18';
+$Alterswerte[5] = '19-27';
+$Alterswerte[6] = 'ab 28';
 
 $Steuerarten[0] = 'befreit';
 $Steuerarten[7] = 'Zweckbetrieb';
-$Steuerarten[19]= 'Geschäftsbetrieb';
+$Steuerarten[19]= 'GeschÃ¤ftsbetrieb';
 $SteuerKurz[0] = 'F';
 $SteuerKurz[7] = 'Z';
 $SteuerKurz[19] = 'G';
 
-// Altergruppen für die Altersangabe
+// Altergruppen fÃ¼r die Altersangabe
 $query = sql_query('SELECT * FROM '.TABLE_ALTERSGRUPPEN.' ORDER BY Reihenfolge');
 while ( $anrede = sql_fetch_array($query) )
 {
@@ -157,7 +157,7 @@ $Wochentage[4] = 'Donnerstag';
 $Wochentage[5] = 'Freitag';
 $Wochentage[6] = 'Samstag';
 
-// Farben für die Belegungsplanung
+// Farben fÃ¼r die Belegungsplanung
 $Belegungsfarbe[0] = '#F4E6C3';
 $Belegungsfarbe[1] = '#F2F5C9';
 $Belegungsfarbe[2] = '#DCC9F5';
@@ -221,8 +221,8 @@ function holeAnredearten()
   return $Anredearten;
 }
 /**
- * macht aus einem assoziativen Feld eine Parameterliste für eine URL, mit & getrennt
- * @param String $feld ein assoziatives Feld mit Schlüsseln und Werten 
+ * macht aus einem assoziativen Feld eine Parameterliste fÃ¼r eine URL, mit & getrennt
+ * @param String $feld ein assoziatives Feld mit SchlÃ¼sseln und Werten 
  * @return String die Parameter als Key=Wert-Liste
  */
 function feldToParams($feld)
@@ -279,7 +279,7 @@ function OrtsAuswahlScriptEinfuegen()
   echo '}';
   echo '</script>';
   echo '<noscript>';
-  echo 'JavaScript ist deaktiviert. Keine Ortsauswahl möglich.';
+  echo 'JavaScript ist deaktiviert. Keine Ortsauswahl mÃ¶glich.';
   echo '</noscript>';
 }
 function OrtsName($oid = -1, $mitHTML = true)
@@ -309,8 +309,8 @@ function OrtsName($oid = -1, $mitHTML = true)
   return $Ergebnis;
 }
 
-// Gibt einen Artikelnamen zurück
-// Wenn ebene > 0 dann auch die nächst höhere Ebene, sofern nicht oberste Ebene
+// Gibt einen Artikelnamen zurÃ¼ck
+// Wenn ebene > 0 dann auch die nÃ¤chst hÃ¶here Ebene, sofern nicht oberste Ebene
 // TODO: Mehr als eine Ebene funktioniert noch nicht
 function getOrtsname($Ortid, $Ebenen=0)
 {
