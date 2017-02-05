@@ -7,34 +7,9 @@
 
 define('CVJM_ZELTBEREICH', 'ZB');
 
-if ( $profile['editor'] != 1 )
+function calculateBelegung($uebernachtungen, $sql)
 {
-  include(INC_PATH.'misc/CVJM.inc');
-  include(INC_PATH.'misc/cvjmArtikeltools.inc');
-  include(INC_PATH.'misc/cvjmBuchungstools.inc');
-  include(INC_PATH.'cvjm/Artikel.class.php');
-  $Artikelarten = Artikel::getArtikelarten();
-  if ( $document['title'] != '')
-    echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
-
-  if ( isset($docinput['Jahr']) && is_numeric($docinput['Jahr']))
-  {
-  	if ( $docinput['Jahr'] > 0 )
-  	{
-  		$Jahr = 'FROM_UNIXTIME(Datum,"%Y")='.$docinput['Jahr'];
-  	}
-  	else 
-  	  $Jahr = '1';
-  echo '<h2>Übernachtungen</h2>';
-  $query = sql_query('SELECT '.TABLE_BUCHUNGEN.'.*, F_Artikel_Nr, Datum, F_Art_id, Position,Einruecken FROM (('.
-      TABLE_RECHNUNGSEINTRAEGE.' INNER JOIN '.
-      TABLE_RECHNUNGEN.' ON F_Rechnung_id=Rechnung_id) INNER JOIN '.TABLE_ARTIKEL.
-      ' ON id=F_Artikel_Nr) INNER JOIN '.TABLE_BUCHUNGEN.
-      ' ON Buchung_Nr=F_Buchung_Nr WHERE Rechnung=1 AND BStatus<='.BUCHUNG_FERTIG.
-      ' AND BStatus <> '.BUCHUNG_STORNIERT.' AND Datum > Von '.  // Vorhut wird nicht berücksichtigt
-      ' AND F_Art_id='.CVJMART_ORT.
-      ' AND Menge > 0 AND NOT Storno AND '.$Jahr.' ORDER BY Datum');
-  $uebernachtungen = array();
+  $query = sql_query($sql);
   $plaetze = array();
   while ( $eintrag = sql_fetch_array($query) )
   {
@@ -60,11 +35,15 @@ if ( $profile['editor'] != 1 )
       $preise[$eintrag['Buchung_Nr']][$eintrag['Datum']][$bereich] +=
            berechnePreis($eintrag['Preis'], $eintrag['Menge'], $eintrag['Dauer'], $eintrag['Rabatt']);
       //echo $eintrag['Buchung_Nr'].': Bereich $bereich mit $schlafplaetze<br />';
-      $leute[$eintrag['Buchung_Nr']] = Personenanzahl($eintrag);
-
+      if ($eintrag['Bis'] < $eintrag['Datum'] || $eintrag['Von'] > $eintrag['Datum'] ) 
+        $leute[$eintrag['Buchung_Nr']] = $schlafplaetze;  // fuer Vor- und Nachhut - Maximalanzahl Bettenanzahl unabhängig von der Anzahl der Personen
+      else 
+        $leute[$eintrag['Buchung_Nr']] = Personenanzahl($eintrag);
+      //print gmdate("Y-m-d\TH:i:s\Z", $eintrag['Datum']) . ' // ' . $personen. ' // '.$buchung_nr . ' // ' . $bereich.'<br />'; 
+          
     }
   }
-  sql_free_result($query);
+  sql_free_result($query);  
   // Nun die Auslastung der Bereiche berechnen
   foreach ( $leute as $buchung_nr => $anzahl )
   {
@@ -140,6 +119,40 @@ if ( $profile['editor'] != 1 )
       }
     }
   }
+  return $uebernachtungen;
+}
+
+
+if ( $profile['editor'] != 1 )
+{
+  include(INC_PATH.'misc/CVJM.inc');
+  include(INC_PATH.'misc/cvjmArtikeltools.inc');
+  include(INC_PATH.'misc/cvjmBuchungstools.inc');
+  include(INC_PATH.'cvjm/Artikel.class.php');
+  $Artikelarten = Artikel::getArtikelarten();
+  if ( $document['title'] != '')
+    echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
+
+  if ( isset($docinput['Jahr']) && is_numeric($docinput['Jahr']))
+  {
+  	if ( $docinput['Jahr'] > 0 )
+  	{
+  		$Jahr = 'FROM_UNIXTIME(Datum,"%Y")='.$docinput['Jahr'];
+  	}
+  	else 
+  	  $Jahr = '1';
+  echo '<h2>Übernachtungen</h2>';
+  $sql= 'SELECT '.TABLE_BUCHUNGEN.'.*, F_Artikel_Nr, Datum, F_Art_id, Position,Einruecken FROM (('.
+      TABLE_RECHNUNGSEINTRAEGE.' INNER JOIN '.
+      TABLE_RECHNUNGEN.' ON F_Rechnung_id=Rechnung_id) INNER JOIN '.TABLE_ARTIKEL.
+      ' ON id=F_Artikel_Nr) INNER JOIN '.TABLE_BUCHUNGEN.
+      ' ON Buchung_Nr=F_Buchung_Nr WHERE Rechnung=1 AND BStatus<='.BUCHUNG_FERTIG.
+      ' AND BStatus <> '.BUCHUNG_STORNIERT.  // 2017-02-05 Vor- und Nachhut wird nicht berücksichtigt
+      ' AND F_Art_id='.CVJMART_ORT.
+      ' AND Menge > 0 AND NOT Storno AND '.$Jahr.' ORDER BY Datum';
+  $uebernachtungen = array();
+  $uebernachtungen = calculateBelegung($uebernachtungen, $sql);
+  
   echo '<table style="text-align:right">';
   echo '<tr class="ueberschrift"><th>Jahr</th><th>Monat</th><th>Buchungen</th><th>Übernachtungen</th></tr>';
   $allgesamt = 0;

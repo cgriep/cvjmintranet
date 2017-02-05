@@ -24,4 +24,4 @@ width="16" height="16" border="0" /></a>
  Nach oben
 </div>
 <br />
-<div class="lbfooter">&copy; 2003-2015 powered by CVJM Feriendorf Herbstein, Germany</div>
+<div class="lbfooter">&copy; 2003-2017 powered by CVJM Feriendorf Herbstein, Germany</div>

@@ -163,6 +163,7 @@ if ( $profile['editor'] != 1 )
 						$uebernachtungen[$bereich][date('Y',$datum)][date('m',$datum)]['Anzahl'] = 0;
 						$uebernachtungen[$bereich][date('Y',$datum)][date('m',$datum)]['Buchungen'] = array();
 						$uebernachtungen[$bereich][date('Y',$datum)][date('m',$datum)]['Selbst'] = 0;
+                                                $anz = 0; // 2017-02-05 am ersten Tag gibt es keine Übernachtungen - da in Buchung jeder Ort an jedem Tag gezählt wird einmal streichen
 					}
 					if ( $schlafplaetze > 0 )
 					{
