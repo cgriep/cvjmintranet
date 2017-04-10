@@ -35,12 +35,11 @@ function calculateBelegung($uebernachtungen, $sql)
       $preise[$eintrag['Buchung_Nr']][$eintrag['Datum']][$bereich] +=
            berechnePreis($eintrag['Preis'], $eintrag['Menge'], $eintrag['Dauer'], $eintrag['Rabatt']);
       //echo $eintrag['Buchung_Nr'].': Bereich $bereich mit $schlafplaetze<br />';
-      if ($eintrag['Bis'] < $eintrag['Datum'] || $eintrag['Von'] > $eintrag['Datum'] ) 
-        $leute[$eintrag['Buchung_Nr']] = $schlafplaetze;  // fuer Vor- und Nachhut - Maximalanzahl Bettenanzahl unabhängig von der Anzahl der Personen
-      else 
-        $leute[$eintrag['Buchung_Nr']] = Personenanzahl($eintrag);
-      //print gmdate("Y-m-d\TH:i:s\Z", $eintrag['Datum']) . ' // ' . $personen. ' // '.$buchung_nr . ' // ' . $bereich.'<br />'; 
-          
+      $leute[$eintrag['Buchung_Nr']] = Personenanzahl($eintrag);
+      $buchung[$eintrag['Buchung_Nr']]['Bis'] = $eintrag['Bis'];
+      $buchung[$eintrag['Buchung_Nr']]['Von'] = $eintrag['Von'];
+       //print gmdate("Y-m-d\TH:i:s\Z", $eintrag['Datum']) . ' // ' . $personen. ' // '.$buchung_nr . ' // ' . $bereich.'<br />'; 
+      
     }
   }
   sql_free_result($query);  
@@ -99,22 +98,26 @@ function calculateBelegung($uebernachtungen, $sql)
         }
         else
         {
-          echo "Nicht zuordbare Personenzahl: $anz in Buchung $buchung_nr am ".
-            date('d.m.Y',$datum).'<br />';
-          if ( ! isset($uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]) )
+          // fuer Vor- und Nachhut - Maximalanzahl Bettenanzahl unabhängig von der Anzahl der Personen
+          // in diesem Fall keine nicht zuordbaren Werte
+
+          if ($buchung[$buchung_nr]['Bis'] >= $datum && $buchung[$buchung_nr]['Von'] <= $datum ) 
           {
-            $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)] = array();
-            $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Anzahl'] = 0;
-            $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Einnahme'] = 0;
-            $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Buchungen'] = array();
+            echo "Nicht zuordbare Personenzahl: $anz in Buchung $buchung_nr am ".
+              date('d.m.Y',$datum).'<br />';
+            if ( ! isset($uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]) )
+            {
+              $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)] = array();
+              $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Anzahl'] = 0;
+              $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Einnahme'] = 0;
+              $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Buchungen'] = array();
+            }
+            if ( ! in_array($buchung_nr, $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Buchungen']) )
+              $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Buchungen'][] = $buchung_nr;
+            $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Anzahl'] += $anz;
+            $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Einnahme'] +=
+              $preise['unbekannt'][date('Y',$datum)][date('m',$datum)];
           }
-           if ( ! in_array($buchung_nr, $uebernachtungen['unbekannt'][date('Y',
-            $datum)][date('m',$datum)]['Buchungen']) )
-             $uebernachtungen['unbekannt'][date('Y',$datum)]
-               [date('m',$datum)]['Buchungen'][] = $buchung_nr;
-          $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Anzahl'] += $anz;
-          $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Einnahme'] +=
-            $preise['unbekannt'][date('Y',$datum)][date('m',$datum)];
         }
       }
     }
