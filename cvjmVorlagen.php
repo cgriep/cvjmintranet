@@ -1383,10 +1383,10 @@ if ( $Datenbank != 'ArtikelPreislisten' && is_numeric($Adressenid) )
 {
   // Preislisten werden nicht gespeichert
   $Pfadname = CVJM_ADRESSEN_DIR.'/'.$Adressenid.'/';
-  $Dateiname = basename($Vorlage,'.sxw')."-$id$Nr-".date('dmyHi');
+  $Dateiname = basename($Vorlage,CVJM_ENDUNG)."-$id$Nr-".date('dmyHi');
   if (!is_dir($Pfadname) )
     mkdirs($Pfadname, 0777);
-  $doc->savefile($Pfadname.$Dateiname.'.sxw');
+  $doc->savefile($Pfadname.$Dateiname.CVJM_ENDUNG);
   // Neu: Weiterleitung auf Erstellung und Ausgabe der PDF-Datei
   if ( $Datenbank != 'Adressen')
   {

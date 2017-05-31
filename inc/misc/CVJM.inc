@@ -8,7 +8,7 @@ define('CVJMPUTZMITTEILUNG','Mitteilung der Putzkräfte');
 define('CVJMSCHLUESSELMITTEILUNG', 'Besondere Schlüssel ausgegeben');
 
 // Endung der Korrespondenzdateien
-define('CVJM_ENDUNG', '.sxw');
+define('CVJM_ENDUNG', '.odt');
 define('CVJM_ENDUNG_PDF', '.pdf');
 
 // Name des Verzeichnisses, in dem Anhänge zu Adressen gelagert werden

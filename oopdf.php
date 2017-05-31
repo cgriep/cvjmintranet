@@ -3,6 +3,8 @@
 // Auftrag auslesen
 define('VERZEICHNIS', '/var/www/vhosts/s18380850.onlinehome-server.info/');
 define('DOCS', 'httpdocs/');
+define('CVJM_ENDUNG', '.odt');
+
 if ( isset($_REQUEST['Datei']))
 {
 	$Datei = $_REQUEST['Datei'];
@@ -18,13 +20,13 @@ if ( isset($Datei) && $Datei != '' )
 	}
 	else
 	{
-		if ( file_exists(VERZEICHNIS.DOCS.$Datei.'.sxw'))
+		if ( file_exists(VERZEICHNIS.DOCS.$Datei.CVJM_ENDUNG))
 		{
 			$newname = pathinfo($Datei);
 			if (!isset($newname['extension'])) $newname['extension']='';
 			$name = basename($newname['basename'],$newname['extension']);
 			// rufe Java auf um die Datei mit OO zu konvertieren
-			passthru('/usr/java/latest/bin/java -jar '.VERZEICHNIS.'jodconverter-2.2.2/lib/jodconverter-cli-2.2.2.jar -f pdf '.VERZEICHNIS.DOCS.$Datei.'.sxw');
+			passthru('/usr/java/latest/bin/java -jar '.VERZEICHNIS.'jodconverter-2.2.2/lib/jodconverter-cli-2.2.2.jar -f pdf '.VERZEICHNIS.DOCS.$Datei.CVJM_ENDUNG);
 
 			if ( file_exists(VERZEICHNIS.DOCS.$Datei.'.pdf'))
 			{
@@ -35,7 +37,7 @@ if ( isset($Datei) && $Datei != '' )
 			}
 			else
 			{
-				echo 'Fehler: '.$Datei.'.sxw konnte nicht konvertiert werden! OO Prozess prüfen: Nach Login: ps -ef |grep soffice. Wenn kein Ergebnis ausser "grep soffice" dann ./OOStarten.sh eingeben.'."\n\n";
+				echo 'Fehler: '.$Datei.CVJM_ENDUNG.' konnte nicht konvertiert werden! OO Prozess prüfen: Nach Login: ps -ef |grep soffice. Wenn kein Ergebnis ausser "grep soffice" dann ./OOStarten.sh eingeben.'."\n\n";
 				echo 'PDF-Name: '.$Datei.'.pdf';
 			}
 		}
