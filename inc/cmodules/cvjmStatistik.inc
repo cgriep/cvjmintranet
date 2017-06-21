@@ -19,7 +19,7 @@ function calculateBelegung($uebernachtungen, $sql)
     {
       if ( $schlafplaetze > 0 )
       {
-        // Hütten-Übernachtung
+        // HÃ¼tten-Ãœbernachtung
         $bereich = getOrtsname(holeArtikelMasterParent($eintrag['F_Art_id'],
           $eintrag['Position'],$eintrag['Einruecken']));
       }
@@ -98,10 +98,10 @@ function calculateBelegung($uebernachtungen, $sql)
         }
         else
         {
-          // fuer Vor- und Nachhut - Maximalanzahl Bettenanzahl unabhängig von der Anzahl der Personen
+          // fuer Vor- und Nachhut - Maximalanzahl Bettenanzahl unabhÃ¤ngig von der Anzahl der Personen
           // in diesem Fall keine nicht zuordbaren Werte
 
-          if ($buchung[$buchung_nr]['Bis'] >= $datum && $buchung[$buchung_nr]['Von'] <= $datum ) 
+          if ($buchung[$buchung_nr]['Bis'] >= $datum && $buchung[$buchung_nr]['Von'] < $datum ) 
           {
             echo "Nicht zuordbare Personenzahl: $anz in Buchung $buchung_nr am ".
               date('d.m.Y',$datum).'<br />';
@@ -144,20 +144,20 @@ if ( $profile['editor'] != 1 )
   	}
   	else 
   	  $Jahr = '1';
-  echo '<h2>Übernachtungen</h2>';
+  echo '<h2>Ãœbernachtungen</h2>';
   $sql= 'SELECT '.TABLE_BUCHUNGEN.'.*, F_Artikel_Nr, Datum, F_Art_id, Position,Einruecken FROM (('.
       TABLE_RECHNUNGSEINTRAEGE.' INNER JOIN '.
       TABLE_RECHNUNGEN.' ON F_Rechnung_id=Rechnung_id) INNER JOIN '.TABLE_ARTIKEL.
       ' ON id=F_Artikel_Nr) INNER JOIN '.TABLE_BUCHUNGEN.
       ' ON Buchung_Nr=F_Buchung_Nr WHERE Rechnung=1 AND BStatus<='.BUCHUNG_FERTIG.
-      ' AND BStatus <> '.BUCHUNG_STORNIERT.  // 2017-02-05 Vor- und Nachhut wird nicht berücksichtigt
+      ' AND BStatus <> '.BUCHUNG_STORNIERT.  // 2017-02-05 Vor- und Nachhut wird nicht berÃ¼cksichtigt
       ' AND F_Art_id='.CVJMART_ORT.
       ' AND Menge > 0 AND NOT Storno AND '.$Jahr.' ORDER BY Datum';
   $uebernachtungen = array();
   $uebernachtungen = calculateBelegung($uebernachtungen, $sql);
   
   echo '<table style="text-align:right">';
-  echo '<tr class="ueberschrift"><th>Jahr</th><th>Monat</th><th>Buchungen</th><th>Übernachtungen</th></tr>';
+  echo '<tr class="ueberschrift"><th>Jahr</th><th>Monat</th><th>Buchungen</th><th>Ãœbernachtungen</th></tr>';
   $allgesamt = 0;
   foreach ( $uebernachtungen as $bereich => $jahre )
   {
@@ -193,7 +193,7 @@ if ( $profile['editor'] != 1 )
 
   echo "<h2>Angebote</h2>";
   echo "<h3>Programmmodule</h3>";
-  // Nur Rechnungen berücksichtigen
+  // Nur Rechnungen berÃ¼cksichtigen
   if (! $query = sql_query("SELECT Datum, Menge, F_Artikel_Nr, Einruecken, Position, F_Preis, Rabatt FROM ((".
     TABLE_RECHNUNGSEINTRAEGE.
     ' INNER JOIN '.TABLE_RECHNUNGEN.' ON Rechnung_id=F_Rechnung_id) INNER JOIN '.
@@ -320,7 +320,7 @@ if ( $profile['editor'] != 1 )
   echo '<tr class="dunkleZeile"><td>Gesamt</td><td></td><td></td><td>'.$personen.'</td><td>'.
     $gesamt.'</td></tr>';
   echo '</table>';
-  } // wenn Jahr übergeben wurde
+  } // wenn Jahr Ã¼bergeben wurde
   echo '<form action="" method="post">';
   echo 'Jahr ';
   $query = mysql_query('SELECT DISTINCT FROM_UNIXTIME(Datum,"%Y") FROM '.
