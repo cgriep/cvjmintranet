@@ -13,7 +13,7 @@ include(INC_PATH.'misc/cvjmBuchungstabelle.inc');
 include(INC_PATH.'misc/cvjmArtikeltools.inc');
 include(INC_PATH.'misc/Kalenderjs.inc');
 
-session_unregister('LetzteRechnung');
+unset($_SESSION['LetzteRechnung']);
 
 if ( $profile['editor'] != 1 )
 {

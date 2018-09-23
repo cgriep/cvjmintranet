@@ -7,7 +7,6 @@
  * AWF-Name: cvjmartikel
  *
  */
-
 function zeigeArtikelTabelle($tabelle, $ueberschrift)
 {
 	global $docinput;
@@ -259,7 +258,6 @@ if ( $profile['editor']!= 1 )
 		$docinput['F_Art_id'] = CVJMART_UNBEKANNT;
 	}
 	$Artikelarten = Artikel::getArtikelArten();
-
 	if ( isset($_REQUEST['Baum']) && isset($docinput['F_Art_id']) )
 	{
 		// neu Nummerieren
@@ -305,7 +303,6 @@ if ( $profile['editor']!= 1 )
 	$Smarty->assign('title', transform($document['title'], $document['datatype']['title']));
 	$Smarty->assign('id', $id);
 	$Smarty->assign_by_ref('docinput', $docinput);
-
 	if ( isset($docinput['Artikel_Nr']) && is_numeric($docinput['Artikel_Nr']))
 	{
 		$Artikel = new Artikel($docinput['Artikel_Nr']);
@@ -464,7 +461,7 @@ if ( $profile['editor']!= 1 )
 		{
 			$Seite = $_REQUEST['Seite'];
 		}
-		elseif ( session_is_registered('Artikel_Seite'))
+		elseif ( array_key_exists('Artikel_Seite', $_SESSION))
 		{
 			$Seite = $_SESSION['Artikel_Seite'];
 		}
@@ -531,7 +528,7 @@ if ( $profile['editor']!= 1 )
 		{
 			$Search = '1';
 		}
-		if ( session_is_registered('Artikel_Sort') && trim($_SESSION['Artikel_Sort']) != '')
+		if ( array_key_exists('Artikel_Sort',$_SESSION) && trim($_SESSION['Artikel_Sort']) != '')
 		{
 			$Sort = mysql_real_escape_string($_SESSION['Artikel_Sort']);
 		}
@@ -542,12 +539,12 @@ if ( $profile['editor']!= 1 )
 		if ( isset($docinput['F_Art_id']) && is_numeric($docinput['F_Art_id']) )
 		{
 			$Search .= ' AND F_Art_id ='.$docinput['F_Art_id'];
-			if ( ! session_is_registered('Artikel_Sort') )
+			if ( ! array_key_exists('Artikel_Sort', $_SESSION) )
 			{
 				$Sort = 'Bezeichnung';
 			}
 		}
-		$sql = 'SELECT id FROM '.TABLE_ARTIKEL.' WHERE '.$Search.' ORDER BY '.$Sort;
+                $sql = 'SELECT id FROM '.TABLE_ARTIKEL.' WHERE '.$Search.' ORDER BY '.$Sort;
 		if (! $query = sql_query($sql))
 		{
 			echo mysql_error();

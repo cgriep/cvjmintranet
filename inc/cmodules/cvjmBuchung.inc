@@ -24,7 +24,7 @@ include (INC_PATH . 'misc/cvjmArtikeltools.inc');
 include (INC_PATH . 'cvjm/Buchung.class.php');
 require_once(INC_PATH . 'cvjm/Artikel.class.php');
 require_once(INC_PATH . 'cvjm/Event.class.php');
-session_unregister('LetzteRechnung');
+unset($_SESSION['LetzteRechnung']);
 function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 {
 	global $Smarty;

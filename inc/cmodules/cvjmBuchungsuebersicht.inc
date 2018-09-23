@@ -165,12 +165,12 @@ if ($profile['editor'] != 1)
 		else
 		{
 		$docinput['Art'] = CVJMART_ORT;
-		session_unregister('docinput[Page]');
+		unset($_SESSION['docinput[Page]']);
 		}
 	}
 	else
 	{
-		session_unregister('docinput[Page]');
+		unset($_SESSION['docinput[Page]']);
 	}
 	// Wir stellen fest, nach welchem Modus die Art abgerechnet wird.
 	$Abrechnungstyp = getAbrechnungstyp($docinput['Art']);

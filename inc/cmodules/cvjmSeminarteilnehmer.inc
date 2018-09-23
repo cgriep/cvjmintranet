@@ -9,7 +9,7 @@
 
 if ( $profile['editor'] != 1 )
 {
-  session_unregister('Sem');
+  unset($_SESSION['Sem']);
   
   // Buchungsdaten anzeigen
   include(INC_PATH.'misc/CVJM.inc');
