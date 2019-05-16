@@ -58,8 +58,8 @@ if ( $profile['editor'] != 1 )
 		TABLE_BUCHUNGSEINTRAEGE.' INNER JOIN '.TABLE_ARTIKEL.
 		' ON id=F_Artikel_Nr) INNER JOIN '.TABLE_BUCHUNGEN.
 		' ON Buchung_Nr=F_Buchung_Nr WHERE (BStatus='.BUCHUNG_RESERVIERUNG.
-		' OR BStatus<='.BUCHUNG_VORRESERVIERUNG.
-		') AND Datum >= Von AND Datum > '.time(). // Vorhut wird nicht berücksichtigt
+		' OR BStatus<='.BUCHUNG_VORRESERVIERUNG.') '.
+		//') AND Datum >= Von AND Datum > '.time(). // Vorhut wird nicht berücksichtigt
 		' AND F_Art_id='.CVJMART_ORT.
 		' AND Menge > 0 AND '.$Jahr.' ORDER BY Datum';
 		if ( isset($_REQUEST['SaveStat']))
@@ -69,8 +69,9 @@ if ( $profile['editor'] != 1 )
 			TABLE_BUCHUNGSEINTRAEGE.' INNER JOIN '.TABLE_ARTIKEL.
 			' ON id=F_Artikel_Nr) INNER JOIN '.TABLE_BUCHUNGEN.
 			' ON Buchung_Nr=F_Buchung_Nr WHERE (BStatus<>'.BUCHUNG_STORNIERT.
-			' AND BStatus<='.BUCHUNG_FERTIG.
-			') AND Datum >= Von AND Datum > '.$start. // Vorhut wird nicht berücksichtigt
+			' AND BStatus<='.BUCHUNG_FERTIG.') '.
+			//' AND Datum >= Von 
+			' AND Datum > '.$start. 
 			' AND F_Art_id='.CVJMART_ORT.
 			' AND Menge > 0 ORDER BY Datum';
 		}
@@ -79,6 +80,7 @@ if ( $profile['editor'] != 1 )
 		$uebernachtungen = array();
 		$plaetze = array();
 		$summe = array();
+		$buchung = array();
 		while ( $eintrag = sql_fetch_array($query) )
 		{
 			$a = new Artikel($eintrag['F_Artikel_Nr']);
@@ -98,6 +100,8 @@ if ( $profile['editor'] != 1 )
 				{
 					$plaetze[$eintrag['Buchung_Nr']][$eintrag['Datum']][$bereich] = 0;
 				}
+				$buchung[$eintrag['Buchung_Nr']]['Von'] = $eintrag['Von'];
+				$buchung[$eintrag['Buchung_Nr']]['Bis'] = $eintrag['Bis'];
 				$plaetze[$eintrag['Buchung_Nr']][$eintrag['Datum']][$bereich] += $schlafplaetze;
 				//echo $eintrag['Buchung_Nr'].': Bereich $bereich mit $schlafplaetze<br />';
 				$leute[$eintrag['Buchung_Nr']] = Personenanzahl($eintrag);
@@ -206,20 +210,22 @@ if ( $profile['editor'] != 1 )
 					}
 					else
 					{
-						echo "Nicht zuordbare Personenzahl: $anz in Buchung $buchung_nr am ".
-						date('d.m.Y',$datum).'<br />';
-						if ( ! isset($uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]) )
-						{
+						if ($buchung[$buchung_nr]['Bis'] >= $datum && $buchung[$buchung_nr]['Von'] < $datum ) 
+					        {
+						  echo "Nicht zuordbare Personenzahl: $anz in Buchung $buchung_nr am ".
+						  date('d.m.Y',$datum).'<br />';
+						  if ( ! isset($uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]) )
+						  {
 							$uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)] = array();
 							$uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Anzahl'] = 0;
 							$uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Buchungen'] = array();
 							$uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Selbst'] = 0;
+						  }
+						  if ( ! in_array($buchung_nr, $uebernachtungen['unbekannt'][date('Y',
+						  $datum)][date('m',$datum)]['Buchungen']) )
+						    $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Buchungen'][] = $buchung_nr;
+		 				  $uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Anzahl'] += $anz;
 						}
-						if ( ! in_array($buchung_nr, $uebernachtungen['unbekannt'][date('Y',
-						$datum)][date('m',$datum)]['Buchungen']) )
-						$uebernachtungen['unbekannt'][date('Y',$datum)]
-						[date('m',$datum)]['Buchungen'][] = $buchung_nr;
-						$uebernachtungen['unbekannt'][date('Y',$datum)][date('m',$datum)]['Anzahl'] += $anz;
 					}
 				}
 			}

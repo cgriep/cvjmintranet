@@ -380,7 +380,7 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 						'F_Bezeichnung,F_Preis,F_Artikel_Nr) VALUES (' .
 						$rechnung_id . ',' . $datum . ',' . $value['MWST'] . ',' . $value['Rabatt'] .
 						',"' . $value['Art'] . '","' . mysql_real_escape_string($value['Einheit']) . '",' . str_replace(',','.',$value['Berechnen'] - $vorhanden) .
-						',' . $value['Dauer'] . ",'" . mysql_real_escape_string($value['Bezeichnung']) . "'," .
+						',' . $value['Dauer'] . ',"' . mysql_real_escape_string($value['Bezeichnung']) . '",' .
 						$value['Preis'] . ',' . $artikel_id . ')';
 					if (!sql_query($sql))
 						echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler 1:' . mysql_error() . "/".$sql."</div>";

@@ -126,7 +126,7 @@ function TagDefinition($buchung = '')
 	} else
 	{
 		$Dauer = round(berechneUebernachtungen($buchung));
-		if (!session_is_registered('ANZAHLTAGE') || $Dauer +3 > $_SESSION['ANZAHLTAGE'])
+		if (!isset($_SESSION['ANZAHLTAGE']) || $Dauer +3 > $_SESSION['ANZAHLTAGE'])
 		{
 			$_SESSION['ANZAHLTAGE'] = $Dauer +3;
 		}
@@ -158,7 +158,7 @@ if ($profile['editor'] != 1)
 	// Wenn nichts anderes angegeben suchen wir nach Orten
 	if (!isset ($docinput['Art']) || !is_numeric($docinput['Art']))
 	{
-		if ( session_is_registered('docinput[Art]'))
+		if ( isset($_SESSION['docinput[Art]']))
 		{
 		$docinput['Art'] = $_SESSION['docinput[Art]'];
 		}
