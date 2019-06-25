@@ -102,7 +102,10 @@ if ( $profile['editor'] != 1 )
 				}
 				$buchung[$eintrag['Buchung_Nr']]['Von'] = $eintrag['Von'];
 				$buchung[$eintrag['Buchung_Nr']]['Bis'] = $eintrag['Bis'];
-				$plaetze[$eintrag['Buchung_Nr']][$eintrag['Datum']][$bereich] += $schlafplaetze;
+				// 2017-02-05 am ersten Tag gibt es keine Übernachtungen - da in Buchung jeder Ort an jedem Tag gezählt wird einmal streichen
+				if ($eintrag['Datum'] <> $eintrag['Von'] ) 
+ 				  	$plaetze[$eintrag['Buchung_Nr']][$eintrag['Datum']][$bereich] += $schlafplaetze;
+
 				//echo $eintrag['Buchung_Nr'].': Bereich $bereich mit $schlafplaetze<br />';
 				$leute[$eintrag['Buchung_Nr']] = Personenanzahl($eintrag);
 			}
@@ -167,10 +170,11 @@ if ( $profile['editor'] != 1 )
 						$uebernachtungen[$bereich][date('Y',$datum)][date('m',$datum)]['Anzahl'] = 0;
 						$uebernachtungen[$bereich][date('Y',$datum)][date('m',$datum)]['Buchungen'] = array();
 						$uebernachtungen[$bereich][date('Y',$datum)][date('m',$datum)]['Selbst'] = 0;
-                                                $anz = 0; // 2017-02-05 am ersten Tag gibt es keine Übernachtungen - da in Buchung jeder Ort an jedem Tag gezählt wird einmal streichen
+                                                
 					}
 					if ( $schlafplaetze > 0 )
 					{
+						$personen = 0;
 						if ( $anz <= $schlafplaetze )
 						{
 							$personen = $anz;
@@ -187,7 +191,7 @@ if ( $profile['editor'] != 1 )
 							$Selbst--; // ein Tag ist verbraucht
 							$uebernachtungen[$bereich][date('Y',$datum)][date('m',$datum)]['Selbst'] += $personen;
 						}
-						//echo 'Buchung $buchung_nr: $personen in Bereich $bereich<br />';
+						//echo "$buchung_nr  $personen  $bereich  ".date('Y-m-d',$datum)."<br />";
 					}
 					else
 					$zda = true;
@@ -198,15 +202,16 @@ if ( $profile['editor'] != 1 )
 				}
 				if ( $anz > 0 )
 				{
-					if ( $zda )
+					if ( $zda && $buchung[$buchung_nr]['Bis'] >= $datum && $buchung[$buchung_nr]['Von'] < $datum ) 
 					{
+						
 						$uebernachtungen[CVJM_ZELTBEREICH][date('Y',$datum)][date('m',$datum)]['Anzahl'] += $anz;
 						if ( $Selbst > 0)
 						{
 							$Selbst--; // ein Tag ist verbraucht
 							$uebernachtungen[CVJM_ZELTBEREICH][date('Y',$datum)][date('m',$datum)]['Selbst'] += $personen;
 						}
-						//echo 'Buchung $buchung_nr: $anz im Zeltbereich<br />';
+						//echo "$buchung_nr  $anz  ZB  ".date('Y-m-d',$datum)."<br />";
 					}
 					else
 					{
