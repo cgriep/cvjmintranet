@@ -133,11 +133,16 @@ $Alterswerte[5] = '19-27';
 $Alterswerte[6] = 'ab 28';
 
 $Steuerarten[0] = 'befreit';
-$Steuerarten[7] = 'Zweckbetrieb';
-$Steuerarten[19]= 'Geschäftsbetrieb';
+$Steuerarten[5] = 'Zweckbetrieb 5%';
+$Steuerarten[7] = 'Zweckbetrieb 7%';
+$Steuerarten[16]= 'Geschäftsbetrieb 16%';
+$Steuerarten[19]= 'Geschäftsbetrieb 19%';
 $SteuerKurz[0] = 'F';
-$SteuerKurz[7] = 'Z';
+$SteuerKurz[5] = 'Z';
+$SteuerKurz[7] = 'Z7';
+$SteuerKurz[16] = 'G16';
 $SteuerKurz[19] = 'G';
+
 
 // Altergruppen für die Altersangabe
 $query = sql_query('SELECT * FROM '.TABLE_ALTERSGRUPPEN.' ORDER BY Reihenfolge');
