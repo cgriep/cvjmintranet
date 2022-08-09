@@ -1,6 +1,6 @@
 <?php
 
-/* Datenbank- und AWF-Funktionalit‰t einbinden */
+/* Datenbank- und AWF-Funktionalit√§t einbinden */
 include ('inc/functions.inc');
 include ('inc/licence.key');
 include ('inc/sessions.inc');
@@ -15,7 +15,7 @@ require_once('inc/Smarty/Smarty.class.php');
 require_once (INC_PATH.'cvjm/Adresse.class.php');
 require_once (INC_PATH.'cvjm/Event.class.php');
 
-/* pr¸fen ob eine Session f¸r den Benutzer existiert */
+/* pr√ºfen ob eine Session f√ºr den Benutzer existiert */
 if (!isset ($session_userid) || $session_userid == '')
 {
 	die('Unauthorisiert!');
@@ -47,7 +47,7 @@ function convertJavaScriptBool($value)
 }
 
 /**
- *  Abrechnung: Erhˆht oder senkt die Menge eines Artikels
+ *  Abrechnung: Erh√∂ht oder senkt die Menge eines Artikels
  */
 function erhoeheRechnungsMenge($rechnung_id, $artikel_nr, $Datum)
 {
@@ -65,7 +65,7 @@ function aendereRechnungsMenge($rechnung_id, $artikel_nr, $Datum, $Richtung='+')
 	return $objResponse;
 	if ( $Richtung != '+' && $Richtung != '-')
 	return $objResponse;
-	// Eintragsmenge erhˆhen
+	// Eintragsmenge erh√∂hen
 	$sql1 = 'UPDATE ' . TABLE_RECHNUNGSEINTRAEGE . ' SET Menge=Menge '.$Richtung.'1 WHERE ' .
 	'F_Artikel_Nr = ' . $artikel_nr . ' AND F_Rechnung_id=' . $rechnung_id . ' AND Datum';
 	if (strpos($Datum, '-') === false)
@@ -92,16 +92,16 @@ function aendereRechnungsMenge($rechnung_id, $artikel_nr, $Datum, $Richtung='+')
 }
 
 /**
- * Buchungs¸bersicht:
+ * Buchungs√ºbersicht:
  * Entfernt einen Artikel aus der Buchung und zeigt die entsprechende Zelle
- * ohne H‰kchen an
+ * ohne H√§kchen an
  */
 function entferneArtikel($buchung_nr, $artikel_id, $datum, $menge,$artikelnummern)
 {
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($artikel_id) || ! is_numeric($datum) || ! is_numeric($menge))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung¸ltige Argumente.'));
+		$objResponse->addAlert(utf8_encode('Fehler - ung√ºltige Argumente.'));
 	}
 	else
 	{
@@ -140,7 +140,7 @@ function entferneArtikel($buchung_nr, $artikel_id, $datum, $menge,$artikelnummer
 	return $objResponse;
 }
 /**
- * Buchungs¸bersicht:
+ * Buchungs√ºbersicht:
  * Bucht den entsprechenden Artikel hinzu und zeigt die Zelle entsprechend an
  */
 function fuegeArtikelHinzu($buchung_nr, $artikel_id, $datum, $artikelnummern)
@@ -148,7 +148,7 @@ function fuegeArtikelHinzu($buchung_nr, $artikel_id, $datum, $artikelnummern)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($artikel_id) || ! is_numeric($datum) )
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung¸ltige Argumente.'));
+		$objResponse->addAlert(utf8_encode('Fehler - ung√ºltige Argumente.'));
 	}
 	else
 	{
@@ -196,7 +196,7 @@ function gesamteReise($buchung_nr, $artikel_id, $art, $setzen,$artikelnummern, $
 	}
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($artikel_id) || ! is_numeric($art))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung¸ltige Argumente.'));
+		$objResponse->addAlert(utf8_encode('Fehler - ung√ºltige Argumente.'));
 	}
 	else
 	{
@@ -227,7 +227,7 @@ function gesamteReise($buchung_nr, $artikel_id, $art, $setzen,$artikelnummern, $
 			}
 			else
 			{
-				$Buchung->entbucheArtikel($artikel_id, $tag, 0); // alle lˆschen
+				$Buchung->entbucheArtikel($artikel_id, $tag, 0); // alle l√∂schen
 				$content = $Smarty->fetch('Buchungsuebersicht_InaktiveZelle.tpl');
 			}
 			$content = utf8_encode($content);
@@ -243,7 +243,7 @@ function gesamterBereich($buchung_nr, $artikelnummern, $art, $setzen)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($art))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung¸ltige Argumente.'));
+		$objResponse->addAlert(utf8_encode('Fehler - ung√ºltige Argumente.'));
 	}
 	else
 	{
@@ -284,13 +284,13 @@ function aktualisiereKorrespondenzListe($id, $Adressen_id, $id_nr)
 	return $objResponse;
 }
 /**
- * Korrespondenz - lˆscht eine Datei
+ * Korrespondenz - l√∂scht eine Datei
  */
 function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 {
 	global $DokArten;
 	$objResponse = new xajaxResponse();
-	// Korrespondenz-Datei lˆschen
+	// Korrespondenz-Datei l√∂schen
 	if ( !is_numeric($id_nr) && strlen($id_nr) > 0)
 	{
 		if ( $id_nr[0] == 'B')
@@ -325,11 +325,11 @@ function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 	$datei = utf8_decode($dokument);
 	if ( ! unlink($datei) )
 	{
-		$objResponse->addAlert(utf8_encode('Datei '.$datei.' konnte nicht gelˆscht werden.'));
+		$objResponse->addAlert(utf8_encode('Datei '.$datei.' konnte nicht gel√∂scht werden.'));
 	}
 	else
 	{
-		//$objResponse->addAlert(utf8_encode('Datei '.$datei.' wurde gelˆscht.'));
+		//$objResponse->addAlert(utf8_encode('Datei '.$datei.' wurde gel√∂scht.'));
 		if ( $Buchung_Nr > 0 )
 		{
 			global $session_userid;
@@ -343,10 +343,10 @@ function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 			$nickname = $user['value'];
 			// Profil laden wegen Nickname
 			if ( ! sql_query('UPDATE '.TABLE_BUCHUNGEN." SET Logtext=CONCAT('".date('d.m.Y H:i').
-			' Korrespondenz '.mysql_real_escape_string(utf8_decode($dokument)).' gelˆscht '.
+			' Korrespondenz '.mysql_real_escape_string(utf8_decode($dokument)).' gel√∂scht '.
 			$nickname."\n',Logtext) ".
 			' WHERE Buchung_Nr='.$Buchung_Nr))
-			$objResponse->addAlert(utf8_encode('Datenbankfehler beim Lˆschen: '.mysql_error()));
+			$objResponse->addAlert(utf8_encode('Datenbankfehler beim L√∂schen: '.mysql_error()));
 			$query = mysql_query('SELECT Logtext FROM '.TABLE_BUCHUNGEN.' WHERE Buchung_Nr='.$Buchung_Nr);
 			$buchung = mysql_fetch_array($query);
 			mysql_free_result($query);
@@ -368,7 +368,7 @@ function aktualisiereKorrespondenz($id, $Adressen_id, $id_nr = -1)
 {
 	global $DokArten;
 	$objResponse = new xajaxResponse();
-	// Korrespondenz-Datei lˆschen
+	// Korrespondenz-Datei l√∂schen
 	if ( !is_numeric($id_nr) && strlen($id_nr) > 0)
 	{
 		if ( $id_nr[0] == 'B')
@@ -492,13 +492,13 @@ function zeigeSeminarKorrespondenz($Buchung_Nr, $Adressen_id, $zeigen = true)
 }
 
 /**
- * Sendet eine Mail an einen Kunden. Diese enth‰lt als Anhang die angegebenen
+ * Sendet eine Mail an einen Kunden. Diese enth√§lt als Anhang die angegebenen
  * Dateien
  * @param int $Adressen_id die ID des Kunden
  * @param String $id_nr die ID der Buchung oder Rechnung (Prefix B oder R, leer wenn nicht vorhanden
- * @param String $Betreff der Betreff der Mail, wird ggf. um die Buchungsnummer erg‰nzt
+ * @param String $Betreff der Betreff der Mail, wird ggf. um die Buchungsnummer erg√§nzt
  * @param String $Text der Inhalt der Mail
- * @param array $dateien die Dateinamen der anzuh‰ngenden Dateien, diese werden mit ; getrennt
+ * @param array $dateien die Dateinamen der anzuh√§ngenden Dateien, diese werden mit ; getrennt
  */
 function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien, $mailadresse = '')
 {
@@ -526,7 +526,7 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 		}
 		catch ( Exception $e )
 		{
-			$objResponse->addAlert(utf8_encode('Ung¸ltige Referenz!'));
+			$objResponse->addAlert(utf8_encode('Ung√ºltige Referenz!'));
 		}
 	}
 	else
@@ -540,7 +540,7 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 		}
 		catch ( Exception $e )
 		{
-			$objResponse->addAlert(utf8_encode('Ung¸ltige Adressen-ID'));
+			$objResponse->addAlert(utf8_encode('Ung√ºltige Adressen-ID'));
 		}
 	}
 	if ( isset($Adresse))
@@ -581,7 +581,7 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 				'Subject'=>utf8_decode($Betreff));
 				$hdrs = $mime->headers($hdrs);
 
-				$mail =& Mail::factory('mail');
+				$mail =& Mail::factory('mail','-f buchhaltung@cvjmferiendorf.de');
 				if ( $mailadresse == '' ) 
 					$mailadresse = $Adresse->Email;
 				if ( $mail->send($mailadresse, $hdrs, $body) === true )
@@ -593,7 +593,7 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 						$Buchung->logAction('Korrespondenz '.mysql_real_escape_string(utf8_decode(implode(',',$dateien))).
 							' per Mail mit Betreff '.utf8_decode($Betreff).' an '.
 							mysql_real_escape_string($mailadresse).' gesendet');
-							// TODO Korrektur URL f¸r Verlinkung ¸bergeben
+							// TODO Korrektur URL f√ºr Verlinkung √ºbergeben
 						$objResponse->addAssign('Historie', 'innerHTML', utf8_encode(nl2br($Buchung->holeHistory(''))));
 						// Speichern der Mail-Datei bei der Buchung
 						$mail = 'An: '.$mailadresse."\n";
@@ -638,7 +638,7 @@ function aendereZuordnung($Adressen_id, $art, $wert, $Zuordnung)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Adressen_id) || !is_numeric($Zuordnung))
 	{
-		$objResponse->addAlert(utf8_encode('Ung¸ltige Adressen_id!'));
+		$objResponse->addAlert(utf8_encode('Ung√ºltige Adressen_id!'));
 	}
 	else
 	{
@@ -696,7 +696,7 @@ function moveArtikel($id, $Artikel_id, $Richtung)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Artikel_id)  || ! is_numeric($id))
 	{
-		$objResponse->addAlert(utf8_encode('Ung¸ltige Artikel-id'));
+		$objResponse->addAlert(utf8_encode('Ung√ºltige Artikel-id'));
 	}
 	else
 	{
@@ -712,7 +712,7 @@ function moveArtikel($id, $Artikel_id, $Richtung)
 	return $objResponse;
 }
 /**
- * ‰ndert die Anzahl der Eintr‰ge in der Artikelbaumliste
+ * √§ndert die Anzahl der Eintr√§ge in der Artikelbaumliste
  * @param int $id die ID der Seite
  * @param int $Artikel_id die ID des Artikels der gerade angezeigt wird
  * @param int/String $Anzahl die Anzahl oder "Alle" die angezeigt werden soll
@@ -722,7 +722,7 @@ function aendereArtikelAnzahl($id, $Artikel_id, $Anzahl)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Artikel_id) || ! is_numeric($id))
 	{
-		$objResponse->addAlert(utf8_encode('Ung¸ltige id!'));
+		$objResponse->addAlert(utf8_encode('Ung√ºltige id!'));
 	}
 	else
 	{
@@ -809,7 +809,7 @@ function zeigePersonenwahlDialog($Buchung_Nr, $Artikel_Nr, $Datum)
 	$Smarty->assign_by_ref('users', $users);
 	init_groups();
 	$Smarty->assign_by_ref('groups', $groups);
-	$Smarty->assign('title', 'Zust‰ndiger f¸r '.$Artikel->Bezeichnung.' am '.date('d.m.Y',$Datum));
+	$Smarty->assign('title', 'Zust√§ndiger f√ºr '.$Artikel->Bezeichnung.' am '.date('d.m.Y',$Datum));
 	$Smarty->assign('extern', $extern);
 	$Smarty->assign('markiertU', $markiertU);
 	$Smarty->assign('markiertG', $markiertG);
@@ -820,20 +820,20 @@ function zeigePersonenwahlDialog($Buchung_Nr, $Artikel_Nr, $Datum)
 	return $objResponse;
 }
 /**
- * tr‰gt die zust‰ndige Person f¸r einen Buchungseintrag ein. Wird keine Person angegeben, wird der Eintrag
- * gelˆscht.
+ * tr√§gt die zust√§ndige Person f√ºr einen Buchungseintrag ein. Wird keine Person angegeben, wird der Eintrag
+ * gel√∂scht.
  * @param int $Buchung_Nr die Buchungsnummer
  * @param int $Artikel_Nr die Artikelnummer
  * @param int $Datum der Zeitpunkt (Datum+Zeit)
  * @param string $Person die einzutragende Person
- * @param int $id die ID des HTML-Feldes das ge‰ndert werden muss
+ * @param int $id die ID des HTML-Feldes das ge√§ndert werden muss
  */
 function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 {
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Buchung_Nr) || ! is_numeric($Artikel_Nr) )
 	{
-		$objResponse->addAlert(utf8_encode('Ung¸ltige Parameter ¸bergeben!'));
+		$objResponse->addAlert(utf8_encode('Ung√ºltige Parameter √ºbergeben!'));
 	}
 	else
 	{
@@ -860,7 +860,7 @@ function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 			$Daten[]= $Datum;
 		}
 		// Neu: Event erstellen, Betroffene einrichten
-		// pr¸fen ob ein Event existiert
+		// pr√ºfen ob ein Event existiert
 		foreach ( $Daten as $Datum )
 		{
 			$text = '';
@@ -951,7 +951,7 @@ function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 		{
 			if( $text!='')
 			{
-				$text = 'Zust‰ndig: '.$text;
+				$text = 'Zust√§ndig: '.$text;
 			}
 			$objResponse->addAssign('Person'.$id,'innerHTML',utf8_encode($text));
 		}
@@ -962,7 +962,7 @@ function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 	return $objResponse;
 }
 /**
- * erzeugt eine CVJM-EAN (n‰chste freie Nummer) und schreibt sie ins Feld
+ * erzeugt eine CVJM-EAN (n√§chste freie Nummer) und schreibt sie ins Feld
  * docinput[EAN]
  */
 function createEAN()
