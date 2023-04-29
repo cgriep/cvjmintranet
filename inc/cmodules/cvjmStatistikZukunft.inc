@@ -980,4 +980,7 @@ if ( $profile['editor'] != 1 )
 	echo '</form>';
 }
 ?>
+<<<<<<< HEAD
 >>>>>>> 8a9dad9 (Synchronisation des Repositories)
+=======
+>>>>>>> 8a9dad9385ba16897ce25bb83a7bb0d85cd60b48
