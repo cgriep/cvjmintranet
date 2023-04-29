@@ -3,6 +3,7 @@
 <input type="Text" name="docinput[Datum]" value="{$Datum|date_format:"%d.%m.%Y"}" size="10" maxlength="10" 
 	onClick="popUpCalendar(this,Wahl['docinput[Datum]'],'dd.mm.yyyy')"
     onBlur="autoCorrectDate('Wahl','docinput[Datum]' , false )" />
+f&uuml;r <input type="Text" name="docinput[Tage]" value="10" size="5" maxlength="3" /> Tage 
 <input type="Submit" value="anzeigen" /> 
 </form>
 

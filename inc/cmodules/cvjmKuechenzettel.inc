@@ -193,24 +193,20 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
   }
   else
   {
-    // Gesamtücht der Küelegung
+    // Gesamtübersicht der Küchenbelegung
     KalenderScriptEinfuegen();
     $Datum = mktime(0,0,0,date("m",time()),date("d",time()),date("Y",time()));
     if ( isset($docinput["Datum"]) )
     {
       $Datum = convertDatumToTimestamp($docinput["Datum"]);
     }
-    /*
-    echo '<form action="'.get_url($id).'" method="post" name="Wahl" class="noprint">';
-      echo '<label for="Datum">Verpflegung ab Datum</label>';
-      echo ' <input type="Text" name="docinput[Datum]" value="'.date("d.m.Y",$Datum).
-        '" size="10" maxlength="10"';
-      echo KalenderEvents("Wahl", "docinput[Datum]");
-      echo '>';
-      echo ' <input type="Submit" value="anzeigen">';
-    echo "</form>\n";
-*/    
-$Where = "(Datum BETWEEN $Datum AND ".strtotime("+10 day",$Datum).")";
+    if ( isset($docinput["Tage"]) && is_numeric($docinput["Tage"]))
+    {
+      $Tage = $docinput["Tage"];
+    }
+    else 
+      $Tage = 10;
+    $Where = "(Datum BETWEEN $Datum AND ".strtotime("+".$Tage." day",$Datum).")";
     $sql = "SELECT Buchung_Nr, F_Artikel_Nr, Datum, Menge, Bezeichnung, ".
       "Altersgruppe, Kuechenhilfe, Position, Vegetarier, Schweinelos, ".
       "BetreueranzahlM, BetreueranzahlW, Essenbesonderheit, F_Speiseraum_id FROM (".
@@ -234,31 +230,7 @@ $Where = "(Datum BETWEEN $Datum AND ".strtotime("+10 day",$Datum).")";
       }
       $Buchungen[$Eintrag["Datum"]][$Eintrag["F_Artikel_Nr"]][] = new Buchung($Eintrag["Buchung_Nr"]);
       $Essen[$Eintrag["Datum"]][$Eintrag["F_Artikel_Nr"]][] = $Eintrag['Menge'];
-      //] = $Eintrag["Menge"];
-      /*
-      $Buchung[$Eintrag["Buchung_Nr"]]["Hilfe"] = $Eintrag["Kuechenhilfe"];
-      $Buchung[$Eintrag["Buchung_Nr"]]["Betreuer"] =
-        $Eintrag["BetreueranzahlM"]+$Eintrag["BetreueranzahlW"];
-      $Buchung[$Eintrag["Buchung_Nr"]]["Altersgruppe"] = $Eintrag["Altersgruppe"];
-      $Buchung[$Eintrag["Buchung_Nr"]]["Vegetarier"] = $Eintrag["Vegetarier"];
-      $Buchung[$Eintrag["Buchung_Nr"]]["Schweinelos"] = $Eintrag["Schweinelos"];
-      $Buchung[$Eintrag["Buchung_Nr"]]["Speiseraum"] = $Eintrag["F_Speiseraum_id"];
-      $Buchung[$Eintrag["Buchung_Nr"]]["Essenbesonderheit"] = $Eintrag["Essenbesonderheit"];
-      if ( ! isset($Buchung[$Eintrag["Buchung_Nr"]]["Daten"]) )
-      {
-        // Daten der Buchung feststellen
-        $q = sql_query("SELECT * FROM ".TABLE_BUCHUNGEN." INNER JOIN ".TABLE_ADRESSEN.
-          " ON Adressen_id=F_Adressen_id WHERE Buchung_Nr=".$Eintrag["Buchung_Nr"]);
-        $kunde = sql_fetch_array($q);
-        sql_free_result($q);
-        $Buchung[$Eintrag["Buchung_Nr"]]["Daten"] = $kunde["Name"]." ".$kunde["Vorname"];
-        if ( $kunde["Zusatz"] != "" )
-          $Buchung[$Eintrag["Buchung_Nr"]]["Daten"] .= "<br />".$kunde["Zusatz"];
-        $Buchung[$Eintrag["Buchung_Nr"]]["Daten"] .= "<br />".$kunde["Ort"]." - ".
-          $kunde["Kunden_Nr"];
-        $Buchung[$Eintrag["Buchung_Nr"]]["Daten"] = stripslashes($Buchung[$Eintrag["Buchung_Nr"]]["Daten"]);
-      }
-*/
+    
     }
     sql_free_result($Eintraege);
     array_multisort($ArtikelPos, SORT_ASC, SORT_NUMERIC, $Artikel, $ArtikelNr);
@@ -277,103 +249,6 @@ $Where = "(Datum BETWEEN $Datum AND ".strtotime("+10 day",$Datum).")";
     $Smarty->assign_by_ref('Essen', $Essen);
     setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");
     $Smarty->display('Kuechenuebersicht.tpl');
-    /*
-    if ( Count($Artikel) > 0 )
-    {
-      $query = sql_query("SELECT ".TABLE_ARTIKEL.".Bezeichnung, id FROM ".TABLE_ARTIKEL." INNER JOIN ".
-        TABLE_BUCHUNGSEINTRAEGE." ON id=F_Artikel_Nr WHERE $Where");
-      $Speisesaal = array();
-      while ( $saal = sql_fetch_array($query) )
-        $Speisesaal[$saal["id"]] = $saal["Bezeichnung"];
-      sql_free_result($query);
-      // Sortieren nach Position
-      array_multisort($ArtikelPos, SORT_ASC, SORT_NUMERIC, $Artikel, $ArtikelNr);
-/*
-      echo $design["table_begin"];
-      echo '<tr class="ueberschrift"><th>Datum</th>';
-      while ( list($key, $value) = each($Artikel) )
-      {
-        echo '<th>'.$value.'</th>';
-      }
-      echo '</tr>';
-      $Color = "helleZeile";
-      while ( list($key, $value) = each($Essen) )
-      {
-        echo '<tr class="'.$Color.'"><td>'.$Wochentage[date("w",$key)].
-          "<br />".date("d.m.Y",$key)."</td>";
-        reset($Artikel);
-        while ( list($akey, $avalue) = each($Artikel) )
-        {
-          echo '<td align="center">';
-          if ( isset($value[$ArtikelNr[$akey]]))
-          {
-            // Essen auflisten
-            $Gesamtmenge = 0;
-            $GesamtmengeB = 0;
-            $GesamtmengeV = 0;
-            $GesamtmengeS = 0;
-            while (list($ekey, $evalue) = each($value[$ArtikelNr[$akey]]) )
-            {
-               $Gesamtmenge += $evalue;
-               $GesamtmengeB += $Buchung[$ekey]["Betreuer"];
-               $GesamtmengeV += $Buchung[$ekey]["Vegetarier"];
-               $GesamtmengeS += $Buchung[$ekey]["Schweinelos"];
-               if ( $Buchung[$ekey]["Essenbesonderheit"] != "" )
-                 $s = "<br />".stripslashes(str_replace("\n","",
-                       str_replace("\r","",nl2br($Buchung[$ekey]["Essenbesonderheit"]))));
-               else
-                 $s = "";
-               $s = $Buchung[$ekey]["Daten"].$s;
-               echo '<a onMouseOver="return overlib(\''.
-                     htmlentities($s)."',CAPTION,'Buchung ".$ekey."');";
-                 echo '" onMouseOut="return nd();" ';
-               echo 'href="'.get_url($id,array("docinput[Buchung_Nr]"=>$ekey,
-                 "docinput[Datum]"=>$key,"docinput[Art]"=>$ArtikelNr[$akey])).'">';
-               if ( $Buchung[$ekey]["Speiseraum"] > 0 )
-                 echo $Speisesaal[$Buchung[$ekey]["Speiseraum"]]." :";
-               else
-                 echo "&gt;"; // kein Saal angegeben
-               echo $evalue;
-               echo '/'.$Buchung[$ekey]["Betreuer"];
-               if ( $Buchung[$ekey]["Vegetarier"] > 0 )
-                 echo '/V:'.$Buchung[$ekey]["Vegetarier"];
-               if ( $Buchung[$ekey]["Schweinelos"] > 0 )
-                 echo '/S:'.$Buchung[$ekey]["Schweinelos"];
-               echo " (".substr($Altersgruppen[$Buchung[$ekey]["Altersgruppe"]],0,4);
-               if ( ! $Buchung[$ekey]["Hilfe"] )
-                 echo ', o.H.';
-               if ( trim($Buchung[$ekey]["Essenbesonderheit"]) != "" )
-               {
-                 echo '<span class="Fehler">!!!!</span>';
-               }
-               echo ')</a>';
-               echo "<br />\n";
-            }
-            echo "<strong>$Gesamtmenge/$GesamtmengeB";
-            if ( $GesamtmengeV != 0 )
-              echo "/V:$GesamtmengeV";
-            if ( $GesamtmengeS != 0 )
-              echo "/S:$GesamtmengeS";
-            echo "</strong>\n";
-          }
-          else
-            echo '&nbsp;';
-          echo '</td>';
-        }
-        echo '</tr>';
-        if ( $Color == "helleZeile" )
-          $Color = "dunkleZeile";
-        else
-          $Color = "helleZeile";
-      }
-      echo "</table>\n";
-
-    } // Artikel vorhanden
-    else
-    {
-      echo '<strong>Keine Buchungen in den nästen 10 Tagen vorhanden!</strong>';
-    }
-    */
   }
 }
 

@@ -206,10 +206,10 @@ if ( $profile['editor'] != 1 )
 					{
 						
 						$uebernachtungen[CVJM_ZELTBEREICH][date('Y',$datum)][date('m',$datum)]['Anzahl'] += $anz;
-						if ( $Selbst > 0)
+						if ( $Selbstverpflegung[$buchung_nr] > 0)
 						{
-							$Selbst--; // ein Tag ist verbraucht
-							$uebernachtungen[CVJM_ZELTBEREICH][date('Y',$datum)][date('m',$datum)]['Selbst'] += $personen;
+							//$Selbst--; // ein Tag ist verbraucht
+							$uebernachtungen[CVJM_ZELTBEREICH][date('Y',$datum)][date('m',$datum)]['Selbst'] += $anz;
 						}
 						//echo "$buchung_nr  $anz  ZB  ".date('Y-m-d',$datum)."<br />";
 					}
