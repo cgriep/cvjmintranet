@@ -4,7 +4,7 @@
  *Adressen
  *
  *Parameter:
- *Search - Wird in den Feldern Name, Vorname, Straße, Ort gesucht
+ *Search - Wird in den Feldern Name, Vorname, StraÃŸe, Ort gesucht
  *Sort - Feld, nachdem sortiert wird
  *Seite - Anzuzeigende Seite des Ergebnisses
  *docinput[AnzahlProSeite] - Setzt die pro Seite anzuzeigenden Datens&auml;tze (Userspezifisch)
@@ -14,7 +14,7 @@
  *		       angezeigt werden sollen
  *docinput[Zugehoerig] - Nummer der Adresse (Adressen_id) deren Institutionen angezeigt
  *		       werden sollen
- *docinput[Edit] - Editieren der Kategoriezugehörigkeiten (1), Zugehoerig (2) oder
+ *docinput[Edit] - Editieren der KategoriezugehÃ¶rigkeiten (1), Zugehoerig (2) oder
  *                 Institutionen(3), Versandmarker (4)
  *docinput[Adressen]  (Adressen_id die in die Kategorie gesetzt werden sollen
  *docinput[AdressenNr] bei der Zuordnung von Kategorien (letzteres alle Nr. in der Ansicht)
@@ -71,7 +71,7 @@ if ($profile['editor'] != '1')
 	}
 	if ($document['Personal'] == 1 && isset ($_REQUEST['Bearbeiten']))
 	{
-		// hack: Damit nicht immer im Persönlichen id der unpersönlichen Seite setzen
+		// hack: Damit nicht immer im PersÃ¶nlichen id der unpersÃ¶nlichen Seite setzen
 		if (!$qres = sql_query('SELECT ' . TABLE_NODES . '.id FROM ' . TABLE_NODES . ' INNER JOIN ' . TABLE_NODEDATA .
 		' ON node_id=' . TABLE_NODES . ".id WHERE value<>'1' AND name='Personal' AND type_id = " .
 		$doctypes['cvjmadressen']))
@@ -86,14 +86,14 @@ if ($profile['editor'] != '1')
 	}
 	if (isset ($_REQUEST['DelOk']) && isset ($_REQUEST['DelMOk']))
 	{
-		// Löschen einer Adresse
+		// LÃ¶schen einer Adresse
 		if (is_numeric($_REQUEST['DelMOk']))
 		{
 			if ($_REQUEST['DelOk'] == - $_REQUEST['DelMOk'])
 			{
 				$Adresse = new Adresse($_REQUEST['DelOk']);
 				$Adresse->loeschen();
-				echo '<div class="Erledigt">&gt;&gt;&gt; Adresse ' . $_REQUEST['DelOk'] . ' gelöscht.</div>';
+				echo '<div class="Erledigt">&gt;&gt;&gt; Adresse ' . $_REQUEST['DelOk'] . ' gelÃ¶scht.</div>';
 			}
 		}
 	}
@@ -116,28 +116,28 @@ if ($profile['editor'] != '1')
 			if (sql_query('INSERT INTO ' . TABLE_KATEGORIEN . " (Kategorie) VALUES ('" .
 			mysql_real_escape_string($docinput['KategorieName']) . "')"))
 			{
-				echo '<div class="Erledigt">&gt;&gt;&gt; Kategorie hinzugefügt.</div>';
+				echo '<div class="Erledigt">&gt;&gt;&gt; Kategorie hinzugefÃ¼gt.</div>';
 				$docinput['Kategorie'] = sql_insert_id();
 			} else
 			{
-				echo '<div class="SchwererFehler">Fehler beim Hinzufügen der Kategorie.' . mysql_error() . "</div>";
+				echo '<div class="SchwererFehler">Fehler beim HinzufÃ¼gen der Kategorie.' . mysql_error() . "</div>";
 			}
 		}
 	}
 	if (isset ($docinput['Edit']) && $docinput['Edit'] >= 5 && $docinput['Edit'] <= 7)
 	{
-		// Alle Versandmarker löschen
+		// Alle Versandmarker lÃ¶schen
 		if (!isset ($docinput['Kategorie']))
 		{
 			switch ($docinput['Edit'])
 			{
-				case 5 : // alle Löschen
+				case 5 : // alle LÃ¶schen
 					Adresse::removeAllVersandmarker();
 					break;
-				case 6 : // Institutionen Löschen
+				case 6 : // Institutionen LÃ¶schen
 					Adresse::removeAllVersandmarkerInstitutionen();
 					break;
-				case 7 : // Ansprechpartner löschen
+				case 7 : // Ansprechpartner lÃ¶schen
 					Adresse::removeAllVersandmarkerAnsprechpartner();
 					break;
 			} // Switch
@@ -147,7 +147,7 @@ if ($profile['editor'] != '1')
 			Adresse::setVersandmarkerKategorie($docinput['Kategorie']);
 		}
 		$docinput['Edit'] = 4;
-		unset ($docinput['Kategorie']); // Löschen damit nicht nur die Kategorie angezeigt wird
+		unset ($docinput['Kategorie']); // LÃ¶schen damit nicht nur die Kategorie angezeigt wird
 	}
 
 	// Neuen Datensatz als Kopie erstellen. Die Kopie wird direkt bearbeitet
@@ -163,7 +163,7 @@ if ($profile['editor'] != '1')
 	}
 	if ( isset($Adresse))
 	{
-		// Stammdaten speichern oder hinzufügen		
+		// Stammdaten speichern oder hinzufÃ¼gen		
 		if ( isset($_REQUEST['KuNr']) )
 		{
 			$Adresse->getKundenNummer();					
@@ -185,12 +185,12 @@ if ($profile['editor'] != '1')
 			$Adresse->uebertrageFelder($docinput);
 			$Adresse->save();
 		}
-		// Bemerkungs-Anhang löschen
+		// Bemerkungs-Anhang lÃ¶schen
 		if (isset ($_REQUEST['DelAnhang']) && isset ($_REQUEST['AddBem']))
 		{
 			$Adresse->entferneAnhang($_REQUEST['AddBem']);
 		}
-		// Bemerkungen speichern oder hinzufügen
+		// Bemerkungen speichern oder hinzufÃ¼gen
 		if (isset ($_REQUEST["BemSave"]))
 		{
 			$Datum = convertDatumToTimestamp($docinput["Datum"]);
@@ -213,7 +213,7 @@ if ($profile['editor'] != '1')
 			{
 				// Korrektur
 				$sql = "UPDATE " . TABLE_ADRESSENBEMERKUNGEN . " SET Bemerkung='" .
-				mysql_real_escape_string($docinput["Bemerkung"]) . "\ngeändert " . date("d.m.Y H:i") . " " .
+				mysql_real_escape_string($docinput["Bemerkung"]) . "\ngeÃ¤ndert " . date("d.m.Y H:i") . " " .
 				get_user_nickname() . "',Datum=$Datum,Wiedervorlage=$Wiedervorlage," .
 				"Anhang='" . $_FILES["Anhang"]["name"] . "' WHERE Bemerkung_id=" . $docinput["Bemerkung_id"];
 			} else
@@ -322,7 +322,7 @@ if ($profile['editor'] != '1')
 	}
 	elseif (isset ($_REQUEST["KategorieNeu"]))
 	{
-		// Neue Kategorie hinzufügen / bearbeiten
+		// Neue Kategorie hinzufÃ¼gen / bearbeiten
 		echo '<form action="' . get_url($id) . '" method="post" >';
 		echo '<label for="Kategorie">Kategorie</label> <input id="Kategorie" ';
 		if ($_REQUEST["KategorieNeu"] >= 0)
@@ -499,19 +499,15 @@ if ($profile['editor'] != '1')
 		{
 			$Search .= ' AND Versandmarker';
 		}
+		if ( $docinput['proJahr'] == 'v')
+			{				
+				$Search .= ' AND Stand >= DATE_SUB(NOW(), INTERVAL 3 YEAR)';				
+			}
 		if ( is_numeric($docinput['AnzBuchungen']) )
 		{
-			if ( $docinput['proJahr'] == 'v')
-			{
-				// mindestens x Buchungen pro Jahr 
-				
-			}
-			else
-			{
 				// mindestens x Buchungen 
 				$Search .= ' AND Adressen_id IN (SELECT F_Adressen_id FROM cvjm_Buchungen GROUP BY F_Adressen_id HAVING Count(F_Adressen_id) >= ';
 				$Search .= $docinput['AnzBuchungen'].')';				
-			}
 		}		
 		if (isset ($_REQUEST['Seite']) && is_numeric($_REQUEST['Seite']))
 		{
@@ -661,9 +657,9 @@ if ($profile['editor'] != '1')
 else
 {
 	echo '<br /><br />';
-	create_editor_input('Recht für Veränderungen', 'SpeicherRecht', 'text_input');
+	create_editor_input('Recht fÃ¼r VerÃ¤nderungen', 'SpeicherRecht', 'text_input');
 	echo '<br /><br />';
-	create_editor_input('Persönlich', 'Personal', 'onoff_input');
+	create_editor_input('PersÃ¶nlich', 'Personal', 'onoff_input');
 	echo '<br /><br />';
 	create_editor_input('Listen (Format ist Listenname:Feld|Feld|Feld)', 'Listen', 'area_input');
 	echo '<br /><br />';

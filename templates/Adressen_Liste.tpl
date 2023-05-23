@@ -11,11 +11,11 @@
     {html_options options=$Kategorien selected=$docinput.Kategorie}
 	</select> 
 {if (!isset ($docinput.Edit))}
-	<input type="Submit" value="auswählen" />
+	<input type="Submit" value="ausw&auml;hlen" />
   </td>
   <td align="right">
   {if $Speichern}
-	[ <a href="?id={$id}&Bearbeiten=-1">Adresse hinzufügen</a> ]<br />
+	[ <a href="?id={$id}&Bearbeiten=-1">Adresse hinzuf&uuml;gen</a> ]<br />
 	{if ($docinput.Kategorie != -1 && !isset ($docinput.Zugehoerig) && !isset ($docinput.Institution))}
 	[ <a href="?id={$id}&Sort={$Sort}&docinput[Edit]=1">Adressen zuordnen</a> ]<br />
 	{else}
@@ -27,7 +27,7 @@
 	    {/if}
 	  {/if}
 	{/if}
-	[ <a href="?id={$id}&KategorieNeu=-1">Kategorie hinzufügen</a> ]
+	[ <a href="?id={$id}&KategorieNeu=-1">Kategorie hinzuf&uuml;gen</a> ]
 	{if ($docinput.Kategorie != -1)}
 			<br />[ <a href="?id={$id}&KategorieNeu={$docinput.Kategorie}">Kategorie bearbeiten</a> ]
 	{/if}
@@ -88,7 +88,7 @@
 	&nbsp;&nbsp;&nbsp;[ <a href="?id={$id}&{$paramsOhneEdit}">Bearbeitung beenden</a> ] 
 	{/if}
 	<label for="docinput[AnzBuchungen]">min. Buchungen</label>
-	<input type="text" name="docinput[AnzBuchungen]" size="2" maxlen="3" value="{$docinput.AnzBuchungen}" /> p.a. 
+	<input type="text" name="docinput[AnzBuchungen]" size="2" maxlen="3" value="{$docinput.AnzBuchungen}" /> nur aus den letzten 3 Jahren: 
 	<input type="checkbox" name="docinput[proJahr]" value="v" {if $docinput.proJahr == 'v'}checked="checked"{/if}/> 
   </td>
   <td align="right">
@@ -123,7 +123,7 @@
   </td>
   <td align="right">
 	<a href="?id={$id}&Seite={$Seite}&docinput[AnzahlProSeite]={eval var=$AnzahlProSeite-5}&{$params}" 
-	title="Anzeigeanzahl reduzieren">&uarr;</a><br />{$Gesamtanzahl} Einträge
+	title="Anzeigeanzahl reduzieren">&uarr;</a><br />{$Gesamtanzahl} Eintr&auml;ge
   </td>
 </tr>
 {/if}
@@ -175,7 +175,7 @@
 	  {if $Adresse->Versandmarker}checked="checked"{/if}
 	  onclick="xajax_aendereZuordnung({$Adresse->Adressen_id},{$docinput.Edit},this.checked,{$Adresse->Versandmarker});"
 	{/if}
-	 title="zugehörig zu {$docinput.KategorieName}"	/>
+	 title="zugeh&ouml;rig zu {$docinput.KategorieName}"	/>
   {/if} 
   </td>
 </tr>
@@ -193,9 +193,9 @@
   {/section}
   </td>
   <td align="right">
-	{$Gesamtanzahl} Einträge<br />
+	{$Gesamtanzahl} Eintr&auml;ge<br />
 	<a href="?id={$id}&Seite={$Seite}&docinput[AnzahlProSeite]={eval var=$AnzahlProSeite+5}&{$params}" 
-	title="Anzeigeanzahl erhöhen">&darr;</a>
+	title="Anzeigeanzahl erh&ouml;hen">&darr;</a>
   </td>
 </tr>
 {/if} {* mehr als eine Seite *}
@@ -204,7 +204,7 @@
 {if ($docinput.Edit != 4)}
 	[ <a href="?id={$id}&docinput[Edit]=4">Versandadressen zusammenstellen</a> ] {/if}
 {if ($Speichern)}
-	[ <a href="?id={$id}&Bearbeiten=-1">Adresse hinzufügen</a> ]
+	[ <a href="?id={$id}&Bearbeiten=-1">Adresse hinzuf&uuml;gen</a> ]
 {/if}
 
 
