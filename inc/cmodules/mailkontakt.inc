@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -14,7 +14,7 @@ if ( isset($_REQUEST['Mailabsenden'])) {
   // Alle Parameter in die Mail
   $message_body = '';
   $sender = "";
-  while (list ($key, $value) = each ($_POST)) {
+  foreach ($_POST as $key => $value)  {
     if ( $key != "Mailabsenden" )
     {
       $message_body .= transform($key,'clean').": ".transform($value, 'clean')."\n";

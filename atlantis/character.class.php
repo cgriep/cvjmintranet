@@ -4,18 +4,18 @@
 /**
  * Klasse Charakter
  * Kapselt die Eigenschaften eines Spielcharakters mit seinen Fertigkeiten
- * Enthält zusätzlich diverse Implemtierungen der Atlantis-Regeln
+ * Enthï¿½lt zusï¿½tzlich diverse Implemtierungen der Atlantis-Regeln
  * 2006 Christoph Griep
  * 
  */
 class Charakter
 {
 	/** 
-	 * Magiepunkte pro Zauber hängen vom Rang ab: 
+	 * Magiepunkte pro Zauber hï¿½ngen vom Rang ab: 
 	 * Wanderer: 3 Punkte
 	 * Adept: 5
 	 * Meister: 10
-	 * Großmeister: 20
+	 * Groï¿½meister: 20
 	 */
 	var $Magiepunkte = array (
 		1 => 3,
@@ -39,13 +39,13 @@ class Charakter
 		'Kurzbeschreibung',
 		'Historie'
 	);
-	// IDs des Übernatürliches-Wesen-Vorteils
+	// IDs des ï¿½bernatï¿½rliches-Wesen-Vorteils
 	const UEBERNATUERLICHLEICHT = 396;
 	const UEBERNATUERLICHGANZ = 398;
 	// ID der Klassen
 	const SCHAMANE = 7;
 	const ELEMENTARIST = 11;
-	// Fertigkeiten für Meister und Großmeisterprüfungen
+	// Fertigkeiten fï¿½r Meister und Groï¿½meisterprï¿½fungen
 	const MEISTER = 509;
 	const GROSSMEISTER = 508;
 	const MAGIEPUNKTE = 510;
@@ -61,8 +61,8 @@ class Charakter
 
 	var $Charakter_id;
 	var $Fertigkeiten;
-	var $Spruchlisten; // zu Beginn ausgewählte Spruchlisten
-	var $vorhandeneSpruchlisten; // tatsächlich schon gewählte Spruchlisten 
+	var $Spruchlisten; // zu Beginn ausgewï¿½hlte Spruchlisten
+	var $vorhandeneSpruchlisten; // tatsï¿½chlich schon gewï¿½hlte Spruchlisten 
 	var $Spezialisierungen;
 
 	function Charakter()
@@ -83,7 +83,7 @@ class Charakter
 		$this->Kurzbeschreibung = '';
 		$this->Fertigkeiten = array ();
 		$this->Verboten = array ();
-		// Spruchlistenanzahl entspricht Stufe in der gewählten Klasse
+		// Spruchlistenanzahl entspricht Stufe in der gewï¿½hlten Klasse
 		$this->Spruchlisten = array ();
 		$this->bestimmeSpezialisierungsraenge();
 	}
@@ -95,12 +95,12 @@ class Charakter
 		  return $wert; 
 	}
 	/**
-	 * Erhöht die Contageanzahl um die angegebene Anzahl und ergänzt die Historie
+	 * Erhï¿½ht die Contageanzahl um die angegebene Anzahl und ergï¿½nzt die Historie
 	 * des Charakters um einen entsprechenden Eintrag. Ist es ein Atlantiscon, 
-	 * so werden zusätzlich die Atlantis-Contage erhöht.
-	 * Pro Contag wird außerdem ein Punkt für Fertigkeiten gegeben.
-	 * @param int Anzahl- die Anzahl der Contage, die ergänzt werden
-	 * @param string Con der Name des Cons für die Historie
+	 * so werden zusï¿½tzlich die Atlantis-Contage erhï¿½ht.
+	 * Pro Contag wird auï¿½erdem ein Punkt fï¿½r Fertigkeiten gegeben.
+	 * @param int Anzahl- die Anzahl der Contage, die ergï¿½nzt werden
+	 * @param string Con der Name des Cons fï¿½r die Historie
 	 * @param boolean Atlantis true, wenn es ein Atlantiscon ist
 	 * @return false, wenn ein Fehler aufgetreten ist, true sonst
 	 */
@@ -111,7 +111,7 @@ class Charakter
 		$this->Contage += $Anzahl;
 		if ($Atlantis)
 			$this->Atlantiscontage += $Anzahl;
-		$s = 'Erfahrung ergänzt ' . date('d.m.Y H:i') . ': ' . $Con .
+		$s = 'Erfahrung ergï¿½nzt ' . date('d.m.Y H:i') . ': ' . $Con .
 		' (' . $Anzahl . ' Contage';
 		if ($Atlantis)
 			$s .= ',Atlantis';
@@ -146,19 +146,19 @@ class Charakter
 		$this->F_Rasse_id = $rasse;
 		$Kosten = 0;
 		// vorgegebene Rassenfertigkeiten beruecksichtigen
-		if (!$query = mysql_query('SELECT * FROM T_RassenFertigkeiten INNER JOIN' .
+		if (!$query = sql_query('SELECT * FROM T_RassenFertigkeiten INNER JOIN' .
 			' T_Fertigkeiten ON Fertigkeit_id=F_Fertigkeit_id ' .
 			'WHERE Pflicht AND F_Rasse_id=' . $this->F_Rasse_id))
 		{
-			die(mysql_error());
+			die(sql_error());
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			if ($row['Kosten'] == 0 && ! $row['Pflicht'])
 				$this->Verboten[] = $row['Fertigkeit_id'];
 			else
 			{
-				// Übernatürliche kostenlose Rassenvorteile sind von Anfang an aktiviert
+				// ï¿½bernatï¿½rliche kostenlose Rassenvorteile sind von Anfang an aktiviert
 				if ($row['Art'] == self :: VORTEILUEBERNATUERLICH )
 				{
 					if ( $row['Kosten'] + $row['Kosten1'] == 0)
@@ -169,26 +169,26 @@ class Charakter
 				$this->Fertigkeiten[$row['Fertigkeit_id']] = $row;
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $Kosten;
 	}
 	/**
-	 * Gibt den Namen der Rasse des Charakters zurück
+	 * Gibt den Namen der Rasse des Charakters zurï¿½ck
 	 * @return der Name der Rasse
 	 */
 	function getRasse()
 	{
 		if (!is_numeric($this->F_Rasse_id))
 			return '';
-		$query = mysql_query('SELECT * FROM T_Rassen WHERE Rasse_id=' . $this->F_Rasse_id);
-		$rasse = mysql_fetch_array($query);
-		mysql_free_result($query);
+		$query = sql_query('SELECT * FROM T_Rassen WHERE Rasse_id=' . $this->F_Rasse_id);
+		$rasse = sql_fetch_array($query);
+		sql_free_result($query);
 		return $rasse['Rasse'];
 	}
 	/**
-	 * Prüft ob eine Fertigkeit erlaubt ist.
+	 * Prï¿½ft ob eine Fertigkeit erlaubt ist.
 	 * Dazu darf sie nicht verboten sein 
-	 * @param int id der Fertigkeit, die geprüft werden soll
+	 * @param int id der Fertigkeit, die geprï¿½ft werden soll
 	 * @return boolean true, wenn die Fertigkeit erlaubt ist, false sonst 
 	 */
 	function fertigkeitErlaubt($fertigkeit_id)
@@ -204,14 +204,14 @@ class Charakter
 	{
 		if (is_numeric($fertigkeit_id))
 		{
-			// Besonderheit: Abhängigkeiten prüfen 
-			if (!$query = mysql_query('SELECT * FROM T_FertigkeitenAbhaengigkeiten ' .
+			// Besonderheit: Abhï¿½ngigkeiten prï¿½fen 
+			if (!$query = sql_query('SELECT * FROM T_FertigkeitenAbhaengigkeiten ' .
 				'INNER JOIN T_Fertigkeiten ON Fertigkeit_id=F_Fertigkeiten_id2 ' .
 				'WHERE F_Fertigkeiten_id2=' . $fertigkeit_id))
-				echo mysql_error();
+				echo sql_error();
 			$ok = true;
 			$Kosten = 0;
-			while (($row = mysql_fetch_array($query)) && $ok)
+			while (($row = sql_fetch_array($query)) && $ok)
 			{
 				if (!isset ($this->Fertigkeiten[$row['F_Fertigkeiten_id1']]) && $row['Erlaubt'])
 				{
@@ -225,28 +225,28 @@ class Charakter
 					$Kosten += $row['Kosten'];
 				}
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			if (!$ok)
 			{
 				$Kosten = 1000;
 			}
 			if (is_numeric($spezialisierung_id))
 			{
-				if (!$query = mysql_query('SELECT * FROM T_SpezialisierungenFertigkeiten ' .
+				if (!$query = sql_query('SELECT * FROM T_SpezialisierungenFertigkeiten ' .
 					'WHERE F_Fertigkeit_id=' . $fertigkeit_id . ' AND F_Spezialisierung_id=' .
 					$spezialisierung_id))
-					die('hfP:' . mysql_error());
-				$f = mysql_fetch_array($query);
-				mysql_free_result($query);
+					die('hfP:' . sql_error());
+				$f = sql_fetch_array($query);
+				sql_free_result($query);
 				$Kosten = $Kosten + $f['Kosten'];
 			} else
 			{
 
-				if (!$query = mysql_query('SELECT * FROM T_Fertigkeiten ' .
+				if (!$query = sql_query('SELECT * FROM T_Fertigkeiten ' .
 					'WHERE Fertigkeit_id=' . $fertigkeit_id))
-					die('hfP2:' . mysql_error());
-				$f = mysql_fetch_array($query);
-				mysql_free_result($query);
+					die('hfP2:' . sql_error());
+				$f = sql_fetch_array($query);
+				sql_free_result($query);
 				$Kosten = $Kosten + $f['Kosten1'];
 			}
 			return $Kosten;
@@ -261,44 +261,44 @@ class Charakter
 			$s = '';
 			if (is_numeric($spezialisierung_id))
 			{
-				$query = mysql_query('SELECT * FROM (T_Fertigkeiten INNER JOIN  ' .
+				$query = sql_query('SELECT * FROM (T_Fertigkeiten INNER JOIN  ' .
 				'(T_SpezialisierungenFertigkeiten' .
 				' INNER JOIN (T_Spezialisierungen INNER JOIN T_Spezialisierungsklassen ON ' .
 				'F_Klasse_id=Klasse_id) ON F_Spezialisierung_id=Spezialisierung_id) ' .
 				' ON F_Fertigkeit_id=Fertigkeit_id) ' .
 				'INNER JOIN T_Raenge ON Rang_id=F_Rang_id' .
 				' WHERE Fertigkeit_id=' . $fertigkeit_id);
-				$f = mysql_fetch_array($query);
-				mysql_free_result($query);
+				$f = sql_fetch_array($query);
+				sql_free_result($query);
 				$f['Spezialisierung_id'] = $spezialisierung_id;
 				$punkte = $this->holeFertigkeitPunkte($fertigkeit_id, $spezialisierung_id);
 			} else
 			{
 				// Vor-/Nachteile
-				$query = mysql_query('SELECT * FROM T_Fertigkeiten WHERE Fertigkeit_id=' . $fertigkeit_id);
-				$f = mysql_fetch_array($query);
-				mysql_free_result($query);
+				$query = sql_query('SELECT * FROM T_Fertigkeiten WHERE Fertigkeit_id=' . $fertigkeit_id);
+				$f = sql_fetch_array($query);
+				sql_free_result($query);
 				$punkte = $f['Kosten1'];
-				// Übernatürliche Dinge werden anders berechnet
+				// ï¿½bernatï¿½rliche Dinge werden anders berechnet
 				if ($f['Art'] == self :: VORTEILUEBERNATUERLICH || $f['Art'] == self :: NACHTEILUEBERNATUERLICH)
 					$punkte = 0;
 
 				/*
 				 * 
 				 * {
-				if ($_SESSION['ÜVorteilpunkte'] + $row['Kosten1'] > Min($MaxUePunkte, abs($_SESSION['ÜNachteilpunkte'])))
+				if ($_SESSION['ï¿½Vorteilpunkte'] + $row['Kosten1'] > Min($MaxUePunkte, abs($_SESSION['ï¿½Nachteilpunkte'])))
 				{
-					$_SESSION['Fehler'] = 'Maximal ' . $MaxUePunkte . ' übernatürliche Vorteilpunkte, übernatürliche ' .
-					'Vorteilpunkte müssen mit übernatürlichen Nachteilpunkten ' .
+					$_SESSION['Fehler'] = 'Maximal ' . $MaxUePunkte . ' ï¿½bernatï¿½rliche Vorteilpunkte, ï¿½bernatï¿½rliche ' .
+					'Vorteilpunkte mï¿½ssen mit ï¿½bernatï¿½rlichen Nachteilpunkten ' .
 					'ausgeglichen sein';
 					FertigkeitHinzufuegen(- $row['Fertigkeit_id']);
-				if (abs($_SESSION['ÜNachteilpunkte'] + $row['Kosten1']) > $MaxUePunkte)
+				if (abs($_SESSION['ï¿½Nachteilpunkte'] + $row['Kosten1']) > $MaxUePunkte)
 				{
 					$_SESSION['Fehler'] = 'Maximal ' . $MaxUePunkte . ' Nachteilpunkte';
 					FertigkeitHinzufuegen(- $row['Fertigkeit_id']);
 				} else
 				{
-					$_SESSION['ÜNachteilpunkte'] += $row['Kosten1'];
+					$_SESSION['ï¿½Nachteilpunkte'] += $row['Kosten1'];
 				}
 				}
 				 * normale Vorteile
@@ -310,7 +310,7 @@ class Charakter
 				{
 				if (abs($Charakter->Hilfspunkte['Nachteilpunkte'] + $row['Kosten1']) > 40)
 				{
-					$_SESSION['Fehler'] = 'Maximal 40 Nachteilpunkte können vergeben werden.';
+					$_SESSION['Fehler'] = 'Maximal 40 Nachteilpunkte kï¿½nnen vergeben werden.';
 					FertigkeitHinzufuegen(- $row['Fertigkeit_id']);
 				 */
 			}
@@ -318,12 +318,12 @@ class Charakter
 			$this->Punkte -= $punkte;
 			$this->bestimmeSpezialisierungsraenge();
 			$s = '';
-			// TODO: Abhängigkeiten beachten!
+			// TODO: Abhï¿½ngigkeiten beachten!
 			/*
-			 * 	if (!$query = mysql_query('SELECT * FROM T_FertigkeitenAbhaengigkeiten ' .
+			 * 	if (!$query = sql_query('SELECT * FROM T_FertigkeitenAbhaengigkeiten ' .
 			'INNER JOIN T_Fertigkeiten ON Fertigkeit_id=F_Fertigkeiten_id2 ' .
 			'WHERE F_Fertigkeiten_id1=' . $fid . ' AND Automatisch'))
-			echo mysql_error();
+			echo sql_error();
 			
 			 */
 
@@ -332,15 +332,15 @@ class Charakter
 	}
 	function fertigkeitEntfernen($fertigkeit_id)
 	{
-		// TODO: Fehler auswerten und als String zurückgeben!
-		// TODO: Abhängige Dinge auswerten und entfernen
+		// TODO: Fehler auswerten und als String zurï¿½ckgeben!
+		// TODO: Abhï¿½ngige Dinge auswerten und entfernen
 		$Fehler = 'Diese Fertigkeit ist nicht vorhanden!';
 		if (isset ($this->Fertigkeiten[$fertigkeit_id]))
 		{
 			if (isset ($this->Fertigkeiten[$fertigkeit_id]['Pflicht']) && $this->Fertigkeiten[$fertigkeit_id]['Pflicht'])
 			{
 				// vorgegebene Fertigkeit!
-				$Fehler = 'Vorgegebene Fertigkeiten können nicht entfernt werden!';
+				$Fehler = 'Vorgegebene Fertigkeiten kï¿½nnen nicht entfernt werden!';
 			} else
 			{
 				if (isset ($this->Fertigkeiten['Spezialisierung_id']))
@@ -349,11 +349,11 @@ class Charakter
 					$punkte = $this->Fertigkeiten[$fertigkeit_id]['Kosten1'];
 				if (isset ($this->Fertigkeiten[$fertigkeit_id]['Kosten']))
 					$punkte += $this->Fertigkeiten[$fertigkeit_id]['Kosten'];
-				// Übernatürliches wird extra abgerechnet 
+				// ï¿½bernatï¿½rliches wird extra abgerechnet 
 				if ($this->Fertigkeiten[$fertigkeit_id]['Art'] == self :: VORTEILUEBERNATUERLICH || $this->Fertigkeiten[$fertigkeit_id]['Art'] == self :: NACHTEILUEBERNATUERLICH)
 					$punkte = 0;
 				$this->Punkte += $punkte;
-				// Übernatürliche Fertigkeiten löschen wenn der Vorteil entfernt wird
+				// ï¿½bernatï¿½rliche Fertigkeiten lï¿½schen wenn der Vorteil entfernt wird
 				if ($fertigkeit_id == self :: UEBERNATUERLICHLEICHT || $fertigkeit_id == self :: UEBERNATUERLICHGANZ)
 				{
 					foreach ($this->Fertigkeiten as $key => $value)
@@ -375,10 +375,10 @@ class Charakter
 	{
 		if ($this->F_Klasse_id != NULL)
 		{
-			$query = mysql_query('SELECT Klasse FROM T_Spezialisierungsklassen ' .
+			$query = sql_query('SELECT Klasse FROM T_Spezialisierungsklassen ' .
 			'WHERE Klasse_id=' . $this->F_Klasse_id);
-			$spez = mysql_fetch_row($query);
-			mysql_free_result($query);
+			$spez = sql_fetch_row($query);
+			sql_free_result($query);
 			return $spez[0];
 		} else
 		{
@@ -389,10 +389,10 @@ class Charakter
 	{
 		if ($this->F_MagischeBesonderheit_id != NULL)
 		{
-			$query = mysql_query('SELECT Fertigkeit FROM T_Fertigkeiten ' .
+			$query = sql_query('SELECT Fertigkeit FROM T_Fertigkeiten ' .
 			'WHERE Fertigkeit_id=' . $this->F_MagischeBesonderheit_id);
-			$spez = mysql_fetch_row($query);
-			mysql_free_result($query);
+			$spez = sql_fetch_row($query);
+			sql_free_result($query);
 			return $spez[0];
 		} else
 		{
@@ -422,14 +422,14 @@ class Charakter
 				  $w = $this->nullWert($this-> $Feld);
 				else
 				  $w = $this->$Feld;
-				$sql .= '"' . mysql_real_escape_string($w) . '",';
+				$sql .= '"' . sql_real_escape_string($w) . '",';
 			}
 			// letztes , entfernen
 			$sql = substr($sql, 0, -1);
 			$sql .= ')';
-			if (!mysql_query($sql))
-				echo 'Save' . $sql . '<br />' . mysql_error();
-			$this->Charakter_id = mysql_insert_id();
+			if (!sql_query($sql))
+				echo 'Save' . $sql . '<br />' . sql_error();
+			$this->Charakter_id = sql_insert_id();
 		} else
 		{
 			// vorhandener Charakter
@@ -441,26 +441,26 @@ class Charakter
 				else
 				  $w = $this->$Feld;
 				$sql .= $Feld . '="' .
-				mysql_real_escape_string($w) . '",';
+				sql_real_escape_string($w) . '",';
 			}
 			// letztes , entfernen
 			$sql = substr($sql, 0, -1);
 			$sql .= ' WHERE Charakter_id=' . $this->Charakter_id;
-			if (!mysql_query($sql))
-				echo 'x1' . $sql . '/' . mysql_error();
+			if (!sql_query($sql))
+				echo 'x1' . $sql . '/' . sql_error();
 		}
 		// Spruchlisten speichern
 		// Dies kann nur bei der Neuerstellung erfolgen, da die Spruchlisten 
-		// danach nicht mehr zu ändern sind 
-		mysql_query('DELETE FROM T_CharakterSpruchlisten WHERE F_Charakter_id=' . $this->Charakter_id);
+		// danach nicht mehr zu ï¿½ndern sind 
+		sql_query('DELETE FROM T_CharakterSpruchlisten WHERE F_Charakter_id=' . $this->Charakter_id);
 		foreach ($this->Spruchlisten as $key => $spruchliste)
 		{
-			mysql_query('INSERT INTO T_CharakterSpruchlisten (F_Charakter_id, ' .
+			sql_query('INSERT INTO T_CharakterSpruchlisten (F_Charakter_id, ' .
 			'F_Spezialisierung_id) VALUES (' . $this->Charakter_id . ',' . $key . ')');
 		}
 
 		// Fertigkeiten speichern
-		mysql_query('DELETE FROM T_CharakterFertigkeiten WHERE F_Charakter_id=' . $this->Charakter_id);
+		sql_query('DELETE FROM T_CharakterFertigkeiten WHERE F_Charakter_id=' . $this->Charakter_id);
 		$sql = 'INSERT INTO T_CharakterFertigkeiten (F_Charakter_id,F_Fertigkeit_id,' .
 		'F_Spezialisierung_id,Stufe) VALUES (' . $this->Charakter_id . ',';
 		foreach ($this->Fertigkeiten as $key => $f)
@@ -480,13 +480,13 @@ class Charakter
 					$f['Stufe'] = 1;
 				$s = $sql . $key . ',NULL,' . $f['Stufe'] . ')';
 			}
-			if (!mysql_query($s))
-				echo mysql_query() . '/' . $s;
+			if (!sql_query($s))
+				echo sql_query() . '/' . $s;
 		}
 	}
 	/**
-	 * Gibt an, ob der Charakter übernatürlich ist. 
-	 * @return boolean true, wenn es ein übernatürlicher Charakter ist, false sonst  
+	 * Gibt an, ob der Charakter ï¿½bernatï¿½rlich ist. 
+	 * @return boolean true, wenn es ein ï¿½bernatï¿½rlicher Charakter ist, false sonst  
 	 */
 	function isUebernatuerlich()
 	{
@@ -496,7 +496,7 @@ class Charakter
 			return false;
 	}
 	/**
-	 * Läd einen Charakter aus der Datenbank.
+	 * Lï¿½d einen Charakter aus der Datenbank.
 	 * @param int die id des Charakters, der geladen werden soll
 	 * @return boolean true, wenn alles ok ist, false wenn ein Fehler aufgetreten ist.
 	 */
@@ -504,13 +504,13 @@ class Charakter
 	{
 		if (is_numeric($characterid))
 		{
-			$query = mysql_query('SELECT * FROM T_Charaktere ' .
+			$query = sql_query('SELECT * FROM T_Charaktere ' .
 			'WHERE Charakter_id=' . $characterid);
-			if (!$charakter = mysql_fetch_array($query))
+			if (!$charakter = sql_fetch_array($query))
 			{
 				die('Konnte Charakter ' . $characterid . ' nicht laden.');
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			foreach ($charakter as $key => $value)
 				$this-> $key = $value;
 			// Null-Werte korrigieren
@@ -522,8 +522,8 @@ class Charakter
 			$this->Charakter_id = $characterid;
 			// Rasse festlegen
 			$this->setRasse($this->F_Rasse_id);
-			// Sicherheitshalber werden nun die Rassenfertigkeiten wieder gelöscht,
-			// falls Änderungen vorgenommen wurden
+			// Sicherheitshalber werden nun die Rassenfertigkeiten wieder gelï¿½scht,
+			// falls ï¿½nderungen vorgenommen wurden
 			$this->Fertigkeiten = array ();
 
 			// Vor- und Nachteile auslesen			
@@ -539,24 +539,24 @@ class Charakter
 			' WHERE F_Charakter_id=' . $characterid .
 			' AND (T_CharakterFertigkeiten.F_Spezialisierung_id IS NULL OR ' .
 			'T_CharakterFertigkeiten.F_Spezialisierung_id=Spezialisierung_id)';
-			if (!$query = mysql_query($sql))
-				echo 'LFD:' . mysql_error();
-			while ($f = mysql_fetch_array($query))
+			if (!$query = sql_query($sql))
+				echo 'LFD:' . sql_error();
+			while ($f = sql_fetch_array($query))
 			{
 				$this->Fertigkeiten[$f['Fertigkeit_id']] = $f;
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			// Spruchlisten
-			if (!$query = mysql_query('SELECT * FROM T_CharakterSpruchlisten ' .
+			if (!$query = sql_query('SELECT * FROM T_CharakterSpruchlisten ' .
 				'INNER JOIN T_Spezialisierungen ON F_Spezialisierung_id=Spezialisierung_id' .
 				' WHERE F_Charakter_id=' . $characterid))
-				echo 'x2' . mysql_error();
+				echo 'x2' . sql_error();
 			$this->Spruchlisten = array ();
-			while ($liste = mysql_fetch_array($query))
+			while ($liste = sql_fetch_array($query))
 			{
 				$this->Spruchlisten[$liste['Spezialisierung_id']] = $liste;
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			$this->bestimmeSpezialisierungsraenge();
 			return TRUE;
 		} else
@@ -565,12 +565,12 @@ class Charakter
 		}
 	}
 	/**
-	 * Bestimmt ob eine Fertigkeit gewählt werden darf oder nicht. Dabei werden die 
-	 * Ränge, die Punkte und die Spezialisierungen berücksichtigt.
-	 * @param int id der Fertigkeiten, die geprüft werden soll
+	 * Bestimmt ob eine Fertigkeit gewï¿½hlt werden darf oder nicht. Dabei werden die 
+	 * Rï¿½nge, die Punkte und die Spezialisierungen berï¿½cksichtigt.
+	 * @param int id der Fertigkeiten, die geprï¿½ft werden soll
 	 * @param int id der Spezialisierung
 	 * @param int id des Ranges
-	 * @return boolean true, wenn die Fertigkeit gewählt werden darf, false sonst 
+	 * @return boolean true, wenn die Fertigkeit gewï¿½hlt werden darf, false sonst 
 	 */
 	function fertigkeitMoeglich($fertigkeit_id, $spezialisierung_id, $rang_id)
 	{
@@ -578,11 +578,11 @@ class Charakter
 			return false;
 		if (!isset ($this->Fertigkeiten[$fertigkeit_id]))
 		{
-			// TODO: Änderung der Kosten + eigentliche Kosten
+			// TODO: ï¿½nderung der Kosten + eigentliche Kosten
 			$Kosten = $this->holeFertigkeitPunkte($fertigkeit_id, $spezialisierung_id);
 			if ($Kosten <= $this->Punkte)
 			{
-				// Fertigkeit ist möglich. Aber stimmt auch der Rang?
+				// Fertigkeit ist mï¿½glich. Aber stimmt auch der Rang?
 				if ($this->RangErlaubt[$spezialisierung_id][$rang_id])
 				{
 					return true;
@@ -593,10 +593,10 @@ class Charakter
 
 	}
 	/**
-	* Bestimmt ob ein Vor-/Nachteil gewählt werden darf oder nicht. Dabei werden die 
-	* Punkte berücksichtigt. 
-	* @param int id der Fertigkeiten, die geprüft werden soll
-	* @return boolean true, wenn die Fertigkeit gewählt werden darf, false sonst 
+	* Bestimmt ob ein Vor-/Nachteil gewï¿½hlt werden darf oder nicht. Dabei werden die 
+	* Punkte berï¿½cksichtigt. 
+	* @param int id der Fertigkeiten, die geprï¿½ft werden soll
+	* @return boolean true, wenn die Fertigkeit gewï¿½hlt werden darf, false sonst 
 	*/
 	function vorteilMoeglich($fertigkeit_id)
 	{
@@ -604,9 +604,9 @@ class Charakter
 			return false;
 		if (!isset ($this->Fertigkeiten[$fertigkeit_id]))
 		{
-			$query = mysql_query('SELECT * FROM T_Fertigkeiten WHERE Fertigkeit_id=' . $fertigkeit_id);
-			$f = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$query = sql_query('SELECT * FROM T_Fertigkeiten WHERE Fertigkeit_id=' . $fertigkeit_id);
+			$f = sql_fetch_array($query);
+			sql_free_result($query);
 			$Kosten = $this->holeFertigkeitPunkte($fertigkeit_id);
 			if ($f['Art'] == self :: VORTEIL || $f['Art'] == self :: NACHTEIL)
 			{
@@ -633,7 +633,7 @@ class Charakter
 		return false;
 	}
 	/**
-	 * Berechnet die Anzahl der verfügbaren Punkte für übernatürliche Fähigkeiten.
+	 * Berechnet die Anzahl der verfï¿½gbaren Punkte fï¿½r ï¿½bernatï¿½rliche Fï¿½higkeiten.
 	 * Sie berechnen sich nach 30+Anzahl Contage-aktivierte Fertigkeiten
 	 * @return int die Anzahl der verbleibenden Punkte
 	 */
@@ -647,28 +647,28 @@ class Charakter
 				if ($f['Stufe'] > 0)
 				{
 					$punkte += $f['Kosten1'];
-				    // Änderung der Kosten direkt aus der Rassentabelle holen 
-				    $query = mysql_query('SELECT Kosten FROM T_Rassenfertigkeiten ' .
+				    // ï¿½nderung der Kosten direkt aus der Rassentabelle holen 
+				    $query = sql_query('SELECT Kosten FROM T_Rassenfertigkeiten ' .
 						'WHERE F_Fertigkeit_id='.$f['Fertigkeit_id'].' AND F_Rasse_id='.$this->F_Rasse_id);
-				    if ( $ff = mysql_fetch_array($query))
+				    if ( $ff = sql_fetch_array($query))
 				    {
 					$punkte += $ff['Kosten'];
 				}
-				mysql_free_result($query);
+				sql_free_result($query);
 				}
 			}
 		}
 		return 30 - $punkte + $this->Contage;
 	}
 	/**
-	 * Initialisiert die Felder für die Bestimmung der Ränge und Spezialisierungen
+	 * Initialisiert die Felder fï¿½r die Bestimmung der Rï¿½nge und Spezialisierungen
 	 */
 	function bestimmeSpezialisierungsraenge()
 	{
 		$Raenge = array ();
 		$SpezRang = array ();
-		$query = mysql_query('SELECT * FROM T_Raenge');
-		while ($rang = mysql_fetch_array($query))
+		$query = sql_query('SELECT * FROM T_Raenge');
+		while ($rang = sql_fetch_array($query))
 		{
 			$Raenge[$rang['Rang_id']] = $rang;
 			$Raenge[$rang['Rang_id']]['Anzahl'] = 0;
@@ -681,15 +681,15 @@ class Charakter
 			}
 			$SpezRang[$rang['Rang_id']] = array ();
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 
-		// Einlesen der notwendigen Punkte für Adept/Meister/Großmeister 
+		// Einlesen der notwendigen Punkte fï¿½r Adept/Meister/Groï¿½meister 
 		$Punktanzahlen = array ();
 		$Adeptenpunkte = array ();
 		$RangErlaubt = array ();
-		$query = mysql_query('SELECT * FROM T_Spezialisierungsklassen INNER JOIN ' .
+		$query = sql_query('SELECT * FROM T_Spezialisierungsklassen INNER JOIN ' .
 		'T_Spezialisierungen ON F_Klasse_id=Klasse_id');
-		while ($klasse = mysql_fetch_array($query))
+		while ($klasse = sql_fetch_array($query))
 		{
 			$Adeptenpunkte[$klasse['Klasse_id']] = $klasse['Adeptenpunkte'];
 			$Punktanzahlen[$klasse['Klasse_id']][$klasse['Spezialisierung_id']]['Meisterpunkte'] = $klasse['Meisterpunkte'];
@@ -700,7 +700,7 @@ class Charakter
 			$RangErlaubt[$klasse['Spezialisierung_id']][3] = false;
 			$RangErlaubt[$klasse['Spezialisierung_id']][4] = false;
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		// Spezialisierungen bestimmen
 		$Spezialisierungen = array ();
 		$vorhandeneSpruchlisten = array ();
@@ -731,7 +731,7 @@ class Charakter
 				if (!isset ($Spezialisierungen[$fertigkeit['F_Klasse_id']][$id]))
 					$Spezialisierungen[$fertigkeit['F_Klasse_id']][$id] = 0;
 				$Spezialisierungen[$fertigkeit['F_Klasse_id']][$id] += $fertigkeit['Kosten'];
-				// Gesamtpunktzahl für die Spezialisierung
+				// Gesamtpunktzahl fï¿½r die Spezialisierung
 				if (!isset ($SpezPunkte[$fertigkeit['F_Klasse_id']][$id]))
 					$SpezPunkte[$fertigkeit['F_Klasse_id']][$id] = 0;
 				$SpezPunkte[$fertigkeit['F_Klasse_id']][$id] += $fertigkeit['Kosten'];
@@ -740,7 +740,7 @@ class Charakter
 		for ($i = 1; $i < 5; $i++)
 			if (isset ($SpezRang[$i]) && Count($SpezRang[$i]) >= $Raenge[$i]['Maximal'])
 			{
-				// ok, Pensum ausgeschöpft. Andere Wandererfertigkeiten abschalten
+				// ok, Pensum ausgeschï¿½pft. Andere Wandererfertigkeiten abschalten
 				foreach ($RangErlaubt as $key => $rang)
 				{
 					if (!in_array($key, $SpruchRang) && !in_array($key, $SpezRang))
@@ -748,7 +748,7 @@ class Charakter
 				}
 			}
 
-		// Prüfen, ob man Adept / Meister / Großmeister geworden ist
+		// Prï¿½fen, ob man Adept / Meister / Groï¿½meister geworden ist
 		foreach ($SpezPunkte as $klasse => $spez)
 		{
 			$idallg = bestimmeAllgemeinSpezialisierung($klasse);
@@ -763,10 +763,10 @@ class Charakter
 				if ($allgemeinPunkte >= $Adeptenpunkte[$klasse])
 				{
 					// Adept in dieser Spezialisierung!
-					// Allgemein und Spruchlisten müssen erlaubt werden
+					// Allgemein und Spruchlisten mï¿½ssen erlaubt werden
 					$RangErlaubt[$id][2] = true;
 					$RangErlaubt[$idallg][2] = true;
-					// Prüfen, ob die Anzahl an Adeptenspezialisierungen überschritten ist
+					// Prï¿½fen, ob die Anzahl an Adeptenspezialisierungen ï¿½berschritten ist
 					$Raenge[2]['Anzahl'] = 0;
 					foreach ($RangErlaubt as $dieId => $rang)
 						if ($rang[2])
@@ -787,14 +787,14 @@ class Charakter
 							}
 						}
 					} // else
-				} // wenn genügend Punkte
+				} // wenn genï¿½gend Punkte
 				// Man kann nur bei einer Spezialisierung Meister werden.
 				if ($klasse != -1 && $id != -1 && $allgemeinPunkte >= $Punktanzahlen[$klasse][$id]['Meisterpunkte'] && $Punktanzahlen[$klasse][$id]['Meisterpunkte'] > 0)
 				{
-					// TODO Prüfen, ob Meisterfertigkeit vorhanden ist!
+					// TODO Prï¿½fen, ob Meisterfertigkeit vorhanden ist!
 
 					$RangErlaubt[$id][3] = true;
-					// Prüfen, ob die Anzahl an Adeptenspezialisierungen überschritten ist
+					// Prï¿½fen, ob die Anzahl an Adeptenspezialisierungen ï¿½berschritten ist
 					$Raenge[3]['Anzahl'] = 0;
 					foreach ($RangErlaubt as $dieId => $rang)
 						if (isset ($rang[3]) && $rang[3])
@@ -814,7 +814,7 @@ class Charakter
 						}
 					}
 				}
-				// TODO: Großmeister!
+				// TODO: Groï¿½meister!
 
 			}
 		} // foreach Spezialisierungen
@@ -823,15 +823,15 @@ class Charakter
 		$this->vorhandeneSpruchlisten = $vorhandeneSpruchlisten;
 	}
 	/**
-	 * Erstellt ein Feld mit den möglichen Fertigkeiten, die der Charakter in 
-	 * der gewählten Spezialisierung wählen kann. Dabei werden die Ränge und die 
-	 * Punkte berücksichtigt.
+	 * Erstellt ein Feld mit den mï¿½glichen Fertigkeiten, die der Charakter in 
+	 * der gewï¿½hlten Spezialisierung wï¿½hlen kann. Dabei werden die Rï¿½nge und die 
+	 * Punkte berï¿½cksichtigt.
 	 * @param int id der Spezialisierung deren Fertigkeiten angezeigt werden sollen
 	 * @return array ein Fertigkeit_id-indiziertes Feld mit den Fertigkeiten  
 	 */
 	function bestimmeMoeglicheFertigkeiten($spezialisierung_id)
 	{
-		// Prüfen ob Spezialisierung erlaubt und wenn ja in welchen Rängen
+		// Prï¿½fen ob Spezialisierung erlaubt und wenn ja in welchen Rï¿½ngen
 		$erlaubt = array ();
 		for ($i = 1; $i < 5; $i++)
 		{
@@ -850,22 +850,22 @@ class Charakter
 		$fertigkeiten = array ();
 		if (Count($erlaubt) > 0)
 		{
-			if (!$query = mysql_query($sql))
-				echo 'Fehler:' . $sql . '/' . mysql_error();
-			while ($f = mysql_fetch_array($query))
+			if (!$query = sql_query($sql))
+				echo 'Fehler:' . $sql . '/' . sql_error();
+			while ($f = sql_fetch_array($query))
 			{
 				if ($this->fertigkeitMoeglich($f['Fertigkeit_id'], $f['Spezialisierung_id'], $f['Rang_id']))
 				{
 					$fertigkeiten[$f['Fertigkeit_id']] = $f;
 				}
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 		}
 		return $fertigkeiten;
 	}
 	/**
-	 * Erstellt ein Feld mit den möglichen Vor- und Nachteilen, die der Charakter 
-	 * wählen kann. Dabei werden die verfügbaren Punkte berücksichtigt.
+	 * Erstellt ein Feld mit den mï¿½glichen Vor- und Nachteilen, die der Charakter 
+	 * wï¿½hlen kann. Dabei werden die verfï¿½gbaren Punkte berï¿½cksichtigt.
 	 * @param String die Art der Vor-/Nachteile (V, Uv, N, Un)
 	 * @return array ein Fertigkeit_id-indiziertes Feld mit den Vor-/Nachteilen  
 	 */
@@ -878,9 +878,9 @@ class Charakter
 			$sql .= 'AND Fertigkeit_id NOT IN (' . implode(',', $this->Verboten) . ')';
 		$sql .= ' ORDER BY Fertigkeit';
 		$fertigkeiten = array ();
-		if (!$query = mysql_query($sql))
-			die('Fehler:' . $sql . '/' . mysql_error());
-		while ($f = mysql_fetch_array($query))
+		if (!$query = sql_query($sql))
+			die('Fehler:' . $sql . '/' . sql_error());
+		while ($f = sql_fetch_array($query))
 		{
 			// 1. Fertigkeit nicht vorhanden			
 			if ($this->vorteilMoeglich($f['Fertigkeit_id']))
@@ -888,7 +888,7 @@ class Charakter
 				$fertigkeiten[$f['Fertigkeit_id']] = $f;
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $fertigkeiten;
 	} // bestimmeMoeglicheVorteile
 	/**
@@ -904,17 +904,17 @@ class Charakter
 			if ($value['Art'] == $art)
 			{
 				$kosten += $value['Kosten1'];
-				// Änderung der Kosten direkt aus der Rassentabelle holen 
-				$query = mysql_query('SELECT Kosten FROM T_RassenFertigkeiten ' .
+				// ï¿½nderung der Kosten direkt aus der Rassentabelle holen 
+				$query = sql_query('SELECT Kosten FROM T_RassenFertigkeiten ' .
 						'WHERE F_Fertigkeit_id='.$value['Fertigkeit_id'].
 ' AND F_Rasse_id='.$this->F_Rasse_id);
-				if ( $ff = mysql_fetch_array($query))
+				if ( $ff = sql_fetch_array($query))
 				{
 					$kosten += $ff['Kosten'];
 				}
 				else
-				echo mysql_error();
-				mysql_free_result($query);				
+				echo sql_error();
+				sql_free_result($query);				
 			}
 		}
 		return $kosten;
@@ -945,19 +945,19 @@ class Charakter
 		if (!$this->isMagisch())
 			return 0;
 		$ergebnis = 0;
-		$query = mysql_query('SELECT Spruchlistenanzahl FROM T_Spezialisierungsklassen ' .
+		$query = sql_query('SELECT Spruchlistenanzahl FROM T_Spezialisierungsklassen ' .
 		'WHERE Klasse_id=' . $this->F_Klasse_id);
-		if ($Klasse = mysql_fetch_array($query))
+		if ($Klasse = sql_fetch_array($query))
 		{
 			$ergebnis = $Klasse['Spruchlistenanzahl'];
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $ergebnis;
 	} // getKlasseSpruchlistenAnzahl
 	/**
-	 * Berechnet die Spezialisierungsklassen, die Ränge usw. 
-	 * Diese Methode muss nach Änderungen an den Fertigkeiten aufgerufen werden,
-	 * damit die erlaubten Ränge, Spezialisierungen usw. korrekt angegeben werden.
+	 * Berechnet die Spezialisierungsklassen, die Rï¿½nge usw. 
+	 * Diese Methode muss nach ï¿½nderungen an den Fertigkeiten aufgerufen werden,
+	 * damit die erlaubten Rï¿½nge, Spezialisierungen usw. korrekt angegeben werden.
 	 *  
 	 */
 	function bestimmeMoeglicheSpezialisierungsklassen()
@@ -970,7 +970,7 @@ class Charakter
 				// es werden alle Spruchlisten angezeigt.
 				$Spruchlisten = implode(',', array_keys($this->Spruchlisten));
 			} else
-			{ // Es sind nur Sprüche der vorhandenen Spruchlisten möglich
+			{ // Es sind nur Sprï¿½che der vorhandenen Spruchlisten mï¿½glich
 				$Spruchlisten = implode(',', $this->vorhandeneSpruchlisten);
 			}
 			// sicherheitshalber
@@ -988,18 +988,18 @@ class Charakter
 		' INNER JOIN (T_Spezialisierungen INNER JOIN T_Spezialisierungsklassen ON ' .
 		'F_Klasse_id=Klasse_id) ON F_Spezialisierung_id=Spezialisierung_id)' .
 		' ON F_Fertigkeit_id=Fertigkeit_id) WHERE (Art="' . self :: FERTIGKEIT . '" ' . $Auswahl;
-		if ( !$query = mysql_query($sql)) die('Fehler9:'.$sql.'/'.mysql_error());
+		if ( !$query = sql_query($sql)) die('Fehler9:'.$sql.'/'.sql_error());
 		$spezialisierungen = array ();
-		while ($s = mysql_fetch_array($query))
+		while ($s = sql_fetch_array($query))
 		{
 			$spezialisierungen[$s['Spezialisierung_id']] = $s['Spezialisierung'];
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $spezialisierungen;
 	} // bestimmeMoeglicheSpezialisierungsklassen
 	/**
-	 * Berechnet die verfügbaren Magiepunkte. Dazu werden die Kosten aller Sprüche 
-	* der Spruchlisten zusammengerechnet, zuzüglich der gekauften Magiepunkte.
+	 * Berechnet die verfï¿½gbaren Magiepunkte. Dazu werden die Kosten aller Sprï¿½che 
+	* der Spruchlisten zusammengerechnet, zuzï¿½glich der gekauften Magiepunkte.
 	 * Pro gekaufter Stufe der Magiepunkt-Fertigkeit gibt es zwei Magiepunkte. 
 	* @return int die Anzahl der Magiepunkte 
 	 */
@@ -1036,20 +1036,20 @@ class Charakter
 			$Art = self :: ELEMENT;
 		}
 		$feld = array ();
-		if ($query = mysql_query('SELECT * FROM T_Fertigkeiten WHERE Art="' .
+		if ($query = sql_query('SELECT * FROM T_Fertigkeiten WHERE Art="' .
 			$Art . '" ORDER BY Fertigkeit'))
 		{
-			while ($row = mysql_fetch_array($query))
+			while ($row = sql_fetch_array($query))
 			{
 				$feld[$row['Fertigkeit_id']] = $row['Fertigkeit'];
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 		}
 		return $feld;
 	}
 	/**
-	  * Bestimmt, wie viele Punkte für Vor- und Nachteile vergeben werden dürfen
-	  * Legt die Punktzahl gemäß des Atlantis-Regelwerks fest.
+	  * Bestimmt, wie viele Punkte fï¿½r Vor- und Nachteile vergeben werden dï¿½rfen
+	  * Legt die Punktzahl gemï¿½ï¿½ des Atlantis-Regelwerks fest.
 	  * @param String die Art der Vorteile (V, N, Uv, Un)
 	  * @return int die Punktanzahl 
 	  */
@@ -1058,14 +1058,14 @@ class Charakter
 		$MaxPunkte = 0;
 		switch ($art)
 		{
-			case self :: VORTEIL : // Maximalpunkte für normale Vorteile
+			case self :: VORTEIL : // Maximalpunkte fï¿½r normale Vorteile
 				$MaxPunkte = 50;
 				break;
-			case self :: NACHTEIL : // Maximalpunkte für normale Nachteile
+			case self :: NACHTEIL : // Maximalpunkte fï¿½r normale Nachteile
 				$MaxPunkte = 40;
 				break;
 			case self :: VORTEILUEBERNATUERLICH :
-			case self :: NACHTEILUEBERNATUERLICH : // Maximalpunkte für Vor- und Nachteile übernatürlicher Art
+			case self :: NACHTEILUEBERNATUERLICH : // Maximalpunkte fï¿½r Vor- und Nachteile ï¿½bernatï¿½rlicher Art
 				if (isset ($this->Fertigkeiten[self :: UEBERNATUERLICHLEICHT]))
 					$MaxPunkte = 125;
 				if (isset ($this->Fertigkeiten[self :: UEBERNATUERLICHGANZ]))
@@ -1076,7 +1076,7 @@ class Charakter
 	} // getMaximalVorteilsPunkte
 	/**
 	 * Wandelt die Klasse in ein indiziertes Feld um
-	 * @param boolean true, wenn die Fertigkeiten ebenfalls übergeben werden sollen
+	 * @param boolean true, wenn die Fertigkeiten ebenfalls ï¿½bergeben werden sollen
 	 * @return array ein Feld mit den verschiedenen Daten des Charakters 
 	 */
 	function alsFeld($mitFertigkeiten = false)
@@ -1143,11 +1143,11 @@ function holeSpezialisierungsNamen($Spezialisierung_id)
 	if (!is_numeric($Spezialisierung_id))
 		return '';
 	$ergebnis = '';
-	$query = mysql_query('SELECT Spezialisierung FROM T_Spezialisierungen ' .
+	$query = sql_query('SELECT Spezialisierung FROM T_Spezialisierungen ' .
 	'WHERE Spezialisierung_id=' . $Spezialisierung_id);
-	if ($spezialisierung = mysql_fetch_array($query))
+	if ($spezialisierung = sql_fetch_array($query))
 		$ergebnis = $spezialisierung['Spezialisierung'];
-	mysql_free_result($query);
+	sql_free_result($query);
 	return $ergebnis;
 }
 /**
@@ -1160,11 +1160,11 @@ function bestimmeAllgemeinSpezialisierung($klasse)
 	if (!is_numeric($klasse))
 		return '';
 	$ergebnis = NULL;
-	$query = mysql_query('SELECT Spezialisierung_id FROM T_Spezialisierungen ' .
+	$query = sql_query('SELECT Spezialisierung_id FROM T_Spezialisierungen ' .
 	'WHERE Allgemein AND F_Klasse_id=' . $klasse);
-	if ($spezialisierung = mysql_fetch_array($query))
+	if ($spezialisierung = sql_fetch_array($query))
 		$ergebnis = $spezialisierung['Spezialisierung_id'];
-	mysql_free_result($query);
+	sql_free_result($query);
 	return $ergebnis;
 }
 ?>

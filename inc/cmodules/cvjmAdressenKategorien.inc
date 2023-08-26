@@ -30,11 +30,11 @@ if ( $profile['editor'] != 1 )
 		TABLE_KATEGORIEN.' LEFT JOIN '.TABLE_ADRESSEN_KATEGORIE.
 		' ON Kategorie_id=F_Kategorie_id GROUP BY Kategorie, Kategorie_id ORDER BY Kategorie'))
 		{
-			throw new Exception('Fehler beim Laden der Kategorien: '.mysql_error());
+			throw new Exception('Fehler beim Laden der Kategorien: '.sql_error());
 		}
 		$Smarty->assign('id', $id);
 		$ret = get_cmodule_id('cvjmadressen');
-		// Rücksprungadresse, standardmäßig zurück zu den Adressstammdaten
+		// RÃ¼cksprungadresse, standardmÃ¤ÃŸig zurÃ¼ck zu den Adressstammdaten
 		if ( isset($_REQUEST['Return']) && is_numeric($_REQUEST['Return']) )
 		{
 			$ret = $_REQUEST['Return'];
@@ -46,7 +46,7 @@ if ( $profile['editor'] != 1 )
 			$Tabelle[] = $kategorie;
 		}
 		$haelfte = ceil(Count($Tabelle) / 2);
-		// Umsortieren für zweispaltige Anzeige
+		// Umsortieren fÃ¼r zweispaltige Anzeige
 		$Kategorien = array();
 		for ( $i = 0; $i <= $haelfte; $i++)
 		{
@@ -64,7 +64,7 @@ if ( $profile['editor'] != 1 )
 	}
 	else
 	{
-		echo '<div class="SchwererFehler">Es wurde keine Adressenid übergeben!</div>';
+		echo '<div class="SchwererFehler">Es wurde keine Adressenid Ã¼bergeben!</div>';
 	}
 }
 

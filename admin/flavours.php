@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -51,13 +51,13 @@ if(sql_num_rows($qresult) > 0) {
 <title>
 Liquid Bytes AWF Flavours
 </title>
-<?
+<?php
         include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> Flavours</h2></center>
+<center><h2><?php echo SITE_TITLE; ?> Flavours</h2></center>
 <br>
 <table width="100%" cellpadding="2" cellspacing="1" border="0">
 <tr>
@@ -67,7 +67,7 @@ Liquid Bytes AWF Flavours
 <td style="font-weight: bold" width="20%" bgcolor="#dddddd" align="center">Published</td>
 <td width="20%" bgcolor="#dddddd" align="right">&nbsp;</td>
 </tr>
-<?
+<?php
 $qres = sql_query("SELECT id, name, lang, published FROM ".TABLE_FLAVOURS." ORDER BY id");
 while($row = sql_fetch_row($qres)) { ?>
 	<form action="flavours.php" method="post">
@@ -76,7 +76,7 @@ while($row = sql_fetch_row($qres)) { ?>
 	<td bgcolor="#ffeeee" align="left"><input type="text" name="name" value="<?=htmlentities(stripslashes($row[1]))?>"size="40" /></td>
 	<td bgcolor="#eeeeff" align="right">
 	<select name="lang" size="1">
-        <?
+        <?php
         $handle=opendir('../inc/lang');
         while (false!==($file = readdir($handle))) {
                 if ($file != "." && $file != "..") {
@@ -89,8 +89,8 @@ while($row = sql_fetch_row($qres)) { ?>
 	</td>
 	<td bgcolor="#eeeeee" align="center">
 	<select name="published" size="1">
-	<option value="1"<? if($row[3] == '1') echo ' selected="selected"'; ?>>Yes</option>
-	<option value="0"<? if($row[3] == '0') echo ' selected="selected"'; ?>>No</option>
+	<option value="1"<?php if($row[3] == '1') echo ' selected="selected"'; ?>>Yes</option>
+	<option value="0"<?php if($row[3] == '0') echo ' selected="selected"'; ?>>No</option>
 	</select>
 	</td>
 	<td bgcolor="#eeeeee" align="center" nowrap>
@@ -100,7 +100,7 @@ while($row = sql_fetch_row($qres)) { ?>
 	</td>
 	</tr>
 	</form>
-	<?
+	<?php
 	}
 ?>
 </table>
@@ -110,7 +110,7 @@ while($row = sql_fetch_row($qres)) { ?>
 <a href="flavours.php?new=true">Add new flavour</a>
 </td></tr>
 </table>
-<?
+<?php
 	include('footer.inc');
 ?>
 </center>

@@ -4,11 +4,11 @@
  * AWF-Modul cvjmkorrespondenzverwaltung
  * Dateiname: cvjmKorrespondenzverwaltung
  *
- * Ermöglicht die Ersetzung einer vorhandenen Korrespondenz durch eine neue Datei
+ * Ermï¿½glicht die Ersetzung einer vorhandenen Korrespondenz durch eine neue Datei
  *
  *  Parameter:
- *  docinput[Datei]: vollständiger Pfad zur Datei
- *  docinput[Herkunft]: id und Parameter der Seite, auf die zurückverwiesen wird
+ *  docinput[Datei]: vollstï¿½ndiger Pfad zur Datei
+ *  docinput[Herkunft]: id und Parameter der Seite, auf die zurï¿½ckverwiesen wird
  *  docinput[Adressen_id]: id der Adresse, deren Dateien bearbeitet werden
  */
 
@@ -34,7 +34,7 @@ if ( $profile["editor"] != 1 )
 	if ( $document['title'] != '')
 	echo '<h1>'.transform($document['title'],$document['datatype']['title'])."</h1>\n";
 	$Adresse = new Adresse($docinput['Adressen_id']);
-	echo 'für '.$Adresse->Vollname().'<br />';
+	echo 'fï¿½r '.$Adresse->Vollname().'<br />';
 	if ( ! isset($_FILES["NeueDatei"]['name']) || $_FILES["NeueDatei"]['name'] == "" )
 	{
 		echo '<form action="'.get_url($id).'" method="post" enctype="multipart/form-data">';
@@ -44,7 +44,6 @@ if ( $profile["editor"] != 1 )
 		'" />'."\n";
 		echo '<input type="hidden" name="docinput[Datei]" value="'.$docinput["Datei"].
 		'" />'."\n";
-		reset($_REQUEST);
 		foreach ($_REQUEST as $key => $value )
 		{
 			if ( ! is_array($value) && $key != "id" )
@@ -65,7 +64,7 @@ if ( $profile["editor"] != 1 )
 	}
 	else
 	{
-		// Datei hochladen und zurück
+		// Datei hochladen und zurï¿½ck
 		if ( $_FILES["NeueDatei"]["name"] != '' )
 		{
 			if (! isset($docinput['Datei']) || $docinput['Datei'] == '')
@@ -118,7 +117,7 @@ if ( $profile["editor"] != 1 )
 		}
 		echo ".<br />";
 	}
-	echo '<a href="'.$docinput['BackID'].'">Zurück</a>';
+	echo '<a href="'.$docinput['BackID'].'">Zurï¿½ck</a>';
 	// get_url($docinput["BackID"],$params)
 }  // wenn nicht editor
 

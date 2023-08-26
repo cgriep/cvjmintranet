@@ -44,13 +44,13 @@ include($_BASEPATH.'/inc/functions.inc');
 <title>
 Liquid Bytes AWF Statistics
 </title>
-<?
+<?php
 	include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> Statistics</h2></center>
+<center><h2><?php echo SITE_TITLE; ?> Statistics</h2></center>
 <h2>Top <?php echo $max; ?> Downloads/Links</h2>
 <table width="100%" border="0" cellpadding="2" cellspacing="1">
 <tr>
@@ -61,7 +61,7 @@ Liquid Bytes AWF Statistics
         <td bgcolor="#ddddff" width="20%" align="left">
                 <b>Referer</b></td>
 </tr>
-<?
+<?php
 
 $qres = sql_query("SELECT url, referer, views FROM ".$db_table_prefix."redirect ORDER BY views DESC LIMIT $max");
 
@@ -89,7 +89,7 @@ sql_free_result($qres);
         <td bgcolor="#ddddff" width="20%" align="left">
                 <b>ID</b></td>
 </tr>
-<?
+<?php
 
 $qres = sql_query("SELECT DISTINCT views, value, node_id FROM ".$db_table_prefix."nodes, ".$db_table_prefix."nodedata 
 WHERE node_id=".$db_table_prefix."nodes.id AND name='title' AND flavour_id=".DEFAULT_FLAVOUR."
@@ -112,7 +112,7 @@ sql_free_result($qres);
 
 </td></tr>
 </table>
-<?
+<?php
         include('footer.inc');
 ?>
 </center>

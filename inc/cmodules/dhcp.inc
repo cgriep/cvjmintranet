@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -16,7 +16,7 @@ $lines = file("/etc/dhcpd.conf");
 $host = '';
 
 while(list ($line_num, $line) = each ($lines)) {
-	$sbuffer = split(' ', $line);
+	$sbuffer =  explode(' ', $line);
 	if($line[0] == '}' && $host != '') {
 		// if(fsockopen($ipadr, 80)) echo 'ONLINE: ';
 		echo('<tr><td>'.$host.'</td><td>'.$macadr.'</td><td>'.$ipadr.'</td><td>');

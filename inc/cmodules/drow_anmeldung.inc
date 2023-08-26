@@ -29,24 +29,24 @@ if($profile['editor'] != "1") {
 if ( ! is_numeric($ref) ) die("Referenz nicht numerisch!");
 if ( $daten['Name'] == "" || $daten['Vorname'] == "" || $daten['Adresse'] == "" ) {
   echo '<p>Bitte vor der Anmeldung erst die <a href="?id='.get_cmodule_id('user').
-  '">persönlichen Daten</a> ergänzen.</p>';
-  echo '<a href="'.get_url($ref).'">Zurück</a> zur Veranstaltungsbeschreibung.</p>';
+  '">persï¿½nlichen Daten</a> ergï¿½nzen.</p>';
+  echo '<a href="'.get_url($ref).'">Zurï¿½ck</a> zur Veranstaltungsbeschreibung.</p>';
 }
 elseif ( is_numeric($veranstaltung["Mindestalter"]) &&
          (strtotime("+".$veranstaltung["Mindestalter"]." year",$daten["birthday"]) >
            strtotime($docinfo["Beginn"])) &&
          $profile["SteinsbergSL"] != 1) {
   echo '<p><b>Die Teilnahme an diesem Con ist erst ab '.$veranstaltung["Mindestalter"].
-    ' Jahren erlaubt.</b> <a href="'.get_url($ref).'">Zurück</a></p>';
+    ' Jahren erlaubt.</b> <a href="'.get_url($ref).'">Zurï¿½ck</a></p>';
 }
 else {
   if ( $profile["SteinsbergSL"] == "1" || $profile["SteinsbergGeld"] == 1)
-    echo 'Zurück zur <a href="'.get_url(get_cmodule_id('drow_liste'),
+    echo 'Zurï¿½ck zur <a href="'.get_url(get_cmodule_id('drow_liste'),
       'Veranstaltung='.$_REQUEST['Ref']).'">Liste</a><br />';
   if ( SESSION_STATUS != "ok" )
-    echo transform("Zurück zu %%".DEFAULT_DOCUMENT."%%","extrans");
+    echo transform("Zurï¿½ck zu %%".DEFAULT_DOCUMENT."%%","extrans");
   elseif ( !is_numeric($_REQUEST['Ref']) )
-    die ("Fehler - unzulässiges Argument!");
+    die ("Fehler - unzulï¿½ssiges Argument!");
   else {
     // Speichern notwendig?
     if ( isset($_REQUEST["newchar"]))
@@ -66,7 +66,7 @@ else {
       add_nodedata($nodeid, 'author', SESSION_EMAIL,$flavour,'email');
       add_nodedata($nodeid, 'author_id', SESSION_DBID, $flavour, 'user_id');
       add_nodedata($nodeid, 'basedir', get_dir_name("files",$nodeid, true), $flavour);
-      // Schreibmöglichkeit erzeugen
+      // Schreibmï¿½glichkeit erzeugen
       $handle = fopen(get_dir_name("files",$nodeid).'/.allow_upload', 'w');
       fclose($handle);
       $handle = fopen(get_dir_name("files",$nodeid).'/.allow_delete', 'w');
@@ -81,7 +81,7 @@ else {
       set_profile("Char$ref", $docinput['charakter'], $SpielerNr);
       $daten = get_profile($SpielerNr, false);
     }
-    // Belegte Plätze berechnen
+    // Belegte Plï¿½tze berechnen
     $sql = "SELECT count(user_id) FROM ".TABLE_USERDATA." WHERE name = 'V".
              $ref."' AND value='SC'";
     $query = sql_query($sql);
@@ -100,7 +100,7 @@ else {
                   $ref."' AND value<>'' AND user_id IN (SELECT user_id FROM ".
                   TABLE_USERDATA." WHERE name = 'V".
                   $ref."' AND value='SC')";
-  if ( ! $query = sql_query($sql) ) echo mysql_error();
+  if ( ! $query = sql_query($sql) ) echo sql_error();
   $SCBezahlt = 0;
   if ( $row = sql_fetch_row($query) )
     $SCBezahlt = $row[0];
@@ -123,7 +123,7 @@ else {
       if ( $_REQUEST['AGB'] == 'v' || $profile['SteinsbergSL'] == 1 || 
            $profile['SteinsbergGeld'] == 1 ) {
         $neu = false;
-        // bei Geldwechsel - Warteliste prüfen
+        // bei Geldwechsel - Warteliste prï¿½fen
         if ( $daten['V'.$ref] == '' || 
         $daten['Geld'.$ref] != $docinput['Geld'.$ref]) {
           $neu = true;
@@ -136,7 +136,7 @@ else {
           if ( $docinput['V'.$ref] == 'SC' )
           {
             if ( $SCFrei <= 0 && $daten['Geld'.$ref] == '' && $docinput['Geld'.$ref] == '' )  {
-              echo 'Keine Spielerplätze frei ! Anmeldung steht auf der Warteliste!';              
+              echo 'Keine Spielerplï¿½tze frei ! Anmeldung steht auf der Warteliste!';              
             }
             else
             {				
@@ -147,7 +147,7 @@ else {
             if ($SCVoraussichtlich <= 0 && 
             ($daten['Geld'.$ref] == '' && $docinput['Geld'.$ref] == '' ) )
             {
-            	echo '<br/>Achtung: Es gibt mehr Anmeldungen als Plätze - die Plätze werden nach Geldeingang vergeben!';
+            	echo '<br/>Achtung: Es gibt mehr Anmeldungen als Plï¿½tze - die Plï¿½tze werden nach Geldeingang vergeben!';
             	$AnzahlWarnung = true;            	
             }            
           }
@@ -155,7 +155,7 @@ else {
           {
           	if ( $NSCFrei <= 0 && $daten['Geld'.$ref] == '' && $docinput['Geld'.$ref] == '' )  {
           
-              echo 'Keine NSC-Plätze frei ! Anmeldung steht auf der Warteliste!';              
+              echo 'Keine NSC-Plï¿½tze frei ! Anmeldung steht auf der Warteliste!';              
             }
             else
             {
@@ -165,7 +165,7 @@ else {
               if ($NSCVoraussichtlich <= 0 &&
               ($daten['Geld'.$ref] == '' && $docinput['Geld'.$ref] == '' ) )
               {
-            	echo '<br/>Achtung: Es gibt mehr Anmeldungen als Plätze - die Plätze werden nach Geldeingang vergeben!';
+            	echo '<br/>Achtung: Es gibt mehr Anmeldungen als Plï¿½tze - die Plï¿½tze werden nach Geldeingang vergeben!';
             	$AnzahlWarnung= true;
               }
             }
@@ -211,11 +211,11 @@ else {
         	if ( $SCFrei <= 0 && $daten['V'.$ref] == 'SC' ||
         	$NSCFrei <= 0 && $daten['V'.$ref] == 'NSC')  
         	{
-        	  $message .= "\nAchtung: Keine Plätze frei! Anmeldung steht auf der Warteliste!\nBitte nicht überweisen!\n\n";
+        	  $message .= "\nAchtung: Keine Plï¿½tze frei! Anmeldung steht auf der Warteliste!\nBitte nicht ï¿½berweisen!\n\n";
         	}
         	elseif ( $AnzahlWarnung )
         	{
-        		$message .= "\nHinweis: Es gibt mehr vorläufige Anmeldungen als Plätze. Die Plätze werden nach Reihenfolge des Geldeinganges vergeben!\n\n";
+        		$message .= "\nHinweis: Es gibt mehr vorlï¿½ufige Anmeldungen als Plï¿½tze. Die Plï¿½tze werden nach Reihenfolge des Geldeinganges vergeben!\n\n";
         	}
         }
         $message .=  $daten['Name'] . " ".stripslashes($daten["Vorname"])."\n";
@@ -242,30 +242,30 @@ else {
         $message .= "Datum: ".date("d.m.Y H:i")."\n";
         if ( $daten['Geld'.$ref] == '' )
         {
-           $message .= 'Achtung: Dies ist eine vorläufige Anmeldung solange kein Zahlungseingang verbucht wurde.';
+           $message .= 'Achtung: Dies ist eine vorlï¿½ufige Anmeldung solange kein Zahlungseingang verbucht wurde.';
            $message .= "\n".'Die Bankverbindung ist auf der Anmeldeseite der Homepage (http://drow-con.de/index.php?id=123) vermerkt.';
         } 
         // an Hausverantwortlichen senden 
 		if ( $daten['VAkzeptiert'.$ref] == '' )
 		{
-			$sql = "SELECT Verantwortlich, EMail FROM T_Haeuser WHERE Hausname='".mysql_real_escape_string($daten['VGruppe'.$ref])."'";
+			$sql = "SELECT Verantwortlich, EMail FROM T_Haeuser WHERE Hausname='".sql_real_escape_string($daten['VGruppe'.$ref])."'";
 			$query = sql_query($sql);
   			if ( $row = sql_fetch_row($query) )		
   			{
   				mail($row[1],$docinfo['title'].' - Neue Hausanmeldung',
   				'Hallo '.$row[0]."\n\n".
-  				'es gibt eine neue Anmeldung für das Haus '.$daten['VGruppe'.$ref].".\n".
-  				'Als Verantwortlicher für das Haus musst du Entscheiden, ob die Anmeldung angenommen wird oder nicht.'."\n".
+  				'es gibt eine neue Anmeldung fï¿½r das Haus '.$daten['VGruppe'.$ref].".\n".
+  				'Als Verantwortlicher fï¿½r das Haus musst du Entscheiden, ob die Anmeldung angenommen wird oder nicht.'."\n".
   				'Spieler: '.$daten['Name'].' '.$daten['Vorname']."\n".
   				'Nach dem Login auf drow-con.de kannst du unter folgendem Link weitere Informationen finden und ggf. Kontakt aufnehmen:'."\n".
   				'http://www.drow-con.de/index.php?id=9&user='.$SpielerNr."\n".
-  				'Nach der Prüfung des Spielers kannst du auf der Hausübersichtsseite die Anmeldung annehmen oder ablehnen.'."\n\n".
+  				'Nach der Prï¿½fung des Spielers kannst du auf der Hausï¿½bersichtsseite die Anmeldung annehmen oder ablehnen.'."\n\n".
   				'deine Spielleitung',
       			"From: ".$docinfo['MeldungsEMail']);
       		}
       		else
       		{
-      			mail($docinput['MeldungsEMail'],'Fehler bei Anmeldung','Keine EMail für Haus '.
+      			mail($docinput['MeldungsEMail'],'Fehler bei Anmeldung','Keine EMail fï¿½r Haus '.
       			$daten['VGruppe'.$ref].' eingetragen!');
       		}
   			sql_free_result($query);
@@ -277,19 +277,19 @@ else {
             "From: ".$docinfo['MeldungsEMail']);
           // an Orga senden
           if ( strtotime("+18 year",$daten["birthday"]) > strtotime($docinfo["Beginn"]))
-           $message .= "\nAchtung: Teilnehmer ist minderjährig!!!!\n";
+           $message .= "\nAchtung: Teilnehmer ist minderjï¿½hrig!!!!\n";
            mail($docinfo["MeldungsEMail"], $docinfo['title']." - Neue Anmeldung ($SpielerNr)",
           $message."\neMail: ".get_user_email($SpielerNr), "From: ".$docinfo["MeldungsEMail"]);
             $neu = false;
         }
         else
-          mail($docinfo["MeldungsEMail"], $docinfo['title']." - Anmeldung geändert ($SpielerNr)",
+          mail($docinfo["MeldungsEMail"], $docinfo['title']." - Anmeldung geï¿½ndert ($SpielerNr)",
           $message."\neMail: ".get_user_email($SpielerNr), "From: ".$docinfo["MeldungsEMail"]);
         echo '<b>&gt;&gt; Ihre Daten wurden gespeichert!</b><br /><br />';
       }// if AGB
       else
       {
-        echo '<big><b>&gt;&gt;&gt; Sie müssen die <a href="'.$docinfo['AGBUrl'].'" target="_blank">AGB akzeptieren!</b></big><br /><br />';
+        echo '<big><b>&gt;&gt;&gt; Sie mï¿½ssen die <a href="'.$docinfo['AGBUrl'].'" target="_blank">AGB akzeptieren!</b></big><br /><br />';
         $daten["V$ref"] = $docinput["V$ref"];
         if ( isset($docinput['Gruppe'])) $daten["VGruppe$ref"] = $docinput['Gruppe'];
         $daten["VBem$ref"] = $docinput["VBem$ref"];
@@ -301,20 +301,20 @@ else {
     echo '<form action="?id='.$id.'&Ref='.$ref.$Verweis.'" method="post">';
     ?>
 <tr bgcolor="<?=$design['table_row_dark']?>"><th>
-Anmeldung für <?=$docinfo['title']?></th></tr>
-<tr bgcolor="<?=$design['table_row_bright']?>"><td align="center"><b>Spieler: <?=$daten['Vorname']." ".$daten['Name']?></b>, Eingang: <?
+Anmeldung fï¿½r <?=$docinfo['title']?></th></tr>
+<tr bgcolor="<?=$design['table_row_bright']?>"><td align="center"><b>Spieler: <?=$daten['Vorname']." ".$daten['Name']?></b>, Eingang: <?php
   if (isset($daten["VEingang$ref"]))
     echo timestamp_to_string($daten["VEingang$ref"]);
   else
     echo timestamp_to_string(time());
 ?></td></tr>
-<?
+<?php
   if ( $daten["VWarte$ref"] == "1" )
   if ( $daten['Geld'.$ref] != '') {
-    echo '<tr><td align="center">Keine Plätze frei ! Anmeldung steht auf der Warteliste!</td></tr>';
+    echo '<tr><td align="center">Keine Plï¿½tze frei ! Anmeldung steht auf der Warteliste!</td></tr>';
   }
   else
-    echo '<tr><td align="center">Vorläuftige Anmeldung, solange kein Geldeingang verbucht wurde.</td></tr>';
+    echo '<tr><td align="center">Vorlï¿½uftige Anmeldung, solange kein Geldeingang verbucht wurde.</td></tr>';
 ?>
 <tr bgcolor="<?=$design['table_row_bright']?>"><td>
 <input type="hidden" name="docinput[V<?=$ref?>]" value="SC" />
@@ -327,12 +327,12 @@ if ($profile['SteinsbergSL'] != '1')
 ?> />
 <br />
 <br />
-Hauszugehörigkeit 
+Hauszugehï¿½rigkeit 
 <?php if ( $daten['VAkzeptiert'.$ref] != '' ) { echo $daten['VGruppe'.$ref]; }
 else
 {
 ?>
-(vorbehaltlich Zustimmung des Hausvorsitzes - <?=transform('%%Hausübersicht%%','extrans')?>)<br />
+(vorbehaltlich Zustimmung des Hausvorsitzes - <?=transform('%%Hausï¿½bersicht%%','extrans')?>)<br />
 <select name="docinput[Gruppe]">
 <option <?php if (!isset($daten['VGruppe'.$ref]) || $daten["VGruppe$ref"] == "-Alleinreisend-" ) echo 'checked="checked"';?>>-Alleinreisend-</option>
 <?php
@@ -348,28 +348,28 @@ else
   ?>
 </select>
 <br />
-Wenn du ein neues Haus gründen willst, bewirb dich bitte bei der Spielleitung (unter hausanmeldung at drow-con.de)
+Wenn du ein neues Haus grï¿½nden willst, bewirb dich bitte bei der Spielleitung (unter hausanmeldung at drow-con.de)
 <br />
 <?php 
 if ( ! $neu && $daten['VAkzeptiert'.$ref] == '')
 {
 ?>
-<b>Der Hausverantwortliche hat diese Anmeldung noch nicht akzeptiert. Charakterinformationen können erst
-eingegeben werden, wenn die Anmeldung für das Haus akzeptiert wurde. Du wirst benachrichtigt, wenn die 
+<b>Der Hausverantwortliche hat diese Anmeldung noch nicht akzeptiert. Charakterinformationen kï¿½nnen erst
+eingegeben werden, wenn die Anmeldung fï¿½r das Haus akzeptiert wurde. Du wirst benachrichtigt, wenn die 
 Entscheidung getroffen wurde.</b><br />
 <?php  
 }
 } // if not akzeptiert
 ?>
 <br />
-Bemerkungen zur Anmeldung (besondere Absprachen, Früher-/Späterkommen, Abholwünsche etc.)<br />
+Bemerkungen zur Anmeldung (besondere Absprachen, Frï¿½her-/Spï¿½terkommen, Abholwï¿½nsche etc.)<br />
 <textarea name="docinput[VBem<?=$ref?>]" cols="60" rows="5"><?=stripslashes($daten["VBem$ref"])?>
 </textarea>
 <?php
 if ( $profile["SteinsbergSL"] == "1" )
 {
   echo "<br /><br />";
-  echo "Interne Hinweise (nur für SL lesbar)<br />";
+  echo "Interne Hinweise (nur fï¿½r SL lesbar)<br />";
   echo '<textarea name="docinput[VSLBem'.$ref.']" cols="60" rows="5">';
   echo stripslashes($daten["VSLBem$ref"]);
   echo '</textarea>';
@@ -377,7 +377,7 @@ if ( $profile["SteinsbergSL"] == "1" )
 ?>
 <br />
 <br />
-Geldeingang <small>(letzte Aktualisierung: <? $dd = get_nodedata($ref, $flavour);
+Geldeingang <small>(letzte Aktualisierung: <?php $dd = get_nodedata($ref, $flavour);
 echo $dd["GeldDatum"]; ?>)</small><br/>
 <?php
   if ( $profile['SteinsbergGeld'] == "1" )
@@ -385,12 +385,12 @@ echo $dd["GeldDatum"]; ?>)</small><br/>
       $daten['Geld'.$ref].'"/> &euro;';
   else
     if ( $daten["Geld$ref"] == "" )
-      echo "<b>Vorläufige Anmeldung, da bisher kein Geldeingang.</b>";
+      echo "<b>Vorlï¿½ufige Anmeldung, da bisher kein Geldeingang.</b>";
     else
       echo "<b>".$daten["Geld$ref"]." &euro;</b>";
 ?>
 <br /><br/>
-Unterbringung (vorbehaltlich Änderungen)<br/>
+Unterbringung (vorbehaltlich ï¿½nderungen)<br/>
 <?php
   if ( $profile['SteinsbergGeld'] == "1" )
     echo '<input type="text" name="docinput[VUnter'.$ref.']" size="40" value="'.
@@ -427,19 +427,19 @@ if ( $profile['SteinsbergSL'] == "1"  || $profile['SteinsbergGeld'] == "1")  {
       echo $design['table_begin'];
 ?>
 <tr bgcolor="<?=$design['table_row_dark']?>"><th>Wichtige Zusatzinformationen</th></tr>
-<? if ( $daten["V$ref"] != "SC" )
+<?php if ( $daten["V$ref"] != "SC" )
   {
 ?>
 <tr bgcolor="<?=$design['table_row_bright']?>"><td>
   Bitte <a href="<?=get_url(get_cmodule_id("steinsberg_nsc"),"Ref=$ref$Verweis")?>">
 NSC-Zusatzinformationen</a> angeben.
 </td></tr>
-<? }
+<?php }
 if ( $daten["V$ref"] != "NSC" && $daten['VAkzeptiert'.$ref] != '') {
 ?>
 <form action="?id=<?=$id?>&Ref=<?=$ref?>#Char" method="post">
 <tr bgcolor="<?=$design['table_row_bright']?>"><td>
-<a name="Char"></a>Charakter für  <?=$docinfo['title']?><br>
+<a name="Char"></a>Charakter fï¿½r  <?=$docinfo['title']?><br>
 <?php
   $sql = "SELECT ".TABLE_NODES.".id FROM ".TABLE_NODES." LEFT JOIN ".TABLE_NODEDATA." ON
     ".TABLE_NODES.".id = ".TABLE_NODEDATA.".node_id WHERE type_id = ".
@@ -449,7 +449,7 @@ if ( $daten["V$ref"] != "NSC" && $daten['VAkzeptiert'.$ref] != '') {
   if ( sql_num_rows($query) > 0 )
   {
     echo '<select name="docinput[charakter]">';
-    echo '<option value="">-keiner gewählt-</option>';
+    echo '<option value="">-keiner gewï¿½hlt-</option>';
     $charakter['name'] = array();
     $charakter['id'] = array();
     while ( $erg = sql_fetch_row($query) )
@@ -471,7 +471,7 @@ if ( $daten["V$ref"] != "NSC" && $daten['VAkzeptiert'.$ref] != '') {
     echo "<b>Bisher keine Charaktere vorhanden!</b>";
   sql_free_result($query);
 ?>
-<?
+<?php
   reset($charakter['name']);
   reset($charakter['id']);
   echo "<br />Charaktere bearbeiten:";
@@ -492,7 +492,7 @@ if ( $daten["V$ref"] != "NSC" && $daten['VAkzeptiert'.$ref] != '') {
 
 </td></tr>
 </form>
-<?
+<?php
       }
       echo $design['table_end'];
     }

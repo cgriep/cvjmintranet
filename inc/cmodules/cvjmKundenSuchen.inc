@@ -33,7 +33,7 @@
        <select name="docinput[Kategorie][]" multiple="multiple">
 <?php
   if (!$query = sql_query("SELECT * FROM ".TABLE_KATEGORIEN." ORDER BY Kategorie")) 
-    echo mysql_error();
+    echo sql_error();
   while ( $row = sql_fetch_array($query) )
   {
   	 echo '<option value="'.$row["Kategorie_id"].'" ';
@@ -78,7 +78,7 @@
             implode(",",$docinput["Kategorie"]).")";
      if ( $docinput["Name"] != "" )
      {
-     	$docinput["Name"] = mysql_real_escape_string($docinput["Name"]);     	
+     	$docinput["Name"] = sql_real_escape_string($docinput["Name"]);     	
      	$sql .= " AND Name LIKE '%{$docinput["Name"]}%'";
      }
 
@@ -92,7 +92,7 @@
      	$docinput["DatumBis"] = convertDatumToTimestamp($docinput["DatumBis"]);
      	$sql .= " AND Bis <= {$docinput["DatumBis"]}";
      }
-     if (!$query = sql_query($sql)) echo mysql_error();
+     if (!$query = sql_query($sql)) echo sql_error();
      echo '<table border="1">';
      echo "<tr><th>Name</th><th>Adresse</th><th>Telefon</th></tr>\n";
      while ( $row = sql_fetch_array($query))
@@ -107,7 +107,7 @@
         echo $row["Strasse"]."<br />{$row["PLZ"]} {$row["Ort"]}</td>\n";
         echo "<td>{$row["Telefon1"]}</td></tr>\n";
      }
-     if ( mysql_num_rows($query) == 0)
+     if ( sql_num_rows($query) == 0)
        echo '<tr><td colspan="3">Keine passenden Kunden gefunden!</td></tr>';
      echo "</table>\n";
      sql_free_result($query);		

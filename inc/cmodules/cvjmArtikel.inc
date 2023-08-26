@@ -27,7 +27,7 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 	{
 		if ( isset($docinput['DArtikel_Nr']) && is_numeric($docinput['DArtikel_Nr']) )
 		{
-			// Unterartikel löschen
+			// Unterartikel lï¿½schen
 			sql_query('DELETE FROM '.$tabelle.' WHERE F_Artikel_id = '.
 			$docinput['Artikel_Nr'].' AND F_Unterartikel_id = '.$docinput['DArtikel_Nr']);
 		}
@@ -61,15 +61,15 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 							if (! sql_query("UPDATE $tabelle SET Menge=$menge, Beginn=$beginn, Dauer=$dauer ".
 							'WHERE F_Artikel_id='.
 							$docinput['Artikel_Nr']." AND F_Unterartikel_id=$key"))
-							echo "&gt;&gt;&gt;Fehler beim Update: ".mysql_error().'<br />';
+							echo "&gt;&gt;&gt;Fehler beim Update: ".sql_error().'<br />';
 						}
 						else
 						{
-							// Unterartikel hinzufügen
+							// Unterartikel hinzufï¿½gen
 							if (! sql_query('INSERT INTO '.$tabelle.
 							' (F_Artikel_id, F_Unterartikel_id,Menge,Dauer,Beginn) '.
 							'VALUES ('.$docinput['Artikel_Nr'].",$key,$menge,$dauer,$beginn)"))
-							echo 'Fehler beim Einfügen: '.mysql_error();
+							echo 'Fehler beim Einfï¿½gen: '.sql_error();
 						}
 					}
 				}
@@ -154,7 +154,7 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 			"docinput[DArtikel_Nr]"=>$unterartikel["id"],"docinput[UTable]"=>$tabellennummer));
 			echo '#'.$tabelle.'" onClick="javascript:return window.confirm(\'Unterartikel '.
 			stripslashes($unterartikel["Bezeichnung"]);
-			echo ' wirklich löschen?\');"><img src="/img/small_edit/delete.gif" border="0"/>';
+			echo ' wirklich lï¿½schen?\');"><img src="/img/small_edit/delete.gif" border="0"/>';
 			echo '</td></tr>';
 			if ( $Color == "helleZeile")
 			$Color = "dunkleZeile";
@@ -166,7 +166,7 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 			if ( isset($docinput["Search".$tabelle]) &&
 			trim($docinput["Search".$tabelle]) != "" )
 			{
-				// TODO: Subselect: Die vorhandenen Unterartikel ausschließen
+				// TODO: Subselect: Die vorhandenen Unterartikel ausschlieï¿½en
 				$uquery = sql_query("SELECT Bezeichnung, id FROM ".TABLE_ARTIKEL.
 				" WHERE id <> ".$docinput["Artikel_Nr"]." AND Bezeichnung LIKE '%".
 				addslashes($docinput["Search$tabelle"])."%'".
@@ -203,7 +203,7 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 			echo '<input type="Submit" name="docinput[Speichern'.$tabelle.
 			']" value="';
 			if ( isset($docinput["Search$tabelle"]) )
-			echo 'Hinzufügen/';
+			echo 'Hinzufï¿½gen/';
 			echo 'Artikel suchen" /></td></tr>';
 		}
 		if ( $docinput["Edit$tabelle"] == 1 )
@@ -229,12 +229,12 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 	}
 	else
 	{
-		echo '<tr><td colspan="3" class="zentriert">Zu diesem Artikel gehören keine weiteren Artikel</td></tr>';
+		echo '<tr><td colspan="3" class="zentriert">Zu diesem Artikel gehï¿½ren keine weiteren Artikel</td></tr>';
 	}
 	if ( $docinput["Edit$tabelle"] != 2 )
 	echo '<tr><td colspan="3" class="zentriert">[ <a href="'.get_url($id,
 	array("docinput[Artikel_Nr]"=>$docinput["Artikel_Nr"],"docinput[Edit$tabelle]"=>2)).
-	'#'.$tabelle.'">Hinzufügen</a> ]</td></tr>';
+	'#'.$tabelle.'">Hinzufï¿½gen</a> ]</td></tr>';
 	echo '</table>';
 	sql_free_result($query);
 }
@@ -274,9 +274,9 @@ if ( $profile['editor']!= 1 )
 	if ( isset($docinput['Bezeichnung']) && isset($docinput['Einheit']) &&
 	isset($docinput['Save']))
 	{
-		// Prüfen, ob Artikel mit gleicher Bezeichnung schon vorhanden ist
+		// Prï¿½fen, ob Artikel mit gleicher Bezeichnung schon vorhanden ist
 		$query = sql_query('SELECT * FROM '.TABLE_ARTIKEL." WHERE Bezeichnung='".
-		mysql_real_escape_string($docinput['Bezeichnung'])."' AND id<>".$docinput['Artikel_Nr']);
+		sql_real_escape_string($docinput['Bezeichnung'])."' AND id<>".$docinput['Artikel_Nr']);
 		if ( sql_num_rows($query) > 0 )
 		{
 			echo '<span class="Fehler">Vorhandene Artikel mit gleicher Bezeichnung:</span><br />';
@@ -371,8 +371,8 @@ if ( $profile['editor']!= 1 )
 			ob_start();
 			zeigeArtikelTabelle(TABLE_ARTIKELGRUPPEN, 'Artikel, die mitgebucht und berechnet werden');
 
-			// zugehörige Artikel
-			zeigeArtikelTabelle(TABLE_ARTIKELBEZIEHUNGEN, 'Zugehörige Artikel (werden nicht berechnet)');
+			// zugehï¿½rige Artikel
+			zeigeArtikelTabelle(TABLE_ARTIKELBEZIEHUNGEN, 'Zugehï¿½rige Artikel (werden nicht berechnet)');
 
 			$Smarty->assign('Tabellen', ob_get_contents());
 
@@ -381,7 +381,7 @@ if ( $profile['editor']!= 1 )
 		// Preise anzeigen
 		if ( isset($docinput['SavePreis']) )
 		{
-			// Preislistenpreis ändern
+			// Preislistenpreis ï¿½ndern
 			foreach ( $docinput['Preis'] as $key => $value )
 			{
 				$value = str_replace(',','.',$value);
@@ -393,23 +393,23 @@ if ( $profile['editor']!= 1 )
 					if ( $key < 0 && ($value != 0 || $value2 != 0) &&
 					$docinput['Preisliste_id'] > 0 )
 					{
-						// Neuen Eintrag hinzufügen
+						// Neuen Eintrag hinzufï¿½gen
 						if ( ! sql_query('INSERT INTO '.TABLE_PREISE.
 						' (Preis,Artikel_Nr,F_Preisliste_id,PreisStunde) VALUES ('.
 						$value.','.$docinput['Artikel_Nr'].','.$docinput['Preisliste_id'].
-						','.$value2.')')) echo 'EP:'.mysql_error();
+						','.$value2.')')) echo 'EP:'.sql_error();
 					}
 					elseif ( ! sql_query('UPDATE '.TABLE_PREISE.
 					" SET Preis=$value,PreisStunde=$value2 WHERE F_Preisliste_id=$key AND Artikel_Nr=".
 					$docinput['Artikel_Nr']))
-					echo 'Fehler bei Preisanpassung: '.mysql_error();
+					echo 'Fehler bei Preisanpassung: '.sql_error();
 				}
 			}
 		}
-		$query = mysql_query('SELECT * FROM '.TABLE_PREISLISTEN. ' WHERE NOT Inaktiv ORDER BY GueltigAb DESC, Bezeichnung');
+		$query = sql_query('SELECT * FROM '.TABLE_PREISLISTEN. ' WHERE NOT Inaktiv ORDER BY GueltigAb DESC, Bezeichnung');
 		$Preisliste = -1;
 		$Preislisten = array();
-		while ( $preisliste = mysql_fetch_array($query))
+		while ( $preisliste = sql_fetch_array($query))
 		{
 			$Preislisten[$preisliste['Preisliste_id']] = $preisliste['Bezeichnung'];
 			if ( $Preisliste < 0 && $preisliste['Standard'] )
@@ -417,7 +417,7 @@ if ( $profile['editor']!= 1 )
 				$Preisliste = $preisliste['Preisliste_id'];
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		$Smarty->assign('Preisliste', $Preisliste);
 		$Smarty->assign('Preislisten', $Preislisten);
 		$Smarty->assign('Preisurl', get_url(get_cmodule_id('cvjmpreise')));
@@ -514,7 +514,7 @@ if ( $profile['editor']!= 1 )
 
 		if ( isset($_REQUEST['Search']) )
 		{
-			$Search = trim(mysql_real_escape_string($_REQUEST['Search']));
+			$Search = trim(sql_real_escape_string($_REQUEST['Search']));
 			if ( $Search == '' )
 			{
 				$Search = '1';
@@ -530,7 +530,7 @@ if ( $profile['editor']!= 1 )
 		}
 		if ( array_key_exists('Artikel_Sort',$_SESSION) && trim($_SESSION['Artikel_Sort']) != '')
 		{
-			$Sort = mysql_real_escape_string($_SESSION['Artikel_Sort']);
+			$Sort = sql_real_escape_string($_SESSION['Artikel_Sort']);
 		}
 		else
 		{
@@ -547,7 +547,7 @@ if ( $profile['editor']!= 1 )
                 $sql = 'SELECT id FROM '.TABLE_ARTIKEL.' WHERE '.$Search.' ORDER BY '.$Sort;
 		if (! $query = sql_query($sql))
 		{
-			echo mysql_error();
+			echo sql_error();
 		}
 		if ( $_REQUEST['Search'] != '' )
 		{
@@ -580,7 +580,7 @@ if ( $profile['editor']!= 1 )
 			sql_free_result($query);
 			if ( ! $query = sql_query($sql.' '.sql_limit($AnzahlProSeite,($Seite-1)*$AnzahlProSeite)))
 			{
-				echo mysql_error();
+				echo sql_error();
 			}
 		}
 		$Smarty->assign('Seite', $Seite);

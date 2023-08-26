@@ -17,8 +17,8 @@
 <a href="<?=get_url($id,$Param)?>Year"><?=LANG_YEAR?></a> | <a
 href="<?=get_url($id)?>&Anzeige=<?=$Anzeige?>">heute</a>
 <br />
-<strong>Ausgewählte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
-alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persönliche Termine</a>
+<strong>Ausgewï¿½hlte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
+alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persï¿½nliche Termine</a>
 (Mailbenachrichtigung <a href="<?=get_url($id, array('Config'=>1))?>">konfigurieren</a>)</p>
 
 
@@ -143,8 +143,8 @@ href="<?=get_url($id)?>&Anzeige=<?=$Anzeige?>">heute</a>
 <?php
   $Param .= $Anzeige;
 ?>
-<strong>Ausgewählte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
-alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persönliche Termine</a>
+<strong>Ausgewï¿½hlte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
+alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persï¿½nliche Termine</a>
 (Mailbenachrichtigung <a href="<?=get_url($id, array('Config'=>1))?>">konfigurieren</a>)</p>
 <p><form action="<?=get_url($id)?>" method="post" name="Springen2">zu Datum
 <input type="hidden" name="Anzeige" value="<?=$Anzeige?>">
@@ -154,7 +154,7 @@ alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">pe
 <?php
   // Gruppe
   reset($groups);
-  while ( list($gid, $g) = each($groups)) {
+  foreach ($groups as $gid => $g)  {
     if ( InGruppe($gid) || $profile[$document["Terminrecht"]] == "1" )
     {
       echo '<input type="Checkbox" name="Gruppe[]" value="'.$gid.'" ';
@@ -171,7 +171,7 @@ if ( $profile["SeeAll"] == "1" ) {
 <select name="Betroffen">
 <?php
   $u = search_users();
-  while ( list($uid, $us) = each($u)) {
+  foreach ($u as $uid => $us)  {
     echo '<option value="'.$uid.'"';
     if ( $uid == SESSION_DBID ) echo ' selected="selected"';
     echo '>'.$us["nickname"].'</option>';
@@ -181,7 +181,7 @@ if ( $profile["SeeAll"] == "1" ) {
 <input type="Submit" value="anzeigen"></form></p>
 <br />
 
-<?
+<?php
 } // if seeAll
 } // if not Printable
 } // if not editor
@@ -203,7 +203,7 @@ if ( $profile['editor'] == "1" ) {
   <option value="Day" <?if ($document['Anzeige'] == "Day") echo "selected";?>>Tag</option>
   <option value="erwMonth" <?if ($document['Anzeige'] == "erwMonth") echo "selected";?>>3 Monate</option>
   </select>
-  <?
+  <?php
   echo "<br /><br />";
   create_editor_input("Alle Termine im System anzeigen","AlleAnzeigen", "onoff_input");
   echo "<br /><br />";
@@ -227,6 +227,6 @@ if ( $profile['editor'] == "1" ) {
   echo "<br /><br />";
   create_editor_input("Farbe Aktueller Tag","Todaycolor", "text_input");
   echo "<br /><br />";
-  create_editor_input("Recht für Terminerstellung","Terminrecht", "text_input");
+  create_editor_input("Recht fï¿½r Terminerstellung","Terminrecht", "text_input");
 }
 ?>

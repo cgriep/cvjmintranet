@@ -36,33 +36,33 @@ if($profile['editor']=='1') {
 	Max per Page<br /><input type="text" name="docdata[ppp]" size="2" maxlength="2" value="<?=$document['ppp']?>">
 	<br /><br />Max total Posts<br /><input type="text" name="docdata[maxposts]" size="3" maxlength="3" value="<?=$document['maxposts']?>">
 	<input type="hidden" name="docdataflavour[ppp]" value="0">
-	<input type="hidden" name="docdataflavour[maxposts]" value="0"><?
+	<input type="hidden" name="docdataflavour[maxposts]" value="0"><?php
 	$result = get_sorted_children($first_item, 100, 'sorttime',$doctypes['linktracker_posting']);
 	if($childcount > 0) {
 		?><br /><br /><?=$design['table_begin']?><tr bgcolor="<?=$design['table_header']?>">
 		<td width="10%" nowrap>Nickname</td>
 		<td width="98%" nowrap>Message</td>
 		<td width="1%" nowrap>Edit</td>
-		<td width="1%" nowrap>Remove</td></tr><?
+		<td width="1%" nowrap>Remove</td></tr><?php
 		}
 	while(list($key, $value) = each($result)) {
 		?><tr bgcolor = "<?=$design['table_row_dark']?>">
-		<td nowrap>[ <?
+		<td nowrap>[ <?php
 		if(isset($value['userid'])) {
 			echo transform($value['userid'], 'user_id');
 			}
 		else {
-			?><a href="mailto:<?=transform($value['email'], 'clean')?>"><?=transform($value['nick'], 'clean')?></a><?
+			?><a href="mailto:<?=transform($value['email'], 'clean')?>"><?=transform($value['nick'], 'clean')?></a><?php
 			}
-		?> ]</td><td nowrap><?=transform(substr($value['posting'],0,40), 'clean')?><?
+		?> ]</td><td nowrap><?=transform(substr($value['posting'],0,40), 'clean')?><?php
 		if(strlen($value['posting'])>40){echo '...';}
 		?></td><td nowrap> [ <a href="<?=get_url($key)?>">Edit</a> ]</td>
-		<td nowrap> <input type="checkbox" name="docinput[deleteposting][]" value="<?=$key?>"> Remove</td></tr><?
+		<td nowrap> <input type="checkbox" name="docinput[deleteposting][]" value="<?=$key?>"> Remove</td></tr><?php
 		}
 	if($childcount > 0) {
 		?><tr bgcolor="<?=$design['table_row_dark']?>">
-		<td colspan="3" width="99%"> </td>
-		<td nowrap width="1%"><input type="checkbox" name="docinput[delall]" value="true"> Remove All</td></tr><?
+		<td colspan="3" width="99%">ï¿½</td>
+		<td nowrap width="1%"><input type="checkbox" name="docinput[delall]" value="true"> Remove All</td></tr><?php
 		echo $design['table_end'];
 		}
 	if($childcount > 100)  {
@@ -88,32 +88,32 @@ elseif($profile['editor']!='1' && !isset($docinput['newmessage'])) {
 		$result = get_sorted_children ($first_item ,$document['ppp'], 'sorttime',$doctypes['linktracker_posting']);
 		if($childcount > 0) echo '<br />'.$design['table_begin'];
 		while(list($key, $value) = each($result)) {
-			?><tr bgcolor = "<?=$design['table_row_dark']?>"><td width="27%" nowrap><?=LANG_NICKNAME?> [ <? 
+			?><tr bgcolor = "<?=$design['table_row_dark']?>"><td width="27%" nowrap><?=LANG_NICKNAME?> [ <?php 
 			if(isset($value['userid'])) {
 				echo transform($value['userid'], 'user_id');
 				}
 			else {
 				if(ereg('@',$value['email'])) { 
-					?><a href="mailto:<?=transform($value['email'], 'clean')?>"><?=transform($value['nick'], 'clean')?></a><?
+					?><a href="mailto:<?=transform($value['email'], 'clean')?>"><?=transform($value['nick'], 'clean')?></a><?php
 					}
 				else { echo transform($value['nick'], 'clean'); }
 				}
-			?> ] </td><td width=70%><?=LANG_URL?> [ <?
+			?> ] </td><td width=70%><?=LANG_URL?> [ <?php
 			if(strlen($value['title']) > 11 )  { echo'<a href="'.transform($value['title'], 'clean').'" target="_blank">'.$value['title'].'</a>'; }
 			else { echo 'none'; }
-			?> ]</td><td width="1%" nowrap><?
+			?> ]</td><td width="1%" nowrap><?php
 			if(SESSION_DBID == $value['userid'] && SESSION_STATUS == 'ok') {
-				?>[ <a href="<?=get_url($key)?>"><?=LANG_EDIT?> ]<?
+				?>[ <a href="<?=get_url($key)?>"><?=LANG_EDIT?> ]<?php
 				}
 			?></td>
 			<td width="1%" nowrap><?=LANG_GUESTBOOK_POSTEDAT?> <?=transform($value['sorttime'], 'datetime')?></td></tr>
 			<tr bgcolor="<?=$design['table_header']?>"><td width="100%" colspan="4" nowrap>
-			<form action="<?=get_url($id)?>" method="post"><?=LANG_RATING?> <select name="docinput[votevalue]"><?
-			for($i = 0; $i<11; $i++) { ?><option value="<?=$i?>"><?=$i?></option><? }			
+			<form action="<?=get_url($id)?>" method="post"><?=LANG_RATING?> <select name="docinput[votevalue]"><?php
+			for($i = 0; $i<11; $i++) { ?><option value="<?=$i?>"><?=$i?></option><?php }			
 			unset($i);
 			?></select><input type="submit" value="<?=LANG_VOTE?>">
 			<input type="hidden" name="docinput[savevote]" value="<?=$key?>">
-			<?
+			<?php
 			if($value['votings'] == '') $value['votings'] = 0;
 			if($value['votes'] == '') $value['votes'] = 0;
 			?>
@@ -122,7 +122,7 @@ elseif($profile['editor']!='1' && !isset($docinput['newmessage'])) {
 			</td></tr></form>
 			<tr bgcolor="<?=$design['table_row_bright']?>"><td colspan="4">
 			<?=transform($value['posting'], 'usertext')?></td></tr>
-			 <tr><td colspan="4"><img src="img/pixel.gif" width="1" height="10" border="0" /></td></tr><?
+			 <tr><td colspan="4"><img src="img/pixel.gif" width="1" height="10" border="0" /></td></tr><?php
 			}
 	if($childcount > 0) echo $design['table_end'];
 	if($childcount > $document['ppp']) {
@@ -142,16 +142,16 @@ elseif($profile['editor']!='1' && !isset($docinput['newmessage'])) {
 			}
 			?><form action="<?=get_url($id)?>" method="post">
 	 	<input type="hidden" name="docinput[newmessage]" value="1">
-	 	<?
+	 	<?php
 		if(SESSION_STATUS != 'ok'){
 			?><?=LANG_NICKNAME?><br /><input type="text" name="docinput[nick]" size="<?=$design['input_size']?>" maxlength="30" >
 	 		<br /><?=LANG_EMAIL_ADDRESS?><br /><input type="text" name="docinput[email]" size="<?=$design['input_size']?>" maxlength="30" >
-	 		<br /><?
+	 		<br /><?php
 			}
 		?><?=LANG_URL?><br /><input type="text" name="docinput[url]"  size="<?=$design['input_size']?>" maxlength="60" value="http://">
 	 	<br /><?=LANG_COMMENTS?><br /><textarea name="docinput[posting]" cols="<?=$design['input_size']?>" rows="5"></textarea>
 	 	<br /><input type="submit" value="<?=LANG_GUESTBOOK_SIGNIN?>">
-	 	</form><?
+	 	</form><?php
 	}
 elseif(isset($docinput['newmessage'])) {
 	if(((isemail($docinput['email']) && $docinput['nick'] != "") || SESSION_STATUS == 'ok') && $docinput['posting'] != '' && strlen($docinput['url']) > 11) {

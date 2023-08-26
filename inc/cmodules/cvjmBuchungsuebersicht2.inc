@@ -1,7 +1,7 @@
 <?php
 /**
 
-Modul Buchungsübersicht monatlich
+Modul Buchungsï¿½bersicht monatlich
 
 AWF-Name: cvjmbuchungsuebersicht2
 
@@ -41,7 +41,7 @@ if ($profile['editor'] != 1)
 		$Tag = convertDatumToTimestamp($_REQUEST['Datum']);
 		$dat = '&Datum=' . $_REQUEST['Datum'];
 	}
-	// Auswahlfelder für Arten
+	// Auswahlfelder fï¿½r Arten
 	$Kategorien = array ();
 	if (!isset ($docinput['Kategorie']))
 		$docinput['Kategorie'] = explode(',', $profile['Kategorie' . $id]);
@@ -52,7 +52,7 @@ if ($profile['editor'] != 1)
 	if (!$query = sql_query('SELECT * FROM ' . TABLE_ARTIKEL .
 		' WHERE Einruecken=0 AND F_Art_id IN (' . CVJMART_ORT . ',' . CVJMART_VERPFLEGUNG . ',' .
 		CVJMART_PROGRAMM . ',' . CVJMART_VERLEIH . ',' . CVJMART_PROGRAMMPAKET . ') ORDER BY Bezeichnung'))
-		echo 'Fehler Kategorie: ' . mysql_error();
+		echo 'Fehler Kategorie: ' . sql_error();
 	while ($kategorie = sql_fetch_array($query))
 	{
 		$Kategorienamen[$kategorie['id']] = $kategorie['Bezeichnung'];		
@@ -119,7 +119,7 @@ if ($profile['editor'] != 1)
 				$row['Tage'][$i] = array ();
 				while (isset ($buchung) && $buchung['Datum'] >= strtotime('+' . ($i -VORLAUF) . ' day', $Tag) && $buchung['Datum'] < strtotime(($i +1 - VORLAUF) . ' day', $Tag))
 				{
-					// Durchnummerierung der Buchung für Farben
+					// Durchnummerierung der Buchung fï¿½r Farben
 					if (!isset ($BuchungFarbe[$buchung['Buchung_Nr']]) && Count($BuchungFarbe) < Count($Belegungsfarbe))
 						$BuchungFarbe[$buchung['Buchung_Nr']] = $Belegungsfarbe[Count($BuchungFarbe)];
 					$buchung['Color'] = $BuchungFarbe[$buchung['Buchung_Nr']];

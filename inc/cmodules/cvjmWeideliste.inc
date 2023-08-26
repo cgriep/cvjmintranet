@@ -1,7 +1,7 @@
 <?php
 /**
  * cvjmWeidelisten
- * Weideliste für CVJM Feriendorf Herbstein
+ * Weideliste fï¿½r CVJM Feriendorf Herbstein
  * 
  */
 
@@ -14,12 +14,12 @@ if ( isset($_REQUEST['Weideliste']) )
 	// Speichern
 	$sql = 'INSERT INTO cvjm_Weideliste (Datum, Ort, Tierart, Bemerkung, Erstellt) VALUES (';
 	$sql .= '\''.date('Y-m-d',strtotime($_REQUEST['Weideliste']['Datum'])).'\',\''.
-	mysql_real_escape_string($_REQUEST['Weideliste']['Ort']).'\',\''.
-	mysql_real_escape_string($_REQUEST['Weideliste']['Tierart']).'\',\''.
-	mysql_real_escape_string($_REQUEST['Weideliste']['Bemerkung']).'\',NOW())';
-	if ( ! mysql_query($sql))
+	sql_real_escape_string($_REQUEST['Weideliste']['Ort']).'\',\''.
+	sql_real_escape_string($_REQUEST['Weideliste']['Tierart']).'\',\''.
+	sql_real_escape_string($_REQUEST['Weideliste']['Bemerkung']).'\',NOW())';
+	if ( ! sql_query($sql))
 	{
-		print mysql_error();
+		print sql_error();
 	}
 }
 
@@ -31,14 +31,14 @@ if ( isset($_REQUEST['Weideliste']) )
 	$sql = 'SELECT * FROM cvjm_Weideliste WHERE Datum BETWEEN \''.date('Y-m-d',$startdatum).
 	'\' AND \''.
 	date('Y-m-d',strtotime('+30 day', $startdatum)).'\' ORDER BY Tierart, Datum';
-	$query = mysql_query($sql);
+	$query = sql_query($sql);
 	$weideliste = array();
 	$row = array('Datum'=>'', 'Tierart'=>'', 'Ort'=>'', 'Bemerkung'=>'', 'Erstellt'=>'');
 	for ($i=0; $i<30;$i++)
 	{
 		$weideliste[strtotime('+'.$i.' days', $startdatum)] = $row;
 	}
-	while ( $row = mysql_fetch_array($query))
+	while ( $row = sql_fetch_array($query))
 	{
 		if ( $weideliste[strtotime($row['Datum'])]['Tierart'] == '' )
 		{
@@ -56,7 +56,7 @@ if ( isset($_REQUEST['Weideliste']) )
 			}
 		}
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	// template anzeigen
 	$Smarty->assign('Weideliste', $weideliste);
 	$Smarty->assign('id', $id);
@@ -65,11 +65,11 @@ if ( isset($_REQUEST['Weideliste']) )
 	
 	$Smarty->assign('Tiere', array('Schafe', 'Ziegen', 'Ponys'));
 	$Smarty->assign('Orte', array(
-		'Röderwiesen (Zeltplatz)',
+		'Rï¿½derwiesen (Zeltplatz)',
 		'Struth JB (Hauptwiese)',
 		'Struth JB (oberhalb BH)',
 		'Struth FB (Hauptwiese)',
-		'Struth FB_2 (zwischen FH1 und Röderwiesen)',
+		'Struth FB_2 (zwischen FH1 und Rï¿½derwiesen)',
 		'Struth FB_3 (oberhalb FH6-10)',
 		'Streuobstwiese',
 		'Ellersbach 1 (andere Seite)',

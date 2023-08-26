@@ -10,7 +10,7 @@
 
 load_lang('preferences');
 
-if($profile[editor] == 1) {
+if($profile['editor'] == 1) {
 	create_editor_input('Message for users who are not logged in','denied','area_input');
 	echo('<br /><br />');
 	create_editor_input('Some notes for registered users','notes','area_input');
@@ -47,9 +47,9 @@ if(SESSION_STATUS == 'ok') {
 	<br />
 	<?=LANG_DEFAULT_MESSAGE_TYPE?><br />
 	<select name="docinput[im_default]" size="1">
-	<option value="instant"<? if($profile['im_default'] == 'instant') echo ' selected';?>><?=LANG_INSTANT_MESSAGE?></option>
-	<? if(isset($profile['icq']) && is_numeric($profile['icq'])) { ?><option value="icq"<? if($profile['im_default'] == 'icq') echo ' selected';?>>ICQ</option><? } ?>
-	<option value="email"<? if($profile['im_default'] == 'email') echo ' selected';?>><?=LANG_EMAIL?></option>
+	<option value="instant"<?php if($profile['im_default'] == 'instant') echo ' selected';?>><?=LANG_INSTANT_MESSAGE?></option>
+	<?php if(isset($profile['icq']) && is_numeric($profile['icq'])) { ?><option value="icq"<?php if($profile['im_default'] == 'icq') echo ' selected';?>>ICQ</option><?php } ?>
+	<option value="email"<?php if($profile['im_default'] == 'email') echo ' selected';?>><?=LANG_EMAIL?></option>
 	</select>
 	</table><br>
 	<input type="submit" value="<?=LANG_SAVE?>">

@@ -53,14 +53,14 @@ if(isset($delete2)) {
 <title>
 Liquid Bytes AWF Banner Management
 </title>
-<?
+<?php
         include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> Banner Management</h2></center>
-<? if(isset($id)) { 
+<center><h2><?php echo SITE_TITLE; ?> Banner Management</h2></center>
+<?php if(isset($id)) { 
 $queryres = sql_query("SELECT host, destination, counter, views, url, banner FROM ".TABLE_ADS." WHERE id=$id");
 $row = sql_fetch_row($queryres);
 sql_free_result($queryres);
@@ -94,10 +94,10 @@ Filename<br />
 <br />
 <input type="submit" value="Save">
 </form>
-<? } elseif(isset($delete)) { ?>
+<?php } elseif(isset($delete)) { ?>
 <center><h3>Delete: Are you sure?</h3>
 <h3><a href="<?=$_SERVER['PHP_SELF']?>">No</a>&nbsp;<a href="<?=$_SERVER['PHP_SELF']?>?delete2=<?=$delete?>">Yes</a></h3>
-<? } elseif(isset($new)) { ?>
+<?php } elseif(isset($new)) { ?>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
 <input type="hidden" name="create_new" value="true" />
 Host
@@ -127,7 +127,7 @@ Filename<br />
 <br />
 <input type="submit" value="Save">
 </form>
-<? } else { ?>
+<?php } else { ?>
 <table width="100%" border="0" cellpadding="2" cellspacing="1">
 <TR><TD WIDTH=20% bgcolor="#ddddff"><B>Host</B></TD>
 <TD WIDTH=30% bgcolor="#ddffdd"><B>Destination URL</B></TD>
@@ -135,7 +135,7 @@ Filename<br />
 <TD WIDTH=10% bgcolor="#dddddd" align="right"><B>Clicks</B></TD>
 <TD WIDTH=10% bgcolor="#dddddd" align="right"><B>Views</B></TD>
 <TD WIDTH=10% bgcolor="#dddddd" align="center"><B>Options</B></TD></TR>
-<?
+<?php
   $queryres = sql_query("SELECT host, destination, counter, views, url, banner, id FROM ".TABLE_ADS." ORDER BY host");
   WHILE($row = sql_fetch_row($queryres)) {
     echo('<TR>'
@@ -154,7 +154,7 @@ Filename<br />
 <center><a href="<?$_SERVER['PHP_SELF']?>?new=true">Add new host</a></center>
 </td></tr>
 </table>
-<?
+<?php
 }
         include('footer.inc');
 ?>

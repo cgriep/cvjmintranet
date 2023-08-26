@@ -8,7 +8,7 @@
         Last update: 21.08.2003
 */
 
-if($profile[editor] == 1) {
+if($profile['editor'] == 1) {
 	create_editor_input('Message for users who are not logged in','denied','area_input');
 	echo('<br /><br />');
 	create_editor_input('Some notes for registered users','notes','area_input');
@@ -66,7 +66,7 @@ if(SESSION_STATUS == 'ok') {
 	<?php
 	}
 elseif(SESSION_STATUS != 'ok') {
-	if(isset($document[denied])) { echo '<p>'.$document[denied].'</p>'; }
+	if(isset($document['denied'])) { echo '<p>'.$document['denied'].'</p>'; }
 	}
 
 }

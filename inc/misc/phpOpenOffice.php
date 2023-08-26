@@ -1,4 +1,4 @@
-<?
+<?php
 // +----------------------------------------------------------------------+
 // | phpOpenOffice - Solution for modifying OpenOffice documents with PHP |
 // | v0.1b - 18/12/2003                                                   |
@@ -117,7 +117,7 @@ class phpOpenOffice
 		$list = $archive->extract(PCLZIP_OPT_PATH, POO_TMP_PATH, PCLZIP_OPT_ADD_PATH, $this->tmpDirName);
 	}
 
-         // setzt die Styles für Fett- und Kursivdruck ein
+         // setzt die Styles fï¿½r Fett- und Kursivdruck ein
          // muss nach loaddocument aufgerufen werden
          function insertStyles()
          {
@@ -137,7 +137,7 @@ class phpOpenOffice
            $fp = fopen($this->parserFiles[$file], "r");
 	  $this->parsedDocuments[$file] = fread($fp, filesize($this->parserFiles[$file]));
 	  fclose($fp);
-           // Style einfügen
+           // Style einfï¿½gen
            if ( ($pos = strpos($this->parsedDocuments[$file], OFFICEAUTOSTYLES)) !== false )
            {
               if ( substr($this->parsedDocuments[$file],$pos+strlen(OFFICEAUTOSTYLES),2) == "/>" )
@@ -267,7 +267,7 @@ class phpOpenOffice
                                    $Zelle);
                                }
                                $Zeilen[$Zeile][$vkey] = str_replace($Zelle, $Zellen, $Zeilen[$Zeile][$vkey]);
-                               // Spaltenzähler erneuern
+                               // Spaltenzï¿½hler erneuern
                                if ( ! $Spalteneingefuegt )
                                {
                                  $Pos = strpos($this->parsedDocuments[$file], POO_VAR_PREFIX.$key.POO_VAR_SUFFIX);

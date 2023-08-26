@@ -13,30 +13,30 @@
 <table width="100%" height="78" cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td width="180" height="78" bgcolor="#cccccc" valign="top" align="left" background="">
-<? if($profile['editmode'] === 0) { ?>
+<?php if($profile['editmode'] === 0) { ?>
 <a href="<?=get_url($id, array('editmode' => 1))?>"><img src="img/small_edit/editmode_on.gif" style="background:gray" border="0" /></a>
-<? } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
+<?php } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
 <a href="<?=get_url($id, array('editmode' => 0))?>"><img src="img/small_edit/editmode_off.gif" border="0" /></a>
-<? 
+<?php 
 if($profile['simple_edit'] == 1) { ?>
 <a href="<?=get_url($id, array('simple_edit' => 0))?>"><img src="img/small_edit/advanced_edit.gif" border="0" /></a>
-<? } else { ?>
+<?php } else { ?>
 <a href="<?=get_url($id, array('simple_edit' => 1))?>"><img src="img/small_edit/simple_edit.gif" border="0" /></a>
-<? } ?>
-<? } ?>
+<?php } ?>
+<?php } ?>
 &nbsp;
 </td>
 <td align="center">
 <table width="180" height="78" background="img/default/yellow_box.png" cellpadding="6" cellspacing="0" border="0">
 <tr>
-<td align="left" valign="top"><?
+<td align="left" valign="top"><?php
 if(SESSION_STATUS != 'ok' || $profile['editor'] != 1) {
 ?>Welcome to AWF! Log in and click on <img src="img/small_edit/editmode_on.gif" style="background:gray" border="0" /> to 
 edit this 
-page. Visit the <a href="admin/">admin area</a> to manage user accounts. Have fun :-)</td><? 
+page. Visit the <a href="admin/">admin area</a> to manage user accounts. Have fun :-)</td><?php 
 } else { 
 ?>Welcome to AWF's edit mode! Having fun?<br />
-To preview this page press save and then click on <img src="img/small_edit/editmode_off.gif" border="0" />.<? 
+To preview this page press save and then click on <img src="img/small_edit/editmode_off.gif" border="0" />.<?php 
 } ?>
 </tr>
 </table>
@@ -50,16 +50,16 @@ To preview this page press save and then click on <img src="img/small_edit/editm
 <td width="180">&nbsp;</td>
 <td align="left" bgcolor="#aaaaaa" style="color: white;">
 <table cellpadding="0" cellspacing="0" border="0"><tr>
-<?
+<?php
 // top level navigation
 
 init_published_roots();
 
 reset($published_roots);
 	$pre = '';
-        while (list ($docid, $value) = each ($published_roots)) {
+        foreach ($published_roots as $docid => $value) {
                 echo $pre;
-                ?><td><a href="<?=get_url($docid)?>" style="color: white;<? if($root_parent_id == $docid || $docid == $id) echo 'font-weight: bold;'; ?>"><?=$value['title']?></a></td><?
+                ?><td><a href="<?=get_url($docid)?>" style="color: white;<?php if($root_parent_id == $docid || $docid == $id) echo 'font-weight: bold;'; ?>"><?=$value['title']?></a></td><?php
                 $pre = '<td>'.get_image_tag('img/nav_sep.png').'</td>';
                 }
 ?>
@@ -68,9 +68,9 @@ reset($published_roots);
 <td align="right" bgcolor="#aaaaaa" style="color: white;">
 <table cellpadding="0" cellspacing="0" border="0"><tr>
 
-<? if(SESSION_STATUS == 'ok') { 
+<?php if(SESSION_STATUS == 'ok') { 
 ?><td><a style="color: white;" title="Bye." href="<?=get_url($id, 'docinput[logout]=true')?>">Logout</a></td>
-<td><?=get_image_tag('img/nav_sep.png')?></td><? 
+<td><?=get_image_tag('img/nav_sep.png')?></td><?php 
 } 
 
 $qresult = sql_query ("SELECT id, name, lang FROM ".TABLE_FLAVOURS." WHERE published=1 ORDER BY name");
@@ -78,7 +78,7 @@ if (sql_num_rows($qresult) > 0) {
 	$pre = '';
         while ($row = sql_fetch_row($qresult)) {
 		echo $pre;
-                ?><td><a href="<?=$self.'docinput[flavour]='.$row[0].'&docinput[lang]='.$row[2]?>" style="color: white;<? if($row[0] == $flavour) echo 'font-weight: bold;'; ?>"><?=$row[1]?></a></td><?
+                ?><td><a href="<?=$self.'docinput[flavour]='.$row[0].'&docinput[lang]='.$row[2]?>" style="color: white;<?php if($row[0] == $flavour) echo 'font-weight: bold;'; ?>"><?=$row[1]?></a></td><?php
                 $pre = '<td>'.get_image_tag('img/nav_sep.png').'</td>';
                 }
 	sql_free_result($qresult);

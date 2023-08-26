@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -13,7 +13,7 @@
 */
 
 if($value['title'] != '' || $profile['editor'] == 1) {
-  if($value[title] == '') { $value[title] = 'Not yet translated.'; }
+  if($value['title'] == '') { $value['title'] = 'Not yet translated.'; }
   echo $design['table_begin'];
   echo '<tr bgcolor="'.$design['newsheader'].'"><th style="border-color:'.
     $design['newsbordercolor'].';border-style:solid;border-right-style:none;border-width:1pt" align="left"><b><a href="'.
@@ -31,7 +31,7 @@ if($value['title'] != '' || $profile['editor'] == 1) {
   echo('<tr><td style="border-color:'.$design['newsbordercolor'].';border-style:solid;border-bottom-style:none;border-width:1pt" colspan="2" >'.$value['body'].'
       <a href="'.get_url($docid,'first_item='.$first_item).'">'.LANG_MORE.'</a></td></tr>');
   if(COUNT_VIEWS == 1) {
-    echo('<tr><td style="border-color:'.$design['newsbordercolor'].';border-style:solid;border-top-style:none;border-width:1pt" colspan="2" align="right" border="blr">( '.$value['views'].' '.LANG_VIEWS.' | '.count_children($doctypes[comment], $flavour,
+    echo('<tr><td style="border-color:'.$design['newsbordercolor'].';border-style:solid;border-top-style:none;border-width:1pt" colspan="2" align="right" border="blr">( '.$value['views'].' '.LANG_VIEWS.' | '.count_children($doctypes['comment'], $flavour,
           $docid).' '.LANG_COMMENTS.' )</td></tr>');
   }
   echo $design['table_end'];

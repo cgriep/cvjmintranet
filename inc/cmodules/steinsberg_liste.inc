@@ -83,11 +83,11 @@ else
       <br />
       Verwendbare Platzhalter: Bezahlt: %%Geld%% / %%Stand%%, Teilnahmeart: %%Art%%,
       %%Charaktername%%, %%Name%%", %%Vorname%%, %%Unterbringung%%<br />
-      Anhängen <input type="file" name="Anhang" /> (Achtung, nicht zu große Datei!)<br />
+      Anhï¿½ngen <input type="file" name="Anhang" /> (Achtung, nicht zu groï¿½e Datei!)<br />
       Real senden <input type="Checkbox" name="senden" value="v" /><br />
       <input type="Submit" name="sendmail" value="<?=LANG_SUBMIT?>">
       
-    <?
+    <?php
     }
    // Liste anzeigen !
       $Summe = "";
@@ -270,7 +270,7 @@ else
       }
     }
     sql_free_result($query);
-    // Charakterdaten hinzufügen
+    // Charakterdaten hinzufï¿½gen
     // Suchen nach VChar#
     // merge der Daten
     reset($alledaten);
@@ -351,11 +351,11 @@ else
       		{
       			echo '<a href="'.get_url($id,'Liste=W&Veranstaltung='.$Veranstaltung.'&WE='.$value['ID']).'" ' .
       					'title="Als Teilnehmer aufnehmen" ' .
-      					'onClick="javascript:return confirm(\'Tatsächlich als regulären Teilnehmer aufnehmen?\');">&rarr; N</a>';
+      					'onClick="javascript:return confirm(\'Tatsï¿½chlich als regulï¿½ren Teilnehmer aufnehmen?\');">&rarr; N</a>';
             }
             elseif ( $Liste == 'TN')
             	echo '<a href="'.get_url($id,'Liste=W&WL='.$value['ID']).'&Veranstaltung='.$Veranstaltung.'" ' .
-            			' onClick="javascript:return confirm(\'Tatsächlich auf Warteliste setzen?\')" ' .
+            			' onClick="javascript:return confirm(\'Tatsï¿½chlich auf Warteliste setzen?\')" ' .
             			'title="in Warteliste schieben">&rarr; WL</a>';
           }
         }
@@ -402,7 +402,7 @@ else
               echo "Mail an ".$mail->to." gesendet.<br />";
           }
           else
-            echo "Mail würde an ".$mail->to." gesendet.<br />";
+            echo "Mail wï¿½rde an ".$mail->to." gesendet.<br />";
         }
         else
           echo '&gt;&gt; Fehler: Konnte %% nicht umsetzen: "'.$body.'".<br />';
@@ -451,7 +451,7 @@ else
 <a href="?id=<?=$id?>&Liste=N&Veranstaltung=<?=$Veranstaltung?>">NSC-Liste</a> |
 <a href="?id=<?=$id?>&Liste=SN&Veranstaltung=<?=$Veranstaltung?>">Nicht-SC-Liste</a> |
 <a href="?id=<?=$id?>&Liste=EG&Veranstaltung=<?=$Veranstaltung?>">Eingangsliste</a> |
-<a href="?id=<?=$id?>&Liste=SL&Veranstaltung=<?=$Veranstaltung?>">SL-Übersicht</a>
+<a href="?id=<?=$id?>&Liste=SL&Veranstaltung=<?=$Veranstaltung?>">SL-ï¿½bersicht</a>
 </p>
 <p>eMail an <a href="<?=get_url($id,'Liste='.$Liste.'&Veranstaltung='.$Veranstaltung.
 '&EMail=1')?>">obige Personen</a> senden</p>

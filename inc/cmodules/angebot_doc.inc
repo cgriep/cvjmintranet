@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -12,7 +12,7 @@ if($profile['editor']!='1') {
   load_lang('Angebot');
   if(SESSION_STATUS == 'ok' && $profile['angebotsposter'] == '1' && isset($_REQUEST['saveangebot'])) {
     if($docinput['body'] == '' || $docinput['title'] == '') {
-      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?
+      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?php
     }
     else {
       $nodeid = create_node($id, $doctypes['angebot_para'], count_children($doctypes['angebot_para']), 1,0, "", $document['key_id'],
@@ -53,7 +53,7 @@ if($profile['editor']!='1') {
         <input type="text" name="docinput[GueltigAb]"  size="<?=$design['input_size']?>" maxlength="20" value="" />
         <br /><br /><?=LANG_GUELTIG_BIS?> (JJJJ-MM-DD)<br />
         <input type="text" name="docinput[expiration]"  size="<?=$design['input_size']?>" maxlength="20" value="" />
-        <br /><br /><input type="submit" name="saveangebot" value="<?=LANG_SUBMIT?>"></form><?
+        <br /><br /><input type="submit" name="saveangebot" value="<?=LANG_SUBMIT?>"></form><?php
   }
   if($document['title'] != '') {
     echo '<h2 clear="all">'.transform($document['title'], $document['datatype']['title']).'</h2>';
@@ -84,24 +84,23 @@ if($profile['editor']!='1') {
         <?=LANG_MULTIPLE_RECIPIENTS?>
         <br />
         <br />
-        <? if(SESSION_STATUS != 'ok') { ?>
+        <?php if(SESSION_STATUS != 'ok') { ?>
         <?=LANG_YOUR_EMAIL_ADDRESS?><br />
         <input type="text" name="docinput[sender]" size="50"><br />
         <br />
-        <? }
+        <?php }
         else { ?>
         <input type="hidden" name="docinput[sender]" value="<?=SESSION_EMAIL?>">
-        <? } ?>
+        <?php } ?>
         <?=LANG_MESSAGE?><br />
         <input type="text" name="docinput[body]" size="50"><br />
         <br />
         <input type="submit" value="Send">
         </form>
-        <?
+        <?php
   }
   elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($docinput['email']) && strlen($docinput['email']) > 3 && isemail($docinput['sender'])) {
     if(isset($children)) {
-      reset($children);
       if($docinput['sender'] == '') { $docinput['sender'] = 'unknown_user@'.$SERVER_NAME; }
       $counter = 0;
       if($docinput['body'] != '') {
@@ -110,7 +109,7 @@ if($profile['editor']!='1') {
       else {
         $message_body = '';
       }
-      while (list ($docid, $value) = each ($children)) {
+      foreach ($children as $docid => $value)  {
         $message_body .= transform($value['title'],'clean')."\n".
         transform(transform($value['body'], $value['datatype']['body']), 'html2txt')."\n\n";
       }
@@ -121,14 +120,13 @@ if($profile['editor']!='1') {
         "From: ".email_to_string($docinput['sender']).' <'.$docinput['sender'].'>');
       ?>
         <p><?=LANG_DOC_SENT_TO?> <b><?=$docinput['email']?></b></p>
-        <?
+        <?php
     }
   }
   $counter = 0;
   if(isset($children)) {
-    reset($children);
-    while (list ($docid, $value) = each ($children) and $counter < $max_newscount) {
-      if($value['type_id']==$doctypes['angebot_para'] && (
+    foreach ($children as $docid => $value) {
+      if( $counter < $max_newscount) && $value['type_id']==$doctypes['angebot_para'] && (
         $value['expiration_date'] == 0 || $value['expiration_date'] > time())) {
         $counter++;
         if($counter > $first_item) {
@@ -168,10 +166,9 @@ if($profile['editor']!='1') {
 }
 elseif($profile['editor']=='1') {
   if(isset($children)) {
-    reset($children);
     $counter = 0;
-    while (list ($docid, $value) = each ($children) and $counter < $max_newscount) {
-      if($value['type_id']==$doctypes['angebot_para']) {
+    foreach ( $children as $docid => $value)  {
+      if( $counter < $max_newscount && $value['type_id']==$doctypes['angebot_para']) {
         if($value['title'] == '') $value['title'] = 'Unknown';
         $counter++;
         if($counter > $first_item) {
@@ -202,12 +199,12 @@ elseif($profile['editor']=='1') {
 ?>
 <p>
 <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
-<td nowrap="nowrap"><? create_editor_input('User comments at bottom','comments','onoff_input'); ?></td>
-<td nowrap="nowrap"><? create_editor_input('Show published files at bottom','show_files','onoff_input'); ?></td>
-<td nowrap="nowrap"><? create_editor_input('Send to a friend','allow_forward','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('User comments at bottom','comments','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('Show published files at bottom','show_files','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('Send to a friend','allow_forward','onoff_input'); ?></td>
 </tr></table>
 
-<?
+<?php
 echo '<br />';
 // Image Input
 create_editor_input('Image','image','image_input');

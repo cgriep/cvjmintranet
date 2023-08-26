@@ -52,16 +52,16 @@ if ( $profile['editor'] != "1" ) {
         if ( Trim($Schulname) != "" )
         if ( ! sql_query("INSERT INTO Schulen (SchulNr, Nummer, Schulname, Bezirk, Schulart) " .
           " VALUES ('$SchulNr',$Nr, '$Schulname', '$Bezirk', '$Schulart')") )
-          echo "<i>Hinzufügen misslungen</i>";
+          echo "<i>Hinzufï¿½gen misslungen</i>";
       }
-      mysql_free_result($qu);
+      sql_free_result($qu);
       //echo $sql;
       //echo "<br />";
       if ( trim($Name) != "" )
       if ( !sql_query($sql) )
         echo "<b>misslungen</b> $SchulNr / $Nr <br />";
       else {
-        //echo mysql_affected_rows () ." geändert.<br />";
+        //echo sql_affected_rows () ." geï¿½ndert.<br />";
         $qu = sql_query("SELECT * FROM Schulen WHERE eMail = '$eMail'");
         if ( sql_num_rows($qu) == 0)
         {
@@ -125,15 +125,15 @@ if ( $profile['editor'] != "1" ) {
               echo "$Bezirk";
               add_user_to_group($ktlid, 11, false);  // Gruppe Kontaktlehrer
               break;
-            case 'Tempelhof-Schöneberg':
+            case 'Tempelhof-Schï¿½neberg':
               echo "$Bezirk";
               add_user_to_group($ktlid, 9, false);  // Gruppe Kontaktlehrer
               break;
-            case 'Neukölln':
+            case 'Neukï¿½lln':
               echo "$Bezirk";
               add_user_to_group($ktlid, 14, false);  // Gruppe Kontaktlehrer
               break;
-            case 'Treptow-Köpenick':
+            case 'Treptow-Kï¿½penick':
               echo "$Bezirk";
               add_user_to_group($ktlid, 17, false);  // Gruppe Kontaktlehrer
               break;

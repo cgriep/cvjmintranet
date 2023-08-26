@@ -25,9 +25,9 @@ global $doctypes;
 
 $children = get_sorted_children (0, 5, 'timestamp', $doctypes['newsitem'], $news_id); 
 
-?><span style="font-size: 10px"><?
+?><span style="font-size: 10px"><?php
 
-while (list ($docid, $value) = each ($children)) {
+foreach ($children as $docid => $value) {
 	if(strlen($value['title']) > 47) { $value['title'] = substr($value['title'], 0, 44).'...'; }
 	?>
 	<img src="<?=$design['arrow_bullet']?>" border="0" width="10" height="7" />
@@ -35,12 +35,12 @@ while (list ($docid, $value) = each ($children)) {
 	<a href="<?=get_url($docid)?>">
 	<?=transform($value['title'], $value['datatype']['title'])?></a>
 	<br />
-	<?
+	<?php
 	}
 	?>
 	<a href="<?=get_url($news_id)?>"><?=LANG_MORE_NEWS?>...</a>
 	</span>
-		<?
+		<?php
 	$content = ob_get_contents();
         ob_end_clean();
         if($cache_time != 0) {

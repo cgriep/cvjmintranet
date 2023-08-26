@@ -41,7 +41,7 @@ Liquid Bytes AWF User Management - HTML dump
 </title>
 </head>
 <body bgcolor="#ffffff" topmargin="0" rightmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
-<?
+<?php
 $qres = sql_query("SELECT id, email, password, valid, views, last_login FROM ".$db_table_prefix."users $where".
 		" ORDER BY $order_by");
 
@@ -59,13 +59,13 @@ while($row2 = sql_fetch_row($qres2)) {
 	<td>valid</td>
         <td>views</td>
         <td>last_login</td>
-	<?
+	<?php
 	while(list($key, $value) = each($userdata)) {
         echo "<td>$value</td>";
         }
 	?>
         </tr>
-		<?
+		<?php
 		while($row = sql_fetch_row($qres)) {
 			if($row[3]==1) { $row[3] = '1'; } else { $row[3] = '0'; } 
 			?>
@@ -76,7 +76,7 @@ while($row2 = sql_fetch_row($qres2)) {
         <td><?=$row[3]?></td>
         <td><?=$row[4]?></td>
         <td><?=$row[5]?></td>
-	<?
+	<?php
 	$profile = get_profile ($row[0]);
 	reset($userdata);
 	while(list($key, $value) = each($userdata)) {
@@ -85,7 +85,7 @@ while($row2 = sql_fetch_row($qres2)) {
         }
 	?>
         </tr>
-		<? } ?>
+		<?php } ?>
 </table>
 </body>
 </html>

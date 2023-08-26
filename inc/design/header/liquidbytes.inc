@@ -14,11 +14,11 @@
 <tr>
 <td width="356" height="83" bgcolor="#000000" valign="top" background=""><img src="img/platine_left_top_old.jpg" border="0" width="356" height="83" /></td>
 <td width="100%" bgcolor="#000000" background="img/platine_top.jpg" align="right" valign="top">
-<? if($profile['editmode'] === 0) { ?>
+<?php if($profile['editmode'] === 0) { ?>
 <a href="<?=get_url($id, array('editmode' => 1))?>"><img style="background:gray" src="img/small_edit/editmode_on.gif" border="0" /></a>
-<? } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
+<?php } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
 <a href="<?=get_url($id, array('editmode' => 0))?>"><img src="img/small_edit/editmode_off.gif" border="0" /></a>
-<? } else { ?>&nbsp;<? } ?>
+<?php } else { ?>&nbsp;<?php } ?>
 </td>
 </tr>
 </table>

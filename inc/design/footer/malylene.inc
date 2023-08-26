@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) Terra Nostra www.terra-nostra.de
         Design J&ouml;rg Podlinski

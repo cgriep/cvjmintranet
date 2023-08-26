@@ -44,7 +44,7 @@ if(isset($logout_userid)) {
 $sql = "SELECT id, username, email, password, valid, expires FROM ".TABLE_USERS.
 	" WHERE email='".addslashes($session_userid)."' OR username='".addslashes($session_userid)."'";
 if (!$qresult = sql_query($sql))
-                 echo mysql_error();
+                 echo sql_error();
 echo $sql."//".$session_userid."//".sql_num_rows($qresult)."//".TABLE_USERS;
 if(sql_num_rows($qresult) == 1) {
         $row = sql_fetch_array($qresult);
@@ -158,8 +158,8 @@ if(!isset($profile['nickname'])) $profile['nickname'] = get_user_nickname();
 // set wildcards
 if(file_exists(INC_PATH.DATA_PATH.'wildcards.conf')) {
 	$lines = file(INC_PATH.DATA_PATH.'wildcards.conf');
-	while(list($line_num, $line) = each($lines)) {
-	  $buffer = split('\|', $line);
+	foreach ( $lines as $line_num => $line) {
+	  $buffer =  explode('\|', $line);
 	  $wildcards[$buffer[0]] = trim($buffer[1]);
 	  }
 	}
@@ -185,7 +185,7 @@ if($profile['editor'] == '1' && $_REQUEST['self_loop'] != 'true') {
 			$doc['published'], $doc['description'], $doc['key_id'], $doc['searchable'], $doc['cacheable']);
 		if(isset($docdata)) {
 		reset($docdata);
-		while(list($key, $value) = each($docdata)) {
+		foreach ( $docdata as $key => $value) {
 			if(isset($docdatatype[$key])) {
 				$datatype = $docdatatype[$key];
 				}
@@ -297,7 +297,7 @@ if(!isset($document['enabled'])) {
 	}
 
 if(!isset($document['title'])) {
-	if($profile[editor] != 1) { $flavour  = $default_flavour; } else { $document['title'] = 'Unknown'; }
+	if($profile['editor'] != 1) { $flavour  = $default_flavour; } else { $document['title'] = 'Unknown'; }
 	unset($document);
 	$document = get_node($id, $flavour);
 	}

@@ -33,7 +33,9 @@ if (empty($dsns)) {
     die('At least one element of $dsns must be defined in setup.inc');
 }
 
-list($dbms, $dsn) = each($dsns);
+$dbms = key($dsns);
+$dsn = current($dsns);
+
 
 if ($dbms == 'mssql') {
     ini_set('mssql.textlimit', 4096);

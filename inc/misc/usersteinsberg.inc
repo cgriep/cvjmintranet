@@ -14,9 +14,9 @@ echo $design['table_begin']?>
 <br />
 <br />
 <?=LANG_GENDER?><br />
-<input type="radio" name="docinput[gender]" value="m"<? if($profile['gender'] == 'm') echo ' checked'; ?> /> m&auml;nnlich
+<input type="radio" name="docinput[gender]" value="m"<?php if($profile['gender'] == 'm') echo ' checked'; ?> /> m&auml;nnlich
 &nbsp&nbsp;
-<input type="radio" name="docinput[gender]" value="f"<? if($profile['gender'] == 'f') echo ' checked'; ?> /> weiblich
+<input type="radio" name="docinput[gender]" value="f"<?php if($profile['gender'] == 'f') echo ' checked'; ?> /> weiblich
 <br />
 <br />
 <?=LANG_BIRTHDAY.' '.LANG_BIRTHDAY_FORMAT?> <b>Bitte Format Monat Tag Jahr beachten !</b><br />
@@ -34,12 +34,12 @@ PLZ, Ort <br />
 <br />
 <?=LANG_COUNTRY?><br />
 <select name="docinput[country]">
-<?
+<?php
 $countries = file(INC_PATH.DATA_PATH.'/country_list_names_only.txt');
 if ( ! isset($profile['country'] ) ) $profile['country'] = "Germany";
-while(list($key, $value) = each($countries)) { ?>
-        <option value="<?=trim($value)?>"<? if($profile['country'] == trim($value)) echo ' selected'; ?>><?=trim($value)?></option>
-        <?
+foreach ($countries as $key => $value) { ?>
+        <option value="<?=trim($value)?>"<?php if($profile['country'] == trim($value)) echo ' selected'; ?>><?=trim($value)?></option>
+        <?php
         }
 ?>
 </select>
@@ -59,9 +59,9 @@ Conerfahrung in Tagen insgesamt<br />
 <br />
 <br />
 Vegetarier (falls kein Selbstverpfleger)<br />
-<input type="radio" name="docinput[Vegetarier]" value="1"<? if($profile['Vegetarier'] == '1') echo ' checked'; ?> /> ja
+<input type="radio" name="docinput[Vegetarier]" value="1"<?php if($profile['Vegetarier'] == '1') echo ' checked'; ?> /> ja
 &nbsp&nbsp;
-<input type="radio" name="docinput[Vegetarier]" value="0"<? if($profile['Vegetarier'] == '0') echo ' checked'; ?> /> nein
+<input type="radio" name="docinput[Vegetarier]" value="0"<?php if($profile['Vegetarier'] == '0') echo ' checked'; ?> /> nein
 </td></tr>
 <?=$design['table_end']?>
 <br />

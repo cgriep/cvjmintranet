@@ -15,7 +15,7 @@
 	echo ' BGCOLOR="#'.$dtc.'"';
 	else
 	echo ' BGCOLOR="'.$design['table_header'].'"'; ?>>
-	<?
+	<?php
 	// Wochenanfang feststellen
 	$sd = date ('w', mktime(0,1,0,$Monat,$Tag-$document['Erstertag'],$Jahr));
 	$sd = ($AnzTage-1) / 2;
@@ -40,7 +40,7 @@
 	$fTermine = search_nodes($search,1000);
 	else
 	$fTermine = search_children ($search,1000);
-	while ( list($key, $value) = each($fTermine) )
+	foreach ( $fTermine as $key => $value)  )
 	{
 		if ( $value['Enddatum'] > $Ende )
 		$Termine[$key] = $value;
@@ -52,7 +52,7 @@
 	$fTermine = search_nodes($search,1000);
 	else
 	$fTermine = search_children ($search,1000);
-	while ( list($key, $value) = each($fTermine) )
+	foreach ($fTermine as $key => $value) )
 	{
 		if ( $value['Datum'] < $Anfang )
 		$Termine[$key] = $value;
@@ -247,7 +247,7 @@
 						}
 						if ( strtotime("+$nextd days", mktime(0,0,0,$Monat,$Tag,$Jahr)) < $value['Enddatum'] )
 						{
-							echo ' (ganztägig!)';
+							echo ' (ganztï¿½gig!)';
 							$Termine[$key]['Ok'.$I] = strtotime($nextd.' days', mktime(0,0,0,$Monat,$Tag,$Jahr));
 						}
 						echo '">'.transform($value['title'],'clean').'</a>';

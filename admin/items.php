@@ -45,15 +45,15 @@ function selecttotext() {
 //-->
 </script>
 
-<?
+<?php
 	include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding="0" cellspacing="0" border="0">
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> Item Management</h2>
+<center><h2><?php echo SITE_TITLE; ?> Item Management</h2>
 
-<?
+<?php
 
 $table_name = TABLE_ITEMS;
 
@@ -130,19 +130,19 @@ if(isset($_REQUEST['move_down_x']) && isset($_REQUEST['item'])) {
 	}
 
 ?>
-<? if(isset($_REQUEST['remove_category_x']) && $_REQUEST['category'] != '' && !isset($_REQUEST['confirm'])) { ?>
+<?php if(isset($_REQUEST['remove_category_x']) && $_REQUEST['category'] != '' && !isset($_REQUEST['confirm'])) { ?>
 
 <p>Remove category <b><?=urldecode($_REQUEST['category'])?></b>?</p>
 <a href="<?=$_SERVER['PHP_SELF']?>">No</a>&nbsp;&nbsp;<a href="<?=$_SERVER['PHP_SELF']?>?remove_category=1&confirm=1&category=<?=urlencode($_REQUEST['category'])?>">Yes</a>
 
 
-<? } elseif((isset($_REQUEST['edit_category']) || isset($_REQUEST['edit_category_x'])) && isset($_REQUEST['category']) && !isset($_REQUEST['back_x'])) { ?>
+<?php } elseif((isset($_REQUEST['edit_category']) || isset($_REQUEST['edit_category_x'])) && isset($_REQUEST['category']) && !isset($_REQUEST['back_x'])) { ?>
 <form name="form" action="<?=$_SERVER['PHP_SELF']?>" method="post">
 <input type="hidden" name="edit_category" value="1">
 <input type="hidden" name="category" value="<?=$_REQUEST['category']?>">
 <h2><?=urldecode($_REQUEST['category'])?></h2>
 <select size="20" name="item" onDblClick="selecttotext()">
-<?
+<?php
 $qres = sql_query("SELECT id, caption, active FROM $table_name WHERE category = '".addslashes(urldecode($_REQUEST['category']))."' ORDER BY sort_order");
 while($row = sql_fetch_row($qres)) { 
 	if($row[1] == '') { $_title = '[empty string]'; } else { $_title = $row[1]; }
@@ -165,7 +165,7 @@ while($row = sql_fetch_row($qres)) {
 <input type="submit" name="add_item" value="Add Item">
 </form>
 
-<? 
+<?php 
 } else { 
 // Edit categories ---------------------------------------------------------------------------------------------
 ?>
@@ -173,7 +173,7 @@ while($row = sql_fetch_row($qres)) {
 
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
 <select size="20" name="category">
-<?
+<?php
 $qres = sql_query("SELECT category, count(*) FROM $table_name GROUP BY category");
 while($row = sql_fetch_row($qres)) { 
 	echo '<option value="'.urlencode(stripslashes($row[0])).'">'.stripslashes($row[0]).' ('.$row[1].')</option>';
@@ -190,7 +190,7 @@ while($row = sql_fetch_row($qres)) {
 <input type="hidden" name="active" value="1">
 <input type="text" name="category" size="25"><input name="add_item" type="submit" value="Add Category">
 </form>
-<? 
+<?php 
 
 // end (category list)
 } 
@@ -198,7 +198,7 @@ while($row = sql_fetch_row($qres)) {
 ?>
 </td></tr>
 </table>
-<?
+<?php
         include('footer.inc');
 ?>
 </center>

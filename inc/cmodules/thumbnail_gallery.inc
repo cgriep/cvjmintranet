@@ -50,7 +50,7 @@ if($profile['editor'] == '1') {
     if($_REQUEST["delall"] == '1') {
       $result = get_children(0, count_children($doctypes['thumbnail_thumbnail']),
                    $doctypes['thumbnail_thumbnail'], 0, 'DESC');
-      while(list($key, $value) = each($result)) { destroy_node($key); }
+      foreach ($result as $key => $value)  { destroy_node($key); }
     }
 }
 else if ( $profile[$document['pictureposter']] == 1  ) {
@@ -99,7 +99,7 @@ if($_REQUEST["add"] != '1') {
   if(!isset($repeater)) {$repeater="1";}
   $result = get_children($repeater-1, $document['ppp'],
     $doctypes['thumbnail_thumbnail'], 1, 'DESC');
-  while(list($key, $value) = each($result)) {
+  foreach ( $resuls as $key => $value) {
     echo '<tr><td nowrap><a href="'.$PHP_SELF.'?id='.$key.'">'.
       $value['title'].'</a></td>';
     if($profile['editor'] == '1') {

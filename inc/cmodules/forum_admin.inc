@@ -22,7 +22,7 @@
     echo "Folgende Foren sind von den jeweils angegebenen Personen abonniert:\n";
     // Alle Foren auflisten
     if ( !$query = sql_query("SELECT id FROM ".TABLE_NODES.
-      " WHERE type_id=".$doctypes["forum_forum"])) echo mysql_error();
+      " WHERE type_id=".$doctypes["forum_forum"])) echo sql_error();
     echo '<form action="'.get_url($id).'" methode="post">';
     while ( $node = sql_fetch_row($query))
     {

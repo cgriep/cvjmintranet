@@ -49,7 +49,7 @@ load_lang('admin');
 <title>
 Liquid Bytes AWF Link Management
 </title>
-<?
+<?php
 	include('header.inc');
 ?>
 <center>
@@ -58,7 +58,7 @@ Liquid Bytes AWF Link Management
 <form action="<?=$_SERVER['PHP_SELF']?>" method="get">
 <input type="hidden" name="page" value="<?=$page?>" />
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 lbi_add_tab('links', LANG_ADMIN_LINKS);
 ?>
 <td bgcolor="#ffffff" width="100%"><img src="img/pixel.gif" width="1" /></td>
@@ -66,7 +66,7 @@ lbi_add_tab('links', LANG_ADMIN_LINKS);
 </table>
 <table bgcolor="<?=$design['color_3']?>" width="100%" cellpadding="9" cellspacing="0" border="0">
 <tr><td>
-<? if($page == 'links') { 
+<?php if($page == 'links') { 
 lbi_display_page_links ('order', 36, 10, 1)
 ?>
 <?=$design['table_begin']?>
@@ -79,13 +79,13 @@ lbi_display_page_links ('order', 36, 10, 1)
 <td></td>
 </tr>
 </table>
-<? } ?>
+<?php } ?>
 </td></tr>
 </table>
 </form>
 </td></tr>
 </table>
-<?
+<?php
         include('footer.inc');
 ?>
 </center>

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -21,7 +21,7 @@ if($value['image'] != '' || $value['summary'] != '') {
 	
 	/* 
 	if(COUNT_VIEWS == 1) {
-        echo('<br>( '.$value['views'].' '.LANG_VIEWS.' | '.count_children($doctypes[comment],
+        echo('<br>( '.$value['views'].' '.LANG_VIEWS.' | '.count_children($doctypes['comment'],
 	        $flavour, $docid).' '.LANG_COMMENTS.' )</p>');
         } 
 	*/

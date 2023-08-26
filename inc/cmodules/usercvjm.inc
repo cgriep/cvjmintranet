@@ -10,7 +10,7 @@
         - L&auml;d bei Bedarf ein im Misc-liegendes Modul, dessen Name im Administrationsfeld
           eingegeben werden kann
 */
-if($profile[editor] == 1) {
+if($profile['editor'] == 1) {
 
         create_editor_input('Zus&auml;tzliches Infomodul (im misc-Ordner)', 'zus_info', 'text_input');
         echo '<br /><br />';
@@ -33,7 +33,7 @@ if(isset($docinput['create_new_user']) && $docinput['create_new_user'] == 'true'
         $docinput['nickname'] != '' && strlen($docinput['passwd_1']) > 5 && $unique_nickname) {
         $insert_id = add_user($docinput['email_adr'], $docinput['passwd_1']);
         if($insert_id != false) {
-                while (list($key, $value) = each($docinput) )
+                foreach ( $docinput as $key => $value)
                 {
                   if ( $key != "passwd_1" && $key != "passwd_2" && $key != "email_adr"
                     && $key != "save_user" && $key != "update_user" )
@@ -71,7 +71,7 @@ elseif(isset($docinput['update_user']) && $docinput['update_user'] == 'true' && 
         $temp_user_id = get_user_id ($docinput['email_adr']);
         if($temp_user_id != SESSION_DBID && $temp_user_id != -1) { $user_exists = true; }
         elseif(update_user($docinput['email_adr'], $docinput['passwd_1'])) {
-          while (list($key, $value) = each($docinput) )
+          foreach ( $docinput as $key => $value)
                 {
                   if ( $key != "passwd_1" && $key != "passwd_2" && $key != "email_adr"
                        && $key != "save_user" && $key != "update_user")
@@ -130,10 +130,10 @@ elseif(isset($docinput['update_user']) && $docinput['update_user'] == 'true' && 
                 <input type="hidden" name="docinput[user_id]" value="<?=$docinput['email_adr']?>" />
                 <?php if(strlen($docinput['passwd_1']) > 5) { ?>
                 <input type="hidden" name="docinput[passwd2]" value="<?=$docinput['passwd_1']?>" />
-                <? } ?>
+                <?php } ?>
                 <input type="submit" value="Proceed" />
                 </form>
-                <?
+                <?php
             }
          } else { echo '<p><b>'.LANG_UPDATE_ERROR.'</b></p>'; }
 }
@@ -190,11 +190,9 @@ if($load_form == true || $user_exists == true) {
 <i>
 <?php
 $drin = false;
-reset($profile);
-while(list($key, $value) = each($groups)) {
+foreach ( $groups as $key => $value) {
  if($profile['group_'.$key] == 1) {  echo "$value "; $drin = true; }
 }
-reset($profile);
 if ( !$drin) echo "-keiner Gruppe zugeordnet-";
 ?></i>
 <br />
@@ -214,7 +212,7 @@ if($document['ext_info'] == '1') { ?>
 <?=$design['table_end']?>
 <br />
 <br />
-<? } // Ext-Info = 1
+<?php } // Ext-Info = 1
 if ($document['zus_info'] != "" && strpos($document['zus_info'],"/") === false)
   include(INC_PATH."misc/".$document['zus_info'].".inc");
 
@@ -268,7 +266,7 @@ if(!$unique_nickname) {
 <input type="password" name="docinput[passwd_2]" size="40" />
 <br />
 <br />
-<? if ($document['zus_info'] != "" && strpos($document['zus_info'],"/")=== false)
+<?php if ($document['zus_info'] != "" && strpos($document['zus_info'],"/")=== false)
   include(INC_PATH."misc/".$document['zus_info'].".inc");
  if($document['ext_info'] == '1') { ?>
 <?=$design['table_begin']?>
@@ -283,7 +281,7 @@ if(!$unique_nickname) {
 <?=$design['table_end']?>
 <br />
 <br />
-<? } ?>
+<?php } ?>
 <input type="submit" value="<?=LANG_REGISTER?>" />
 </form>
 </p>

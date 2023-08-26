@@ -1,7 +1,7 @@
 <?php
   if ( $_REQUEST["Config"] == "2" )
   {
-    while ( list($key, $value) = each($groups) ) {
+    foreach ($groups as $key => $value)  {
       if ( $profile["group_".$key] == "1" )
         if ( $_REQUEST["grp_$key"] == "1" )
           set_profile("Kal".$id."MailGrp".$key, 1);
@@ -14,10 +14,10 @@
   {
     echo '<form action="'.get_url($id).'" method="post">';
     echo '<b>Mail-Konfiguration</b><br />';
-    echo 'Für folgende Gruppen sollen bei Änderungen Benachrichtigungen versendet werden:<br />';
+    echo 'FÃ¼r folgende Gruppen sollen bei Ã„nderungen Benachrichtigungen versendet werden:<br />';
     echo '<input type="hidden" name="Config" value="2" />';
     // alle Gruppen anzeigen
-    while ( list($key, $value) = each($groups) ) {
+    foreach ($groups as $key => $value) {
       if ( $profile["group_".$key] == "1" ) {
         echo '<input type="checkbox" name="grp_'.$key.'" value="1" ';
         if ( $profile["Kal".$id."MailGrp$key"] == 1 ) echo 'checked="checked" ';

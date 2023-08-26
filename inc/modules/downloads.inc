@@ -10,8 +10,8 @@
 
 $filename = INC_PATH.DATA_PATH.'downloads.txt';
 $lines = file($filename);
-while (list ($line_num, $line) = each ($lines)) {
-  $buffer = split('\|', $line);
+foreach ($lines as $line_num => $line)  {
+  $buffer =  explode('\|', $line);
   echo('<a href="'.$buffer[1].'">'.$buffer[0].'</a><br />');
 }
 ?>

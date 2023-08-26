@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -20,7 +20,7 @@ $lbi_details = lbi_get_details (base64_decode($_REQUEST['file']));
 <title>View Details</title>
 <link rel="stylesheet" type="text/css" href="admin.css" />
 
-<?
+<?php
 
 function add_row ($key, $value) {
 	global $design;
@@ -29,7 +29,7 @@ function add_row ($key, $value) {
 	<td width="20%" valign="top" align="right" nowrap="nowrap"><i><?=htmlentities($key)?>:</i></td>
 	<td width="80%" valign="top" align="left"><?=$value?></td>
 	</tr>
-	<?
+	<?php
 	}
 
 ?>
@@ -49,7 +49,7 @@ function open_window(url) {
 <tr>
 <td colspan="2" bgcolor="<?=$design['color_1']?>"><b>Author</b></td>
 </tr>
-<?
+<?php
 add_row('Name/Company',$lbi_details['author_name']);
 add_row('Address',$lbi_details['author_address']);
 add_row('eMail','<a href="mailto:'.$lbi_details['author_email'].'">'.$lbi_details['author_email'].'</a>');
@@ -58,7 +58,7 @@ add_row('Website','<a target="_blank" href="'.$lbi_details['author_website'].'">
 <tr>
 <td colspan="2" bgcolor="<?=$design['color_1']?>"><b>Software</b></td>
 </tr>
-<?
+<?php
 add_row('Name',$lbi_details['name']);
 add_row('Version',$lbi_details['version']);
 add_row('License',$lbi_details['license']);

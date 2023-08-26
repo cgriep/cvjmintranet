@@ -71,7 +71,7 @@ $row = sql_get_single_row(TABLE_USERS, 'id = '.$target_id);
 <input type="hidden" name="page" value="<?=$page?>" />
 <input type="hidden" name="target_id" value="<?=$target_id?>" />
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 lftk_add_tab('login', LANG_ADMIN_LOGIN);
 lftk_add_tab('contact', LANG_ADMIN_CONTACT);
 lftk_add_tab('details', LANG_ADMIN_DETAILS);
@@ -84,7 +84,7 @@ lftk_add_tab('profile', LANG_ADMIN_PROFILE);
 </table>
 <table bgcolor="<?=$lftk_config['color_3']?>" width="100%" cellpadding="9" cellspacing="0" border="0">
 <tr><td>
-<?
+<?php
 /**********************************************************************************************************
 Login
 **********************************************************************************************************/
@@ -141,7 +141,7 @@ if(isset($_REQUEST['docinput']) && is_numeric($target_id)) {
 ?>
 <?=LANG_ADMIN_USERNAME?>
 <br />
-<?
+<?php
 if(!awf_login_is_unique($row['username'], $target_id)) {
 	lftk_display_error (LANG_ADMIN_USERNAME_EXISTS);
 	}
@@ -151,7 +151,7 @@ if(!awf_login_is_unique($row['username'], $target_id)) {
 <br />
 <?=LANG_ADMIN_EMAIL?>
 <br />
-<?
+<?php
 if(!awf_login_is_unique($row['email'], $target_id)) {
 	lftk_display_error (LANG_ADMIN_EMAIL_EXISTS);
 	}
@@ -161,7 +161,7 @@ if(!awf_login_is_unique($row['email'], $target_id)) {
 <br />
 <?=LANG_ADMIN_PASSWORD?>
 <br />
-<?
+<?php
 if(strlen($row['password']) < 6) {
 	lftk_display_warning (LANG_ADMIN_PASSWORD_SHORT);
 	}
@@ -193,7 +193,7 @@ if(strlen($row['password']) < 6) {
 <input type="reset" onclick="window.close();" value="<?=LANG_ADMIN_CLOSE?>" />
 <input type="submit" value="<?=LANG_ADMIN_SAVE?>" />
 </p>
-<?
+<?php
 }
 
 /**********************************************************************************************************
@@ -205,7 +205,7 @@ elseif($page == 'contact') {
 if(isset($_REQUEST['docinput']) && is_numeric($target_id)) {
 	$docinput = $_REQUEST['docinput'];
 	
-	while(list($key, $value) = each($docinput)) {
+	foreach ( $docinput as $key => $value) {
 		if($value == '') {
 			remove_profile($key, $target_id);
 			}
@@ -238,11 +238,11 @@ $profile = get_profile ($target_id, FALSE);
 <br />
 <?=LANG_ADMIN_COUNTRY?>
 <br />
-<?
+<?php
 echo '<select name="docinput[country]">'."\n";
 $countries = unserialize(join('', file($_BASEPATH.INC_PATH.DATA_PATH.'/countries.ser')));
-while(list($ckey, $cvalue) = each($countries)) {
-	?>      <option value="<?=$ckey?>"<? if($profile['country'] == $ckey) echo ' selected="true"'; ?>><?=$cvalue?></option><?
+foreach ($countries as $ckey => $cvalue) {
+	?>      <option value="<?=$ckey?>"<?php if($profile['country'] == $ckey) echo ' selected="true"'; ?>><?=$cvalue?></option><?php
 	echo "\n";
 	}
 echo '</select>';
@@ -274,7 +274,7 @@ echo '</select>';
 <input type="reset" onclick="window.close();" value="<?=LANG_ADMIN_CLOSE?>" />
 <input type="submit" value="<?=LANG_ADMIN_SAVE?>" />
 </p>
-<?
+<?php
 }
 
 /**********************************************************************************************************
@@ -286,7 +286,7 @@ elseif($page == 'details') {
 if(isset($_REQUEST['docinput']) && is_numeric($target_id)) {
 	$docinput = $_REQUEST['docinput'];
 	
-	while(list($key, $value) = each($docinput)) {
+	foreach ($docinput as $key => $value) {
 		if($value == '') {
 			remove_profile($key, $target_id);
 			}
@@ -315,8 +315,8 @@ $profile = get_profile ($target_id, FALSE);
 <br />
 <select name="docinput[gender]">
 <option value=""></option>
-<option <? if($profile['gender'] == 'm') echo 'selected="true" '; ?>value="m"><?=LANG_ADMIN_MALE?></option>
-<option <? if($profile['gender'] == 'f') echo 'selected="true" '; ?>value="f"><?=LANG_ADMIN_FEMALE?></option>
+<option <?php if($profile['gender'] == 'm') echo 'selected="true" '; ?>value="m"><?=LANG_ADMIN_MALE?></option>
+<option <?php if($profile['gender'] == 'f') echo 'selected="true" '; ?>value="f"><?=LANG_ADMIN_FEMALE?></option>
 </select>
 <br />
 <br />
@@ -330,7 +330,7 @@ $profile = get_profile ($target_id, FALSE);
 <input type="reset" onclick="window.close();" value="<?=LANG_ADMIN_CLOSE?>" />
 <input type="submit" value="<?=LANG_ADMIN_SAVE?>" />
 </p>
-<?
+<?php
 }
 
 /**********************************************************************************************************
@@ -350,13 +350,13 @@ elseif($_FILES['userfile']['size'] <= 250000) {
 <table width="100%" border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td valign="top">
-<?
+<?php
 if(file_exists($_BASEPATH.'img/users/'.$target_id.'.jpg')) { ?>
 <a href="<?='../img/users/'.$target_id.'.jpg'?>">
 <img src="<?='../img/users/'.$target_id.'.jpg'?>" border="0" width="150" /></a>
-<? } else { ?>
+<?php } else { ?>
 <img src="../img/nopic.gif" border="0">
-<? } ?>
+<?php } ?>
 </td>
 <td valign="top" width="100%">
 <input type="file" name="userfile">
@@ -368,7 +368,7 @@ if(file_exists($_BASEPATH.'img/users/'.$target_id.'.jpg')) { ?>
 </tr>
 </table>
 
-<?
+<?php
 }
 /**********************************************************************************************************
 Groups
@@ -393,14 +393,14 @@ $profile = get_profile ($target_id, FALSE);
 
 ?>
 <select name="group" size="5">
-<? while(list($key, $value) = each($groups)) { ?>
-<option value="<?=$key?>"><?=$value?><? if($profile['group_'.$key] == 1) echo ' [Member]'; ?></option>
-<? } ?>
+<?php foreach ( $groups as $key => $value)  { ?>
+<option value="<?=$key?>"><?=$value?><?php if($profile['group_'.$key] == 1) echo ' [Member]'; ?></option>
+<?php } ?>
 </select>
 <br />
 <br />
 <input type="submit" value="Add / Remove">
-<?
+<?php
 }
 /**********************************************************************************************************
 Profile
@@ -442,7 +442,7 @@ lftk_display_table_header(
 		),
 	TRUE);
 
-while(is_array($rows) && list($key, $row) = each($rows)) {
+foreach ($rows as $key => $row ) {
 	lftk_display_table_row(
 		array(
 			'name'		=> htmlentities($row['name']),
@@ -466,7 +466,7 @@ lftk_display_table_footer();
 <?=LANG_ADMIN_KEY?> <input type="text" size="20" name="docinput[key]" />&nbsp;
 <?=LANG_ADMIN_VALUE?> <input type="text" size="20" name="docinput[value]" />
 <input type="submit" value="<?=LANG_ADMIN_ADD_UPDATE?>" />
-<?
+<?php
 
 }
 ?>

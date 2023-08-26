@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -50,45 +50,45 @@ if(sql_num_rows($qresult) > 0) {
 <title>
 Liquid Bytes AWF l10n
 </title>
-<?
+<?php
         include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> l10n</h2></center>
+<center><h2><?php echo SITE_TITLE; ?> l10n</h2></center>
 <br>
 <form action="l10n.php" method="post">
 Datetime format<br>
-<input type="text" name="datetime_format" value="<? echo DATETIME_FORMAT; ?>" size=20>
+<input type="text" name="datetime_format" value="<?php echo DATETIME_FORMAT; ?>" size=20>
 <br><br>
 Date format<br>
-<input type="text" name="date_format" value="<? echo DATE_FORMAT; ?>" size=20>
+<input type="text" name="date_format" value="<?php echo DATE_FORMAT; ?>" size=20>
 <br><br>
 Time format<br>
-<input type="text" name="time_format" value="<? echo TIME_FORMAT; ?>" size=20>
+<input type="text" name="time_format" value="<?php echo TIME_FORMAT; ?>" size=20>
 <br><br>
 Decimal Symbol<br>
-<input type="text" name="dec_point" value="<? echo DEC_POINT; ?>" size=20>
+<input type="text" name="dec_point" value="<?php echo DEC_POINT; ?>" size=20>
 <br><br>
 Thousands Symbol<br>
-<input type="text" name="thousands_sep" value="<? echo THOUSANDS_SEP ?>" size=20>
+<input type="text" name="thousands_sep" value="<?php echo THOUSANDS_SEP ?>" size=20>
 <br><br>
 Currency Decimals<br>
-<input type="text" name="decimals" value="<? echo DECIMALS; ?>" size=20>
+<input type="text" name="decimals" value="<?php echo DECIMALS; ?>" size=20>
 <br><br>
 Currency Symbol<br>
-<input type="text" name="currency_sym" value="<? echo CURRENCY_SYM; ?>" size=20>
+<input type="text" name="currency_sym" value="<?php echo CURRENCY_SYM; ?>" size=20>
 <br><br>
 Charset<br>
-<input type="text" name="charset" value="<? echo CHARSET; ?>" size=20>
+<input type="text" name="charset" value="<?php echo CHARSET; ?>" size=20>
 <br><br>
 <input type="hidden" name="save" value="config">
 <input type="submit" value="Save">
 </form>
 </td></tr>
 </table>
-<?
+<?php
 	include('footer.inc');
 ?>
 </center>

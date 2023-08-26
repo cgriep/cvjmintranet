@@ -18,12 +18,12 @@ function holeArtikelID($Artikelname)
 
 
 // Sucht einen Artikel mit Zusatz
-// gut für Altersangaben (Frühstück -> Frühstück 6-8 Jahre) etc.
+// gut fï¿½r Altersangaben (Frï¿½hstï¿½ck -> Frï¿½hstï¿½ck 6-8 Jahre) etc.
 function holeUnterArtikelID($Artikelid, $Zusatz)
 {
   $sql = 'SELECT T1.id FROM '.TABLE_ARTIKEL.' AS T1 INNER JOIN '.TABLE_ARTIKEL.
     " AS T2 ON T1.Bezeichnung=CONCAT(T2.Bezeichnung,' $Zusatz') WHERE T2.id=$Artikelid";
-  if ( ! $query = sql_query($sql) ) echo "Fehler $sql: ".mysql_error();
+  if ( ! $query = sql_query($sql) ) echo "Fehler $sql: ".sql_error();
   if ( $row = sql_fetch_row($query) )
   {
     $id = $row[0];
@@ -39,13 +39,13 @@ function holeArtikelParent($Art, $Position, $Einruecken)
 {
   $sql = 'SELECT MAX(Position) FROM '.TABLE_ARTIKEL;
   $sql .= " WHERE Position<$Position AND Einruecken<$Einruecken AND F_Art_id=$Art";
-  if ( ! $query = sql_query($sql)) echo "HAP $sql:".mysql_error();
+  if ( ! $query = sql_query($sql)) echo "HAP $sql:".sql_error();
   if ( $zeile = sql_fetch_row($query))
     $zeile = $zeile[0];
   sql_free_result($query);
   if ( ! is_numeric($zeile)) $zeile = -1;
   if ( ! $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.
-    " WHERE Position=$zeile AND F_Art_id=$Art") ) echo "HAP2: ".mysql_error();
+    " WHERE Position=$zeile AND F_Art_id=$Art") ) echo "HAP2: ".sql_error();
   if ( ! $art = sql_fetch_row($query)) $art[0] = -1;
   sql_free_result($query);
   return $art[0];
@@ -53,7 +53,7 @@ function holeArtikelParent($Art, $Position, $Einruecken)
 function holeArtikelParentID($id)
 {
   if ( ! $query = sql_query('SELECT * FROM '.TABLE_ARTIKEL.' WHERE id='.$id))
-    echo 'Fehler: '.mysql_error();
+    echo 'Fehler: '.sql_error();
   if ( $art = sql_fetch_array($query))
     $art = holeArtikelParent($art['F_Art_id'],$art['Position'],$art['Einruecken']);
   else
@@ -66,7 +66,7 @@ function holeArtikelMasterParent($Art, $Position, $Einruecken)
 {
   $sql = 'SELECT MAX(Position) FROM '.TABLE_ARTIKEL;
   $sql .= " WHERE Position<=$Position AND Einruecken=0 AND F_Art_id=$Art";
-  if ( ! $query = sql_query($sql)) echo "HAMP $sql: ".mysql_error();
+  if ( ! $query = sql_query($sql)) echo "HAMP $sql: ".sql_error();
   if ( ! $zeile = sql_fetch_row($query)) $zeile[0] = -1;
   sql_free_result($query);
   $zeile = $zeile[0];
@@ -85,7 +85,7 @@ function ZeigeArtikel($Art, $Buchung_Nr)
     ' INNER JOIN '.TABLE_ARTIKEL.
     ' ON F_Artikel_Nr = id WHERE F_Buchung_Nr = '.$Buchung_Nr.
     ' AND F_Art_id ='.$Art;
-  if ( ! $query = sql_query($sql)) echo 'Fehler ZeigeArtikel: '.mysql_error();
+  if ( ! $query = sql_query($sql)) echo 'Fehler ZeigeArtikel: '.sql_error();
   while ( $artikel = sql_fetch_array($query) )
   {
     $Bereiche[] = $artikel['Bezeichnung'];
@@ -107,12 +107,12 @@ function BerechneEinzelnSchlafplaetze($Ortid)
   return $Plaetze;
 }
 
-// Ergibt die Schlafplätze eines Ortes, -1 wenn keine
+// Ergibt die Schlafplï¿½tze eines Ortes, -1 wenn keine
 function BerechneSchlafplaetze($Ortid)
 {
   $Plaetze = BerechneEinzelnSchlafplaetze($Ortid);
   if ( ! $query = sql_query('SELECT id, Position, Einruecken,F_Art_id FROM '.
-    TABLE_ARTIKEL.' WHERE id = '.$Ortid)) echo mysql_error();
+    TABLE_ARTIKEL.' WHERE id = '.$Ortid)) echo sql_error();
   if ( ! $artikel = sql_fetch_array($query))
   {
     echo "Fehler: $Ortid nicht gefunden.";
@@ -121,7 +121,7 @@ function BerechneSchlafplaetze($Ortid)
   sql_free_result($query);
   if ( ! $query = sql_query('SELECT Position FROM '.TABLE_ARTIKEL.
     ' WHERE Position>'.$artikel['Position'].' AND Einruecken<='.$artikel['Einruecken'].
-    ' AND F_Art_id='.$artikel['F_Art_id'].' ORDER BY Position LIMIT 1')) echo mysql_error();
+    ' AND F_Art_id='.$artikel['F_Art_id'].' ORDER BY Position LIMIT 1')) echo sql_error();
   if ( ! $artikel2 = sql_fetch_array($query))
     $artikel2['Position'] = 999999999;
   sql_free_result($query);
@@ -140,7 +140,7 @@ function BerechneSchlafplaetze($Ortid)
   return $Plaetze;
 }
 
-// ergibt die Gesamtanzahl der Schlafplätze (0 ... )
+// ergibt die Gesamtanzahl der Schlafplï¿½tze (0 ... )
 function BerechneAlleSchlafplaetze($Buchungid, $datum=0, $auswahlID='')
 {
   $sql = 'SELECT DISTINCT F_Artikel_Nr FROM '.TABLE_BUCHUNGSEINTRAEGE;
@@ -166,10 +166,10 @@ function holePreis($id, $Preisliste, $Stunde = false)
 {
   if ( ! is_numeric($id) || ! is_numeric($Preisliste) ) return 0;
   if ( ! $query = sql_query('SELECT Preis, PreisStunde FROM '.TABLE_PREISE.
-    ' WHERE F_Preisliste_id = '.$Preisliste.' AND Artikel_Nr = '.$id) ) echo 'Fehler '.mysql_error();
+    ' WHERE F_Preisliste_id = '.$Preisliste.' AND Artikel_Nr = '.$id) ) echo 'Fehler '.sql_error();
   if ( ! $preis = sql_fetch_row($query) )
   {
-    // parent prüfen
+    // parent prï¿½fen
     $parent= holeArtikelParentID($id);
     if ( $parent > 0 )
       $erg = holePreis($parent, $Preisliste, $Stunde);
@@ -193,7 +193,7 @@ function holeOberArtikel($artikel_id, $buchung, $tabelle = TABLE_ARTIKELBEZIEHUN
   $sql = "SELECT $tabelle.F_Artikel_id FROM $tabelle ".
     ' INNER JOIN '.TABLE_BUCHUNGSEINTRAEGE.' ON F_Artikel_id=F_Artikel_Nr '.
     " WHERE F_Unterartikel_id=$artikel_id AND F_Buchung_Nr=".$buchung['Buchung_Nr'];
-  if ( ! $q = sql_query($sql)) echo "Fehler $sql: ".mysql_error();
+  if ( ! $q = sql_query($sql)) echo "Fehler $sql: ".sql_error();
   $vorhanden = -1;
   if ( $da = sql_fetch_row($q) )
   {
@@ -204,12 +204,12 @@ function holeOberArtikel($artikel_id, $buchung, $tabelle = TABLE_ARTIKELBEZIEHUN
   return $vorhanden;
 }
 
-// gibt die ID des (ersten) Oberartikels zurück wenn in der Buchung vorhanden
+// gibt die ID des (ersten) Oberartikels zurï¿½ck wenn in der Buchung vorhanden
 function pruefeAlleOberArtikel($artikel_id, $buchung, $tabelle = TABLE_ARTIKELBEZIEHUNGEN)
 {
   $sql = 'SELECT F_Artikel_id FROM '.TABLE_ARTIKELBEZIEHUNGEN.
     " WHERE F_Unterartikel_id=$artikel_id";
-  if ( ! $q = sql_query($sql)) echo "Fehler $sql: ".mysql_error();
+  if ( ! $q = sql_query($sql)) echo "Fehler $sql: ".sql_error();
   $vorhanden = holeOberArtikel($artikel_id, $buchung, $tabelle);
   while ( ($da = sql_fetch_row($q)) && $vorhanden == -1)
   {
@@ -249,7 +249,7 @@ function holeEndPreis($artikel_id, $buchung, $Stunde = false)
 }
 /**
  * Sucht Artikelnachfolger in Bezug auf die Position eines andere Artikels.
- * Es geht also um die Positionierung im Artikelbaum. Die Einrücktiefe bleibt
+ * Es geht also um die Positionierung im Artikelbaum. Die Einrï¿½cktiefe bleibt
  * dabei gleich.
  * Es wird der Artikel gefunden, der vor bzw. nach dem Artikel liegt.
  * @param $Artikel der Artikel auf den sich bezogen wird (kompletter Datensatz)
@@ -260,7 +260,7 @@ function findeArtikelPos($Artikel, $Richtung)
   // Sucht
   if ( $Richtung == 'h' )
   {
-    // der Vorgänger
+    // der Vorgï¿½nger
     $query = sql_query('SELECT MAX(Position) FROM '.TABLE_ARTIKEL.
      ' WHERE Einruecken<='.$Artikel['Einruecken'].' AND Position < '.$Artikel['Position'].
       ' AND F_Art_id='.$Artikel['F_Art_id']);
@@ -275,7 +275,7 @@ function findeArtikelPos($Artikel, $Richtung)
     $sql = 'SELECT MIN(Position) FROM '.TABLE_ARTIKEL.
      ' WHERE Einruecken<='.$Artikel['Einruecken'].' AND Position > '.$Artikel['Position'].
       ' AND F_Art_id='.$Artikel['F_Art_id'];
-    if ( ! $query = sql_query($sql)) echo mysql_error();
+    if ( ! $query = sql_query($sql)) echo sql_error();
     if ( ! $Pos = sql_fetch_row($query) )
     {
       $Pos[0] = $Artikel['Position']+1;
@@ -295,7 +295,7 @@ function findeArtikelPos($Artikel, $Richtung)
       ' WHERE F_Art_id='.$Artikel['F_Art_id'].' AND Einruecken<='.
       $Artikel['Einruecken'].' AND Position > '.
        findeArtikelPos($Artikel, 'r');
-    if ( ! $query = sql_query($sql)) echo 'FAP '.$sql.': '.mysql_error();
+    if ( ! $query = sql_query($sql)) echo 'FAP '.$sql.': '.sql_error();
     if ( ! $Pos = sql_fetch_row($query) )
     {
       $Pos[0] = $Artikel['Position']+1;

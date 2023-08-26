@@ -251,7 +251,7 @@ function holeArtikelarten()
 {
   $Artikelarten = array();
   if ( ! $query = sql_query('SELECT * FROM '.TABLE_ARTIKELARTEN.' ORDER BY Art'))
-   echo mysql_error();
+   echo sql_error();
   while ( $art = sql_fetch_array($query) )
   {
     $Artikelarten[$art['Art_id']] = $art['Art'];
@@ -263,7 +263,7 @@ function holeMWST()
 {
   $MWST = array();
   if ( ! $query = sql_query('SELECT * FROM '.TABLE_MWST))
-   echo mysql_error();
+   echo sql_error();
   while ( $art = sql_fetch_array($query) )
     $MWST[$art['MWST_id']] = $art['MWST'];
   sql_free_result($query);

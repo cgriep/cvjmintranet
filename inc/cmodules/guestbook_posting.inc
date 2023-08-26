@@ -14,22 +14,22 @@ if($profile['editor']=='1') {
 	?><input type="hidden" name="docdataflavour[email]" value="0">
 	<input type="hidden" name="docdataflavour[url]" value="0">
 	<input type="hidden" name="docdataflavour[posting]" value="0">
-	<input type="hidden" name="docdataflavour[title]" value="0"><?
+	<input type="hidden" name="docdataflavour[title]" value="0"><?php
 	}
 elseif($profile['editor']!='1') {
 	echo $design['table_begin'];
 	?><tr bgcolor="<?=$design['table_row_dark']?>"><td width="70%">
-	<?=LANG_NICKNAME?> [ <?
-	if(ereg('@',$document['email'])) { ?><a href="mailto:<?=transform($document['email'],'clean')?>"><?=transform($document['title'], 'clean')?></a><? }
+	<?=LANG_NICKNAME?> [ <?php
+	if(ereg('@',$document['email'])) { ?><a href="mailto:<?=transform($document['email'],'clean')?>"><?=transform($document['title'], 'clean')?></a><?php }
 	else { echo transform($document['title'], 'clean'); }
-	?> ]&nbsp;&nbsp;<?=LANG_GUESTBOOK_HOMEPAGE?> [ <?
-	if(strlen($document['url']) > 11) { ?><a href="<?=transform($document['url'],'clean')?>" target="_blank"><?=transform($document['url'],'clean')?></a><? }
+	?> ]&nbsp;&nbsp;<?=LANG_GUESTBOOK_HOMEPAGE?> [ <?php
+	if(strlen($document['url']) > 11) { ?><a href="<?=transform($document['url'],'clean')?>" target="_blank"><?=transform($document['url'],'clean')?></a><?php }
 	else { echo 'none'; }
 	?> ]</td><td width="1%" nowrap><?=LANG_GUESTBOOK_POSTEDAT?> <?=transform($document['sorttime'], 'datetime')?>
-	</td></tr><tr bgcolor="<?=$design['table_row_bright']?>"><td colspan="2"><?
+	</td></tr><tr bgcolor="<?=$design['table_row_bright']?>"><td colspan="2"><?php
 	if(isset($document['datatype']['posting'])) { echo transform($document['posting'], $document['datatype']['posting']); }
 	else { echo transform($document['posting'], 'usertext'); }
-	?></td></tr><?
+	?></td></tr><?php
 	echo $design['table_end'];
 	}
 ?>

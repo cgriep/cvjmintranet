@@ -41,10 +41,10 @@ if ($document['tn_height'] == "") { $document['tn_height'] = 100; }
 load_lang('imagegallery');
 if($profile['editor']!='1')
 	{
-	?><center><table width="100%" border="0" cellpadding="1" cellspacing="1"><?
-	if(isset($document['title']) && $document['title'] != "") { ?><tr><td><h3><?=transform($document['title'], 'clean')?></h3></td></tr><? }
-	if(isset($document['body']) && $document['body'] != "") { ?><tr><td><?=transform($document['body'], $document['datatype']['body'])?></td></tr><? }
-	?></table></center><?
+	?><center><table width="100%" border="0" cellpadding="1" cellspacing="1"><?php
+	if(isset($document['title']) && $document['title'] != "") { ?><tr><td><h3><?=transform($document['title'], 'clean')?></h3></td></tr><?php }
+	if(isset($document['body']) && $document['body'] != "") { ?><tr><td><?=transform($document['body'], $document['datatype']['body'])?></td></tr><?php }
+	?></table></center><?php
 
 	//first let's make sure we have a 'thumbs' dir
 	if (! file_exists($document['directory']."/thumbs") ){
@@ -56,7 +56,7 @@ if($profile['editor']!='1')
 	$gd2 = checkgd();
         $handle = opendir($document['directory']);
 	while ($file = readdir($handle)) { $existingth[] = $file;}
-	?><p align="left"><?
+	?><p align="left"><?php
 	$handle = opendir($document['directory']);
         while ($file = readdir ($handle))  { 
         	if (in_array($file, $existingth) && (ereg(".jpeg",substr($file,strlen($file)-5)) || ereg(".jpg",substr($file,strlen($file)-4)) || ereg(".png",substr($file,strlen($file)-4)))) {
@@ -68,10 +68,10 @@ if($profile['editor']!='1')
 			<a href="<?=$document['directory'].$file?>" target="_blank">
 			<img alt="<?=substr($file,0,-4)?>" src="<?=$document['directory']?>thumbs/<?=$file?>" border=0>
 			</a>
-			<? 
+			<?php 
 			}
 		}
-	?></p><?
+	?></p><?php
 	}
 //DO EDITOR STUFF BELOW HERE
 else {
@@ -193,7 +193,7 @@ else {
 //Setup A Link Back to the Parent gallery, if it exists...
 $isgallery = get_node($document['parent_id'], $flavour);
 if(($isgallery['type_id'] == $doctypes['gallery_overview']) && $isgallery != '') {
-	?><center><br><br>[ <a href="<?=$PHP_SELF?>?id=<?=$document['parent_id']?>"><?=LANG_GALLERY_BACK?></a> ]</center><?
+	?><center><br><br>[ <a href="<?=$PHP_SELF?>?id=<?=$document['parent_id']?>"><?=LANG_GALLERY_BACK?></a> ]</center><?php
 	}
 /*
 	Function createthumb($name,$filename,$new_w,$new_h)

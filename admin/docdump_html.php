@@ -38,7 +38,7 @@ Liquid Bytes AWF - HTML document dump
 </title>
 </head>
 <body bgcolor="#ffffff" topmargin="0" rightmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
-<?
+<?php
 $qres = sql_query("SELECT id, sort_order, parent_id, enabled, published, searchable, cacheable, type_id, description, 
 key_id, release_date, members_only, views FROM ".TABLE_NODES." ORDER BY $order_by");
 
@@ -56,13 +56,13 @@ while($row2 = sql_fetch_row($qres2)) {
 	<td>enabled</td>
         <td>published</td>
         <td>searchable</td>
-	<?
+	<?php
 	while(list($key, $value) = each($nodedata)) {
         echo "<td>$value</td>";
         }
 	?>
         </tr>
-	<?
+	<?php
 while($row = sql_fetch_row($qres)) {
 	if($row[3]==1) { $row[3] = '1'; } else { $row[3] = '0'; } 
 	?>
@@ -73,7 +73,7 @@ while($row = sql_fetch_row($qres)) {
         <td><?=$row[3]?></td>
         <td><?=$row[4]?></td>
         <td><?=$row[5]?></td>
-	<?
+	<?php
 	$node = get_nodedata ($row[0], DEFAULT_FLAVOUR);
 	reset($nodedata);
 	while(list($key, $value) = each($nodedata)) {
@@ -81,7 +81,7 @@ while($row = sql_fetch_row($qres)) {
        }
 	?>
         </tr>
-		<? } ?>
+		<?php } ?>
 </table>
 </body>
 </html>

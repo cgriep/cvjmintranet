@@ -18,7 +18,7 @@ function adf_dump_xml ($sql_query, $cols, $target) {
 
         while($row = sql_fetch_array($qres)) {
 		fwrite($fp, "\t"."<item>\n");
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
 			fwrite($fp, "\t\t<".utf8_encode($key).' format="'.$cols[$key]['format'].'">'.utf8_encode(stripslashes($value)).'</'.utf8_encode($key).">\n");
 			}
 		fwrite($fp, "\t</item>\n");
@@ -38,7 +38,7 @@ function adf_dump_xml_example ($sql_query, $cols, $target) {
 
         $row = sql_fetch_array($qres);
 	$result .= ("\t"."<item>\n");
-	while(list($key, $value) = each($row)) {
+	foreach ( $row as $key => $value )  {
 		$result .= ("\t\t<".utf8_encode($key).' format="'.$cols[$key]['format'].'">'.utf8_encode(stripslashes($value)).'</'.utf8_encode($key).">\n");
 		}
 	$result .= ("\t</item>\n</data_dump>");
@@ -76,7 +76,7 @@ function adf_dump_html ($sql_query, $cols, $target) {
 	fwrite($fp, "<table>\n");
 
 	fwrite($fp, "\t"."<tr>\n");
-	while(list($key, $value) = each($cols)) {
+	foreach ( $cols as $key => $value) {
 		fwrite($fp, "\t\t<th>".htmlentities($key)."</th>\n");
 		}
 	fwrite($fp, "\t</tr>\n");
@@ -86,7 +86,7 @@ function adf_dump_html ($sql_query, $cols, $target) {
 	while($row = sql_fetch_array($qres)) {
                 fwrite($fp, "\t"."<tr>\n");
                 reset($cols);
-                while(list($key, $value) = each($cols)) {
+                foreach ( $cols as $key => $value) {
                         if($value['source'] == 'db_table') {
                                 fwrite($fp, "\t\t<td>".htmlentities(transform(stripslashes($row[$key]), $value['format']))."</td>\n");
                                 }
@@ -111,7 +111,7 @@ function adf_dump_html_example ($sql_query, $cols, $target) {
 	$result .= "<table>\n";
 
 	$result .= "\t"."<tr>\n";
-	while(list($key, $value) = each($cols)) {
+	foreach ( $cols as $key => $value) {
 		$result .= "\t\t<th>".htmlentities($key)."</th>\n";
 		}
 	$result .= "\t</tr>\n";
@@ -122,7 +122,7 @@ function adf_dump_html_example ($sql_query, $cols, $target) {
 
         reset($cols);
 
-        while(list($key, $value) = each($cols)) {
+        foreach ( $cols as $key => $value) {
 	        if($value['source'] == 'db_table') {
         	        $result .= "\t\t<td>".htmlentities(transform(stripslashes($row[$key]), $value['format']))."</td>\n";
                 	}
@@ -180,7 +180,7 @@ function adf_compose_sql_query ($tables, $cols, $count_only = false, $order = ''
 
 	// fields
 	$pre = '';
-	while(list($key, $value) = each($cols)) {
+	foreach ( $cols as $key => $value) {
 		if($value['source'] == 'db_table') {
 			$fields = $fields.$pre.$value['table'].'.'.$key;
 			$pre = ', ';
@@ -199,7 +199,7 @@ function adf_compose_sql_query ($tables, $cols, $count_only = false, $order = ''
 				$search_or_block = '';
 				$search_or_pre = '';
 				reset($cols);
-				while(list($key, $value) = each($cols)) {
+				foreach ( $cols as $key => $value) {
 					if($value['source'] == 'db_table' && $value['format'] == 'text' && $search_item != '' && $value['searchable'] == 'true') {
 						$search_or_block = $search_or_block.$search_or_pre.$value['name']." LIKE '%".addslashes($search_item)."%'";
 						$search_or_pre = ' OR ';
@@ -265,7 +265,7 @@ function adf_compose_sql_query ($tables, $cols, $count_only = false, $order = ''
 function adf_display_page_links ($order, $count, $wrap_count, $first_item) {
 	?><table width="100%" cellpadding="3" cellspacing="0" border="0"><tr>
 	<td class="text"><?=LANG_PAGE?></td>
-	<?
+	<?php
 	$i = 0;
 	$page = 0;
 	$max_dist = 10;
@@ -290,14 +290,14 @@ function adf_display_page_links ($order, $count, $wrap_count, $first_item) {
 	echo '<td class="text" width="100%" align="right">';
 	printf(LANG_ROWS_FOUND, $count);
 	echo '</td>';
-	?></tr></table><?
+	?></tr></table><?php
 	}
 
 function adf_display_table_header ($cols, $order, $count, $wrap_count, $first_item) {
 	adf_display_page_links ($order, $count, $wrap_count, $first_item);
-	?><table width="100%" bgcolor="<?=$GLOBALS['design']['table_header']?>" cellpadding="1" cellspacing="0" border="0"><tr><td><?
-	?><table width="100%" cellpadding="3" cellspacing="1" border="0"><tr><?
-	while(list($key, $value) = each($cols)) {
+	?><table width="100%" bgcolor="<?=$GLOBALS['design']['table_header']?>" cellpadding="1" cellspacing="0" border="0"><tr><td><?php
+	?><table width="100%" cellpadding="3" cellspacing="1" border="0"><tr><?php
+	foreach ( $cols as $key => $value) {
 		if($order == $value['name']) { $style = 'class="text" style="font-weight: bold"'; }
 		else { $style = 'class="text" style="font-weight: normal"'; }
 		switch($value['source']) {
@@ -307,37 +307,37 @@ function adf_display_table_header ($cols, $order, $count, $wrap_count, $first_it
 					case 'blob':
 					case 'country':
 					case 'text':
-						?><td align="left" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?
-				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?
+						?><td align="left" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?php
+				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?php
 						echo '</td>';
 						break;
 					case 'number':
-						?><td align="right" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?
-				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?
+						?><td align="right" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?php
+				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?php
 						echo '</td>';
 						break;
 					case 'timestamp':
-						?><td align="right" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?
-				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?
+						?><td align="right" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?php
+				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?php
 						echo '</td>';
 						break;
 					case 'bool':
-						?><td align="center" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?
-				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?
+						?><td align="center" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?php
+				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?php
 						echo '</td>';
 						break;
 					default:
-						?><td align="center" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?
-				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?
+						?><td align="center" bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?>><?php
+				        	?><a href="<?=get_url($GLOBALS['id'])?>?page=<?=$_REQUEST['page']?>&order=<?=$value['name']?>&target_id=<?=$GLOBALS['target_id']?>&first_item=<?=$_REQUEST['first_item']?>&search=<?=urlencode($_REQUEST['search'])?>"><?=$value['label']?></a><?php
 						echo '</td>';
 						break;
 					}
 				break;
 			case 'edit':
-				?><td bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?> align="center"><?=$value['label']?></td><?
+				?><td bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?> align="center"><?=$value['label']?></td><?php
 				break;
 			default:
-				?><td bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?> align="left"><?=$value['label']?></td><?
+				?><td bgcolor="<?=$GLOBALS['design']['table_header']?>" <?=$style?> align="left"><?=$value['label']?></td><?php
 				break;
 
 			}
@@ -347,7 +347,7 @@ function adf_display_table_header ($cols, $order, $count, $wrap_count, $first_it
 
 function adf_display_table_footer ($cols, $order, $count, $wrap_count, $first_item) {
 	?></td></tr></table>
-	</table><?
+	</table><?php
 	adf_display_page_links ($order, $count, $wrap_count, $first_item);
 	}
 
@@ -420,7 +420,7 @@ function adf_display_table_row ($row, $cols, $target) {
 
 	echo '<tr bgcolor="'.$color.'">';
 
-        while(list($key, $value) = each($cols)) {
+        foreach ( $cols as $key => $value) {
 		switch($value['source']) {
 			case 'db_table':
 				if($value['hidden'] == 'true') break;
@@ -588,7 +588,7 @@ function db_get_array ($table, $key, $target_id) {
 	if(sql_num_rows($qres) > 0) {
 		$row = sql_fetch_array($qres);
 		sql_free_result($qres);
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
 			$result[$key] = stripslashes($value);
 			}
 		$value = stripslashes($row[0]);
@@ -696,7 +696,7 @@ function db_create_docinput ($name, $type, $table, $key, $target_id, $autosave =
 			echo '<select name="docinput[db]['.$name.']">'."\n";
 			$countries = unserialize(join('', file(INC_PATH.DATA_PATH.'/countries.ser')));
 			while(list($ckey, $cvalue) = each($countries)) {
-				?>	<option value="<?=$ckey?>"<? if($value == $ckey) echo ' selected="true"'; ?>><?=$cvalue?></option><?
+				?>	<option value="<?=$ckey?>"<?php if($value == $ckey) echo ' selected="true"'; ?>><?=$cvalue?></option><?php
 				echo "\n";
 			        }
 			echo '</select>';
@@ -726,7 +726,7 @@ function db_create_docinput ($name, $type, $table, $key, $target_id, $autosave =
 
 			echo '<select name="docinput[db]['.$name.']">'."\n";
 			while($row = sql_fetch_row($qres)) {
-				?>	<option value="<?=$row[0]?>"<? if($value == $row[0]) echo ' selected="selected"'; ?>><?=htmlentities(stripslashes($row[1]))?></option><?
+				?>	<option value="<?=$row[0]?>"<?php if($value == $row[0]) echo ' selected="selected"'; ?>><?=htmlentities(stripslashes($row[1]))?></option><?php
 				echo "\n";
 			        }
 			echo '</select>';

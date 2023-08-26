@@ -11,17 +11,17 @@ class Feiertag extends DBEntity {
 		parent::__construct(TABLE_FEIERTAGE);
 		if ( ! is_numeric($feiertag_id))
 		{
-			throw new Exception('Ungültige Feiertag-id: '.$feiertag_id.'!');
+			throw new Exception('Ungï¿½ltige Feiertag-id: '.$feiertag_id.'!');
 		}
 		if ( $feiertag_id > 0 )
 		{
 			$sql = 'SELECT * FROM '.TABLE_FEIERTAGE.' WHERE id='.$feiertag_id;
-			$query = mysql_query($sql);
-			if ( ! $Artikel = mysql_fetch_array($query))
+			$query = sql_query($sql);
+			if ( ! $Artikel = sql_fetch_array($query))
 			{
 				throw new Exception('Konnte Feiertag '.$feiertag_id.' nicht laden!');
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			$this->uebertrageFelder($Artikel);
 			$this->Feiertag_id = $this->id;
 		}
@@ -57,9 +57,9 @@ class Feiertag extends DBEntity {
 		if ( is_numeric($datum))
 		{
 			$sql = 'SELECT Count(*) FROM '.TABLE_FEIERTAGE.' WHERE Datum='.$datum;
-			$query = mysql_query($sql);
-			$row = mysql_fetch_row($query);
-			mysql_free_result($query);
+			$query = sql_query($sql);
+			$row = sql_fetch_row($query);
+			sql_free_result($query);
 			Feiertag::$feiertage[$datum] = ($row[0]>0);
 			return ($row[0] > 0);
 		}

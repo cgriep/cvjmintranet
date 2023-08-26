@@ -2,7 +2,7 @@
 
 /**
  * Holt einen Buchungsdatensatz mit der angegebenen Buchungsnummer
- * Der Datensatz enthält die gesamte Buchung plus den Adressdatensatz des Kunden 
+ * Der Datensatz enthï¿½lt die gesamte Buchung plus den Adressdatensatz des Kunden 
  * @param int $Buchung_Nr die buchungsnummer
  * @return array Buchungs- und Adressdatensatz 
  */
@@ -20,8 +20,8 @@ function holeBuchung($Buchung_Nr)
 }
 
 /**
-  * Bucht einen Artikel zur Buchung und ergänzt alle zugehörigen Artikel der Gruppe
- * Wenn die Menge des zuzubuchenden Artikels 0 beträgt wird er nur ein einziges Mal
+  * Bucht einen Artikel zur Buchung und ergï¿½nzt alle zugehï¿½rigen Artikel der Gruppe
+ * Wenn die Menge des zuzubuchenden Artikels 0 betrï¿½gt wird er nur ein einziges Mal
  * zugebucht. 
  * Um mehrere Tage auf einmal zu buchen, Datum in Form von Anfangsdatum-Enddatum angeben
  * @param int $buchung_nr Die Buchungsnummer
@@ -29,7 +29,7 @@ function holeBuchung($Buchung_Nr)
  * @param int/String $datum das Datum als Timestamp oder Timestamp-Timestamp als von-bis
  * @param double $menge die Menge
  * @param double $dauer die Dauer
- * @param int $ebene die Ebene des Artikels für rekursives Einbuchen. Maximal 10 Ebenen werden gebucht. 
+ * @param int $ebene die Ebene des Artikels fï¿½r rekursives Einbuchen. Maximal 10 Ebenen werden gebucht. 
  */
 function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebene=0)
 {
@@ -66,17 +66,17 @@ function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebe
        // Datensatz vorhanden. Dann muss die Menge angepasst werden.
        if ( $art["Menge"] == 0 )
        {
-         // Prüfen, ob schon vorhanden
+         // Prï¿½fen, ob schon vorhanden
          if ( ! $q = sql_query("SELECT Count(F_Artikel_Nr) FROM ".TABLE_BUCHUNGSEINTRAEGE.
            " WHERE F_Buchung_Nr=".$buchung_nr." AND F_Artikel_Nr=".$artikel_id) )
-             echo mysql_error();
+             echo sql_error();
          $meineMenge = 0;
          if ( $row = sql_fetch_row($q) )
          {
            if ( $row[0] == 1 )
            {
              $meineMenge = 1;
-             // Derartige Pauschalen sollen am nächsten Tag gebucht werden, wenn nicht
+             // Derartige Pauschalen sollen am nï¿½chsten Tag gebucht werden, wenn nicht
              // anders angegeben (weil sonst im "0"-Bereich der frei-Pauschalen)
              if ( $art["Beginn"] == 0 )
                $art["Beginn"] = 86400;
@@ -97,7 +97,7 @@ function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebe
          else
            $ndauer = $dauer;
          pruefeArtikelVorhanden($buchung_nr, $art["F_Unterartikel_id"], $ndatum, $ndauer, $ebene+1);
-         // Rekursives Einbuchen der Artikel. Geändert 07.12.06
+         // Rekursives Einbuchen der Artikel. Geï¿½ndert 07.12.06
          bucheArtikel($buchung_nr, $art['F_Unterartikel_id'], $ndatum, $meineMenge, $ndauer);
          /**
          if ( ! sql_query("INSERT INTO ".TABLE_BUCHUNGSEINTRAEGE.
@@ -107,20 +107,20 @@ function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebe
            if ( ! sql_query("UPDATE ".TABLE_BUCHUNGSEINTRAEGE." SET Menge=Menge+".
            $meineMenge.", Dauer=$ndauer WHERE F_Artikel_Nr=".$art["F_Unterartikel_id"].
            " AND F_Buchung_Nr=$buchung_nr AND Datum=$ndatum"))
-            echo mysql_error();
+            echo sql_error();
          }
          */
        }
     }
     sql_free_result($query);
-    // Einträge mit Menge 0 löschen
+    // Eintrï¿½ge mit Menge 0 lï¿½schen
     sql_query("DELETE FROM ".TABLE_BUCHUNGSEINTRAEGE.
       " WHERE F_Buchung_Nr=$buchung_nr AND Menge=0");
   } // Datum nicht numerisch
 }
 
-// Bucht einen Artikel zur Buchung und ergänzt alle zugehörigen Artikel der Gruppe
-// Wenn die Menge des zuzubuchenden Artikels 0 beträgt wird er komplett gelöscht
+// Bucht einen Artikel zur Buchung und ergï¿½nzt alle zugehï¿½rigen Artikel der Gruppe
+// Wenn die Menge des zuzubuchenden Artikels 0 betrï¿½gt wird er komplett gelï¿½scht
 function entbucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $ebene=0)
 {
   // Absicherung: Keine Endlosschleifen bei rekursiver Einbuchung
@@ -165,11 +165,11 @@ function entbucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $ebene=0)
     {
        if ( $art['Menge'] == 0 )
        {
-         // Prüfen, ob schon vorhanden
+         // Prï¿½fen, ob schon vorhanden
          if ( ! $q = sql_query("SELECT Count(F_Artikel_Nr) FROM ".TABLE_BUCHUNGSEINTRAEGE.
            " WHERE F_Buchung_Nr=".$buchung_nr." AND F_Artikel_Nr=".$artikel_id.
            " AND Menge>0") )
-             echo mysql_error();
+             echo sql_error();
          $meineMenge = 0;
          if ( $row = sql_fetch_row($q) )
          {
@@ -208,12 +208,12 @@ function entbucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $ebene=0)
               " SET Menge=Menge-$meineMenge WHERE F_Buchung_Nr=$buchung_nr AND F_Artikel_Nr=".
               $art['F_Unterartikel_id']." AND Datum=$loeschDatum";
          if ( ! sql_query($sql) )
-            echo "Fehler $sql: ".mysql_error();
+            echo "Fehler $sql: ".sql_error();
          */
        }
-    } // für alle Unterartikel
+    } // fï¿½r alle Unterartikel
     sql_free_result($query);
-    // Einträge mit Menge 0 löschen
+    // Eintrï¿½ge mit Menge 0 lï¿½schen
     sql_query('DELETE FROM '.TABLE_BUCHUNGSEINTRAEGE.
       " WHERE F_Buchung_Nr=$buchung_nr AND Menge=0");
   } // Datum nicht numerisch
@@ -247,7 +247,7 @@ function pruefeArtikelVorhanden($buchung_nr, $artikel_id, $datum, $dauer=0)
                  ' AND F_Buchung_Nr<>'.$buchung_nr.' AND F_Artikel_Nr='.$artikel_id.
                  ' AND (Datum BETWEEN '.$datum.' AND '.($datum+$dauer).
                  ' OR (Datum+Dauer) BETWEEN '.$datum.' AND '.($datum+$dauer).')';
-  if ( ! $query = sql_query($sql)) echo mysql_error();
+  if ( ! $query = sql_query($sql)) echo sql_error();
   while ( $artikel = sql_fetch_array($query) )
   {
     echo '<div class="Fehler">Artikel '.
@@ -274,7 +274,7 @@ function ZeigeBereiche($Art, $Buchung_Nr)
     ' INNER JOIN '.TABLE_ARTIKEL.
     ' ON F_Artikel_Nr = id WHERE F_Buchung_Nr = '.$Buchung_Nr.
     ' AND F_Art_id ='.$Art;
-  if ( ! $query = sql_query($sql)) echo "Fehler Zeigebereiche: ".mysql_error();
+  if ( ! $query = sql_query($sql)) echo "Fehler Zeigebereiche: ".sql_error();
   while ( $artikel = sql_fetch_array($query) )
   {
     $id = holeArtikelMasterParent($Art, $artikel["Position"], $artikel["Einruecken"]);

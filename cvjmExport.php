@@ -30,7 +30,7 @@ require('inc/misc/CVJM.inc');
 
 /**
  * Schreibt den Inhalt eines Datenbankfeldes aufbereitet in die CSV-Datei
- * Dabei werden verknüpfte Felder aufgelöst und Datumsangaben etc. leserlich
+ * Dabei werden verknï¿½pfte Felder aufgelï¿½st und Datumsangaben etc. leserlich
  * ausgegeben
  * @param String $feldname der Feldname der angezeigt werden soll (nach mysql)
  * @param String $feld der Inhalt des auzugebenden Feldes 
@@ -55,7 +55,7 @@ if ( ! isset($_REQUEST['Search']))
 {
 	$_REQUEST['Search'] = '';
 }
-$Search = trim(mysql_real_escape_string($_REQUEST['Search']));
+$Search = trim(sql_real_escape_string($_REQUEST['Search']));
 if ( ! isset($_REQUEST['docinput']))
 {
   $docinput = array();	
@@ -98,19 +98,19 @@ header('Content-type: application/octet-stream');
 // Es wird downloaded.pdf benannt
 header('Content-Disposition: attachment; filename='.$_REQUEST['db'].date('ymdHi').'.csv');
 if ( ! $query = sql_query('SELECT * FROM '.$Datenbank.' WHERE '.$Suchen))
-  die("Fehler (Datenbank $Datenbank, Suchen: $Suchen): ".mysql_error());
-  $anz = mysql_num_fields($query);
+  die("Fehler (Datenbank $Datenbank, Suchen: $Suchen): ".sql_error());
+  $anz = sql_num_fields($query);
 for ( $i = 0; $i < $anz-1; $i++)
 {
-  echo '"'.addslashes(mysql_field_name($query, $i)).'";';
+  echo '"'.addslashes(sql_field_name($query, $i)).'";';
 }
-echo '"'.addslashes(mysql_field_name($query, $anz-1)).'"'."\n";
-while ( $ds = mysql_fetch_row($query) )
+echo '"'.addslashes(sql_field_name($query, $anz-1)).'"'."\n";
+while ( $ds = sql_fetch_row($query) )
 {
   $felder = array();
 	for ( $i = 0; $i < $anz; $i++)
   {
-    $felder[] = schreibeInhalt(mysql_field_name($query, $i), $ds[$i]);
+    $felder[] = schreibeInhalt(sql_field_name($query, $i), $ds[$i]);
   }
   echo '"'.implode('";"',$felder).'"'."\n";
 }

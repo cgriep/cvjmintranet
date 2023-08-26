@@ -1,7 +1,7 @@
 <?php
-/** Artikel hinzufügen
+/** Artikel hinzufï¿½gen
  * wird innerhalb einer n-spaltigen Tabelle verwendet.
- * dadurch wird die Ausrichtung an die vorher angezeigten Artikel gewährleistet
+ * dadurch wird die Ausrichtung an die vorher angezeigten Artikel gewï¿½hrleistet
  * Die Suchanfrage steht in $docinput['ArtikelSearch']
  * @param Buchung $Buchung das Buchungsobjekt
  * @param int $spalten die Spaltenanzahl die angezeigt werden soll
@@ -21,11 +21,11 @@ function anzeigeArtikelHinzufuegen($buchung, $spalten = 9)
 }
 
 /**
- *  trägt Artikel in die Datenbank ein
+ *  trï¿½gt Artikel in die Datenbank ein
  * @param docinput[ArtikelSearch] - muss gesetzt sein
- * @param docinput[Menge] - numerisch, enthält die Menge
- *	@param docinput[Preis] - Preis ( nur Rechnungseinträge)
- * @param docinput[Rabatt] - Rabatt (nur Rechnungseinträge)
+ * @param docinput[Menge] - numerisch, enthï¿½lt die Menge
+ *	@param docinput[Preis] - Preis ( nur Rechnungseintrï¿½ge)
+ * @param docinput[Rabatt] - Rabatt (nur Rechnungseintrï¿½ge)
  * @param docinput[Rechnung_id] / REQUEST[Buchung_Nr] - die id
  * @return array die Liste mit den Fehlern beim Buchen
  */
@@ -37,7 +37,7 @@ function ArtikelHinzufuegen($tabelle)
 	{
 		// Buchungsnummer aus Rechnung holen
 		$q = sql_query('SELECT F_Buchung_Nr FROM '.TABLE_RECHNUNGEN.' WHERE Rechnung_id='.$docinput['Rechnung_id']);
-		if (! $b = sql_fetch_array($q) ) throw new Exception(mysql_error());
+		if (! $b = sql_fetch_array($q) ) throw new Exception(sql_error());
 		sql_free_result($q);
 		$B = new Buchung($b['F_Buchung_Nr']);
 	}
@@ -54,7 +54,7 @@ function ArtikelHinzufuegen($tabelle)
 			{
 				if ( $tabelle == TABLE_RECHNUNGSEINTRAEGE )
 				{					
-					// Neuen Eintrag hinzufügen
+					// Neuen Eintrag hinzufï¿½gen
 					$sql = 'INSERT INTO '.TABLE_RECHNUNGSEINTRAEGE.
 					' (F_Rechnung_id,F_Preis,F_Bezeichnung,Einheit,Rabatt,MWSt,Art,'.
 					'Menge,Dauer,Datum,F_Artikel_Nr)'.
@@ -120,7 +120,7 @@ function ArtikelHinzufuegen($tabelle)
 					{
 						if ( ! sql_query($sql.$i.','.$key.')'))
 						{
-							echo "Fehler $sql: ".mysql_error();
+							echo "Fehler $sql: ".sql_error();
 						}
 					}
 				}
@@ -147,7 +147,7 @@ function ArtikelHinzufuegen($tabelle)
 				}
 			}
 		} // foreach
-	} // wenn zusätzliche Artikel angegeben
+	} // wenn zusï¿½tzliche Artikel angegeben
 	return $l;
 }
 

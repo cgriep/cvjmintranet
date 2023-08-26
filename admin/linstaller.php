@@ -39,7 +39,7 @@ define('LBI_SHARE_CLIENT', 'http://'.$_SERVER['SERVER_NAME'].dirname(dirname($_S
 <title>
 Liquid Bytes AWF Installer
 </title>
-<?
+<?php
 	require('header.inc');
 
 	require('linstaller.inc');

@@ -43,7 +43,7 @@ class Charakterbogen extends FPDF
 			$t = explode("\n", $teil);
 			for ($i = 0; $i < Count($t) - 1; $i++)
 			$alles[] = $t[$i] . "\n";
-			// Letzten Eintrag ohne newline anhängen
+			// Letzten Eintrag ohne newline anhï¿½ngen
 			$alles[] = $t[$i];
 		}
 		$gesamt = '';
@@ -94,16 +94,16 @@ function erstelleSeite($charid, $pdf)
 {
 	// node zum Charakter feststellen wegen Bild
 	$sql = 'SELECT node_id FROM drowcon_nodedata WHERE name=\'Charakter_id\' AND value=\''.$charid.'\'';
-	$query = mysql_query($sql);
-	if ( $row = mysql_fetch_row($query))
+	$query = sql_query($sql);
+	if ( $row = sql_fetch_row($query))
 	{
 		$id = $row[0];
 	}
 	else
 	{
-		throw new error("Keine Charakterseite für diesen Charakter gefunden!");
+		throw new error("Keine Charakterseite fï¿½r diesen Charakter gefunden!");
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	$charakter = get_charakter($charid);
 	$pdf->AddPage();
 	$pdf->SetFont('Arial', 'B', 16);
@@ -113,7 +113,7 @@ function erstelleSeite($charid, $pdf)
 	if ( file_exists($bbasedir.'Spielerbild.jpg') ) {
 		$pdf->Image($bbasedir.'Spielerbild.jpg', 180, 38, 20, 30, 'JPG');
 	}
-	// Rahmen für das Bild
+	// Rahmen fï¿½r das Bild
 	$pdf->Rect(180, 38, 20, 30);
 	$pdf->SetFont('Arial', '', 10);
 	$pdf->Ln();
@@ -167,18 +167,18 @@ function erstelleSeite($charid, $pdf)
 	$pdf->Ln();
 	$sql = 'SELECT * FROM T_Eigenschaften INNER JOIN T_Charakter_Eigenschaften ON F_Eigenschaft_id=Eigenschaft_id '.
 	'WHERE F_Charakter_id='.$charakter['Charakter_id'].' ORDER BY Art, Eigenschaftsname';
-	$query = mysql_query($sql);
+	$query = sql_query($sql);
 	$summe = 0;
 	$Art = '';
 	$Nr = 0;
 	$Anz = 0;
 	$Punkte = 0;
 	$Eigenschaft = '';
-	while ( $row = mysql_fetch_array($query))
+	while ( $row = sql_fetch_array($query))
 	{
 		if ( $Art != $row['Art'])
 		{
-			// prüfen ob stapel 
+			// prï¿½fen ob stapel 
 			if ( $Eigenschaft != '' )
 			{
 				$pdf->Cell(10, 5, $Anz,1 );
@@ -234,7 +234,7 @@ function erstelleSeite($charid, $pdf)
 		}
 		else
 		{
-			// prüfen Stapel 
+			// prï¿½fen Stapel 
 			if ( $Eigenschaft != '' )
 			{
 				$pdf->Cell(10, 5, $Anz,1);
@@ -275,7 +275,7 @@ function erstelleSeite($charid, $pdf)
 			$pdf->Ln();
 		}
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	
 	// Con-Teilnahmen
 	$pdf->Ln();
@@ -292,7 +292,7 @@ function erstelleSeite($charid, $pdf)
 			$veranstaltung = substr($key, 4);
 			if ( is_numeric($veranstaltung))
 			{
-				// Achtung: Flavour = 1 - > Standardsprache, ggf. ändern wenn andere genutzt
+				// Achtung: Flavour = 1 - > Standardsprache, ggf. ï¿½ndern wenn andere genutzt
 				$node = get_nodedata($veranstaltung, 1);
 				$pdf->Cell(80, 5, $node['title']);
 				$pdf->Ln();
@@ -308,7 +308,7 @@ if ((is_numeric($_REQUEST['Charakter_id']) || is_numeric($_REQUEST['Veranstaltun
 session_is_registered('Charakter_id') && session_is_registered('id') )
 {
 	$charid = array();
-	// Datenbank öffnen 
+	// Datenbank ï¿½ffnen 
 	if ( is_numeric($_REQUEST['Charakter_id']) && session_is_registered('SL'))
 	{
 		$charid[] = $_REQUEST['Charakter_id'];
@@ -321,12 +321,12 @@ session_is_registered('Charakter_id') && session_is_registered('id') )
 				INNER JOIN T_Charaktere ON Charakter_id=n1.value
 				WHERE u1.name=\'Char'.$_REQUEST['Veranstaltung'].'\' AND n1.name=\'Charakter_id\'
 				ORDER BY T_Charaktere.Name';
-		if (! $query = mysql_query($sql) ) throw "Fehler: ".mysql_error();
-		while ( $row = mysql_fetch_row($query))
+		if (! $query = sql_query($sql) ) throw "Fehler: ".sql_error();
+		while ( $row = sql_fetch_row($query))
 		{
 			$charid[] = $row[0];			
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 	}
 	else
 	{

@@ -3,7 +3,7 @@
 /*
   cvjmArtikelarten.inc
   AWF-Name: cvjmartikelarten
-  Speichert und ändert die Artikelarten.
+  Speichert und ï¿½ndert die Artikelarten.
 
 */
 
@@ -17,7 +17,7 @@ if ( $profile["editor"] != 1 )
   }
   if ( isset($docinput["Art"]) && is_array($docinput["Art"]) )
   {
-     // Datensätze speichern
+     // Datensï¿½tze speichern
      foreach ( $docinput["Art"] as $key => $value )
      {
        if ( is_numeric($docinput["Typ"][$key]) && is_numeric($key) )
@@ -41,7 +41,7 @@ if ( $profile["editor"] != 1 )
   }
   if (!$query = sql_query("SELECT Art_id, Art, Typ, Count(id) AS Anz FROM ".TABLE_ARTIKELARTEN." LEFT JOIN ".
     TABLE_ARTIKEL." ON Art_id=F_Art_id GROUP BY Art, Art_id, Typ ORDER BY Art"))
-     echo mysql_error();
+     echo sql_error();
   echo '<form action="'.get_url($id).'" method="post">';
   echo '<table width="100%">';
   echo '<tr bgcolor="'.$design["table_header"].
@@ -62,7 +62,7 @@ if ( $profile["editor"] != 1 )
     }
     echo '</select><td>';
     if ( $art["Anz"] == 0 )
-      echo '<a href="'.get_url($id,"docinput[DelArt]=".$art['Art_id']).'">Löschen</a>';
+      echo '<a href="'.get_url($id,"docinput[DelArt]=".$art['Art_id']).'">Lï¿½schen</a>';
     else
       echo "(".$art["Anz"].")";
     echo "</td></tr>\n";
@@ -72,7 +72,6 @@ if ( $profile["editor"] != 1 )
   echo '<td><input type="Text" name="docinput[Art][-1]" size="25" maxlength="25" />';
   echo '</td><td>';
   echo '<select name="docinput[Typ][-1]">';
-  reset($Abrechnungstypen);
   foreach ( $Abrechnungstypen as $key => $value )
     echo '<option value="'.$key.'">'.$value.'</option>';
   echo '</select></td></tr>';

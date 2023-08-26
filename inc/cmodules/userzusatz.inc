@@ -8,7 +8,7 @@ if ( $profile['editor'] != 1 ) {
     if ( isset($_REQUEST["Update"]) ) {
       $daten = $_REQUEST["daten"];
       $entf = $_REQUEST["Entfernen"];
-      while ( list($key, $value) = each($daten) )
+      foreach ($daten as $key => $value)
       {
         echo "$key ".$daten[$key]." ".$prof[$key]." ".$entf[$key]."<br />";
         if ( $entf[$key] == "v" )
@@ -27,7 +27,7 @@ if ( $profile['editor'] != 1 ) {
     echo '<table border="0" cellspacing="0">';
     echo '<tr><th colspan="3">'.get_user_nickname($_REQUEST["User"]).'</th></tr>';
     echo '<tr><th>Feld</th><th>Wert</th><th>Feld<br />entfernen</th></tr>';
-    while ( list($key, $value) = each($prof) ) {
+    foreach ($prof as $key => $value) {
       echo '<tr><td>'.$key.'</td><td><input type="Text" name="daten['.$key.']" value="';
       echo $value.'"></td><td align="center">';
       echo '<input type="Checkbox" name="Entfernen['.$key.']" value="v">';
@@ -55,7 +55,7 @@ if ( $profile['editor'] != 1 ) {
   }
   echo $design['table_end'];
   sql_free_result($qres);
-  echo '<br /><input type="Submit" value="Feld hinzufügen">';
+  echo '<br /><input type="Submit" value="Feld hinzufï¿½gen">';
   echo '</form><br /></td></tr></table>';
 }
 ?>

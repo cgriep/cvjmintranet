@@ -15,7 +15,7 @@ if ( $profile['editor']!= 1 )
 	include_once (INC_PATH . 'cvjm_ajax.php');
 	$xajax->printJavascript('./javascript');
 	
-	// Speichern der Einträge
+	// Speichern der Eintrï¿½ge
 	
 	
 	require_once(INC_PATH.'Smarty/Smarty.class.php');
@@ -33,16 +33,16 @@ if ( $profile['editor']!= 1 )
 		$Artikel = new Artikel($docinput['Ort']);
 		$Smarty->assign_by_ref('Ort', $Artikel);
 		$Liste = array();
-		$query = mysql_query('SELECT * FROM '.'cvjm_Artikelorte'.' WHERE F_Ort_id='.$Artikel->Artikel_id);
-		while ( $menge = mysql_fetch_array($query))
+		$query = sql_query('SELECT * FROM '.'cvjm_Artikelorte'.' WHERE F_Ort_id='.$Artikel->Artikel_id);
+		while ( $menge = sql_fetch_array($query))
 		{
 			$a = new Artikel($menge['F_Artikel_id']);
-			// Sonderfall: Menge hinzufügen
+			// Sonderfall: Menge hinzufï¿½gen
 			$a->Menge = $menge['Menge'];
 			$Liste[] = $a;
 			
 		}
-		mysql_free_result($query);		
+		sql_free_result($query);		
 		$Smarty->assign_by_ref('Artikelliste', $Liste);
 	}	
 	$Smarty->display('Artikel_Inventur.tpl');

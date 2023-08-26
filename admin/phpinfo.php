@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -18,7 +18,7 @@
 <title>
 Liquid Bytes AWF PHP Info
 </title>
-<?
+<?php
         include('header.inc');
 ?>
 <center>
@@ -27,7 +27,7 @@ align="center" height="400"
 name="phpinfo">
 </iframe>
 </center>
-<?
+<?php
 	include('footer.inc');
 ?>
 </body>

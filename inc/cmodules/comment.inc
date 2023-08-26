@@ -14,7 +14,7 @@ if($profile['editor']!='1') {
 
 	?>
 	<table width="100%" border="0" cellpadding="5" cellspacing="0"><tr><td align="left" bgcolor="<?=$design['table_row_bright']?>">
-	<? printf(LANG_COMMENT_INTRO, transform($document['title'], $document['datatype']['title'])); ?>
+	<?php printf(LANG_COMMENT_INTRO, transform($document['title'], $document['datatype']['title'])); ?>
 	<br>
 	<?=LANG_HTML_CONVERTED?><br><br>
 	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
@@ -38,7 +38,8 @@ if($profile['editor']!='1') {
 	} else {
 
 	reset($parents);
-	list($pid,$pdoc) = each($parents);
+	$pid = key($parents);
+	$pdoc = current ($parents);
 	echo '<table width="100%" border="0" cellpadding="5" cellspacing="0"><tr><td align="left" bgcolor="'.$design['table_row_bright'].'">';
 	echo '<p>';
 	printf(LANG_COMMENT_ABOUT, $pdoc['title'], transform($document['author_id'], 'user_id'), transform($document['timestamp'], 'date'));

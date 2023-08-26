@@ -2,7 +2,7 @@
 
 
 /**
- * Administrationsoberfläche für die Atlantis-Daten
+ * Administrationsoberflï¿½che fï¿½r die Atlantis-Daten
  * 2006 Christoph Griep
  */
 include ('atlantis.db.php');
@@ -22,13 +22,13 @@ if ($sql != '')
 	echo '<?xml-stylesheet href="atlantis' . $sort . '.xslt" type="text/xsl"?>' . "\n";
 	//echo '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">'."\n";
 	echo '<'.$action.' stand="' . date('d.m.Y H:i') . '">' . "\n";
-	if (!$query = mysql_query($sql))
+	if (!$query = sql_query($sql))
 	{
-		echo 'Fehler: ' . $sql . '/' . mysql_error();
+		echo 'Fehler: ' . $sql . '/' . sql_error();
 	}
 	if ( $id == '' ) $id = $gruppe;
 	if ( $id == '' ) $id = 'Element';
-	while ($zeile = mysql_fetch_array($query))
+	while ($zeile = sql_fetch_array($query))
 	{
 		echo '<' . $id . '>' . "\n";
 		foreach ($zeile as $key => $value)
@@ -40,7 +40,7 @@ if ($sql != '')
 		}
 		echo '</' . $id . '>' . "\n";
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	echo '</'.$action.'>' . "\n";
 }
 ?>

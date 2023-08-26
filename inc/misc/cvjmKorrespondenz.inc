@@ -1,11 +1,11 @@
 <?php
 /**
- * Zeigt die Vorlagen in Form eines Menüs an. Es muss die Flyout-Css-Vorlage eingebunden sein
+ * Zeigt die Vorlagen in Form eines Menï¿½s an. Es muss die Flyout-Css-Vorlage eingebunden sein
  * @param int $Adressen_id die ID der Adresse
  * @param int $InstAdressen_id die ID der Institution
  * @param array $Vorlagen die Vorlagen, die angezeigt werden sollen
- * @param String $Datenbank der Name der Datenbank, aus der später die Vorlagen erstellt werden sollen
- * @returns String eine HTML-Zeichenkette, die die Vorlagen enthält
+ * @param String $Datenbank der Name der Datenbank, aus der spï¿½ter die Vorlagen erstellt werden sollen
+ * @returns String eine HTML-Zeichenkette, die die Vorlagen enthï¿½lt
  */
 function ListeVorlagen($Adressen_id, $InstAdressen_id, $Vorlagen, $Datenbank='Adressen')
 {
@@ -53,9 +53,9 @@ function ZeigeVorlagen($idnummer, $Wofuer, $Datenbank = '')
  * Zeit die vorhandene Korrespondenz an.
  * Voraussetzung:
  * xajax muss initialisiert sein (printJavaScript)
- * @param korrespondenz Datensatz mit den notwendigen Schlüsselinformationen (Adressen_id, $Buchung_Nr und ggf. Rechnung_id)
+ * @param korrespondenz Datensatz mit den notwendigen Schlï¿½sselinformationen (Adressen_id, $Buchung_Nr und ggf. Rechnung_id)
  * @param array Buchungsunerlagen Feld mitden Namen der vorhandenen Vorlagen-Namen
- * @param array params Die Parameter die beim Aufruf von Links übergeben werden sollen 
+ * @param array params Die Parameter die beim Aufruf von Links ï¿½bergeben werden sollen 
  */
 function ZeigeKorrespondenz($korrespondenz, $Buchungsvorlagen, $params)
 {
@@ -71,8 +71,8 @@ function ZeigeKorrespondenz($korrespondenz, $Buchungsvorlagen, $params)
  * @param int $id die id der aktuellen Seite
  * @param array $Buchungsvorlagen ein Feld mit den Namen der relevanten Vorlagen
  * @param array $korrespondenz Feld mit Buchung_Nr, Adressen_id und Rechnung_id je nach Ausgabe
- * @param array $params Parameter, die beim Verlinken angefügt werden sollen
- * @param boolean $Speichern true, wenn gelöscht werden darf, false sonst 
+ * @param array $params Parameter, die beim Verlinken angefï¿½gt werden sollen
+ * @param boolean $Speichern true, wenn gelï¿½scht werden darf, false sonst 
  * @return String die Tabelle im HTML-Format 
  */
 function holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params = array(), $Speichern=true)
@@ -133,7 +133,7 @@ function holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params 
 		if ( !$query = sql_query('SELECT Rechnung_id FROM '.TABLE_RECHNUNGEN.' WHERE F_Buchung_Nr='.
 		$korrespondenz['Buchung_Nr'].' ORDER BY Rechnungsdatum DESC'))
 		{
-			throw new Exception('Fehler bei Korrespondenzliste: '.mysql_error());
+			throw new Exception('Fehler bei Korrespondenzliste: '.sql_error());
 		}
 		while ( $rechnung = sql_fetch_row($query) )
 		{
@@ -174,7 +174,7 @@ function holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params 
 		-1, '.'.$data['extension'], basename($dateien['Name'][$i],'.'.$data['extension']));
 		$Liste[] = $datei;
 	}
-	// Standardvorlagen für die Dokumentart anfügen 
+	// Standardvorlagen fï¿½r die Dokumentart anfï¿½gen 
 	foreach (glob('Vorlagen/Dokumente/*') as $Anhang)
 	{
 		$datei['Name'] = $Anhang;

@@ -11,13 +11,13 @@
 echo "\t";
 
 if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') && file_exists('css/'.$design['css'].'.msie.css')) {
-?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.msie.css" /><?
+?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.msie.css" /><?php
 } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'pera') && file_exists('css/'.$design['css'].'.opera.css')) {
-?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.opera.css" /><?
+?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.opera.css" /><?php
 } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'ozilla/4') && file_exists('css/'.$design['css'].'.ns4.css')) {
-?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.ns4.css" /><?
+?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.ns4.css" /><?php
 } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'ozilla/5') && file_exists('css/'.$design['css'].'.ns6.css')) {
-?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.ns6.css" /><?
+?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.ns6.css" /><?php
 } elseif(file_exists('css/'.$design['css'].'.css')) {
-?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.css" /><?
+?><link rel="stylesheet" type="text/css" href="css/<?=$design['css']?>.css" /><?php
 }

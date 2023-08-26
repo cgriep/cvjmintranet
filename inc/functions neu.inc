@@ -114,9 +114,9 @@ function isemail ($email, $override = false) {
 function url_to_link ($in, $override = false) {
 	// makes URLs and email addresses "clickable"
 	if(DISABLE_URL_TO_LINK == 1 && !$override) return $in;
-	$out = eregi_replace( "([[:alnum:]]+)://([^[:space:]]*)([[:alnum:]#?/&=])",
+	$out = preg_replace( "([[:alnum:]]+)://([^[:space:]]*)([[:alnum:]#?/&=])/i",
                 "<a href=\"\\1://\\2\\3\" target=\"_blank\">\\1://\\2\\3</a>", $in);
-        $out = eregi_replace( "(([a-z0-9_]|\\-|\\.)+@([^[:space:]]*)([[:alnum:]-]))",
+        $out = preg_replace( "(([a-z0-9_]|\\-|\\.)+@([^[:space:]]*)([[:alnum:]-]))/i",
                 "<a href=\"mailto:\\1\">\\1</a>", $out);
         return $out;
 	}
@@ -225,7 +225,7 @@ function get_user_nickname ($user_id = -1) {
 	if($user_id == -1 || (defined(SESSION_DBID) && $user_id == SESSION_DBID)) {
 		global $profile;
 		if(!isset($profile['nickname'])) $profile['nickname'] = LANG_STRANGER;
-		return htmlchars($profile[nickname]);
+		return htmlchars($profile['nickname']);
 		}
 	$nickname = sql_query ("SELECT value FROM ".TABLE_USERDATA." WHERE user_id=".$user_id." AND name='nickname'");
                 if(sql_num_rows($nickname) > 0) {
@@ -485,7 +485,7 @@ function get_node ($id, $flavour_id, $counter_inc = true) {
 		$row = sql_fetch_array($qresult);
         	sql_free_result($qresult);
 
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
 			$document[$key] = stripslashes($value);
 			}
 
@@ -581,7 +581,7 @@ function get_children ($offset, $count, $type_id = -1, $key_only = false, $sort_
         	if(sql_num_rows($qresult) > 0) {
                 	while($row = sql_fetch_array($qresult)) {
 
-				while(list($key, $value) = each($row)) {
+				foreach ( $row as $key => $value )  {
 					$document[$key] = stripslashes($value);
 					}
 
@@ -658,7 +658,7 @@ function get_siblings ($offset, $count, $type = -1, $title_only = false, $publis
 		if(sql_num_rows($qresult) > 0) {
 	        while($row = sql_fetch_array($qresult)) {
 			if($row['id'] != $id || $no_filter) {
-				while(list($key, $value) = each($row)) {
+				foreach ( $row as $key => $value )  {
 					$related[$key] = stripslashes($value);
 					}
 				}
@@ -675,7 +675,7 @@ function get_siblings ($offset, $count, $type = -1, $title_only = false, $publis
 
         	if(sql_num_rows($qresult) > 0) {
                 	while($row = sql_fetch_array($qresult)) {
-				while(list($key, $value) = each($row)) {
+				foreach ( $row as $key => $value )  {
 					$doc[$key] = stripslashes($value);
 					}
 		                $related[$row['id']] = array_merge(get_nodedata($row['id'], $flavour), $doc);
@@ -705,7 +705,7 @@ function init_published_children () {
         (flavour_id=$flavour OR flavour_id=0) AND published=1 $enabled_filter ORDER BY sort_order DESC");
 	if(sql_num_rows($qresult) > 0) {
         while($row = sql_fetch_array($qresult)) {
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
 			$published_children[$row['node_id']][$key] = stripslashes($value);
 			}
                 }
@@ -842,7 +842,7 @@ function init_doctypes () {
 	$rows = sql_query_array("SELECT id, label, name, filename, visible, type FROM ".
 				TABLE_DOCTYPES." WHERE format = 'html'", 'id');
 	// print_r($rows);
-	while(list($key, $row) = each($rows)) {
+	foreach ( $rows as $key => $value )  {
 		$doctypes[$row['name']] = $key;
 		$docnames[$key]		= $row['name'];
 		$doctemplates[$key]	= $row['filename'];
@@ -1102,7 +1102,7 @@ function search_messages ($user_id = -1, $type = '', $status = -1, $release_date
 	$message_query = sql_query("SELECT id, user_id, subject, message, sender, sender_id, type, status, created,
 		delivered, release_date, expiration_date FROM ".TABLE_MESSAGES." $where ORDER BY created $sort_dir");
 	while($row = sql_fetch_array($message_query)) {
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
 			$messages[$row['id']][$key] = stripslashes($value);
 			}
 		if($mark) mark_message($row['id']);
@@ -1120,7 +1120,7 @@ function get_message ($message_id, $mark = true) {
 	$message_query = sql_query("SELECT id, user_id, subject, message, sender, sender_id, type, status, created,
 		delivered, release_date, expiration_date FROM ".TABLE_MESSAGES." WHERE id = $message_id ORDER BY created");
 	$row = sql_fetch_array($message_query);
-	while(list($key, $value) = each($row)) {
+	foreach ( $row as $key => $value )  {
 		$message[$key] = stripslashes($value);
 		}
 	sql_free_result($message_query);
@@ -1349,8 +1349,8 @@ function load_lang ($name, $lang = '') {
 		}
         $lines = file($filename);
 	// parse file
-        while (list ($line_num, $line) = each ($lines)) {
-		$buffer = split("\t", $line);
+        foreach ($lines as $line_num => $line) {
+		$buffer =  explode("\t", $line);
 		if(!strstr('#', $buffer[0])) {
 			$text   = trim(strstr($line, "\t"));
 			if(!defined('LANG_'.strtoupper($buffer[0]))) define('LANG_'.strtoupper($buffer[0]), $text);
@@ -1396,8 +1396,8 @@ function html2txt ($content) {
 
 	if(file_exists('inc/data/html_replace.conf')) {
 	        $lines = file('inc/data/html_replace.conf');
-        	while (list ($line_num, $line) = each ($lines)) {
-                	$buffer = split('	', $line);
+        	foreach ($lines as $line_num => $line) {
+                	$buffer =  explode('	', $line);
 	                $wildcards[$buffer[0]] = trim($buffer[1]);
 	                }
         	}

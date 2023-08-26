@@ -17,10 +17,10 @@ elseif($profile['editor']=='1') {
 Redirection (optional)<br />
 <select name="docdata[redirect]">
 <option value="">Disabled</option>
-        <?
+        <?php
         if(isset($children)) {
         reset($children);
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
                 $value['title'] = htmlspecialchars(strip_tags($value['title']));
                 if(strlen($value['title']) > 30) { $value['title'] = substr($value['title'], 0, 27).'...'; }
                 if($document['redirect'] == get_url($docid)) { $sel = ' selected'; } else { $sel = ''; }
@@ -32,7 +32,7 @@ Redirection (optional)<br />
         <input type="hidden" name="docdataflavour[redirect]" value="0" />
 <br />
 <br />
-<?
+<?php
 create_editor_input('Image', 'image', 'image_input');
 echo '<br /><br />';
 create_editor_input('Body', 'body', 'area_input');
@@ -41,7 +41,7 @@ create_editor_input('Body', 'body', 'area_input');
 
 if(isset($children)) {
         reset($children);
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
                 if($value['title'] != '') {
                         include(INC_PATH.'misc/topic.inc');
                         }

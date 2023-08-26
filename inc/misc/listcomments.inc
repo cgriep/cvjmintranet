@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -14,7 +14,7 @@ if(!isset($_REQUEST['comment_item'])) { $_REQUEST['comment_item'] = 0; }
  echo '<p>';
  if(SESSION_STATUS == 'ok' && isset($docinput['remove_comment'])) {
   $del_comment = get_nodedata($docinput['remove_comment'], $flavour);
-  if($del_comment['author_id'] == SESSION_DBID || $profile[editor] == 1) destroy_node($docinput['remove_comment']);
+  if($del_comment['author_id'] == SESSION_DBID || $profile['editor'] == 1) destroy_node($docinput['remove_comment']);
   }
  if(SESSION_STATUS == 'ok' && isset($docinput['save_comment']) && $docinput['title'] != '') {
   $msgid = create_node ($id, $doctypes['comment'], 0, 1, 0, '', $document['key_id'], 1, 1, 0, $document['members_only']);
@@ -70,10 +70,10 @@ if(!isset($_REQUEST['comment_item'])) { $_REQUEST['comment_item'] = 0; }
  if($noflavcomments == true) {
   echo '<br />'.LANG_NO_COMMENTS.'<br /><br />';
   }
- if(SESSION_STATUS == 'ok' && $profile[editor] != 1) {
+ if(SESSION_STATUS == 'ok' && $profile['editor'] != 1) {
   echo '[ <a href="'.$self.'add_comment=true">'.LANG_ADD_COMMENT.'</a> ]';
   }
- elseif($profile[editor] == 0) {
+ elseif($profile['editor'] == 0) {
   echo LANG_TO_ADD_A_COMMENT;
   }
  echo '</p>';

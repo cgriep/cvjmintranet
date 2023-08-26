@@ -7,14 +7,14 @@
         The author is Michael Mayer (michael@liquidbytes.net)
         Last update: 07.06.2002
         Erweitert:
-        - Läd bei Bedarf ein im Misc-liegendes Modul, dessen Name im Administrationsfeld
+        - Lï¿½d bei Bedarf ein im Misc-liegendes Modul, dessen Name im Administrationsfeld
           eingegeben werden kann
         - Zeigt fremde Userdaten an wenn Parameter UNr in Gebrauch
 */
 
 if($profile["editor"] == 1) {
 
-        create_editor_input('Zusätzliches Infomodul (im misc-Ordner)', 'zus_info', 'text_input');
+        create_editor_input('Zusï¿½tzliches Infomodul (im misc-Ordner)', 'zus_info', 'text_input');
         echo '<br /><br />';
         create_editor_input('Extended Info', 'ext_info', 'onoff_input');
         echo '<br /><br />';
@@ -154,10 +154,10 @@ elseif(isset($docinput['update_user']) && $docinput['update_user'] == 'true' && 
                 <input type="hidden" name="docinput[user_id]" value="<?=$docinput['email_adr']?>" />
                 <?php if(strlen($docinput['passwd_1']) > 5) { ?>
                 <input type="hidden" name="docinput[passwd2]" value="<?=$docinput['passwd_1']?>" />
-                <? } ?>
+                <?php } ?>
                 <input type="submit" value="Proceed" />
                 </form>
-                <?
+                <?php
             }
          } else { echo '<p><b>'.LANG_UPDATE_ERROR.'</b></p>'; }
 }
@@ -241,7 +241,6 @@ foreach ( $groups as $key => $value )
 {
   if($profile['group_'.$key] == 1) {  echo "$value "; $drin = true; }
 }
-reset($profile);
 if ( !$drin) echo "-keiner Gruppe zugeordnet-";
 ?></i>
 <br />
@@ -261,7 +260,7 @@ if($document['ext_info'] == '1') { ?>
 <?=$design['table_end']?>
 <br />
 <br />
-<? } // Ext-Info = 1
+<?php } // Ext-Info = 1
 if ($document['zus_info'] != "" && strpos($document['zus_info'],"/") === false)
 {
  include(INC_PATH."misc/".$document['zus_info'].".inc");
@@ -316,7 +315,7 @@ if(isset($docinput['create_new_user'])) {
 <input type="password" name="docinput[passwd_2]" size="40" />
 <br />
 <br />
-<? /* if ($document['zus_info'] != "" && strpos($document['zus_info'],"/")=== false)
+<?php /* if ($document['zus_info'] != "" && strpos($document['zus_info'],"/")=== false)
   include(INC_PATH."misc/".$document['zus_info'].".inc"); */
  if($document['ext_info'] == '1') { ?>
 <?=$design['table_begin']?>
@@ -331,7 +330,7 @@ if(isset($docinput['create_new_user'])) {
 <?=$design['table_end']?>
 <br />
 <br />
-<? } ?>
+<?php } ?>
 <input type="submit" value="<?=LANG_REGISTER?>" />
 </form>
 </p>

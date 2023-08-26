@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstrakte Grundklasse für Datenbankobjekte
+ * Abstrakte Grundklasse fï¿½r Datenbankobjekte
  */
 abstract class DBEntity
 {
@@ -10,13 +10,13 @@ abstract class DBEntity
 	 */
 	function __construct($tabelle)
 	{
-		if ( ! $query = mysql_query('SHOW COLUMNS FROM '.$tabelle))
+		if ( ! $query = sql_query('SHOW COLUMNS FROM '.$tabelle))
 		{
 			throw new Exception('Die Tabelle '.$tabelle.' konnte nicht ausgelesen werden!');
 		}
-		while ($feld = mysql_fetch_array($query))
+		while ($feld = sql_fetch_array($query))
 		{
-			// Übertragen der Felder in die Attribute des Klasse
+			// ï¿½bertragen der Felder in die Attribute des Klasse
 			$name = $feld['Field'];
 			$this->$name = $feld['Default'];
 			if ( $feld['Default'] == null)
@@ -28,15 +28,15 @@ abstract class DBEntity
 				$this->$name = $feld['Default'];
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 	}
 	/**
-	 * Überträgt alle Felder aus dem Datensatz ins Objekt
+	 * ï¿½bertrï¿½gt alle Felder aus dem Datensatz ins Objekt
 	 * @param array $datensatz ein assoziatives Feld mit den Feldnamen => Feldinhalt
 	 */
 	public function uebertrageFelder($datensatz)
 	{
-		// Übertragen der Felder in die Attribute des Klasse
+		// ï¿½bertragen der Felder in die Attribute des Klasse
 		foreach ( $datensatz as $key => $value )
 		{
 			$this->$key = $value;

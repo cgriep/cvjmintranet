@@ -78,7 +78,7 @@ function open_window(url) {
 <input type="hidden" name="page" value="<?=$page?>" />
 <input type="hidden" name="target_id" value="<?=$target_id?>" />
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 lftk_add_tab('profile', LANG_ADMIN_PROFILE);
 lftk_add_tab('members', LANG_ADMIN_MEMBERS);
 lftk_add_tab('name', LANG_ADMIN_NAME);
@@ -88,7 +88,7 @@ lftk_add_tab('name', LANG_ADMIN_NAME);
 </table>
 <table bgcolor="<?=$lftk_config['color_3']?>" width="100%" cellpadding="9" cellspacing="0" border="0">
 <tr><td>
-<?
+<?php
 /**********************************************************************************************************
 Profile
 **********************************************************************************************************/
@@ -156,7 +156,7 @@ lftk_display_table_footer();
 <?=LANG_ADMIN_KEY?> <input type="text" size="20" name="docinput[key]" />&nbsp;
 <?=LANG_ADMIN_VALUE?> <input type="text" size="20" name="docinput[value]" />
 <input type="submit" value="<?=LANG_ADMIN_ADD_UPDATE?>" />
-<?
+<?php
 }
 /**********************************************************************************************************
 Members
@@ -244,7 +244,7 @@ if(isset($_REQUEST['docinput'])) {
 ?>
 <?=LANG_ADMIN_NAME?>
 <br />
-<?
+<?php
 if(isset($docinput)) {
 
 if($row_count > 0) {
@@ -260,7 +260,7 @@ if($row_count > 0) {
 <input type="reset" onclick="window.close();" value="<?=LANG_ADMIN_CLOSE?>" />
 <input type="submit" value="<?=LANG_ADMIN_SAVE?>" />
 </p>
-<?
+<?php
 }
 ?>
 </td></tr>

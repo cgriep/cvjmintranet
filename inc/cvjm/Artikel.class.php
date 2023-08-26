@@ -14,20 +14,20 @@ class Artikel extends DBEntity
 		parent::__construct(TABLE_ARTIKEL);
 		if ( ! is_numeric($artikel_id))
 		{
-			throw new Exception('Ungültige Artikel-id: '.$artikel_id.'!');
+			throw new Exception('Ungï¿½ltige Artikel-id: '.$artikel_id.'!');
 		}
 		if ( $artikel_id > 0 )
 		{
-			// TODO: id in Artikel_id ändern
+			// TODO: id in Artikel_id ï¿½ndern
 			$sql = 'SELECT * FROM '.TABLE_ARTIKEL.' WHERE id='.$artikel_id;
-			$query = mysql_query($sql);
-			if ( ! $Artikel = mysql_fetch_array($query))
+			$query = sql_query($sql);
+			if ( ! $Artikel = sql_fetch_array($query))
 			{
 				throw new Exception('Konnte Artikel '.$artikel_id.' nicht laden!');
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			$this->uebertrageFelder($Artikel);
-			// TODO: umstellung von id auf Artikel_id für konsistenze Bezeichnungen
+			// TODO: umstellung von id auf Artikel_id fï¿½r konsistenze Bezeichnungen
 			$this->Artikel_id = $this->id;
 		}
 		else
@@ -44,7 +44,7 @@ class Artikel extends DBEntity
 	function uebertrageFelder($felder)
 	{
 		parent::uebertrageFelder($felder);
-		// Besonderheit: Checkboxen berücksichtigen
+		// Besonderheit: Checkboxen berï¿½cksichtigen
 		foreach ( array('Anzeigen','Rabattfaehig','Geringwertig', 'Steuerpflicht', 'PersonJN') as $Feld)
 		{
 			if ( ! isset($felder[$Feld]))
@@ -62,7 +62,7 @@ class Artikel extends DBEntity
 		return !is_numeric($this->Artikel_id) || $this->Artikel_id <= 0;
 	}
 	/**
-	 * Löscht den Artikel
+	 * Lï¿½scht den Artikel
 	 */
 	function loeschen()
 	{
@@ -81,11 +81,11 @@ class Artikel extends DBEntity
 	private function AendereArtikelPosition($Artikel_Nr, $Position)
 	{
 		if ( ! is_numeric($Position) || ! is_numeric($Artikel_Nr)) return;
-		// Positionänderung
+		// Positionï¿½nderung
 		if ( ! $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.' WHERE Position='.
 		$Position.' AND F_Art_id='.$this->F_Art_id.	' AND id<>'.$Artikel_Nr) )
 		{
-			throw new Exception('AendereArtikelPosition:'.mysql_error());
+			throw new Exception('AendereArtikelPosition:'.sql_error());
 		}
 		if ( sql_num_rows($query) > 0 )
 		{
@@ -103,7 +103,7 @@ class Artikel extends DBEntity
 	 */
 	function save($verschieben = false)
 	{
-		// Numerische Überprüfung
+		// Numerische ï¿½berprï¿½fung
 		foreach ( array('Anzeigen', 'Geringwertig', 'Rabattfaehig', 'Einruecken',
 		'Position','Steuerpflicht', 'F_MWSt', 'F_Lieferant_id', 'Einkaufspreis',
 		'F_Art_id','PersonJN', 'F_PruefungArt', 'LetztePruefung') as $feld)
@@ -120,34 +120,34 @@ class Artikel extends DBEntity
 		if ( !$this->isNeu())
 		{
 			$sql = "UPDATE ".TABLE_ARTIKEL.
-			' SET Einheit="'.mysql_real_escape_string($this->Einheit).'", '.
-			'Bezeichnung="'.mysql_real_escape_string($this->Bezeichnung).'",'.
+			' SET Einheit="'.sql_real_escape_string($this->Einheit).'", '.
+			'Bezeichnung="'.sql_real_escape_string($this->Bezeichnung).'",'.
 			'Anzeigen='.$this->Anzeigen.',';
 			$sql .= 'Geringwertig='.$this->Geringwertig.',';
 			$sql .= 'Rabattfaehig='.$this->Rabattfaehig.',';
 			$sql .= 'Einruecken='.$this->Einruecken.',';
 			$sql .= 'F_MWSt='.$this->F_MWSt.',';
-			$sql .= 'Beschreibung="'.mysql_real_escape_string($this->Beschreibung).'",';
+			$sql .= 'Beschreibung="'.sql_real_escape_string($this->Beschreibung).'",';
 			$sql .= 'F_Lieferant_id='.$this->F_Lieferant_id.',';
-			$sql .= 'Barcode="'.mysql_real_escape_string($this->Barcode).'",';
+			$sql .= 'Barcode="'.sql_real_escape_string($this->Barcode).'",';
 			$sql .= 'Steuerpflicht='.$this->Steuerpflicht.',';
-			$sql .= 'Bestellnummer="'.mysql_real_escape_string($this->Bestellnummer).'",';
+			$sql .= 'Bestellnummer="'.sql_real_escape_string($this->Bestellnummer).'",';
 			$sql .= 'Einkaufspreis='.$this->Einkaufspreis.',';
 			$sql .= 'PersonJN='.$this->PersonJN.',';
 			$sql .= 'Schlafplatz='.$this->Schlafplatz.',';
-			$sql .= 'Aktion="'.mysql_real_escape_string($this->Aktion).'",';
+			$sql .= 'Aktion="'.sql_real_escape_string($this->Aktion).'",';
 			$sql .= 'LetztePruefung='.$this->LetztePruefung.',';
 			$sql .= 'F_PruefungArt='.$this->F_PruefungArt;
 			$sql .= ' WHERE id='.$this->Artikel_id;
 			if ( ! sql_query($sql))
 			{
-				throw new Exception('Artikelupdate: '.mysql_error());
+				throw new Exception('Artikelupdate: '.sql_error());
 			}
 		}
 		else
 		{
 			// Neue Position suchen
-			if ( $this->Position == 0)	 // Position für den Artikel freimachen
+			if ( $this->Position == 0)	 // Position fï¿½r den Artikel freimachen
 			{
 				$query = sql_query('SELECT MAX(Position) FROM '.TABLE_ARTIKEL.' WHERE F_Art_id='.$this->F_Art_id);
 				$Pos = sql_fetch_row($query);
@@ -159,29 +159,29 @@ class Artikel extends DBEntity
 			$sql .= 'Geringwertig,Einkaufspreis,Bestellnummer,Barcode,Beschreibung,F_MWSt,';
 			$sql .= 'F_Lieferant_id,Anzeigen,Schlafplatz,PersonJN,Aktion,LetztePruefung,';
 			$sql .= 'F_PruefungArt) VALUES ("';
-			$sql .= mysql_real_escape_string($this->Bezeichnung).'",';
-			$sql .= '"'.mysql_real_escape_string($this->Einheit).'",';
+			$sql .= sql_real_escape_string($this->Bezeichnung).'",';
+			$sql .= '"'.sql_real_escape_string($this->Einheit).'",';
 			$sql .= $this->F_Art_id.',';
 			$sql .= $this->Einruecken.',';
 			$sql .= $this->Rabattfaehig.',';
 			$sql .= $this->Steuerpflicht.',';
 			$sql .= $this->Geringwertig.',';
 			$sql .= $this->Einkaufspreis.',';
-			$sql .= '"'.mysql_real_escape_string($this->Bestellnummer).'",';
-			$sql .= '"'.mysql_real_escape_string($this->Barcode).'",';
-			$sql .= '"'.mysql_real_escape_string($this->Beschreibung).'",';
+			$sql .= '"'.sql_real_escape_string($this->Bestellnummer).'",';
+			$sql .= '"'.sql_real_escape_string($this->Barcode).'",';
+			$sql .= '"'.sql_real_escape_string($this->Beschreibung).'",';
 			$sql .= $this->F_MWSt.',';
 			$sql .= $this->F_Lieferant_id.',';
 			$sql .= $this->Anzeigen.',';
 			$sql .= $this->Schlafplatz.',';
 			$sql .= $this->PersonJN.',';
-			$sql .= '"'.mysql_real_escape_string($this->Aktion).'",';
+			$sql .= '"'.sql_real_escape_string($this->Aktion).'",';
 			$sql .= $this->LetztePruefung.',';
 			$sql .= $this->F_PruefungArt;
 			$sql .= ')';
-			if ( ! mysql_query($sql))
+			if ( ! sql_query($sql))
 			{
-				throw new Exception ('Artikel einfügen: '.$sql.'/'.mysql_error());
+				throw new Exception ('Artikel einfï¿½gen: '.$sql.'/'.sql_error());
 			}
 			$this->Artikel_id = sql_insert_id();
 			$this->id = $this->Artikel_id;
@@ -212,7 +212,7 @@ class Artikel extends DBEntity
 		$this->OriginalF_Art_id = $this->F_Art_id;
 	}
 	/**
-	 * Liste mit den möglichen Prüfungsarten
+	 * Liste mit den mï¿½glichen Prï¿½fungsarten
 	 *
 	 */
 	function PruefungsArten()
@@ -257,13 +257,13 @@ class Artikel extends DBEntity
 		'SELECT '.$this->Artikel_id.',F_Unterartikel_id, Menge,Beginn,Dauer FROM '.TABLE_ARTIKELBEZIEHUNGEN.
 		' WHERE F_Artikel_id='.$Originalid))
 		{
-			throw new Exception('Fehler bei Artikelkopie 1: '.mysql_error());
+			throw new Exception('Fehler bei Artikelkopie 1: '.sql_error());
 		}
 		if ( ! sql_query('INSERT INTO '.TABLE_ARTIKELGRUPPEN.' (F_Artikel_id,F_Unterartikel_id,Menge,Beginn,Dauer) '.
 		'SELECT '.$this->Artikel_id.',F_Unterartikel_id,Menge,Beginn,Dauer FROM '.TABLE_ARTIKELGRUPPEN.
 		' WHERE F_Artikel_id='.$Originalid))
 		{
-			throw new Exception ('Fehler bei Artikelkopie 2: '.mysql_error());
+			throw new Exception ('Fehler bei Artikelkopie 2: '.sql_error());
 		}
 	}
 	/**
@@ -291,9 +291,9 @@ class Artikel extends DBEntity
 		return $anz[0];
 	}
 	/**
-	 * gibt den Pfad der Artikel über mehrere Ebenen zurück. Ist Ebene = 0, so wird nur der
-	 * Artikelname selbst zurückgegeben, sonst eine Pfadangabe der Form X > Y > Z
-	 * @param int $Ebenen die Anzahl der zurückgegebenen Ebenen
+	 * gibt den Pfad der Artikel ï¿½ber mehrere Ebenen zurï¿½ck. Ist Ebene = 0, so wird nur der
+	 * Artikelname selbst zurï¿½ckgegeben, sonst eine Pfadangabe der Form X > Y > Z
+	 * @param int $Ebenen die Anzahl der zurï¿½ckgegebenen Ebenen
 	 * @return array Feld (Bezeichnung) mit dem Artikelpfad
 	 */
 	function getArtikelPfad($Ebenen = 0)
@@ -315,7 +315,7 @@ class Artikel extends DBEntity
 		return implode(' > ', $this->getArtikelPfad($Ebenen));
 	}
 	/**
-	 * liefert den nächsthöheren Artikel einer Art bezogen auf die Position
+	 * liefert den nï¿½chsthï¿½heren Artikel einer Art bezogen auf die Position
 	 * @return Artikel das Artikelobjekt oder NULL wenn keiner vorhanden
 	 */
 	function getArtikelParent()
@@ -326,7 +326,7 @@ class Artikel extends DBEntity
 		' AND F_Art_id='.$this->F_Art_id;
 		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('getArtikelParent: '.$sql.':'.mysql_error());
+			throw new Exception('getArtikelParent: '.$sql.':'.sql_error());
 		}
 		if ( $zeile = sql_fetch_row($query))
 		{
@@ -337,7 +337,7 @@ class Artikel extends DBEntity
 			if ( ! $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.
 			' WHERE Position='.$zeile.' AND F_Art_id='.$this->F_Art_id) )
 			{
-				throw new Exception('HAP2: '.mysql_error());
+				throw new Exception('HAP2: '.sql_error());
 			}
 			if ( $art = sql_fetch_row($query)) {
 				$artikel = new Artikel($art[0]);
@@ -353,7 +353,7 @@ class Artikel extends DBEntity
 	}
 	/**
 	 *
-	 * stellt ein Feld mit den vorhandenen Mehrwertsteuern zur Verfügung
+	 * stellt ein Feld mit den vorhandenen Mehrwertsteuern zur Verfï¿½gung
 	 * @return array assoziatives Feld mit ID -> Beschreibung
 	 */
 	function getMWSTListe()
@@ -398,8 +398,8 @@ class Artikel extends DBEntity
 		}
 	}
 	/**
-	 * liefert ein Feld von Preisen aus den verschiedenen Preislisten für den Artikel
-	 * Das Feld ist nach der Gültigkeit der Preislisten sortiert.
+	 * liefert ein Feld von Preisen aus den verschiedenen Preislisten fï¿½r den Artikel
+	 * Das Feld ist nach der Gï¿½ltigkeit der Preislisten sortiert.
 	 * @return array Feld mit Preis und Preislisteneintrag
 	 */
 	function getPreise()
@@ -414,7 +414,7 @@ class Artikel extends DBEntity
 			{
 				$this->Preise[$preis['Preisliste_id']] = $preis;
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 		}
 		return $this->Preise;
 	}
@@ -423,7 +423,7 @@ class Artikel extends DBEntity
 	 * der Einzelpreis oder der Preis pro Stunde.
 	 * @param int $Preisliste_id die ID der Preisliste
 	 * @param boolean $Stunde true, wenn der Stundenpreis verlangt ist, false sonst
-	 * @return double der gewünschte Preis des Artikels
+	 * @return double der gewï¿½nschte Preis des Artikels
 	 */
 	function holePreis($Preisliste_id, $Stunde = false)
 	{
@@ -434,11 +434,11 @@ class Artikel extends DBEntity
 		if ( ! $query = sql_query('SELECT Preis, PreisStunde FROM '.TABLE_PREISE.
 		' WHERE F_Preisliste_id = '.$Preisliste_id.' AND Artikel_Nr = '.$this->Artikel_id) )
 		{
-			throw new Exception('holePreis: '.mysql_error());
+			throw new Exception('holePreis: '.sql_error());
 		}
 		if ( ! $preis = sql_fetch_row($query) )
 		{
-			// parent prüfen
+			// parent prï¿½fen
 			$parent= $this->getArtikelParent();
 			if ( $parent != NULL )
 			{
@@ -470,7 +470,7 @@ class Artikel extends DBEntity
 	/**
 	 * Bewegt einen Artikel im Baum.
 	 * @param char $richtung die Richtung (l, r, u, o)
-	 * @param boolean $einzeln true, wenn nur der Artikel verändert werden soll, false wenn alle Unterartikel mitbewegt werden sollen
+	 * @param boolean $einzeln true, wenn nur der Artikel verï¿½ndert werden soll, false wenn alle Unterartikel mitbewegt werden sollen
 	 */
 	function bewegen($richtung, $einzeln = true)
 	{
@@ -531,7 +531,7 @@ class Artikel extends DBEntity
 						$pos.' AND '.($this->Position-1).
 						" AND F_Art_id=".$this->F_Art_id))
 						{
-							throw new Exception('bewegen: '.mysql_error());
+							throw new Exception('bewegen: '.sql_error());
 						}
 						$anz = $pos-$this->Position; // negativer Wert
 						//echo "Anz: $anz";
@@ -561,7 +561,7 @@ class Artikel extends DBEntity
 	}
 	/**
 	 * Sucht Artikelnachfolger in Bezug auf die Position eines andere Artikels.
-	 * Es geht also um die Positionierung im Artikelbaum. Die Einrücktiefe bleibt
+	 * Es geht also um die Positionierung im Artikelbaum. Die Einrï¿½cktiefe bleibt
 	 * dabei gleich.
 	 * Es wird der Artikel gefunden, der vor bzw. nach dem Artikel liegt.
 	 * @param char $Richtung h (hoch), r (runter) oder egal: Nachfolger des Nachfolgers (zweimal r)
@@ -581,7 +581,7 @@ class Artikel extends DBEntity
 		}
 		if ( $Richtung == 'h' )
 		{
-			// der Vorgänger
+			// der Vorgï¿½nger
 			$query = sql_query('SELECT MAX(Position) FROM '.TABLE_ARTIKEL.
 			' WHERE Einruecken<='.$this->Einruecken.' AND Position < '.$Position.
 			' AND F_Art_id='.$this->F_Art_id);
@@ -598,7 +598,7 @@ class Artikel extends DBEntity
 			' AND F_Art_id='.$this->F_Art_id;
 			if ( ! $query = sql_query($sql))
 			{
-				throw new Exception('findeArtikelpos: '.mysql_error());
+				throw new Exception('findeArtikelpos: '.sql_error());
 			}
 			if ( ! $Pos = sql_fetch_row($query) )
 			{
@@ -621,7 +621,7 @@ class Artikel extends DBEntity
 			$this->findeArtikelPos('r', $Original);
 			if ( ! $query = sql_query($sql))
 			{
-				throw new Exception ('FAP '.$sql.': '.mysql_error());
+				throw new Exception ('FAP '.$sql.': '.sql_error());
 			}
 			if ( ! $Pos = sql_fetch_row($query) )
 			{
@@ -639,31 +639,31 @@ class Artikel extends DBEntity
 		return $Pos[0];
 	}
 	/**
-	 * berechnet die Schlafplätze an diesem Ort, ohne die Unterorte zur berücksichtigen.
+	 * berechnet die Schlafplï¿½tze an diesem Ort, ohne die Unterorte zur berï¿½cksichtigen.
 	 * Sonderfall:
-	 * -1 wenn es keine Schlafplätze gibt
-	 * 0 wenn es beliebig viele Schlafplätze gibt (Zeltplatz)
-	 * @return int die Schlafplätze am aktuelle Artikel, -1 wenn dort keine Schlafplätze vorliegen, 0 beim Zeltplätz
+	 * -1 wenn es keine Schlafplï¿½tze gibt
+	 * 0 wenn es beliebig viele Schlafplï¿½tze gibt (Zeltplatz)
+	 * @return int die Schlafplï¿½tze am aktuelle Artikel, -1 wenn dort keine Schlafplï¿½tze vorliegen, 0 beim Zeltplï¿½tz
 	 */
 	function BerechneEinzelnSchlafplaetze()
 	{		
 		return $this->Schlafplatz;
 	}
 	/**
-	 * Berechnet die Schlafplätze eines Ortes. Dabei werden eventuell zugehörige
-	 * Unterartikel berücksichtigt. Im Ergebnis bekommt man 0 oder mehr Schlafplätze. Sofern es gar keine
-	 * Schlafplätze gibt, wird -1 zurückgegeben.
-	 * @return int die Gesamt-Schlafplätze am Ort, oder -1 wenn es keine gibt
+	 * Berechnet die Schlafplï¿½tze eines Ortes. Dabei werden eventuell zugehï¿½rige
+	 * Unterartikel berï¿½cksichtigt. Im Ergebnis bekommt man 0 oder mehr Schlafplï¿½tze. Sofern es gar keine
+	 * Schlafplï¿½tze gibt, wird -1 zurï¿½ckgegeben.
+	 * @return int die Gesamt-Schlafplï¿½tze am Ort, oder -1 wenn es keine gibt
 	 */
 	function BerechneSchlafplaetze()
 	{
 		$Plaetze = $this->BerechneEinzelnSchlafplaetze();
-		// Bestimmt die Position des nächsten Artikels
+		// Bestimmt die Position des nï¿½chsten Artikels
 		if ( ! $query = sql_query('SELECT Position FROM '.TABLE_ARTIKEL.
 		' WHERE Position>'.$this->Position.' AND Einruecken<='.$this->Einruecken.
 		' AND F_Art_id='.$this->F_Art_id.' ORDER BY Position LIMIT 1'))
 		{
-			throw new Exception('berechneSchlafplaetze: '.mysql_error());
+			throw new Exception('berechneSchlafplaetze: '.sql_error());
 		}
 		if ( ! $artikel2 = sql_fetch_array($query))
 		{
@@ -679,7 +679,7 @@ class Artikel extends DBEntity
 			$p = $a->BerechneEinzelnSchlafplaetze();
 			if ( $p >= 0 )
 			{
-				// Artikel ohne Schlafplätze ignorieren
+				// Artikel ohne Schlafplï¿½tze ignorieren
 				if ( $Plaetze < 0 ) $Plaetze = 0;
 				$Plaetze += $p;
 			}
@@ -712,8 +712,8 @@ class Artikel extends DBEntity
 		}
 	}
 	/**
-	 * gibt an, ob die Abrechnung des Artikels nach Übernachtungen erfolgt
-	 * @return boolean true, wenn die Abrechnung nach Übernachtungen erfolgt
+	 * gibt an, ob die Abrechnung des Artikels nach ï¿½bernachtungen erfolgt
+	 * @return boolean true, wenn die Abrechnung nach ï¿½bernachtungen erfolgt
 	 */
 	function isAbrechnungNachUebernachtungen()
 	{
@@ -735,9 +735,9 @@ class Artikel extends DBEntity
 	{
 		if ( ! isset($this->Abrechnungstyp))
 		{
-			$query= mysql_query('SELECT Typ FROM '.TABLE_ARTIKELARTEN.' WHERE Art_id='.$this->F_Art_id);
-			$art = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$query= sql_query('SELECT Typ FROM '.TABLE_ARTIKELARTEN.' WHERE Art_id='.$this->F_Art_id);
+			$art = sql_fetch_array($query);
+			sql_free_result($query);
 			$this->Abrechnungstyp = $art[0];
 		}
 		return $this->Abrechnungstyp;
@@ -745,7 +745,7 @@ class Artikel extends DBEntity
 	/**
 	 * baut ein Feld mit Artikel auf, das die Artikel der Art des aktuellen Artikels im Form eines Baumes
 	 * abbilden. Der aktuelle Artikel wird in der Mitte des Feldes positioniert.
-	 * @param int/String $Anzahl die Anzahl der Artikel in der Baumliste oder 'Alle' für alle.
+	 * @param int/String $Anzahl die Anzahl der Artikel in der Baumliste oder 'Alle' fï¿½r alle.
 	 * @return array ein Feld mit den Artikeln
 	 */
 	function baueArtikelBaumAuf($Anzahl = 10)
@@ -759,7 +759,7 @@ class Artikel extends DBEntity
 		$sql .= ' ORDER BY Position';
 		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('baueArtikelBaumAuf: '.$sql.'/'.mysql_error());
+			throw new Exception('baueArtikelBaumAuf: '.$sql.'/'.sql_error());
 		}
 		$Artikelliste = array();
 		while ( $baumartikel = sql_fetch_row($query) )
@@ -783,7 +783,7 @@ class Artikel extends DBEntity
 	// ---------------------------------------------------------------
 	/**
 	 * Nummeriert die Positionen der Artikel im Artikelbaum neu durch, so dass jeder Artikel eine
-	 * eindeutige Nummer erhält.
+	 * eindeutige Nummer erhï¿½lt.
 	 */
 	static function neuNummerieren()
 	{
@@ -807,7 +807,7 @@ class Artikel extends DBEntity
 
 		if ( ! $query = sql_query('SELECT * FROM '.TABLE_ARTIKELARTEN.' ORDER BY Art'))
 		{
-			throw new Exception('getArtikelArten: '.mysql_error());
+			throw new Exception('getArtikelArten: '.sql_error());
 		}
 		while ( $art = sql_fetch_array($query) )
 		{
@@ -830,8 +830,8 @@ class Artikel extends DBEntity
 		{
 			// TODO: id->Artikel_id
 			$query = sql_query("SELECT id FROM ".TABLE_ARTIKEL." WHERE Bezeichnung='".
-			mysql_real_escape_string($Bezeichnung)."' AND id<>".$NichtArtikel_id);
-			while ( $a = mysql_fetch_row($query) )
+			sql_real_escape_string($Bezeichnung)."' AND id<>".$NichtArtikel_id);
+			while ( $a = sql_fetch_row($query) )
 			{
 				$Artikel[] = new Artikel($a[0]);
 			}
@@ -839,7 +839,7 @@ class Artikel extends DBEntity
 		return $Artikel;
 	}
 	/**
-	 * liefert eine Liste aller Speiseräume (erkennbar am Namen "Saal". Das Feld ist nach
+	 * liefert eine Liste aller Speiserï¿½ume (erkennbar am Namen "Saal". Das Feld ist nach
 	 * Namen sortiert.
 	 * @return array Feld mit Artikelobjekten
 	 */
@@ -849,11 +849,11 @@ class Artikel extends DBEntity
 		$sql = "SELECT DISTINCT id FROM " . TABLE_ARTIKEL .
 		" WHERE F_Art_id=" . CVJMART_ORT . " AND Bezeichnung LIKE '%Saal %' ORDER BY Bezeichnung";
 		$q = sql_query($sql);
-		while ( $saal = mysql_fetch_row($q))
+		while ( $saal = sql_fetch_row($q))
 		{
 			$raeume[] = new Artikel($saal[0]);
 		}
-		mysql_free_result($q);
+		sql_free_result($q);
 		return $raeume;
 	}
 	/**
@@ -864,13 +864,13 @@ class Artikel extends DBEntity
 	static function getArtikelSuche($bezeichnung='')
 	{
 		$query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.' WHERE Bezeichnung LIKE "%'.
-		mysql_real_escape_string($bezeichnung).'%" ORDER BY Bezeichnung');
+		sql_real_escape_string($bezeichnung).'%" ORDER BY Bezeichnung');
 		$ergebnis = array();
-		while ($artikel = mysql_fetch_row($query))
+		while ($artikel = sql_fetch_row($query))
 		{
 			$ergebnis[] = new Artikel($artikel[0]);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $ergebnis;
 	}
 	/**
@@ -882,35 +882,35 @@ class Artikel extends DBEntity
 	{
 		$query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.' WHERE F_Art_id='.CVJMART_ORT.' ORDER BY Position');
 		$ergebnis = array();
-		while ($artikel = mysql_fetch_row($query))
+		while ($artikel = sql_fetch_row($query))
 		{
 			$ergebnis[] = new Artikel($artikel[0]);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $ergebnis;
 	}
 	/**
 	 * Sucht einen Artikel nach dem angegebenen Text. Gesucht wird in den Feldern Bezeichnung und Barcode. 
-	 * Der Barcode muss genau übereinstimmen, die Bezeichnung wird mit Wildcards druchsucht. 
+	 * Der Barcode muss genau ï¿½bereinstimmen, die Bezeichnung wird mit Wildcards druchsucht. 
 	 * @return array ein Feld der passenden Artikel 
 	 */
 	static function search($text)
 	{
-		$text = mysql_real_escape_string(trim($text));
-		$query = mysql_query('SELECT id FROM '.TABLE_ARTIKEL.' WHERE Bezeichnung LIKE "%'.$text.
+		$text = sql_real_escape_string(trim($text));
+		$query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.' WHERE Bezeichnung LIKE "%'.$text.
 		'%" OR Barcode="'.$text.'"');
 		$Feld = array();
-		while ($artikel = mysql_fetch_array($query))
+		while ($artikel = sql_fetch_array($query))
 		{
 			$Feld[] = new Artikel($artikel['id']);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $Feld;
 	}
 	static function findNextCVJMEAN()
 	{
-		$query = mysql_query('SELECT Max(Barcode) FROM '.TABLE_ARTIKEL.' WHERE Barcode LIKE "CVJM%"');
-		if ( ! $row = mysql_fetch_row($query))
+		$query = sql_query('SELECT Max(Barcode) FROM '.TABLE_ARTIKEL.' WHERE Barcode LIKE "CVJM%"');
+		if ( ! $row = sql_fetch_row($query))
 		{
 			$nr = 'CVJM00000001';
 		}
@@ -919,12 +919,12 @@ class Artikel extends DBEntity
 			$nr = substr($row[0],4);
 			if ( ! is_numeric($nr))
 			{
-				throw new Exception('Vorhandene EAN '.$row[0].' ist ungültig.');
+				throw new Exception('Vorhandene EAN '.$row[0].' ist ungï¿½ltig.');
 			}
 			$nr = $nr + 1;
 			$nr = 'CVJM'.sprintf('%08d',$nr);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $nr;
 	}
 } // Klasse Artikel ?>

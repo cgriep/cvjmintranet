@@ -8,7 +8,7 @@
         Last update: 21.08.2003
 */
 
-if($profile[editor] == 1) {
+if($profile['editor'] == 1) {
 
 	create_editor_input('Extended Info', 'ext_info', 'onoff_input');
 	echo '<br /><br />';
@@ -112,10 +112,10 @@ elseif(isset($docinput['update_user']) && $docinput['update_user'] == 'true' && 
 		<input type="hidden" name="docinput[user_id]" value="<?=$docinput['email_adr']?>" />
 		<?php if(strlen($docinput['passwd_1']) > 5) { ?>
 		<input type="hidden" name="docinput[passwd2]" value="<?=$docinput['passwd_1']?>" />
-		<? } ?>
+		<?php } ?>
 		<input type="submit" value="Proceed" />
 		</form>
-		<?
+		<?php
 		}
 	} else { echo '<p><b>'.LANG_UPDATE_ERROR.'</b></p>'; }
 	}
@@ -168,7 +168,7 @@ if(!$unique_nickname) {
 <input type="password" name="docinput[passwd_2]" size="40" />
 <br />
 <br />
-<? if($document['ext_info'] == '1') { ?>
+<?php if($document['ext_info'] == '1') { ?>
 <?=$design['table_begin']?>
 <tr bgcolor="<?=$design['table_row_dark']?>"><td>
 <b><?=LANG_ADDITIONAL_INFO?></b></td></tr>
@@ -187,11 +187,11 @@ if(!$unique_nickname) {
 <br />
 <?=LANG_COUNTRY?><br />
 <select name="docinput[country]">
-<?
+<?php
 $countries = file(INC_PATH.DATA_PATH.'/country_list_names_only.txt');
-while(list($key, $value) = each($countries)) { ?>
-	<option value="<?=trim($value)?>"<? if($profile['country'] == trim($value)) echo ' selected'; ?>><?=trim($value)?></option>
-	<?
+foreach ( $countries as $key => $value) { ?>
+	<option value="<?=trim($value)?>"<?php if($profile['country'] == trim($value)) echo ' selected'; ?>><?=trim($value)?></option>
+	<?php
 	}
 ?>
 </select>
@@ -202,9 +202,9 @@ while(list($key, $value) = each($countries)) { ?>
 <br />
 <br />
 <?=LANG_GENDER?><br />
-<input type="radio" name="docinput[gender]" value="m"<? if($profile['gender'] == 'm') echo ' checked'; ?> /> Male
+<input type="radio" name="docinput[gender]" value="m"<?php if($profile['gender'] == 'm') echo ' checked'; ?> /> Male
 &nbsp&nbsp;
-<input type="radio" name="docinput[gender]" value="f"<? if($profile['gender'] == 'f') echo ' checked'; ?> /> Female
+<input type="radio" name="docinput[gender]" value="f"<?php if($profile['gender'] == 'f') echo ' checked'; ?> /> Female
 <br />
 <br />
 <?=LANG_BIRTHDAY.' '.LANG_BIRTHDAY_FORMAT?><br />
@@ -213,7 +213,7 @@ while(list($key, $value) = each($countries)) { ?>
 <?=$design['table_end']?>
 <br />
 <br />
-<? } ?>
+<?php } ?>
 <input type="submit" value="Update" />
 </form>
 </p>
@@ -263,7 +263,7 @@ if(!$unique_nickname) {
 <input type="password" name="docinput[passwd_2]" size="40" />
 <br />
 <br />
-<? if($document['ext_info'] == '1') { ?>
+<?php if($document['ext_info'] == '1') { ?>
 <?=$design['table_begin']?>
 <tr bgcolor="<?=$design['table_row_dark']?>"><td>
 <b><?=LANG_ADDITIONAL_INFO?></b></td></tr>
@@ -283,11 +283,11 @@ if(!$unique_nickname) {
 <?=LANG_COUNTRY?><br />
 <select name="docinput[country]">
 <option value=""></option>
-<?
+<?php
 $countries = file(INC_PATH.DATA_PATH.'/country_list_names_only.txt');
-while(list($key, $value) = each($countries)) { ?>
-	<option value="<?=$value?>"<? if($docinput['country'] == $value) echo ' selected'; ?>><?=$value?></option>
-	<?
+foreach ( $countries as $key => $value) { ?>
+	<option value="<?=$value?>"<?php if($docinput['country'] == $value) echo ' selected'; ?>><?=$value?></option>
+	<?php
 	}
 ?>
 </select>
@@ -298,9 +298,9 @@ while(list($key, $value) = each($countries)) { ?>
 <br />
 <br />
 <?=LANG_GENDER?><br />
-<input type="radio" name="docinput[gender]" value="m"<? if($docinput['gender'] == 'm') echo ' checked'; ?> /> Male
+<input type="radio" name="docinput[gender]" value="m"<?php if($docinput['gender'] == 'm') echo ' checked'; ?> /> Male
 &nbsp&nbsp;
-<input type="radio" name="docinput[gender]" value="f"<? if($docinput['gender'] == 'f') echo ' checked'; ?> /> Female
+<input type="radio" name="docinput[gender]" value="f"<?php if($docinput['gender'] == 'f') echo ' checked'; ?> /> Female
 <br />
 <br />
 <?=LANG_BIRTHDAY.' '.LANG_BIRTHDAY_FORMAT?><br />
@@ -309,7 +309,7 @@ while(list($key, $value) = each($countries)) { ?>
 <?=$design['table_end']?>
 <br />
 <br />
-<? } ?>
+<?php } ?>
 <input type="submit" value="<?=LANG_REGISTER?>" />
 </form>
 </p>

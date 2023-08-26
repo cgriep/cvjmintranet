@@ -3,14 +3,14 @@
 
 require_once ('inc/xajax/xajax.inc.php');
 
-/* Datenbank- und AWF-Funktionalität einbinden */
+/* Datenbank- und AWF-Funktionalitï¿½t einbinden */
 include ('inc/functions.inc');
 include ('inc/licence.key');
 include ('inc/sessions.inc');
 include ('inc/caching.inc');
 include ('inc/config.inc');
 
-/* prüfen ob eine Session für den Benutzer existiert */
+/* prï¿½fen ob eine Session fï¿½r den Benutzer existiert */
 if (!isset ($session_userid) || $session_userid == '')
 {
 	die('Unauthorisiert!');
@@ -30,10 +30,10 @@ function zeigeTeilnahmeArt($node_id, $art)
 	$objResponse = new xajaxResponse();
 	$options = '';
 	$test = "";
-	foreach ( split("\n",$docinfo['Bereiche']) as $Bereich)
+	foreach (  explode("\n",$docinfo['Bereiche']) as $Bereich)
 	{
-		// Nur Optionen anzeigen die für die entsprechende Teilnahmeart verfügbar sind.
-		$option = split(';',$Bereich);
+		// Nur Optionen anzeigen die fï¿½r die entsprechende Teilnahmeart verfï¿½gbar sind.
+		$option =  explode(';',$Bereich);
 		if ( !isset($option[1]) || trim($option[1]) == $art || ($art != 'SC' && $art != 'NSC')) 
 		{
 			$options .= '<option>'.$option[0].'</option>';

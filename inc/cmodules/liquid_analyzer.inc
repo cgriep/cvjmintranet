@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2004 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -31,16 +31,16 @@ if($profile['editor'] != 1) {
 <td align="left"><h2>Log Analysis for <?=date("F Y", mktime(0,0,0,$month,1,$year))?></h2></td>
 <td nowrap="nowrap" align="right">
 <select name="docinput[month]">
-<?
+<?php
 for($i = 1; $i <= 12; $i++) {
-	?><option <? if($i == $month) echo 'selected="selected" '; ?>value="<?=str_pad($i, 2, '0', STR_PAD_LEFT)?>"><?=str_pad($i, 2, '0',STR_PAD_LEFT)?></option><?
+	?><option <?php if($i == $month) echo 'selected="selected" '; ?>value="<?=str_pad($i, 2, '0', STR_PAD_LEFT)?>"><?=str_pad($i, 2, '0',STR_PAD_LEFT)?></option><?php
 	}
 ?>
 </select>
 <select name="docinput[year]">
-<?
+<?php
 for($i = 2002; $i <= date('Y'); $i++) {
-	?><option <? if($i == $year) echo 'selected="selected" '; ?>value="<?=$i?>"><?=$i?></option><?
+	?><option <?php if($i == $year) echo 'selected="selected" '; ?>value="<?=$i?>"><?=$i?></option><?php
 	}
 ?>
 </select>
@@ -49,7 +49,7 @@ for($i = 2002; $i <= date('Y'); $i++) {
 </tr>
 </table>
 </form>
-<?
+<?php
 
 $filename = BASE_PATH.'logs/'.$year.'_'.$month.'.log';
 
@@ -97,7 +97,7 @@ Page Views by Day of the Month
 </td>
 </tr>
 <tr>
-<?
+<?php
 $max_height = 0;
 for($i = 1; $i <= 31; $i++) {
 	$_height = $days[$i] / $pages;
@@ -119,7 +119,7 @@ for($i = 1; $i <= 31; $i++) {
 ?>
 </tr>
 <tr bgcolor="<?=$design['table_row_dark']?>">
-<?
+<?php
 for($i = 1; $i <= 31; $i++) {
 ?>
 <td width="3%" align="center">
@@ -139,7 +139,7 @@ Page Views by Hour of the Day
 </td>
 </tr>
 <tr>
-<?
+<?php
 $max_height = 0;
 for($i = 1; $i <= 23; $i++) {
 	$_height = $hours[$i] / $pages;
@@ -161,7 +161,7 @@ for($i = 0; $i <= 23; $i++) {
 ?>
 </tr>
 <tr bgcolor="<?=$design['table_row_dark']?>">
-<?
+<?php
 for($i = 0; $i <= 23; $i++) {
 ?>
 <td width="4%" align="center">
@@ -182,7 +182,7 @@ for($i = 0; $i <= 23; $i++) {
 Languages
 </td>
 </tr>
-<?
+<?php
 while(list($key, $value) = each($langs)) {
 ?>
 <tr>
@@ -196,7 +196,7 @@ cellpadding="0">
 </table>
 </td>
 </tr>
-<?
+<?php
 	}
 ?>
 </table>
@@ -256,7 +256,7 @@ Average Time to Serve Pages</td>
 </td>
 </tr>
 </table>
-<?
+<?php
 }
 }
 else {

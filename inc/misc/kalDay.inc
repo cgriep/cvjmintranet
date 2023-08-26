@@ -1,7 +1,7 @@
 <table WIDTH="100%" BORDER="0" CELLSPACING="<?echo$cs?>" CELLPADDING="<?echo$cp?>">
 <tr>
 <td CLASS="monthyear" <?if($mtc) {echo ' BGCOLOR="#'.$mtc.'"';}?>>
-<div ALIGN="center"><?
+<div ALIGN="center"><?php
 switch ( date("w",mktime(0,0,0,$Monat,$Tag,$Jahr)) )
 {  case 0: echo "Sonntag"; break;
   case 1: echo "Montag"; break;
@@ -22,7 +22,7 @@ echo " ".$Tag.". $mn";?></div>
   echo ' BGCOLOR="#'.$dtc.'"';
   else
   echo ' BGCOLOR="'.$design["table_header"].'"'; ?>>
-<?
+<?php
 
   // Termine suchen
   $search = "(name='Datum' AND ";
@@ -50,7 +50,7 @@ echo " ".$Tag.". $mn";?></div>
   {
     $fTermine = array();
   }
-  while ( list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value)
   {
     if ( $value["Enddatum"] > mktime(23,59,59,$Monat,$Tag,$Jahr) )
     {
@@ -68,7 +68,7 @@ echo " ".$Tag.". $mn";?></div>
   {
     $fTermine = array();
   }
-  while ( list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value)
   {
     if ( $value["Datum"] < mktime(0,0,0,$Monat,$Tag,$Jahr) )
     {
@@ -86,7 +86,7 @@ echo " ".$Tag.". $mn";?></div>
   {
     $fTermine = array();
   }
-  while (list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value) )
   {
     if (($value['TurnusEnde'] == 0 ||
         $value['TurnusEnde'] >= mktime(0,0,0,$Monat, $Tag,$Jahr)) &&
@@ -185,7 +185,7 @@ echo " ".$Tag.". $mn";?></div>
     echo "<td>";
     reset($Termine);
     $Anz = 0;
-    while ( list($key, $value) = each($Termine) ) {
+    foreach ( $fTermine as $key => $value) {
       if ( ($value['Datum'] >= $zeit && $value['Datum'] < $nextzeit) ||
         ( $value['Datum'] <= $zeit && $value['Enddatum'] >= $zeit )
       ) {
@@ -205,7 +205,7 @@ echo " ".$Tag.". $mn";?></div>
           echo 'bis '.date("d.m.Y H:i",$value["Enddatum"]);
         if ( strtotime("$Jahr-$Monat-$Tag 23:59") < $value["Enddatum"] )
         {
-          echo " (ganztägig!)";
+          echo " (ganztï¿½gig!)";
           $Termine[$key]["Ok"] = true;
         }
         echo '">'.transform($value['title'],'clean')."</a>";

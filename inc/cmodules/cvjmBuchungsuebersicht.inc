@@ -2,17 +2,17 @@
 
 /**
  *
- * Modul Buchungsübersicht
+ * Modul Buchungsï¿½bersicht
 *
 * AWF-Name: cvjmbuchungsuebersicht
 *
 * Parameter:
-* Buchung_Nr - Nummer der anzuzeigenden Buchung; -1 für allgemeine Übersicht
+* Buchung_Nr - Nummer der anzuzeigenden Buchung; -1 fï¿½r allgemeine ï¿½bersicht
 * Tag - erster Tag der Anzeige
 * Tage - Anzahl der anzuzeigenden Tage
 * docinput[Page] - id der Kategorie, die angezeigt werden soll
-* docinput[Alle] - 1 wenn alle Orte (unabhängig von "Anzeigen" angezeigt werden sollen
-* docinput[Art] - Art der Artikel, die ausgewählt werden soll, wenn keine Angabe = Ort
+* docinput[Alle] - 1 wenn alle Orte (unabhï¿½ngig von "Anzeigen" angezeigt werden sollen
+* docinput[Art] - Art der Artikel, die ausgewï¿½hlt werden soll, wenn keine Angabe = Ort
 *
  */
 require_once(INC_PATH.'cvjm/Artikel.class.php');
@@ -37,7 +37,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
 	$query = sql_query("SELECT * FROM " . TABLE_ARTIKEL . " WHERE id=" . $parent);
 	if (!$row = sql_fetch_array($query))
 	{
-	echo "Fehler p=$parent: " . mysql_error();
+	echo "Fehler p=$parent: " . sql_error();
 	}
 	sql_free_result($query);
 	$parentPos = $row["Position"];
@@ -78,7 +78,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
 			$row['tage'][strtotime('+'.$i.'days',$Tag)]['Buchungen'] = array ();
 			$row['tage'][strtotime('+'.$i.'days',$Tag)]['Aktiv'] = array ();
 		}
-		while ($diebuchung = mysql_fetch_array($buchungen))
+		while ($diebuchung = sql_fetch_array($buchungen))
 		{
 			// Sommerzeit!
 			$tag = floor(($diebuchung['Datum'] - $Tag) / 86400);
@@ -181,13 +181,13 @@ if ($profile['editor'] != 1)
 		if (!$query = sql_query('SELECT * FROM ' . TABLE_BUCHUNGEN . ' WHERE Buchung_Nr=' .
 		$_REQUEST['Buchung_Nr']))
 		{
-			echo '<div class="SchwererFehler">Fehler Buchung: ' . mysql_error() . "</div>";
+			echo '<div class="SchwererFehler">Fehler Buchung: ' . sql_error() . "</div>";
 		}
 		$buchung = sql_fetch_array($query);
 		sql_free_result($query);
 
 		TagDefinition($buchung);
-		// vorhandene Buchungen im Bereich löschen
+		// vorhandene Buchungen im Bereich lï¿½schen
 		foreach (explode(",", $docinput["Artikelnummern"]) as $key => $value)
 		{
 			entbucheArtikel($_REQUEST['Buchung_Nr'], $value, $_REQUEST["Tag"] . "-" .
@@ -236,11 +236,11 @@ if ($profile['editor'] != 1)
 									if (!$anzquery = sql_query("SELECT Menge FROM " . TABLE_BUCHUNGSEINTRAEGE .
 									" WHERE F_Artikel_Nr=$oberartikel AND F_Buchung_Nr=" . $buchung["Buchung_Nr"]))
 									{
-										echo mysql_error();
+										echo sql_error();
 									}
 									if (!$anz = sql_fetch_row($anzquery))
 									{
-										echo mysql_error();
+										echo sql_error();
 									}
 									sql_free_result($anzquery);
 									if ($anz[0] != 0)
@@ -282,10 +282,10 @@ if ($profile['editor'] != 1)
 		} // wenn nicht Gesamt
 		$Artikelarten = holeArtikelarten();
 		if (!sql_query('UPDATE ' . TABLE_BUCHUNGEN . " SET Logtext=CONCAT('" . date("d.m.Y H:i") .
-		" " . $Artikelarten[$docinput["Art"]] . " geändert " . get_user_nickname() . "\n',Logtext) " .
+		" " . $Artikelarten[$docinput["Art"]] . " geï¿½ndert " . get_user_nickname() . "\n',Logtext) " .
 		" WHERE Buchung_Nr=" . $_REQUEST["Buchung_Nr"]))
 		{
-		echo mysql_error();
+		echo sql_error();
 		}
 	}
 	require_once(INC_PATH.'Smarty/Smarty.class.php');
@@ -330,7 +330,7 @@ if ($profile['editor'] != 1)
 			if (!$query = sql_query("SELECT * FROM " . TABLE_BUCHUNGEN . " INNER JOIN " . TABLE_ADRESSEN .
 			" ON Adressen_id = F_Adressen_id WHERE Buchung_Nr = " . $_REQUEST["Buchung_Nr"]))
 			{
-				echo mysql_error();
+				echo sql_error();
 			}
 			$buchung = sql_fetch_array($query);
 			sql_free_result($query);
@@ -385,7 +385,7 @@ if ($profile['editor'] != 1)
 		if (!$query = sql_query("SELECT * FROM " . TABLE_ARTIKEL . " WHERE Einruecken=0 AND F_Art_id=" .
 		$docinput["Art"] . " $Alle ORDER BY Position"))
 		{
-			echo "Fehler Kategorie: " . mysql_error();
+			echo "Fehler Kategorie: " . sql_error();
 		}
 		$s = ZeigeBereiche($docinput["Art"], $Buchung->Buchung_Nr);
 		if ($s != "")
@@ -399,7 +399,7 @@ if ($profile['editor'] != 1)
 		$Kategorien = array ();
 		while ($kategorie = sql_fetch_array($query))
 		{
-			// wenn kein Reiter gewählt ist den ersten anzeigen in dem eine Buchung ist
+			// wenn kein Reiter gewï¿½hlt ist den ersten anzeigen in dem eine Buchung ist
 			if (!isset ($docinput["Page"]) && Count($BelegteBereiche) > 0)
 			{
 				if (in_array($kategorie["Bezeichnung"], $BelegteBereiche))

@@ -84,17 +84,16 @@ else
   // Charakterdaten hinzuf&uuml;gen
   // Suchen nach VChar#
   // merge der Daten
-  reset($alledaten);
   global $flavour;
   // Sortieren des Feldes
   $sortarray = array();
-  while ( list($key, $value) = each($alledaten) )
+  foreach ($alledaten as $key => $value) 
   {
     $sortarray[] = $value[$Sort];
   }
   array_multisort($sortarray, SORT_ASC, $alledaten);
   $Summenwert = 0;
-  while ( list($key, $value) = each($alledaten) )
+  foreach ( $alledaten as $key => $value)
   {
     $Feld = strtok($Felder, "|");
     echo '<tr';

@@ -80,10 +80,9 @@ function sortiereDatenNachDatum($daten)
     {
        if ( $art == 0 )
        {
-       		// neue Überschrift - bisherige Daten sortieren
+       		// neue ï¿½berschrift - bisherige Daten sortieren
     		array_multisort($tempdaten, SORT_NUMERIC, $keypositionen);
-			reset($felder);       
-    		foreach($felder as $f => $feld)
+				foreach($felder as $f => $feld)
     		{ 
 				// neue Inhalte in neuer Reihenfolge eintragen 
      			foreach ( $keypositionen as $pos)
@@ -91,7 +90,7 @@ function sortiereDatenNachDatum($daten)
         			$daten[$zeichen.$feld][] = $tdaten[$zeichen.$feld][$pos];
         		}
     		}
-    		// aktuelle Überschrift einfügen
+    		// aktuelle ï¿½berschrift einfï¿½gen
     		foreach($felder as $f => $feld)
     		{ 
 				$daten[$zeichen.$feld][] = $tdaten[$zeichen.$feld][$key];
@@ -101,7 +100,7 @@ function sortiereDatenNachDatum($daten)
        }
        else 
        {
-       		// Daten übertragen
+       		// Daten ï¿½bertragen
        		$tempdaten[] = $daten['SORT'.$zeichen.'DATUM'][$key];       
        		$keypositionen[] = $key;
        }
@@ -117,9 +116,7 @@ function sortiereDatenNachDatum($daten)
 				}
     	}
     }
-    // Sortieren und zurückschreiben
-    reset($felder);
-    reset($tempdaten);
+    // Sortieren und zurÃ¼ckschreiben
     foreach ( $arten as $k => $art )
     {
        
@@ -128,7 +125,6 @@ function sortiereDatenNachDatum($daten)
       foreach ($tempdaten[$art] as $key => $value )
       {
         $pos = next($keypositionen[$art]);
-        reset($felder);
         foreach ($felder as $f => $feld )
         {
           $daten[$zeichen.$feld][$pos] = $value[$zeichen.$feld];
@@ -149,7 +145,7 @@ function Kuechenzettel($Buchung_Nr, $daten)
       'Position FROM '.TABLE_BUCHUNGSEINTRAEGE.' INNER JOIN '.
       TABLE_ARTIKEL.' ON id=F_Artikel_Nr WHERE F_Art_id='.CVJMART_VERPFLEGUNG.
         " AND F_Buchung_Nr=$Buchung_Nr AND NOT Unberechnet ORDER BY Datum";
-  if ( ! $Eintraege = sql_query($sql) ) echo "Fehler $sql: ".mysql_error();
+  if ( ! $Eintraege = sql_query($sql) ) echo "Fehler $sql: ".sql_error();
   $Artikel = array();
   $Essen = array();
   $Buchung = array();
@@ -168,12 +164,11 @@ function Kuechenzettel($Buchung_Nr, $daten)
       $daten['SPEISERAUM'] = getOrtsname($daten['F_SPEISERAUM_ID'],0);
       // Sortieren nach Position
       array_multisort($ArtikelPos, SORT_ASC, SORT_NUMERIC, $Artikel, $ArtikelNr);
-      while ( list($key, $value) = each($Artikel) )
+      foreach($Artikel as $key => $value) 
       {
         $daten['ESSEN'][0][$Nr] = $value;
         $attribute['ESSEN'][0][$Nr] = 'b';
         $x = 1;
-        reset($Essen);
         foreach ( $Essen as $datum => $menge )
         {
           $daten['ESSEN'][$x][0] = date('d.m.',$datum);
@@ -195,11 +190,11 @@ function Kuechenzettel($Buchung_Nr, $daten)
 function InstitutionErsetzen($daten)
 {
   global $Anredearten;
-  // Institution überprüfen falls Buchung!
+  // Institution ï¿½berprï¿½fen falls Buchung!
   if ( isset($daten['F_INSTITUTION']) && is_numeric($daten['F_INSTITUTION']) &&
        $daten['F_INSTITUTION']> 0 )
   {
-    // statt Kundendaten die Daten der Institution übernehmen
+    // statt Kundendaten die Daten der Institution ï¿½bernehmen
     $query = sql_query('SELECT * FROM '.TABLE_ADRESSEN.' WHERE Adressen_id='.$daten['F_INSTITUTION']);
     if ( $adresse = sql_fetch_array($query) )
     {
@@ -257,7 +252,7 @@ function InstitutionErsetzen($daten)
 
 function fuelleSchlafplaetze($daten = array() )
 {
-  // Berechnet die vorhandenen Schlafmöglichkeiten
+  // Berechnet die vorhandenen Schlafmï¿½glichkeiten
   // muss nach DatenZusammenfassen aufgerufen werden
   global $Artikelarten;
   global $attribute;
@@ -329,7 +324,7 @@ function fuelleSchlafplaetze($daten = array() )
             $attribute['VBEZEICHNUNG'][] = $attribute['ZBEZEICHNUNG'][$key];
           else
             $attribute['VBEZEICHNUNG'][] = '';          
-          // Position dieses Schlüssels merken
+          // Position dieses Schlï¿½ssels merken
           $merkartikel[$bereichid] = Count($daten['VARTIKELNR'])-1;
           //echo $bereichname.'//'.$merkartikel[$bereichid];
         }
@@ -385,7 +380,7 @@ function fuelleSchlafplaetze($daten = array() )
           $attribute['VBEZEICHNUNG'][] = $attribute['ZBEZEICHNUNG'][$key];
         else
           $attribute['VBEZEICHNUNG'][] = '';
-        // Sonderbehandlung Orte: Aufführung bei Unterbringung
+        // Sonderbehandlung Orte: Auffï¿½hrung bei Unterbringung
         if ( $daten['ZART'][$key] == $Artikelarten[CVJMART_ORT] )
         {
           $daten['UNTERBRINGUNGANZAHL'][$artikelnr] = 1;
@@ -461,7 +456,6 @@ function fuelleProgramme($daten = array() )
     }
   }
   array_multisort($programm1, SORT_NUMERIC, $programm2);
-  reset($programm1);
   foreach ( $programm1 as $key => $value )
   {
     $daten['PROGRAMMDATUM'][] = date('d.m.Y',$value);
@@ -486,7 +480,7 @@ function berechneGesamtsumme($daten = array() )
   {
     //if ( is_numeric($daten['ZGESAMT'][$key]) )
     {
-      // Preis rückgängig machen
+      // Preis rï¿½ckgï¿½ngig machen
       $daten['GESAMTPREIS'] = AddPreis($daten['GESAMTPREIS'],$daten['ZGESAMT'][$key],false);
       $daten['GESAMTMWST'] = AddPreis($daten['GESAMTMWST'],$daten['ZMWSTSUMME'][$key],false);
       if ( ! isset($werte[$daten['ZMWST'][$key]]) )
@@ -557,13 +551,13 @@ function fuelleDaten($sql, $daten = array() )
   $daten['GESAMTMWST'] = 0;
   $daten['GESAMTRABATT'] = 0;
   if ( ! $query = sql_query($sql) )
-    die('Fehler ('.$sql.'): '.mysql_error());
+    die('Fehler ('.$sql.'): '.sql_error());
   // mehr als ein Datensatz - in Felder!
-  while ( $ds = mysql_fetch_array($query) )
+  while ( $ds = sql_fetch_array($query) )
   {
     foreach ( $ds as $key => $value )
     {
-      // besondere Felder füllen
+      // besondere Felder fï¿½llen
       if ( ! is_numeric($key) )
       switch ( $key )
       {        
@@ -678,7 +672,7 @@ function fuelleDaten($sql, $daten = array() )
               $daten['DOKUMENTNR'] = 'V-'.$ds['Rechnung_id'];
               break;
             case 3:
-              $daten['BELEGART'] = 'Reservierungsbestätigung';
+              $daten['BELEGART'] = 'Reservierungsbestï¿½tigung';
               $daten['DOKUMENTNR'] = 'B-'.$ds['Rechnung_id'];
               break;
             default:
@@ -809,7 +803,7 @@ function fuelleDaten($sql, $daten = array() )
       } // switch
       $daten['DATUMAKTUELL'] = date('d.m.Y');
     } // foreach
-    // Privat-Daten übernehmen (falls noch eine Institution kommt)
+    // Privat-Daten ï¿½bernehmen (falls noch eine Institution kommt)
     if ( isset($daten['NAME']) )
     {
       $daten['P_ZUSATZ'] = $daten['ZUSATZ'];
@@ -908,7 +902,7 @@ function DatenZusammenfassen($daten)
       }
       $ndatum = mktime(0,0,0,$ndatum[1],$ndatum[0],$ndatum[2]);
       // Bei Orten: Erlaube das Zusammenfassen bei unterschiedlichen Mengen
-      // damit '0' für die Übernachtungszählung berücksichtigt wird
+      // damit '0' fï¿½r die ï¿½bernachtungszï¿½hlung berï¿½cksichtigt wird
       if ( $LetzterArtikel == $daten['BEZEICHNUNG'][$key] &&
            strtotime('-1 day',$ndatum) == $datum &&
            ($LetzteMenge == $daten['MENGE'][$key] || $LetzteMenge == 0 ) &&
@@ -930,7 +924,7 @@ function DatenZusammenfassen($daten)
       {
         if ( $VonDatum != 0 )
         {
-          // Veränderung - bisherigen Stand abspeichern
+          // Verï¿½nderung - bisherigen Stand abspeichern
           if ( $VonDatum != $BisDatum )
           {
             $d1 = explode('.',$VonDatum);
@@ -950,7 +944,7 @@ function DatenZusammenfassen($daten)
             $einzelmenge = number_format($Menge/$LetzteMenge,0);
           else
             $einzelmenge = 0;
-          // Prüfen: Bei Essen und Unterbringung Einheit ändern:
+          // Prï¿½fen: Bei Essen und Unterbringung Einheit ï¿½ndern:
           // Anzahl/Tag*'Personen'
           if ( ($LetzteArt == $Artikelarten[CVJMART_VERPFLEGUNG] ||
                $LetzteArt == $Artikelarten[CVJMART_PAUSCHALEKOPF] ||
@@ -1028,7 +1022,7 @@ function DatenZusammenfassen($daten)
         // Neuer Anfang
         if ( $LetzteArt != $daten['ART'][$key])
         {
-          // Art-Überschrift
+          // Art-ï¿½berschrift
           $LetzteArt = $daten['ART'][$key];
           $daten['SORTZDATUM'][] = 0;
           $daten['ZDATUM'][] = '';
@@ -1045,7 +1039,7 @@ function DatenZusammenfassen($daten)
           $daten['ZDAUER'][] = '';
           $daten['ZBEZEICHNUNG'][] = $LetzteArt;
           $daten['ZARTIKELNR'][] = '';
-          // Überschriften sollen fett gedruckt werden
+          // ï¿½berschriften sollen fett gedruckt werden
           $attribute['ZBEZEICHNUNG'][] = 'b';
         }
         $Startdatumzahl = $daten['SORTDATUM'][$key];
@@ -1065,7 +1059,7 @@ function DatenZusammenfassen($daten)
       }
     } // foreach
     reset($daten['DATUM']);
-    // Änderungen des letzten Eintrages abspeichern
+    // ï¿½nderungen des letzten Eintrages abspeichern
     if ( $VonDatum != $BisDatum )
     {
       $d1 = explode('.',$VonDatum);
@@ -1086,7 +1080,7 @@ function DatenZusammenfassen($daten)
             $einzelmenge = number_format($Menge/$LetzteMenge,0);
     else
             $einzelMenge = 0;
-    // Prüfen: Bei Essen und Unterbringung Einheit ändern:
+    // Prï¿½fen: Bei Essen und Unterbringung Einheit ï¿½ndern:
     // Anzahl/Tag*'Personen'
     if ( ($LetzteArt == $Artikelarten[CVJMART_VERPFLEGUNG] ||
                $LetzteArt == $Artikelarten[CVJMART_PAUSCHALEKOPF] ||
@@ -1241,7 +1235,7 @@ switch ($Datenbank )
     $sql = 'SELECT * FROM '.TABLE_BUCHUNGEN.' WHERE Buchung_Nr='.$daten['F_BUCHUNG_NR'];
     $daten = fuelleDaten($sql, $daten);
     $sql = 'SELECT Adressen_id FROM '.TABLE_ADRESSEN.' WHERE Adressen_id='.$daten['F_ADRESSEN_ID'];
-    if (! $query = sql_query($sql)) die( mysql_error());
+    if (! $query = sql_query($sql)) die( sql_error());
     if ( $adresse = sql_fetch_row($query) )
     {
       $Adressenid = $adresse[0];
@@ -1300,7 +1294,7 @@ switch ($Datenbank )
     $Adressenid = $daten['F_ADRESSEN_ID'];
     $daten['ADRESSEN_ID'] = $Adressenid;
     sql_query('UPDATE '.TABLE_BUCHUNGEN.' SET Logtext=CONCAT("'.date('d.m.Y H:i').
-      ' Küchenzettel erzeugt '.$username.'\n",Logtext) WHERE Buchung_Nr = '.$id);
+      ' Kï¿½chenzettel erzeugt '.$username.'\n",Logtext) WHERE Buchung_Nr = '.$id);
   break;
   case 'Seminar':
       // Seminardaten des Seminars mit gegebener id

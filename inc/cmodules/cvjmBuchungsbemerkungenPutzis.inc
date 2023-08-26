@@ -5,7 +5,7 @@
   Bemerkungen zu einer Buchung
   z.B. Zerbruch, Ausleihen etc.
 
-  Parameter: docinput[Buchung_Nr] mit der Buchungsnummer für die eingegeben werden soll
+  Parameter: docinput[Buchung_Nr] mit der Buchungsnummer fï¿½r die eingegeben werden soll
 */
 
 
@@ -25,7 +25,7 @@ if ( $profile["editor"] != 1 )
         {
           if ( $docinput["Nr"][$key] != -1 && is_numeric($docinput["Nr"][$key]) )
           {
-            // Prüfen ob geändert
+            // Prï¿½fen ob geï¿½ndert
             $sql = "SELECT Hinweis FROM ".TABLE_BUCHUNGSBEMERKUNGEN." WHERE Bemerkung_id=".
               $docinput["Nr"][$key];
             $query = sql_query($sql);
@@ -34,15 +34,15 @@ if ( $profile["editor"] != 1 )
             if ( $row[0] != trim(addslashes($value)) )
             {
               $sql = "UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis='".trim(addslashes($value)).
-                "', Logtext=CONCAT('".date("d.m.Y H:i")." geändert ".
+                "', Logtext=CONCAT('".date("d.m.Y H:i")." geï¿½ndert ".
                 get_user_nickname()."\n',Logtext) WHERE Bemerkung_id = ".$docinput["Nr"][$key];
-              if ( ! sql_query($sql) ) echo mysql_error();
+              if ( ! sql_query($sql) ) echo sql_error();
               $erzeugt = true;
             }
           }
           else
           {
-            // Neue Bemerkung anfügen
+            // Neue Bemerkung anfï¿½gen
             if ( !sql_query("INSERT INTO ".TABLE_BUCHUNGSBEMERKUNGEN." (F_Buchung_Nr,Bemerkung,Hinweis,Logtext) VALUES (".
               $key.",'".CVJMPUTZMITTEILUNG."','".
                 addslashes($value)."','".date("d.m.Y H:i")." erstellt ".get_user_nickname()."')"))
@@ -53,11 +53,11 @@ if ( $profile["editor"] != 1 )
         }
         else if ( $docinput["Nr"][$key] != -1 )
         {
-          // vorhandene Bemerkung löschen
-          $sql = "UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis=CONCAT(Hinweis,'\n-Eintrag gelöscht-')".
-              ", Logtext=CONCAT('".date("d.m.Y H:i")." gelöscht ".
+          // vorhandene Bemerkung lï¿½schen
+          $sql = "UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis=CONCAT(Hinweis,'\n-Eintrag gelï¿½scht-')".
+              ", Logtext=CONCAT('".date("d.m.Y H:i")." gelï¿½scht ".
               get_user_nickname()."\n',Logtext) WHERE Bemerkung_id = ".$docinput["Nr"][$key];
-          if ( ! sql_query($sql) ) echo mysql_error();
+          if ( ! sql_query($sql) ) echo sql_error();
         }
         if ( $erzeugt )
         {
@@ -78,7 +78,7 @@ if ( $profile["editor"] != 1 )
   }
   if ( $document['title'] != '') echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
   {
-    // Übersicht über die aktuellen Belegungen
+    // ï¿½bersicht ï¿½ber die aktuellen Belegungen
     echo '<form action="'.get_url($id).'" method="post">';
     echo $design["table_begin"];
     echo '<tr class="ueberschrift"><th>Ankunft</th>'.
@@ -104,8 +104,8 @@ if ( $profile["editor"] != 1 )
       echo "<br />\n";
       switch ( $buchung["BStatus"] )
       {
-        case BUCHUNG_GELOESCHT: // gelöscht
-          echo '<img src="img/CVJM/geloescht.gif" border="0" title="Vorreservierung gelöscht">';
+        case BUCHUNG_GELOESCHT: // gelï¿½scht
+          echo '<img src="img/CVJM/geloescht.gif" border="0" title="Vorreservierung gelï¿½scht">';
           break;
         case 0:
           echo '<img src="img/CVJM/vorres.gif" border="0" title="Vorreservierung">';

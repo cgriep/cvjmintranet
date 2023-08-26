@@ -6,7 +6,7 @@
 *  z.B. Zerbruch, Ausleihen etc.
 *
 *  AWF-Name: cvjmbuchungsbemerkungen
-*  Parameter: docinput[Buchung_Nr] mit der Buchungsnummer für die eingegeben werden soll
+*  Parameter: docinput[Buchung_Nr] mit der Buchungsnummer fï¿½r die eingegeben werden soll
 */
 function VerantwortlicheAnzeigen($buchung, $Name)
 {
@@ -50,11 +50,11 @@ if ( $profile['editor'] != 1 )
   {
     if ( trim($docinput['NewBem']) != '' )
     {
-      // Neue Bemerkung anfügen
+      // Neue Bemerkung anfï¿½gen
       if ( sql_query('INSERT INTO '.TABLE_BUCHUNGSBEMERKUNGEN.
         ' (F_Buchung_Nr,Bemerkung, Logtext) VALUES ('.
         $docinput['Buchung_Nr'].",'".
-        trim(mysql_real_escape_string($docinput["NewBem"]))."','".date("d.m.Y H:i").
+        trim(sql_real_escape_string($docinput["NewBem"]))."','".date("d.m.Y H:i").
         " erstellt ".get_user_nickname()."')"))
         echo '<strong>&gt;&gt;&gt; Bemerkung erzeugt.</strong><br />';
       else
@@ -106,9 +106,9 @@ if ( $profile['editor'] != 1 )
       {
         if ( stripslashes($buchung["Hinweis"]) != $docinput["H".$buchung["Bemerkung_id"]] )
         {
-          // Text wurde verändert
+          // Text wurde verï¿½ndert
           sql_query("UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis = '".trim(addslashes(
-            $docinput["H".$buchung["Bemerkung_id"]]))."', Logtext=CONCAT('".date("d.m.Y H:i")." geändert ".
+            $docinput["H".$buchung["Bemerkung_id"]]))."', Logtext=CONCAT('".date("d.m.Y H:i")." geï¿½ndert ".
             get_user_nickname()."\n',Logtext) WHERE Bemerkung_id = ".$buchung["Bemerkung_id"]);
         }
       }
@@ -122,7 +122,7 @@ if ( $profile['editor'] != 1 )
     include(INC_PATH."misc/cvjmPersonalplanungtools.inc");
     $Arten = array("Anreisename", "Abreisename", "Rechnungname", "Abnahmename" );
     $Was = "";
-    while ( list($key, $value) = each($Arten) )
+    foreach ( $Arten as $key => $value) 
         if ( is_numeric($docinput["Erledigt"][$value]) )
           $Was = $value;
     if ( isset($docinput["Buchung_Nr"]) && is_numeric($docinput["Buchung_Nr"]))
@@ -142,7 +142,7 @@ if ( $profile['editor'] != 1 )
     }
     elseif ( $Was != "" )
     {
-      // Schlüsselliste / Personalplanung zeigen
+      // Schlï¿½sselliste / Personalplanung zeigen
       $query = sql_query("SELECT * FROM ".TABLE_BUCHUNGEN." INNER JOIN ".TABLE_ADRESSEN.
       " ON Adressen_id = F_Adressen_id WHERE Buchung_Nr = ".$docinput["Erledigt"][$Was]);
       $Buchung = sql_fetch_array($query);
@@ -153,12 +153,12 @@ if ( $profile['editor'] != 1 )
       echo '<form action="'.get_url($id).'" method="post">';
       echo '<input type="hidden" name="docinput[Erledigt]['.$Was;
       echo ']" value="'.$docinput[Erledigt][$Was].'" />';
-      // Schlüsselliste
+      // Schlï¿½sselliste
       ZeigeSchluesselliste($Buchung);
       // Personalplanung
       ZeigePersonalplanung($Buchung);
       echo '<tr><td colspan="2" class="zentriert">';
-      echo '<input type="Submit" value="Erledigt, Schlüsselliste und Abnahmedaten speichern" /></td></tr>';
+      echo '<input type="Submit" value="Erledigt, Schlï¿½sselliste und Abnahmedaten speichern" /></td></tr>';
       echo '</form>';
       echo $design["table_end"];
     }
@@ -170,11 +170,11 @@ if ( $profile['editor'] != 1 )
      " WHERE F_Buchung_Nr = ".$docinput['Buchung_Nr']." ORDER BY Bemerkung_id DESC";
     $query = sql_query($sql);
     $Bemerkungen = array();
-    while ($bemerkung = mysql_fetch_array($query))
+    while ($bemerkung = sql_fetch_array($query))
     {
     	$Bemerkungen[] = $bemerkung;
     }
-    mysql_free_result($query);
+    sql_free_result($query);
     
     require_once(INC_PATH.'Smarty/Smarty.class.php');
 	$Smarty = new Smarty;
@@ -192,9 +192,9 @@ if ( $profile['editor'] != 1 )
   }
   elseif ( ! isset($docinput["Erledigt"]) )
   {
-    // Übersicht über die aktuellen Belegungen
+    // ï¿½bersicht ï¿½ber die aktuellen Belegungen
     echo $design["table_begin"];
-    echo '<tr class="ueberschrift"><th></th><th>Ankunft</th><th>Häuser-<br />abnahme<br />Abfahrt</th><th>Abrechnung</th>'.
+    echo '<tr class="ueberschrift"><th></th><th>Ankunft</th><th>Hï¿½user-<br />abnahme<br />Abfahrt</th><th>Abrechnung</th>'.
       '<th>Smileycard</th><th>Name</th><th>Belegung/<br />Personen</th></tr>';
       /* Alt:
     $query = sql_query("SELECT * FROM ".TABLE_BUCHUNGEN." INNER JOIN ".TABLE_ADRESSEN.
@@ -224,7 +224,7 @@ if ( $profile['editor'] != 1 )
       ' INNER JOIN '.TABLE_ADRESSEN.' ON F_Adressen_id = Adressen_id '.
       ' LEFT JOIN '.TABLE_SCHLUESSEL.' ON F_Buchung_Nr=Buchung_Nr WHERE '. 
 //Bis >= '.strtotime('-'.$document['TageLZ'].' day').' AND BStatus < '.BUCHUNG_FERTIG.
-        // solange Schlüssel vorhanden oder eine der Abnahmen nicht da
+        // solange Schlï¿½ssel vorhanden oder eine der Abnahmen nicht da
 		'(SUBSTRING(Anreisename,1,2) <> "OK" OR '.
 		'(SUBSTRING(Abreisename,1,2) <> "OK" OR '.
 		'(SUBSTRING(Rechnungname,1,2) <> "OK" OR '.
@@ -243,7 +243,7 @@ if ( $profile['editor'] != 1 )
       echo '<a href="'.get_url($id,"docinput[Buchung_Nr]=".$buchung["Buchung_Nr"]).
         '"><img src="img/small_edit/edit_small.gif" title="Bemerkung eingeben" />';
       echo "<br />\n";
-      // Farbige Markierung von Schlüssel ausgegeben sind
+      // Farbige Markierung von Schlï¿½ssel ausgegeben sind
       echo '<a href="'.get_url(get_cmodule_id("cvjmpersonalplanung"),
         "docinput[Buchung_Nr]=".$buchung["Buchung_Nr"]).
         '"';
@@ -255,12 +255,12 @@ if ( $profile['editor'] != 1 )
       {
       	echo ' style="background-color: #FF8080;"';
       }
-      echo '><img src="img/icon_key.png" title="Schlüsselliste ansehen" />';
+      echo '><img src="img/icon_key.png" title="Schlï¿½sselliste ansehen" />';
       echo '<br />';
       switch ( $buchung["BStatus"] )
       {
-        case BUCHUNG_GELOESCHT: // gelöscht
-          echo '<img src="img/CVJM/geloescht.gif" title="Vorreservierung gelöscht">';
+        case BUCHUNG_GELOESCHT: // gelï¿½scht
+          echo '<img src="img/CVJM/geloescht.gif" title="Vorreservierung gelï¿½scht">';
           break;
         case 0:
           echo '<img src="img/CVJM/vorres.gif" title="Vorreservierung">';
@@ -351,7 +351,7 @@ if ( $profile['editor'] != 1 )
       echo "<br />".Personenanzahl($buchung)." Personen (".$Altersgruppen[$buchung["Altersgruppe"]].")";
       if ( $buchung["BetreuerW"]+$buchung["BetreuerM"] > 0 )
         echo " davon ".($buchung["BetreuerW"]+$buchung["BetreuerM"])." Betreuer";      
-      if ( $schluessel > 0 ) echo '<span style="background-color:#FF8080"> ('.$schluessel.' Schlüssel)</span>';
+      if ( $schluessel > 0 ) echo '<span style="background-color:#FF8080"> ('.$schluessel.' Schlï¿½ssel)</span>';
       echo '</td>';
       echo "</tr>\n";
       if ( $Color == "helleZeile" )

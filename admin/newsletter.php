@@ -29,7 +29,7 @@
 ?>
 
 <table border="0" width="100%">
-<form action="<? $_SERVER["PHP_SELF"];?>" methode="post">
+<form action="<?php $_SERVER["PHP_SELF"];?>" methode="post">
 <tr><td>Absender</td><td><input type="Text" name="Absender" value="<?=WEBMASTER_MAIL?>" size="40"></td></tr>
 <tr><td>Betreff</td><td><input type="Text" name="Betreff" value="[Newsletter] <?=SITE_TITLE?>" size="60" maxlength=""></td></tr>
 <tr><td>Text</td><td><textarea name="Inhalt" cols="75" rows="10"></textarea></td></tr>

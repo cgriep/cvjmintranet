@@ -77,7 +77,7 @@ function aendereRechnungsMenge($rechnung_id, $artikel_nr, $Datum, $Richtung='+')
 		$sql .= ' BETWEEN '.$anf.' AND '.$end;
 	}
 	if (!sql_query($sql1.$sql))
-	$ergebnis = 'Fehler: ' . $sql1.$sql . ': ' . mysql_error();
+	$ergebnis = 'Fehler: ' . $sql1.$sql . ': ' . sql_error();
 	else
 	{
 		$query = sql_query('SELECT Menge FROM '.TABLE_RECHNUNGSEINTRAEGE.
@@ -272,8 +272,8 @@ function aktualisiereKorrespondenzListe($id, $Adressen_id, $id_nr)
 		$Rechnung_Nr = substr($id_nr, 1);
 		// Rechnung holen
 		$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_Nr = ' . $Rechnung_Nr);
-		$rechnung = mysql_fetch_array($query);
-		mysql_free_result($query);
+		$rechnung = sql_fetch_array($query);
+		sql_free_result($query);
 		$Buchungsvorlagen = holeVorlagen('Fakturierung/' .$DokArten[$rechnung['Rechnung']], 'Rechnung');
 		$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 		$korrespondenz['Buchung_Nr'] = $Buchung_Nr;
@@ -305,8 +305,8 @@ function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 			$Rechnung_Nr = substr($id_nr, 1);
 			// Rechnung holen
 			$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_id = ' . $Rechnung_Nr);
-			$rechnung = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$rechnung = sql_fetch_array($query);
+			sql_free_result($query);
 			$Buchungsvorlagen = holeVorlagen('Fakturierung/' .$DokArten[$rechnung['Rechnung']], 'Rechnung');
 			$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 			$korrespondenz['Buchung_Nr'] = $Buchung_Nr;
@@ -333,23 +333,23 @@ function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 		if ( $Buchung_Nr > 0 )
 		{
 			global $session_userid;
-			$qresult = sql_query("SELECT id FROM ".TABLE_USERS." WHERE email='".mysql_real_escape_string($session_userid)."'");
-			$idresult = mysql_fetch_row($qresult);
+			$qresult = sql_query("SELECT id FROM ".TABLE_USERS." WHERE email='".sql_real_escape_string($session_userid)."'");
+			$idresult = sql_fetch_row($qresult);
 			$idresult = $idresult[0];
-			mysql_free_result($qresult);
-			$query = mysql_query('SELECT value FROM '.TABLE_USERDATA.' WHERE name="nickname" AND user_id='.$idresult);
-			$user = mysql_fetch_array($query);
-			mysql_free_result($query);
+			sql_free_result($qresult);
+			$query = sql_query('SELECT value FROM '.TABLE_USERDATA.' WHERE name="nickname" AND user_id='.$idresult);
+			$user = sql_fetch_array($query);
+			sql_free_result($query);
 			$nickname = $user['value'];
 			// Profil laden wegen Nickname
 			if ( ! sql_query('UPDATE '.TABLE_BUCHUNGEN." SET Logtext=CONCAT('".date('d.m.Y H:i').
-			' Korrespondenz '.mysql_real_escape_string(utf8_decode($dokument)).' gelöscht '.
+			' Korrespondenz '.sql_real_escape_string(utf8_decode($dokument)).' gelöscht '.
 			$nickname."\n',Logtext) ".
 			' WHERE Buchung_Nr='.$Buchung_Nr))
-			$objResponse->addAlert(utf8_encode('Datenbankfehler beim Löschen: '.mysql_error()));
-			$query = mysql_query('SELECT Logtext FROM '.TABLE_BUCHUNGEN.' WHERE Buchung_Nr='.$Buchung_Nr);
-			$buchung = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$objResponse->addAlert(utf8_encode('Datenbankfehler beim Löschen: '.sql_error()));
+			$query = sql_query('SELECT Logtext FROM '.TABLE_BUCHUNGEN.' WHERE Buchung_Nr='.$Buchung_Nr);
+			$buchung = sql_fetch_array($query);
+			sql_free_result($query);
 			$objResponse->addAssign('Historie', 'innerHTML', utf8_encode(nl2br($buchung['Logtext'])));
 		}
 	}
@@ -383,8 +383,8 @@ function aktualisiereKorrespondenz($id, $Adressen_id, $id_nr = -1)
 			$Rechnung_Nr = substr($id_nr, 1);
 			// Rechnung holen
 			$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_id = ' . $Rechnung_Nr);
-			$rechnung = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$rechnung = sql_fetch_array($query);
+			sql_free_result($query);
 			$Buchungsvorlagen = holeVorlagen('Fakturierung/' .$DokArten[$rechnung['Rechnung']], 'Rechnung');
 			$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 			$korrespondenz['Buchung_Nr'] = $Buchung_Nr;
@@ -423,10 +423,10 @@ function setzeAdressKategorie($Adressen_id, $Kategorie_id, $set = true)
 			sql_query('DELETE FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Adressen_id='.$Adressen_id.' AND F_Kategorie_id='.$Kategorie_id);
 		}
 		// Anzahlen korrigieren
-		$query = mysql_query('SELECT Count(*) FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Kategorie_id='.$Kategorie_id);
-		$anzahl = mysql_fetch_row($query);
+		$query = sql_query('SELECT Count(*) FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Kategorie_id='.$Kategorie_id);
+		$anzahl = sql_fetch_row($query);
 		$anzahl = $anzahl[0];
-		mysql_free_result($query);
+		sql_free_result($query);
 		$objResponse->addAssign('K'.$Kategorie_id, 'innerHTML', $anzahl);
 	}
 	return $objResponse;
@@ -514,8 +514,8 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 			$Rechnung_Nr = substr($id_nr, 1);
 			// Rechnung holen
 			$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_Nr = ' . $Rechnung_Nr);
-			$rechnung = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$rechnung = sql_fetch_array($query);
+			sql_free_result($query);
 			$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 				
 		}
@@ -590,9 +590,9 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 					' wurde per Mail an '.$mailadresse.' versendet.');
 					if ( isset($Buchung))
 					{
-						$Buchung->logAction('Korrespondenz '.mysql_real_escape_string(utf8_decode(implode(',',$dateien))).
+						$Buchung->logAction('Korrespondenz '.sql_real_escape_string(utf8_decode(implode(',',$dateien))).
 							' per Mail mit Betreff '.utf8_decode($Betreff).' an '.
-							mysql_real_escape_string($mailadresse).' gesendet');
+							sql_real_escape_string($mailadresse).' gesendet');
 							// TODO Korrektur URL für Verlinkung übergeben
 						$objResponse->addAssign('Historie', 'innerHTML', utf8_encode(nl2br($Buchung->holeHistory(''))));
 						// Speichern der Mail-Datei bei der Buchung
@@ -933,19 +933,19 @@ function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 		/*
 		foreach ( $Daten as $Datum )
 		{
-			if ( !mysql_query('INSERT INTO '.TABLE_BUCHUNGPERSONEN.' (F_Buchung_Nr,PersonenArt,F_Artikel_Nr,Datum,Status,Person) '.
-			'VALUES ('.$Buchung_Nr.',"Person",'.$Artikel_Nr.','.$Datum.',"","'.mysql_real_escape_string($Person).
-			'") ON DUPLICATE KEY UPDATE Person="'.mysql_real_escape_string(trim($Person)).'"'))
+			if ( !sql_query('INSERT INTO '.TABLE_BUCHUNGPERSONEN.' (F_Buchung_Nr,PersonenArt,F_Artikel_Nr,Datum,Status,Person) '.
+			'VALUES ('.$Buchung_Nr.',"Person",'.$Artikel_Nr.','.$Datum.',"","'.sql_real_escape_string($Person).
+			'") ON DUPLICATE KEY UPDATE Person="'.sql_real_escape_string(trim($Person)).'"'))
 			{
 				$Fehler = true;
 			}
 			// Leere Personen entfernen
-			mysql_query('DELETE FROM '.TABLE_BUCHUNGPERSONEN.' WHERE Person=""');
+			sql_query('DELETE FROM '.TABLE_BUCHUNGPERSONEN.' WHERE Person=""');
 		}
 		*/
 		if ( $Fehler )
 		{
-			$objResponse->addAlert('Fehler - Konnte Ereignis nicht eintragen.'.mysql_error());
+			$objResponse->addAlert('Fehler - Konnte Ereignis nicht eintragen.'.sql_error());
 		}
 		else
 		{
@@ -991,14 +991,14 @@ function sucheKunden($Name)
 {
 	$objResponse = new xajaxResponse();
 	$Kunden = array();
-	$Name = trim(mysql_real_escape_string(utf8_decode($Name)));
-	$query = mysql_query('SELECT Adressen_id FROM '.TABLE_ADRESSEN.' WHERE Kunden_Nr>0 AND (Name LIKE "%'.
+	$Name = trim(sql_real_escape_string(utf8_decode($Name)));
+	$query = sql_query('SELECT Adressen_id FROM '.TABLE_ADRESSEN.' WHERE Kunden_Nr>0 AND (Name LIKE "%'.
 	$Name.'" OR Vorname LIKE "%'.$Name.'%" OR Kunden_Nr="'.$Name.'") LIMIT 20');
-	while ( $k = mysql_fetch_row($query))
+	while ( $k = sql_fetch_row($query))
 	{
 		$Kunden[] = new Adresse($k[0]);
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	$Smarty = new Smarty;
 	$Smarty->template_dir = TEMPLATEPATH;
 	$Smarty->assign('Kunden', $Kunden);

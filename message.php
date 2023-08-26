@@ -42,7 +42,7 @@
 <body bgcolor="#ffffff" marginheight="0" marginwidth="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" link="#0000ff" vlink="#0000ff" text="#000000">
 <table width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="#ffffff"><tr>
 <td align="left" bgcolor="#dedede" valign="top" class="text">
-<?
+<?php
 
 if(isset($send_message) && !isset($type)) {
 	$_profile = get_profile($send_message);
@@ -68,7 +68,7 @@ if(SESSION_STATUS != 'ok' && !isset($send_message)) { ?>
 <p><b>Bye!</b></p>
 </td></tr></table>
 
-<? } elseif(SESSION_STATUS != 'ok' && isset($send_message) && !isset($body)) { ?>
+<?php } elseif(SESSION_STATUS != 'ok' && isset($send_message) && !isset($body)) { ?>
 <b><?=printf(LANG_SEND_MESSAGE,LANG_ANONYMOUS_MESSAGE)?></b><br />
 <span style="font-size:10px"><?=LANG_TO?> <?=get_user_nickname($send_message)?></span>
 </td>
@@ -86,7 +86,7 @@ if(SESSION_STATUS != 'ok' && !isset($send_message)) { ?>
 </td></tr></table>
 </p>
 
-<? } elseif(SESSION_STATUS != 'ok' && isset($send_message) && isset($body)) {
+<?php } elseif(SESSION_STATUS != 'ok' && isset($send_message) && isset($body)) {
 send_message ($send_message, $body, -1, 'Anonymous User', '['.SITE_TITLE.'] Anonymous Message', $type);
 ?>
 <b><?=printf(LANG_SENT_MESSAGE, LANG_ANONYMOUS_MESSAGE)?></b><br />
@@ -111,29 +111,29 @@ send_message ($send_message, $body, -1, 'Anonymous User', '['.SITE_TITLE.'] Anon
 </table>
 </p>
 
-<? } elseif(!isset($send_message)) { ?>
+<?php } elseif(!isset($send_message)) { ?>
 
 <b><?=$type_long?></b><br />
 <?php $message = get_message($message_id, true); 
 if($message['user_id'] != SESSION_DBID) exit(); ?>
 <span style="font-size:10px"><?=LANG_SENT_BY?> 
-<? if(isset($message['sender_id']) && $message['sender_id'] > 0) { ?>
+<?php if(isset($message['sender_id']) && $message['sender_id'] > 0) { ?>
 <a href="<?=$_SERVER['PHP_SELF']?>?message_id=<?=$message['message_id']?>&send_message=<?=$message['sender_id']?>&session_passwd=<?=$session_passwd?>&session_userid=<?=$session_userid?>"><?=get_user_nickname($message['sender_id'])?></a> 
-<? } elseif(isset($message['sender']) && $message['sender'] != '') { ?>
+<?php } elseif(isset($message['sender']) && $message['sender'] != '') { ?>
 <?=url_to_link($message['sender'], true)?> 
-<? } else { ?>
+<?php } else { ?>
 <?=LANG_ANONYMOUS_USER?>
-<? } ?>
+<?php } ?>
 <?=LANG_ON?> <?=timestamp_to_string($message['created'])?></span></p></td>
 <td align="right" bgcolor="#dedede" valign="middle">
-<? if(isset($message['sender_id']) && $message['sender_id'] > 0) { ?>
+<?php if(isset($message['sender_id']) && $message['sender_id'] > 0) { ?>
 <form action="<?=$_SERVER['PHP_SELF']?>"?>
 <input type="hidden" name="type" value="<?=$type?>">
 <input type="hidden" name="send_message" value="<?=$message['sender_id']?>">
 <input type="hidden" name="message_id" value="<?=$message_id?>">
 <input type="hidden" name="session_userid" value="<?=$session_userid?>">
 <input type="hidden" name="session_passwd" value="<?=$session_passwd?>">
-<input type="submit" value="<?=LANG_REPLY?>"></form><? } ?></td>
+<input type="submit" value="<?=LANG_REPLY?>"></form><?php } ?></td>
 </tr><tr>
 <td colspan="2" align="left" bgcolor="#ffffff" valign="top">
 <?=transform(stripslashes($message['message']), 'usertext')?>
@@ -142,7 +142,7 @@ if($message['user_id'] != SESSION_DBID) exit(); ?>
 </td></tr></table>
 </p>
 
-<? } elseif(isset($send_message) && !isset($body)) { ?>
+<?php } elseif(isset($send_message) && !isset($body)) { ?>
 <b><?=printf(LANG_SEND_MESSAGE, $type_long)?></b><br />
 <?php 
 	if(isset($message_id) && $message_id != '') { 
@@ -170,7 +170,7 @@ if($message['user_id'] != SESSION_DBID) exit(); ?>
 </td></tr></table>
 </p>
 
-<? } elseif(isset($send_message) && isset($body)) { 
+<?php } elseif(isset($send_message) && isset($body)) { 
 	if(isset($message_id) && $message_id != '') { 
 		$message = get_message($message_id, false); 
 		if($message['user_id'] != SESSION_DBID) exit();
@@ -191,6 +191,6 @@ if($message['user_id'] != SESSION_DBID) exit(); ?>
 [ <a href="javascript:window.close();"><?=LANG_CLOSE?></a> ]</p>
 </td></tr></table>
 </p>
-<? } ?>
+<?php } ?>
 </body>
 </html>

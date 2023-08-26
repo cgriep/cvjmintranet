@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2003 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -66,7 +66,7 @@ function save_termin($dd) {
         add_nodedata($id, 'Enddatum', $document["Enddatum"],$flavour,'datetime');
     }
     $Person = "";
-    while ( list($key, $value) = each($dd["Person"]) )
+    foreach ($dd["Person"]as $key => $value)
       $Person .= $value.",";
     if ( $Person == "" && (count($dd["Gruppe"]) == 0 || $_REQUEST["DelGrp"] == "v") )
       $Person = SESSION_DBID.",";
@@ -96,11 +96,11 @@ if($profile['editor']!='1') {
   else {
     if ( $_REQUEST["Ok"] == "1" ) {
       send_message ($document["author_id"], "Termin $id wurde am ".date("d.m.Y H:i").
-        " bestätigt.\n\nTitel: ".transform($document["title"],clean)."\nInhalt: ".
+        " bestï¿½tigt.\n\nTitel: ".transform($document["title"],clean)."\nInhalt: ".
         transform($docinput["body"],clean)."\n".
         "Erstellt von ".get_user_nickname($document["author_id"])."\n", SESSION_DBID, '',
-        "Terminbestätigung ".transform($document["title"],"clean"));
-      echo "<B>&gt;&gt; Termin bestätigt.</b><br />";
+        "Terminbestï¿½tigung ".transform($document["title"],"clean"));
+      echo "<B>&gt;&gt; Termin bestï¿½tigt.</b><br />";
     }
     if ( $_REQUEST['Erinnerung'] == '1' ) {
       sendeAllen($document);
@@ -156,7 +156,7 @@ if($profile['editor']!='1') {
       unset($document);
       global $flavour;
       $document = get_node($id, $flavour);
-      sendeAllen($document, 'Terminänderung durch '.get_user_email().' am '.date('d.m.Y H:i'));
+      sendeAllen($document, 'Terminï¿½nderung durch '.get_user_email().' am '.date('d.m.Y H:i'));
     }
     if ( $_REQUEST['Bearbeiten'] == 1 && (inPerson($document['Person'], $document['author_id'],$document['Aendern']=='1') ||
          inGruppe($document['Gruppe'],-1,$document['Aendern']=='1'))) {
@@ -166,12 +166,12 @@ if($profile['editor']!='1') {
     else if ( isset($_REQUEST['delete']) && $_REQUEST['delete'] == 1 &&
      (inPerson($document['Person'], $document['author_id'],$document['Aendern']=='1') ||
          inGruppe($document['Gruppe'],-1,$document['Aendern']=='1')) ) {
-      sendeAllen($document, 'Termin von '.get_user_nickname().' am '.date('d-m-Y H:i').' gelöscht: ');
+      sendeAllen($document, 'Termin von '.get_user_nickname().' am '.date('d-m-Y H:i').' gelï¿½scht: ');
       destroy_node($id);
       remove_profile('editor_'.$id);
       $id = $document['parent_id'];
-      echo '<b>Der Termin wurde gelöscht!</b><br />';
-      echo 'Übergeordnetes Dokument:<br />';
+      echo '<b>Der Termin wurde gelï¿½scht!</b><br />';
+      echo 'ï¿½bergeordnetes Dokument:<br />';
       $document = get_node($id, $flavour);
       echo '<a href="'.get_url($id).'">'.transform($document['title'], $document['datatype']['title']).'</a>';
     }
@@ -192,7 +192,7 @@ if($profile['editor']!='1') {
       foreach ( $wer as $key => $value) {
         echo transform($value,"user_id");
         if ( $value == SESSION_DBID )
-          echo ' <a href="'.get_url($id,"Ok=1").'">(Termin bestätigen)</a>';
+          echo ' <a href="'.get_url($id,"Ok=1").'">(Termin bestï¿½tigen)</a>';
         echo "<br />";
       }
     }
@@ -218,7 +218,7 @@ if($profile['editor']!='1') {
     if ( $document["Ort"] != "" ) {
   ?>
     <td><b>Ort</b></td><td colspan="3">
-    <? if ( function_exists("OrtsName") && is_numeric($document['Ort']))
+    <?php if ( function_exists("OrtsName") && is_numeric($document['Ort']))
       echo OrtsName($document['Ort'], false);
     else echo transform($document['Ort'], 'clean'); ?>
     </td>
@@ -228,10 +228,10 @@ if($profile['editor']!='1') {
     if ( $document["Turnus"] != "" ) echo "<b>Turnus</b>";
     echo '</td><td>';
     if ( $document["Turnus"] == "m" ) echo "monatlich";
-    else if ( $document["Turnus"] == "w" ) echo "wöchentlich";
-    else if ( $document["Turnus"] == "d" ) echo "täglich";
-    else if ( $document["Turnus"] == "j" ) echo "jährlich";
-    else if ( $document["Turnus"] == "v" ) echo "14tägig";
+    else if ( $document["Turnus"] == "w" ) echo "wï¿½chentlich";
+    else if ( $document["Turnus"] == "d" ) echo "tï¿½glich";
+    else if ( $document["Turnus"] == "j" ) echo "jï¿½hrlich";
+    else if ( $document["Turnus"] == "v" ) echo "14tï¿½gig";
     echo '</td><td>';
     if ( $document["TurnusEnde"] != 0 )
       echo "<strong>Letzter Termin</strong></td><td>".date("d.m.Y",$document["TurnusEnde"]);
@@ -251,7 +251,7 @@ if($profile['editor']!='1') {
     if ( inGruppe($document["Gruppe"],-1,$document["Aendern"]=="1") ||
          inPerson($document["Person"], $document["author_id"],$document["Aendern"]=="1") ) {
       echo '[ <a href="'.get_url($id,'Bearbeiten=1').'">Bearbeiten</a> ] ';
-      echo '[ <a href="'.get_url($id,'delete=1').'">Löschen</a> ]';
+      echo '[ <a href="'.get_url($id,'delete=1').'">Lï¿½schen</a> ]';
       echo "<br />";
       echo "<br />";
     }
@@ -285,7 +285,7 @@ else { // Editor-Modus
   $design['input_rows']?>" multiple="multiple">
 <?php
   $User = search_users();
-  while ( list($key, $value) = each($User) ) {
+  foreach ($User as $key => $value) {
     echo '<option value="'.$key.'"';
     if ( in_array($key, explode(",",$document["Person"])) )
       echo ' selected="selected"';
@@ -313,6 +313,6 @@ else { // Editor-Modus
   echo '<br /><br />';
   create_editor_input('User comments at bottom','comments','onoff_input');
   echo '<br /><br />';
-  create_editor_input('Alle User dürfen ändern','Aendern','onoff_input');
+  create_editor_input('Alle User dï¿½rfen ï¿½ndern','Aendern','onoff_input');
 }
 ?>

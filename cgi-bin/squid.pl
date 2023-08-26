@@ -54,7 +54,7 @@ if ( $Aktion eq "allow" )
     # $' - Zeichenkette nach Fundort
     my $Rest;
     my $AllesRest = $';
-    ($Minuten,$Rest) = split(/\n/,$');
+    ($Minuten,$Rest) =  explode(/\n/,$');
     print "$Minuten Minuten wurden gekauft";
     $Minuten =~ /^(.*)$/;
     $Minuten = $1;

@@ -40,20 +40,20 @@ if($profile['editor']!='1') {
     <?=LANG_MULTIPLE_RECIPIENTS?>
     <br />
     <br />
-    <? if(SESSION_STATUS != 'ok') { ?>
+    <?php if(SESSION_STATUS != 'ok') { ?>
       <?=LANG_YOUR_EMAIL_ADDRESS?><br />
       <input type="text" name="docinput[sender]" size="50"><br />
       <br />
-    <? }
+    <?php }
     else { ?>
       <input type="hidden" name="docinput[sender]" value="<?=SESSION_EMAIL?>">
-    <? } ?>
+    <?php } ?>
     <?=LANG_MESSAGE?><br />
     <input type="text" name="docinput[body]" size="50"><br />
     <br />
     <input type="submit" value="Send">
     </form>
-    <?
+    <?php
   }
   elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($docinput['email']) &&
         strlen($docinput['email']) > 3 && isemail($docinput['sender'])) {
@@ -76,7 +76,7 @@ if($profile['editor']!='1') {
            $message_body, "From: ".email_to_string($docinput['sender']).' <'.$docinput['sender'].'>');
     ?>
     <p><?=LANG_DOC_SENT_TO?> <b><?=$docinput['email']?></b></p>
-    <?
+    <?php
   }
   if ( $_REQUEST["Edit"] == "1" ) {
   ?>
@@ -87,20 +87,20 @@ if($profile['editor']!='1') {
     wrap="virtual" rows="<?=$design['input_rows']?>"><?=$document["body"]?></textarea>
     <br /><br /><?=LANG_ICON?><br />
     <select name="docinput[icon]"><option value="">No Icon</option>
-    <?
+    <?php
     $handle=opendir($image_path.'news/');
     while (false!==($file = readdir($handle)))
       if ($file != "." && $file != "..")
         $icons[] = $file;
     natcasesort($icons);
-    while(list($key, $file) = each($icons)) {
+    foreach ($icons as $key => $file)  {
       echo '<option value="'.$file.'"';
       if ( $file == $document['icon'] ) echo ' selected="selected"';
       echo '>'.substr($file, 0, -4).'</option>';
     }?>
     </select>
     <br /><br /><input type="submit" value="<?=LANG_SUBMIT?>" name="savenews"></form>
-  <?
+  <?php
   }
   else {
     echo '<p class="newsDate">'.transform($document['timestamp'], 'date')."</p>";
@@ -133,8 +133,7 @@ if($profile['editor']!='1') {
   $related = get_sorted_children(0, 10, 'timestamp', $doctypes['newsitem'], $document['parent_id']);
   if(count($related) > 1) {
     echo('<p>'.LANG_MORE_NEWS.'<br />');
-    reset($related);
-    while (list ($docid2, $value2) = each ($related)) {
+    foreach ($related as $docid2 => $value2)  {
       if($value2['title'] != '' && $docid2 != $id) {
         echo '<img src="'.$design['arrow_bullet'].'" border="0" hspace="2" width="10" height="7" />'.
              '<a href="'.get_url($docid2).'">'.transform($value2['title'], 'clean').
@@ -149,18 +148,18 @@ else {
         <p>
         <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
         <td>
-        <? create_editor_input('User comments at bottom', 'comments', 'onoff_input'); ?>
+        <?php create_editor_input('User comments at bottom', 'comments', 'onoff_input'); ?>
         <input type="hidden" name="docdataflavour[comments]" value="0" />
         </td><td>
-        <? create_editor_input('Show published files at bottom','show_files','onoff_input'); ?>
+        <?php create_editor_input('Show published files at bottom','show_files','onoff_input'); ?>
         </td></tr></table><p>
-        <? create_editor_input('Source','source','text_input'); ?>
+        <?php create_editor_input('Source','source','text_input'); ?>
         <br /><br />
-        <? create_editor_input('Link to external URL (optional)','redirect','text_input'); ?>
+        <?php create_editor_input('Link to external URL (optional)','redirect','text_input'); ?>
         </p>
         <p>
         <input type="hidden" name="docdataflavour[icon]" value="0">
-        <?
+        <?php
         create_editor_input('Icon','icon','icon_input');
         echo '<br /><br />';
         create_editor_input('Image', 'image', 'image_input');

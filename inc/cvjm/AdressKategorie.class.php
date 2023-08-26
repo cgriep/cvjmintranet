@@ -9,12 +9,12 @@ class AdressKategorie
 		if ( is_numeric($Kategorie_id) && $Kategorie_id > 0 )
 		{
 			$sql = 'SELECT * FROM '.TABLE_KATEGORIEN.' WHERE Kategorie_id='.$Kategorie_id;
-			$query = mysql_query($sql);
-			if ( ! $this->Kategorie = mysql_fetch_array($query))
+			$query = sql_query($sql);
+			if ( ! $this->Kategorie = sql_fetch_array($query))
 			{
 				throw new Exception('Konnte Kategorie '.$Kategorie_id.' nicht laden!');
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 		}
 			
 	}
@@ -23,7 +23,7 @@ class AdressKategorie
 		if ( $this->Kategorie['Kategorie_id'] <= 0)
 		{
 			if (sql_query('INSERT INTO ' . TABLE_KATEGORIEN . ' (Kategorie) VALUES ("' .
-			mysql_real_escape_string($this->Kategorie['Kategorie']) . '")'))
+			sql_real_escape_string($this->Kategorie['Kategorie']) . '")'))
 			{				
 				$this->Kategorie['Kategorie_id'] = sql_insert_id();
 			}

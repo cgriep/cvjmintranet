@@ -106,7 +106,7 @@ class SPAW_TB_Dropdown extends SPAW_TB_Item
     {
       $buf = '<select size="1" id="SPAW_'.$this->editor.'_tb_'.$this->name.'" name="SPAW_'.$this->editor.'_tb_'.$this->name.'" align="absmiddle" class="SPAW_'.$this->theme.'_tb_input" onchange="SPAW_'.$this->name.'_change(\''.$this->editor.'\',this)" '.(isset($this->attributes)?$this->attributes:'').'>';
       $buf.='<option>'.$this->lang->m('title',$this->name).'</option>';
-      while(list($value,$text) = each($this->data))
+      foreach ( $this->data as $value =>$text)
       {
         $buf.='<option value="'.$value.'">'.$text.'</option>';
       }
@@ -205,7 +205,7 @@ class SPAW_Toolbars
         $tb_item_sep = '<br>';
       }
       $buf = $tb_pos_start;
-      while (list(,$tb) = each($this->toolbars[$pos.'_'.$mode]))
+      foreach ( $this->toolbars[$pos.'_'.$mode] as $tb )      
       {
         if ($pos == 'top' || $pos == 'bottom')
         {
@@ -221,7 +221,7 @@ class SPAW_Toolbars
         }
       
         $buf .= $tb_start;
-        while (list(,$tbitem) = each($tb['data']))
+        foreach ( $tb['data'] as $tbitem)
         {
           $buf .= $this->getTbItem($tbitem['name'],$tbitem['type'],isset($tbitem['attributes'])?$tbitem['attributes']:'', isset($tbitem['data'])?$tbitem['data']:'') . $tb_item_sep;
         }

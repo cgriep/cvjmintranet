@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -30,7 +30,7 @@ if(isset($pchildren)) {
  
 if(isset($children)) {
         reset($children);
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
 		include(INC_PATH.'misc/newsitem.inc');
                 }
 	  if($total_count > $inc_value) {
@@ -66,7 +66,7 @@ if(isset($pchildren)) {
 if(isset($children)) {
         reset($children);
         $counter = 0;
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
 		include(INC_PATH.'misc/newsitem.inc');
                 }
 	  if($total_count > $inc_value) {

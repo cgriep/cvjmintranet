@@ -4,7 +4,7 @@
  * Created on 15.11.2006
  * Christoph Griep
  * 
- * Aufrufmöglichkeiten:
+ * Aufrufmï¿½glichkeiten:
  * - "Bild": Das Bild des aktuellen Charakters wird angezeigt
  * - "Rasse":Bild der angegebenen Rasse (id) wird angezeigt
  * - "Klasse"
@@ -20,56 +20,56 @@
   }
   if ( isset($_REQUEST['Charakter']) && is_numeric($_REQUEST['Charakter']))
   {
-  	$query = mysql_query('SELECT Bild FROM T_Charaktere ' .
+  	$query = sql_query('SELECT Bild FROM T_Charaktere ' .
 			  'WHERE charakter_id='.$_REQUEST['Charakter']);
-	if( $b = mysql_fetch_row($query))
+	if( $b = sql_fetch_row($query))
 	{
 		  $Bild = $b[0];
   	}
-	mysql_free_result($query);    
+	sql_free_result($query);    
   }
   // Bild heraussuchen 
   if ( isset($_REQUEST['Rasse']) && is_numeric($_REQUEST['Rasse']) )
   {
-    $query = mysql_query('SELECT Bild FROM T_Rassen ' .
+    $query = sql_query('SELECT Bild FROM T_Rassen ' .
 			  'WHERE Rasse_id='.$_REQUEST['Rasse']);
-	if( $beschreibung = mysql_fetch_row($query))
+	if( $beschreibung = sql_fetch_row($query))
 	{
 		  $Bild = $beschreibung[0];
   	}
-	mysql_free_result($query);  
+	sql_free_result($query);  
   }
   if ( isset($_REQUEST['Klasse']) && is_numeric($_REQUEST['Klasse']) )
   {
-    $query = mysql_query('SELECT Bild FROM T_Spezialisierungsklassen ' .
+    $query = sql_query('SELECT Bild FROM T_Spezialisierungsklassen ' .
 			  'WHERE Klasse_id='.$_REQUEST['Klasse']);
-	if( $beschreibung = mysql_fetch_row($query))
+	if( $beschreibung = sql_fetch_row($query))
 	{
 		  $Bild = $beschreibung[0];
   	}
-	mysql_free_result($query);
+	sql_free_result($query);
   }  
   if ( isset($_REQUEST['Spezialisierung']) && is_numeric($_REQUEST['Spezialisierung']) )
   {
-    $query = mysql_query('SELECT Bild FROM T_Spezialisierungen ' .
+    $query = sql_query('SELECT Bild FROM T_Spezialisierungen ' .
 			  'WHERE Spezialisierung_id='.$_REQUEST['Spezialisierung']);
-	if( $beschreibung = mysql_fetch_row($query))
+	if( $beschreibung = sql_fetch_row($query))
 	{
 		  $Bild = $beschreibung[0];
   	}
-	mysql_free_result($query);
+	sql_free_result($query);
   }  
   // Bild ausgeben
   if ( $Bild != '' )
   {      
-     // Senden des Response-Headers für den Inhaltstyp der gelieferten
+     // Senden des Response-Headers fï¿½r den Inhaltstyp der gelieferten
      // Daten 
      header ( 'Content-Type: image/jpeg');
      // Senden der eigentlichen Bilddaten als (einzigen) Inhalt der
      // Response
      if ( isset($_REQUEST['Groesse']) && is_numeric($_REQUEST['Groesse']))
      {
-     	// Bildgröße verändern
+     	// Bildgrï¿½ï¿½e verï¿½ndern
      	$altesBild=imagecreatefromstring ($Bild);       
         $breite = imageSX($altesBild);
         $hoehe = imageSY($altesBild);
@@ -93,7 +93,7 @@
        echo ( $Bild );
   }
   else
-    die ( 'Ungültige ID oder Bild nicht vorhanden!');
-  mysql_close(); 
+    die ( 'Ungï¿½ltige ID oder Bild nicht vorhanden!');
+  sql_close(); 
 
 ?>

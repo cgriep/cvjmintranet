@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 
         List the last 10 documents, regardless of what type they are or the parent/child relationship

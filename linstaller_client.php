@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -28,8 +28,8 @@ include('admin/linstaller_lib.inc');
 
 lbi_load_config('admin/'.LBI_CONFIG_FILE);
 
-$basename = strtr(strtolower($_REQUEST['name']), ' -/\()[]=?.;,!äöüß', '______________aous');
-$baseversion = strtr(strtolower($_REQUEST['version']), ' -/\()[]=?;,!äöüß', '................');
+$basename = strtr(strtolower($_REQUEST['name']), ' -/\()[]=?.;,!ï¿½ï¿½ï¿½ï¿½', '______________aous');
+$baseversion = strtr(strtolower($_REQUEST['version']), ' -/\()[]=?;,!ï¿½ï¿½ï¿½ï¿½', '................');
 
 echo base64_encode(file_get_contents('admin/'.LBI_PACKAGE_PATH.$basename.'-'.$baseversion.'.lbi'));
 ?>

@@ -56,7 +56,7 @@ $row = sql_get_single_row(TABLE_DOCTYPES, 'id = '.$target_id);
 <body topmargin="0" rightmargin="0" leftmargin="0" marginwidth="0" marginheight="0" bgcolor="#FFFFFF">
 <table border="0" cellpadding="5" cellspacing="0" bgcolor="#ffffff" width="100%">
 <tr>
-<?
+<?php
 /*
 <td valign="middle">
 // =get_image_tag('img/doctype.gif','','',0,0,'middle')
@@ -76,7 +76,7 @@ $row = sql_get_single_row(TABLE_DOCTYPES, 'id = '.$target_id);
 <input type="hidden" name="page" value="<?=$page?>" />
 <input type="hidden" name="target_id" value="<?=$target_id?>" />
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 lftk_add_tab('fields', LANG_ADMIN_FIELDS);
 ?>
 <td bgcolor="#ffffff" width="100%"><img src="img/pixel.gif" width="1" /></td>
@@ -84,7 +84,7 @@ lftk_add_tab('fields', LANG_ADMIN_FIELDS);
 </table>
 <table bgcolor="<?=$lftk_config['color_3']?>" width="100%" cellpadding="9" cellspacing="0" border="0">
 <tr><td>
-<?
+<?php
 /**********************************************************************************************************
 Fields
 **********************************************************************************************************/

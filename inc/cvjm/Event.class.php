@@ -7,7 +7,7 @@ require_once(INC_PATH.'cvjm/DBEntity.class.php');
 DEFINE('TABLE_EVENTS','cvjm_Events');
 DEFINE('TABLE_EVENT_BETROFFENE','cvjm_Event_Betroffene');
 
-// Turnusarten für den Kalender
+// Turnusarten fï¿½r den Kalender
 define('EVENT_TURNUS_EINMALIG', 100);
 define('EVENT_TURNUS_TAEGLICH', 101);
 define('EVENT_TURNUS_WOECHENTLICH', 102);
@@ -19,7 +19,7 @@ define('EVENT_TURNUS_ZWEIMONATLICH', 106);
 // Referenzen 
 define('EVENT_REFERENZ_BUCHUNG', 'BuNr');
 define('EVENT_REFERENZ_ARTIKEL', 'ArtNr');
-// Statusarten für Aufträge
+// Statusarten fï¿½r Auftrï¿½ge
 define('EVENT_STATUS_OFFEN',1);
 define('EVENT_STATUS_INARBEIT', 2);
 define('EVENT_STATUS_UNTERBRECHUNG', 3);
@@ -38,7 +38,7 @@ define('EVENT_BETROFFENER_USER', 0);
 define('EVENT_BETROFFENER_GRUPPE', 1);
 define('EVENT_BETROFFENER_EXTERN', 2);
 
-// Bestätigungsstatus
+// Bestï¿½tigungsstatus
 define('EVENT_BESTAETIGUNG_KEINE', 0);
 define('EVENT_BESTAETIGUNG_ANGEFORDERT', 1);
 define('EVENT_BESTAETIGUNG_GESENDET', 2);
@@ -51,7 +51,7 @@ define('EVENT_BESTAETIGUNG_ABGESAGT', 7);
 class Event extends DBEntity
 {
 	static $Tage = array( 'S', 'M', 'D', 'M', 'D', 'F', 'S');
-	static $Monate = array('Januar', 'Februar', 'März', 'April',
+	static $Monate = array('Januar', 'Februar', 'Mï¿½rz', 'April',
 	'Mai', 'Juni', 'Juli', 'August', 'September',
 	'Oktober', 'November', 'Dezember');
 
@@ -77,29 +77,29 @@ class Event extends DBEntity
     );
 	static $Turnusse = array(
 	EVENT_TURNUS_EINMALIG => '-einmalig-',
-	EVENT_TURNUS_TAEGLICH => 'täglich',
-	EVENT_TURNUS_WOECHENTLICH => 'wöchentlich',
-	EVENT_TURNUS_14TAEGIG => '14tägig',
+	EVENT_TURNUS_TAEGLICH => 'tÃ¤glich',
+	EVENT_TURNUS_WOECHENTLICH => 'wÃ¶chentlich',
+	EVENT_TURNUS_14TAEGIG => '14tÃ¤gig',
 	EVENT_TURNUS_MONATLICH => 'monatlich',
 	EVENT_TURNUS_ZWEIMONATLICH => 'zweimonatlich',
-	EVENT_TURNUS_JAERHLICH => 'jährlich'
+	EVENT_TURNUS_JAERHLICH => 'jÃ¤hrlich'
 	);
 	function __construct($event_id = -1)
 	{
 		parent::__construct(TABLE_EVENTS);
 		if ( ! is_numeric($event_id))
 		{
-			throw new Exception('Event: Ungültige id: '.$event_id.'!');
+			throw new Exception('Event: UngÃ¼ltige id: '.$event_id.'!');
 		}
 		if ( $event_id > 0 )
 		{
 			$sql = 'SELECT * FROM '.TABLE_EVENTS.' WHERE Event_id='.$event_id;
-			$query = mysql_query($sql);
-			if ( ! $Event = mysql_fetch_array($query))
+			$query = sql_query($sql);
+			if ( ! $Event = sql_fetch_array($query))
 			{
 				throw new Exception('Event: Konnte id '.$event_id.' nicht laden!');
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			$this->uebertrageFelder($Event);
 		}
 		else
@@ -125,7 +125,7 @@ class Event extends DBEntity
 	}
 	function getPrioritaet()
 	{
-		// Namen für Prioritäten und Status
+		// Namen fÃ¼r PrioritÃ¤ten und Status
 		if ( isset(Event::$Prioritaeten[$this->Prioritaet]))
 		{
 			return Event::$Prioritaeten[$this->Prioritaet];
@@ -150,7 +150,7 @@ class Event extends DBEntity
 	function uebertrageFelder($felder)
 	{
 		parent::uebertrageFelder($felder);
-		// Besonderheit: Checkboxen berücksichtigen
+		// Besonderheit: Checkboxen berï¿½cksichtigen
 		//TODO
 		foreach ( array('Anzeigen','Rabattfaehig','Geringwertig', 'Steuerpflicht', 'PersonJN') as $Feld)
 		{
@@ -161,7 +161,7 @@ class Event extends DBEntity
 		}
 	}
 	/**
-	 * Überträgt einen Termin aus dem alten AWF-Kalendersystem
+	 * Ã¼bertrÃ¤gt einen Termin aus dem alten AWF-Kalendersystem
 	 * @param array $termin der Termin in der Form wie er aus der Datenbank kommt
 	 */
 	function uebertrageTermin($termin)
@@ -174,7 +174,7 @@ class Event extends DBEntity
 	}
 	function save()
 	{
-		// Sicherheitsprüfungen
+		// Sicherheitsprï¿½fungen
 		foreach (array('Autor','Status','Ort','Datum','Dauer','Turnus','TurnusEnde','Art') as $feld)
 		{
 			if (!is_numeric($this->$feld))
@@ -186,9 +186,9 @@ class Event extends DBEntity
 		{
 			$sql = 'INSERT INTO '.TABLE_EVENTS.' (Titel, Beschreibung, Bemerkung, Status, Prioritaet,';
 			$sql .= ' Autor,Ort,Datum,Turnus,TurnusEnde,Referenz,Art,created,Dauer,BearbeitenBis) VALUES (';
-			$sql .= '"'.mysql_real_escape_string($this->Titel).'",';
-			$sql .= '"'.mysql_real_escape_string($this->Beschreibung).'",';
-			$sql .= '"'.mysql_real_escape_string($this->Bemerkung).'",';
+			$sql .= '"'.sql_real_escape_string($this->Titel).'",';
+			$sql .= '"'.sql_real_escape_string($this->Beschreibung).'",';
+			$sql .= '"'.sql_real_escape_string($this->Bemerkung).'",';
 			$sql .= $this->Status.',';
 			$sql .= $this->Prioritaet.',';
 			$sql .= $this->Autor.',';
@@ -196,27 +196,27 @@ class Event extends DBEntity
 			$sql .= $this->Datum.',';
 			$sql .= $this->Turnus.',';
 			$sql .= $this->TurnusEnde.',';
-			$sql .= '"'.mysql_real_escape_string($this->Referenz).'",';
+			$sql .= '"'.sql_real_escape_string($this->Referenz).'",';
 			$sql .= $this->Art.',';
 			$sql .= time().',';
 			$sql .= $this->Dauer.',';
 			$sql .= $this->BearbeitenBis;
 			$sql .= ')';
-			if ( ! mysql_query($sql))
+			if ( ! sql_query($sql))
 			{
-				throw new Exception('Event Insert: '.mysql_error());
+				throw new Exception('Event Insert: '.sql_error());
 			}
 			else
 			{
-				$this->Event_id = mysql_insert_id();
+				$this->Event_id = sql_insert_id();
 			}
 		}
 		else
 		{
 			$sql = 'UPDATE '.TABLE_EVENTS.' SET ';
-			$sql .= 'Titel="'.mysql_real_escape_string($this->Titel).'",';
-			$sql .= 'Beschreibung="'.mysql_real_escape_string($this->Beschreibung).'",';
-			$sql .= 'Bemerkung="'.mysql_real_escape_string($this->Bemerkung).'",';
+			$sql .= 'Titel="'.sql_real_escape_string($this->Titel).'",';
+			$sql .= 'Beschreibung="'.sql_real_escape_string($this->Beschreibung).'",';
+			$sql .= 'Bemerkung="'.sql_real_escape_string($this->Bemerkung).'",';
 			$sql .= 'Status='.$this->Status.',';
 			$sql .= 'Prioritaet='.$this->Prioritaet.',';
 			$sql .= 'Autor='.$this->Autor.',';
@@ -228,9 +228,9 @@ class Event extends DBEntity
 			$sql .= 'BearbeitenBis='.$this->BearbeitenBis.',';
 			$sql .= 'Art='.$this->Art;
 			$sql .= ' WHERE Event_id='.$this->Event_id;
-			if ( ! mysql_query($sql))
+			if ( ! sql_query($sql))
 			{
-				throw new Exception('Event Update: '.mysql_error());
+				throw new Exception('Event Update: '.sql_error());
 			}
 		}
 		$this->schreibeBetroffene();
@@ -259,7 +259,7 @@ class Event extends DBEntity
 		}
 	}
 	/**
-	 * liefert den Beschreibungsstring mit Ersetzungen für Systemevents (Querverweise zu Buchung etc.)
+	 * liefert den Beschreibungsstring mit Ersetzungen fï¿½r Systemevents (Querverweise zu Buchung etc.)
 	 * @return string der String in HTML-Form mit Querverweisen
 	 */
 	function getBeschreibung()
@@ -267,8 +267,8 @@ class Event extends DBEntity
 
 	}
 	/**
-	 * liefert eine Zeichenkette mit der Übersicht über den Event
-	 * @return string eine HTML-Zeichenkette mit der Übersicht
+	 * liefert eine Zeichenkette mit der ï¿½bersicht ï¿½ber den Event
+	 * @return string eine HTML-Zeichenkette mit der ï¿½bersicht
 	 */
 	function getUebersicht()
 	{
@@ -285,8 +285,8 @@ class Event extends DBEntity
 		 */
 	}
 	/**
-	 * liefert eine Zeichenkette mit der Art des Termins. Muss für erbende Objekte entsprechend
-	 * überladen werden.
+	 * liefert eine Zeichenkette mit der Art des Termins. Muss fï¿½r erbende Objekte entsprechend
+	 * ï¿½berladen werden.
 	 * @return string Zeichenkette mit den Namen der Eventart
 	 */
 	function getArt()
@@ -309,8 +309,8 @@ class Event extends DBEntity
 		return Event::$Turnusse[$this->Turnus];
 	}
 	/**
-	 * zeigt an, ob der Eintrag nach der Erstellung noch mindestens einmal geändert wurde
-	 * @return true, wenn eine Änderung vorgenommen wurde
+	 * zeigt an, ob der Eintrag nach der Erstellung noch mindestens einmal geï¿½ndert wurde
+	 * @return true, wenn eine ï¿½nderung vorgenommen wurde
 	 */
 	function wurdeGeaendert()
 	{
@@ -340,7 +340,7 @@ class Event extends DBEntity
 		return ($this->istBetroffen() && $this->Aendern) || $this->Autor == SESSION_DBID;
 	}
 	/**
-	 * prüft AWT-Spezifische User- und Gruppenberechtigungen
+	 * prï¿½ft AWT-Spezifische User- und Gruppenberechtigungen
 	 * @return true, wenn der Benutzer betroffen ist, false sonst
 	 */
 	function istBetroffen($Betroffen_id = SESSION_DBID)
@@ -382,13 +382,13 @@ class Event extends DBEntity
 	function holeBetroffene()
 	{
 		$this->Betroffene = array();
-		$query = mysql_query('SELECT * FROM '.TABLE_EVENT_BETROFFENE.
+		$query = sql_query('SELECT * FROM '.TABLE_EVENT_BETROFFENE.
 		' WHERE F_Event_id='.$this->Event_id);
 		while ( $row = sql_fetch_array($query))
 		{
 			$this->Betroffene[] = $row;
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 	}
 	/*
 	 * Schreibt die Betroffenen eines Termins in die Betroffenen-Tabelle
@@ -398,7 +398,7 @@ class Event extends DBEntity
 		$sql = 'DELETE FROM '.TABLE_EVENT_BETROFFENE.' WHERE F_Event_id='.$this->Event_id;
 		if (! sql_query($sql))
 		{
-			throw new Exception('Event.schreibeBetroffene: '.mysql_error());
+			throw new Exception('Event.schreibeBetroffene: '.sql_error());
 		}
 		foreach ($this->Betroffene as $betroffener)
 		{
@@ -424,7 +424,7 @@ class Event extends DBEntity
 			}
 			else
 			{
-				$betroffener['Betroffener'] = '"'.mysql_real_escape_string($betroffener['Betroffener']).'"';
+				$betroffener['Betroffener'] = '"'.sql_real_escape_string($betroffener['Betroffener']).'"';
 			}
 			$sql = 'INSERT INTO '.TABLE_EVENT_BETROFFENE.
 			' (F_Event_id,F_Betroffener_id, Betroffener_Art, Betroffener,Bestaetigungsstatus,'.
@@ -437,7 +437,7 @@ class Event extends DBEntity
 			$betroffener['Erinnerungsstatus'].')';
 			if (! sql_query($sql))
 			{
-				throw new Exception('Event-Betroffene: '.$sql.'/'.mysql_error());
+				throw new Exception('Event-Betroffene: '.$sql.'/'.sql_error());
 			}
 		}
 	}
@@ -504,8 +504,8 @@ class Event extends DBEntity
 	}
 	/**
 	 * setzt eine Nachricht zusammen die per Mail gesendet wird.
-	 * Muss für späteer Klassen abgeleitet werden.
-	 * @param string $Text ein zusätzlicher Text, der vor den eigentlichen Daten angezeigt wird
+	 * Muss fï¿½r spï¿½teer Klassen abgeleitet werden.
+	 * @param string $Text ein zusï¿½tzlicher Text, der vor den eigentlichen Daten angezeigt wird
 	 * @return string der Nachrichtentext
 	 */
 	function getMessageText($Text='')
@@ -522,7 +522,7 @@ class Event extends DBEntity
 		{
 			$Text .= "\nOrt: ".$Ort;
 		}
-		$Text .= "\nPriorität: ".$this->getPrioritaet();
+		$Text .= "\nPrioritï¿½t: ".$this->getPrioritaet();
 		
 		if (Count($this->Betroffene) > 0)
 		{
@@ -542,7 +542,7 @@ class Event extends DBEntity
 	}
 	/**
 	 * Benachrichtigt alle Betroffenen 
-	 * @param string $zusatztext der Text, der zusätzlich zu den Rahmendaten angezeigt wird
+	 * @param string $zusatztext der Text, der zusï¿½tzlich zu den Rahmendaten angezeigt wird
 	 */
 	function sendBenachrichtigung($zusatztext='')
 	{
@@ -572,7 +572,7 @@ class Event extends DBEntity
 							$Betroffene[] = $row[0];	
 						}
 					}
-					mysql_free_result($query);
+					sql_free_result($query);
 					break;
 				case EVENT_BETROFFENER_EXTERN:
 					break;
@@ -585,9 +585,9 @@ class Event extends DBEntity
 		}
 	}
 	/**
-	 * sendet eine Mail mit der Benachrichtigung über den Event an den angegebenen User
+	 * sendet eine Mail mit der Benachrichtigung ï¿½ber den Event an den angegebenen User
 	 * @param int $user_id die ID des zu benachrichtigenden Benutzers
-	 * @param string $zusatztext ein zusätzlicher Text, der vor den Ereignisdaten angezeigt wird
+	 * @param string $zusatztext ein zusï¿½tzlicher Text, der vor den Ereignisdaten angezeigt wird
 	 * @return boolean true wenn die Mail erfolgreich abgesendet wurde, false sonst
 	 */
 	function sendeMail($user_id, $zusatztext = '')
@@ -598,8 +598,8 @@ class Event extends DBEntity
 				'From: '.get_user_nickname($this->Autor).' <'.get_user_email($this->Autor).'>');
 	}
 	/**
-	 * Liefert eine Liste aus Gruppen und Benutzern von AWF. Der Key ist bei Gruppen mit einem führenden
-	 * g versehen (g13 für Gruppe 13). Bei Benutzern wird nur eine Zahl verwendet.
+	 * Liefert eine Liste aus Gruppen und Benutzern von AWF. Der Key ist bei Gruppen mit einem fï¿½hrenden
+	 * g versehen (g13 fï¿½r Gruppe 13). Bei Benutzern wird nur eine Zahl verwendet.
 	 * @return array Liste der Benutzer und Gruppen
 	 */
 	function getListOfGroupsAndUsers()
@@ -616,7 +616,7 @@ class Event extends DBEntity
 		{
 			$liste[$row['id']] = $row['value'];
 		}
-		mysql_free_result($qres);
+		sql_free_result($qres);
 		return $liste;	
 	}
 	
@@ -643,7 +643,7 @@ class Event extends DBEntity
 	}
 	
 	/**
-	 * Liefert ein Feld von Events, die im angegebenen Datum für den aktuellen Benutzer aktiv sind.
+	 * Liefert ein Feld von Events, die im angegebenen Datum fï¿½r den aktuellen Benutzer aktiv sind.
 	 * @param date $Datum das Datum an dem die Events gesucht werden
 	 * @param date $EndDatum das Enddatum eines Bereichs in dem Events gesucht werden sollen
 	 * @return array Feld der Events, null wenn keine vorhanden
@@ -653,11 +653,11 @@ class Event extends DBEntity
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE '.Event::sqlWhereDate($Datum).
 		' ORDER BY Datum';
 		$ergebnis = array();
-		if ( ! $query = mysql_query($sql))
+		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('searchEvents: '.mysql_error());
+			throw new Exception('searchEvents: '.sql_error());
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			$event = new Event($row['Event_id']);
 			if ( $event->istBetroffen() )
@@ -665,17 +665,17 @@ class Event extends DBEntity
 				$ergebnis[] = $event;
 			}
 		}
-		mysql_free_result($query);
-		// Turnusevents hinzufügen
-		// Monatlich - Tag muss übereinstimmen, Monat + Jahr egal 
+		sql_free_result($query);
+		// Turnusevents hinzufï¿½gen
+		// Monatlich - Tag muss ï¿½bereinstimmen, Monat + Jahr egal 
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_MONATLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAYOFMONTH(FROM_UNIXTIME(Datum))=DAYOFMONTH(FROM_UNIXTIME('.$Datum.')) ORDER BY Datum';
-		if ( ! $query = mysql_query($sql))
+		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('searchEvents: '.mysql_error().' / '.$sql);
+			throw new Exception('searchEvents: '.sql_error().' / '.$sql);
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			$event = new Event($row['Event_id']);
 			if ( $event->istBetroffen() )
@@ -685,16 +685,16 @@ class Event extends DBEntity
 				$ergebnis[] = $event;
 			}
 		}
-		mysql_free_result($query);		
-		// Wöchentlich - Wochentag muss gleich sein  
+		sql_free_result($query);		
+		// Wï¿½chentlich - Wochentag muss gleich sein  
 		$sql = ' SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_WOECHENTLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAYOFWEEK(FROM_UNIXTIME(Datum))=DAYOFWEEK(FROM_UNIXTIME('.$Datum.')) ORDER BY Datum';
-		if ( ! $query = mysql_query($sql))
+		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('searchEvents: '.mysql_error().' / '.$sql);
+			throw new Exception('searchEvents: '.sql_error().' / '.$sql);
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			$event = new Event($row['Event_id']);
 			if ( $event->istBetroffen() )
@@ -704,16 +704,16 @@ class Event extends DBEntity
 				$ergebnis[] = $event;
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		
-		// täglich alles egal 
+		// tï¿½glich alles egal 
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_TAEGLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';		
 		$sql .= ' AND Datum<='.$Datum.' ORDER BY Datum';
-		if ( ! $query = mysql_query($sql))
+		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('searchEvents: '.mysql_error().' / '.$sql);
+			throw new Exception('searchEvents: '.sql_error().' / '.$sql);
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			$event = new Event($row['Event_id']);
 			if ( $event->istBetroffen() )
@@ -723,18 +723,18 @@ class Event extends DBEntity
 				$ergebnis[] = $event;
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		
-		// 14tägig - Tag muss übereinstimmen, Kalenderwoche/2 muss gleiche Zahl ergeben  
+		// 14tï¿½gig - Tag muss ï¿½bereinstimmen, Kalenderwoche/2 muss gleiche Zahl ergeben  
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_14TAEGIG;
 		$sql .= ' AND Datum<='.$Datum.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND DAY(FROM_UNIXTIME(Datum))=DAY(FROM_UNIXTIME('.$Datum.')) ';
 		$sql .= ' AND WEEKOFYEAR(FROM_UNIXTIME(Datum))%2=WEEKOFYEAR(FROM_UNIXTIME('.$Datum.'))%2 ORDER BY Datum';
-		if ( ! $query = mysql_query($sql))
+		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('searchEvents: '.mysql_error().' / '.$sql);
+			throw new Exception('searchEvents: '.sql_error().' / '.$sql);
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			$event = new Event($row['Event_id']);
 			if ( $event->istBetroffen() )
@@ -744,18 +744,18 @@ class Event extends DBEntity
 				$ergebnis[] = $event;
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		
-		// Monatlich - Tag muss übereinstimmen, Jahr egal 
+		// Monatlich - Tag muss ï¿½bereinstimmen, Jahr egal 
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_JAEHRLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAY(FROM_UNIXTIME(Datum))=DAY(FROM_UNIXTIME('.$Datum.'))';
 		$sql .= ' AND MONTH(FROM_UNIXTIME(Datum))=MONTH(FROM_UNIXTIME('.$Datum.')) ORDER BY Datum';
-		if ( ! $query = mysql_query($sql))
+		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('searchEvents: '.mysql_error().' / '.$sql);
+			throw new Exception('searchEvents: '.sql_error().' / '.$sql);
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			$event = new Event($row['Event_id']);
 			if ( $event->istBetroffen() )
@@ -765,19 +765,19 @@ class Event extends DBEntity
 				$ergebnis[] = $event;
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 				
-		// Zweimonatlich - Tag muss übereinstimmen, Monat/2 muss gleiche Zahl ergeben
+		// Zweimonatlich - Tag muss ï¿½bereinstimmen, Monat/2 muss gleiche Zahl ergeben
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_ZWEIMONATLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAY(FROM_UNIXTIME(Datum))=DAY(FROM_UNIXTIME('.$Datum.'))';
 		$sql .= ' AND MONTH(FROM_UNIXTIME(Datum))%2=MONTH(FROM_UNIXTIME('.$Datum.'))%2 ORDER BY Datum';		
 		
-		if ( ! $query = mysql_query($sql))
+		if ( ! $query = sql_query($sql))
 		{
-			throw new Exception('searchEvents: '.mysql_error().' / '.$sql);
+			throw new Exception('searchEvents: '.sql_error().' / '.$sql);
 		}
-		while ($row = mysql_fetch_array($query))
+		while ($row = sql_fetch_array($query))
 		{
 			$event = new Event($row['Event_id']);
 			if ( $event->istBetroffen() )
@@ -787,44 +787,44 @@ class Event extends DBEntity
 				$ergebnis[] = $event;
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $ergebnis;
 	}
 	/**
-	 * sendet Bestätigungs-Mails für Events wo dies angefordert wurde und setzt dann die den Status entsprechend
+	 * sendet Bestï¿½tigungs-Mails fï¿½r Events wo dies angefordert wurde und setzt dann die den Status entsprechend
 	 */
 	static function sendeBestaetigungsMails()
 	{
 		$sql = 'SELECT Betroffene_id, F_Event_id, F_Betroffener_id FROM '.TABLE_EVENT_BETROFFENE.
 		' WHERE Bestaetigungsstatus='.EVENT_BESTAETIGUNG_ANGEFORDERT;
-		$query = mysql_query($sql);
-		while ( $zeile = mysql_fetch_row($query))
+		$query = sql_query($sql);
+		while ( $zeile = sql_fetch_row($query))
 		{
 			$Event = new Event($zeile[1]);
-			//echo "Sende Mail für Event ".$zeile[1]." an ".$zeile[2]."\n";
+			//echo "Sende Mail fï¿½r Event ".$zeile[1]." an ".$zeile[2]."\n";
 			$Event->sendeMail($zeile[2], 'Bitte beachten Sie das folgende Ereignis:');
-			// Status ändern
-			mysql_query('UPDATE '.TABLE_EVENT_BETROFFENE.' SET Bestaetigungsstatus='.EVENT_BESTAETIGUNG_GESENDET.
+			// Status ï¿½ndern
+			sql_query('UPDATE '.TABLE_EVENT_BETROFFENE.' SET Bestaetigungsstatus='.EVENT_BESTAETIGUNG_GESENDET.
 			' WHERE Betroffene_id='.$zeile[0]);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 	}
 	static function searchEventErinnerung()
 	{
 		$sql = 'SELECT Betroffene_id, F_Event_id, F_Betroffener_id FROM '.TABLE_EVENT_BETROFFENE.
 		' INNER JOIN '.TABLE_EVENT.' ON F_Event_id=Event_id '.
 		'WHERE Erinnerungsstatus>0 AND DATE_SUB(FROM_UNIXTIME(DATUM),INTERVAL Erinnerungsstatus DAY) <= CURDATE()';
-		$query = mysql_query($sql);
-		while ( $zeile = mysql_fetch_row($query))
+		$query = sql_query($sql);
+		while ( $zeile = sql_fetch_row($query))
 		{
 			$Event = new Event($zeile[1]);
 			$Event->sendeMail($zeile[2]);
-			// Status ändern
-			mysql_query('UPDATE '.TABLE_EVENT_BETROFFENE.
+			// Status ï¿½ndern
+			sql_query('UPDATE '.TABLE_EVENT_BETROFFENE.
 			' SET Erinnerungsstatus=-Erinnerungsstatus '.
 			' WHERE Betroffene_id='.$zeile[0]);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 	}
 	/**
 	 * sucht nach Events zu einer Referenz. 
@@ -846,13 +846,13 @@ class Event extends DBEntity
 		}
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE '.$RefString;
 		
-		$query = mysql_query($sql);
+		$query = sql_query($sql);
 		$Events = array();
-		while ( $zeile = mysql_fetch_row($query))
+		while ( $zeile = sql_fetch_row($query))
 		{
 			$Events[] = new Event($zeile[0]);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		return $Events;
 	}
 	static function searchBuchungEvent($StartDatum, $EndDatum, $Buchung_Nr, $Artikel_Nr =-1)

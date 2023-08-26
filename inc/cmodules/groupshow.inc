@@ -16,7 +16,7 @@ if ( $profile['editor'] != 1 ) {
   while($row = sql_fetch_row($qres)) { ?>
         <tr>
         <th colspan="3" bgcolor="<?=$design['table_row_dark']?>"><a id="R<?=$row[0]?>" name=""></a><?=$row[1]?></th></tr>
-        <?
+        <?php
                 $sql = "SELECT user_id FROM ".TABLE_USERDATA." WHERE name = 'group_".$row[0].
                   "' AND value = '1'";
                 $qres2 = sql_query($sql);
@@ -44,7 +44,7 @@ if ( $profile['editor'] != 1 ) {
                 }
                 sql_free_result($qres2);
                 echo '</select>';
-                echo '<input type="Submit" name="UAdd" value="Hinzufügen">';
+                echo '<input type="Submit" name="UAdd" value="Hinzufï¿½gen">';
                 echo '</tr>';
                 echo '</form>';
   }

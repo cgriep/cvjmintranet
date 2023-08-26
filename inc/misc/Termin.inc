@@ -40,7 +40,7 @@ function sortiereTermine($Termine)
     $okey = $key;
     if ( strpos($key, '&') !== false ) $okey = substr($key, 0, strpos($key, '&'));
     if ( $value['parent_id'] == $id || $document['AlleAnzeigen'] == '1') {
-      // Prüfen, ob Betroffen
+      // Prï¿½fen, ob Betroffen
       if ( isset($_REQUEST['Gruppe']) )
       {
         // nur Gruppe anzeigen
@@ -48,7 +48,7 @@ function sortiereTermine($Termine)
         if ( $_REQUEST['Gruppe'] != '' )
         {
           $Gruppen = explode(',',$_REQUEST['Gruppe']);
-          while ( list($nr, $gruppe) = each($Gruppen))
+          foreach ( $Gruppen as $nr => $gruppe)
           {
             if ( in_array($gruppe, explode(',',$value['Gruppe'])) ||
                  in_array(-1, explode(',',$value['Gruppe'])) )
@@ -74,7 +74,7 @@ function sortiereTermine($Termine)
       {
         // nur von Einzelbetroffenen anzeigen
         $Gruppen = explode(',',$_REQUEST['Betroffen']);
-        while ( list($nr, $gruppe) = each($Gruppen))
+        foreach ( $Gruppen as $nr => $gruppe)
         {
           // Person ist klar, nun noch die Gruppen, in denen die Person ist
           $prof = get_profile($gruppe, false);
@@ -94,7 +94,7 @@ function sortiereTermine($Termine)
       {
         // nur von Einzelbetroffenen anzeigen
         $Gruppen = explode(',',$_REQUEST['Selbst']);
-        while ( list($nr, $gruppe) = each($Gruppen))
+        foreach ( $Gruppen as $nr => $gruppe)
         {
           if ( $gruppe == -1 || in_array($gruppe, explode(',',$value['Person'])) )
           {
@@ -121,7 +121,7 @@ function sortiereTermine($Termine)
   return $Termine;
 }
 
-// prüft, ob der Ansehende Mitglied der Gruppe ist
+// prï¿½ft, ob der Ansehende Mitglied der Gruppe ist
 function InGruppe($Gruppe, $prof = -1, $save = true)
 {
   if ( $prof == -1 ) {
@@ -136,7 +136,7 @@ function InGruppe($Gruppe, $prof = -1, $save = true)
   }
   return false;
 }
-// prüft, ob der Ansehende Autor oder Betroffene Person ist
+// prï¿½ft, ob der Ansehende Autor oder Betroffene Person ist
 function InPerson($Person, $author='', $save = true)
 {
   if ( SESSION_STATUS != 'ok' ) return false;
@@ -147,7 +147,7 @@ function InPerson($Person, $author='', $save = true)
 function sendErinnerung($Wem, $document, $Besonderes = '') {
   global $id;
   if ( $Besonderes != '' ) $Besonderes .= "\n\n";
-  if ( strpos($Besonderes,'gelöscht') !== false )
+  if ( strpos($Besonderes,'gelï¿½scht') !== false )
   {
     $Message = 'Termin '.transform($document['title'],'clean').
       ' am '.transform($document['Datum'],'datetime')."\n";
@@ -173,7 +173,7 @@ function sendeAllen($document, $Besonderes = '') {
   $gesendet = false;
   if ( $document['Person'] != '' ) {
     $wer = explode(',',$document['Person']);
-    while ( list($key, $value) = each($wer))
+    foreach ($wer as $key => $value) 
     {
       sendErinnerung($value, $document, $Besonderes);
       $gesendet = true;
@@ -181,7 +181,7 @@ function sendeAllen($document, $Besonderes = '') {
   }
   if ( $document['Gruppe'] != '' ) {
     $wer = explode(',',$document['Gruppe']);
-    while ( list($key, $value) = each($wer)) {
+    foreach ($wer as $key => $value) {
       $qres2 = sql_query ('SELECT user_id FROM '.TABLE_USERDATA.
         " WHERE name = 'group_".$value."' AND value = '1'");
       while ( $row2 = sql_fetch_row($qres2) ) {

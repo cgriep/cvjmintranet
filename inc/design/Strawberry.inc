@@ -107,7 +107,7 @@ $design['module_end']['left']     	=
 '</td><td bgcolor="#ffffff" background="img/strawberry_middle_2.gif" width="22">
 <img src="img/pixel.gif" border="0" width="16" height="1">
 </td></tr></table><img src="img/strawberry_bottom.jpg" /><br />';
-$design_module_end[right]     	= '<br /><br />';
+$design_module_end['right']     	= '<br /><br />';
 
 $design['module_begin']['right']= '
 <p align="left">

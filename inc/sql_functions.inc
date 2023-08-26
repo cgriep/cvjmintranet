@@ -16,7 +16,7 @@ function sql_insert ($table, $values, $debug = FALSE) {
 	
 	$pre = '';
 
-	while(list($key, $value) = each($values)) {
+	foreach ( $values as $key => $value) {
 		if($value !== NULL) {
 			$sql_query .= $pre."$key = '".addslashes($value)."'";
 			$pre = ',';
@@ -37,7 +37,7 @@ function sql_update ($table, $values, $where) {
 	
 	$pre = '';
 
-	while(list($key, $value) = each($values)) {
+	foreach ( $values as $key => $value) {
 		if($value !== NULL) {
 			$sql_query .= $pre."$key = '".addslashes($value)."'";
 			$pre = ',';
@@ -57,7 +57,7 @@ function sql_result_array ($qres, $primary_key) {
 	if(sql_num_rows($qres) == 0) return FALSE;
 
 	while($row = sql_fetch_array($qres)) {
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
 			$result[$row[$primary_key]][$key] = stripslashes($value);
 			}
 		}
@@ -82,7 +82,7 @@ function sql_get_single_row ($table, $where) {
 	if(sql_num_rows($qres) == 1) {
 		$row = sql_fetch_array($qres);
 		sql_free_result($qres);
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
                         $result[$key] = stripslashes($value);
                         }
 		return $result;

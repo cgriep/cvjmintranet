@@ -4,7 +4,7 @@
 init_published_roots();
 reset($published_roots);
 $pre = '&nbsp;';
-        while (list ($docid, $value) = each ($published_roots)) {
+        foreach ($published_roots as $docid => $value)  {
                 echo $pre;
                 if($root_parent_id == $docid || $docid == $id) { echo '<b>';
                 }

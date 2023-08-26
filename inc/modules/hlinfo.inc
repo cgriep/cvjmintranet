@@ -1,4 +1,4 @@
-<?
+<?php
 	/*
 		Created:	2003-04-06
 		Last modified:	2003-04-10

@@ -27,7 +27,7 @@ if(is_numeric($exploded_name[0])) {
 	}
 elseif($exploded_name[0] != 'index') {
         $redirect = file('inc/data/redir_map.conf');
-        while(list($key, $value) = each($redirect)) {
+        foreach ( $redirect as $key => $value) {
                 if($s_pathinfo['dirname'].'/'.strtok($value,"\t") == $_SERVER['REQUEST_URI']) {
                         header("Location: ".$s_pathinfo['dirname'].'/'.trim(strstr($value,"\t")));
                         exit();

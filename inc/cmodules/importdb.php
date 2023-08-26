@@ -4,8 +4,8 @@
   if ( isset($_FILES['KAnfragedatei']['tmp_name']) &&
        $_FILES['KAnfragedatei']['tmp_name'] != '' )
   {
-    mysql_connect("localhost","root","jopodata");
-    mysql_select_db("awf");
+    sql_connect("localhost","root","jopodata");
+    sql_select_db("awf");
     $handle = fopen($_FILES['KAnfragedatei']['tmp_name'],"r");
     // &Uuml;berschrift lesen
     $sql = "INSERT INTO cvjm_Adressen_Kategorie ( F_Adressen_id, F_Kategorie_id ) VALUES (";
@@ -13,22 +13,22 @@
       $zeile = fgets($handle, 4096);
       $sql2 = $sql;
       echo $zeile."<br />";
-      $query = mysql_query("SELECT Adressen_id FROM cvjm_Adressen WHERE Kunden_Nr= ".$zeile);
-      $row = mysql_fetch_array($query);
-      mysql_free_result($query);
+      $query = sql_query("SELECT Adressen_id FROM cvjm_Adressen WHERE Kunden_Nr= ".$zeile);
+      $row = sql_fetch_array($query);
+      sql_free_result($query);
       $sql2 .= $row["Adressen_id"].",40)";
-      if ( ! mysql_query($sql2) ) echo $sql2." ".mysql_error();
-      else echo "Hinzugefügt<br />";
+      if ( ! sql_query($sql2) ) echo $sql2." ".sql_error();
+      else echo "Hinzugefï¿½gt<br />";
       echo $sql2."<br />";
     }
     fclose($handle);
-    mysql_close();
+    sql_close();
   }
   if ( isset($_FILES['Anfragedatei']['tmp_name']) &&
        $_FILES['Anfragedatei']['tmp_name'] != '' )
   {
-    mysql_connect("localhost","root","jopodata");
-    mysql_select_db("awf");
+    sql_connect("localhost","root","jopodata");
+    sql_select_db("awf");
     $handle = fopen($_FILES['Anfragedatei']['tmp_name'],"r");
     // &Uuml;berschrift lesen
     $ueberzeile = fgets($handle, 4096);
@@ -61,18 +61,18 @@
       }
       $sql2 = substr($sql2, 0, strlen($sql2)-1);
       $sql2.= ")";
-      if ( ! mysql_query($sql2) ) echo mysql_error();
-      else echo "Hinzugefügt<br />";
+      if ( ! sql_query($sql2) ) echo sql_error();
+      else echo "Hinzugefï¿½gt<br />";
       echo $sql2."<br />";
     }
     fclose($handle);
-    mysql_close();
+    sql_close();
   }
   if ( isset($_FILES['Listendatei']['tmp_name']) &&
        $_FILES['Listendatei']['tmp_name'] != '' )
   {
-    mysql_connect("localhost","root","jopodata");
-    mysql_select_db("awf");
+    sql_connect("localhost","root","jopodata");
+    sql_select_db("awf");
     $handle = fopen($_FILES['Listendatei']['tmp_name'],"r");
     // &Uuml;berschrift lesen
     $ueberzeile = fgets($handle, 4096);
@@ -95,12 +95,12 @@
       }
       $sql2 = substr($sql2, 0, strlen($sql2)-1);
       $sql2.= ")";
-      if ( ! mysql_query($sql2) ) echo mysql_error();
-      else echo "Hinzugefügt<br />";
+      if ( ! sql_query($sql2) ) echo sql_error();
+      else echo "Hinzugefï¿½gt<br />";
       echo $sql2."<br />";
     }
     fclose($handle);
-    mysql_close();
+    sql_close();
   }
 ?>
 

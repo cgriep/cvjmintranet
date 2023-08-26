@@ -1,4 +1,4 @@
-<?
+<?php
 
 include(dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'inc/database.inc');
 

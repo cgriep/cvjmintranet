@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -34,7 +34,7 @@ if($search_results) {
 	?>
 	<table width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="#ffffff"><tr>
 	<td align="left" bgcolor="<?=$design['table_header']?>">
-	<? printf(LANG_SEARCHED_THIS_SITE, $search); ?>
+	<?php printf(LANG_SEARCHED_THIS_SITE, $search); ?>
 	</td>
 	<td align="right" bgcolor="<?=$design['table_header']?>">
 	<?php printf(LANG_RESULT_COUNT, count($search_results), $search_time); ?>
@@ -44,7 +44,7 @@ if($search_results) {
 	<table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#ffffff">
 	<?php
 	$counter = 0; 
-	while(list($key,$value) = each ($search_results)) {
+	foreach ($search_results as $key =>$value)  {
 		$counter++;
 		echo '<tr><td align="right" bgcolor="'.$design['table_row_dark'].'" valign="top" width="5%">'.$counter.'</td>
 	        <td align="left" bgcolor="'.$design['table_row_bright'].'" valign="top" width="95%">

@@ -16,21 +16,21 @@ if(!isset($_GET['url']) || $_GET['url'] == '') {
 include('inc/database.inc');
 if (!isset($_GET['referer']))
   $_GET['referer'] = ''; 
-mysql_query("UPDATE ".$db_table_prefix."redirect SET views=views+1 WHERE 
+sql_query("UPDATE ".$db_table_prefix."redirect SET views=views+1 WHERE 
 referer='".addslashes($_GET['referer'])."' AND url='".addslashes($_GET['url'])."'"); 
-if(mysql_affected_rows() < 1) {
-	mysql_query("INSERT INTO ".$db_table_prefix."redirect SET views=1, referer='".addslashes($_GET['referer'])."',
+if(sql_affected_rows() < 1) {
+	sql_query("INSERT INTO ".$db_table_prefix."redirect SET views=1, referer='".addslashes($_GET['referer'])."',
 	url='".addslashes($_GET['url'])."'");
-	if(mysql_affected_rows() < 1) {
-		mysql_query("CREATE TABLE ".$db_table_prefix."redirect (id int not null auto_increment, 
+	if(sql_affected_rows() < 1) {
+		sql_query("CREATE TABLE ".$db_table_prefix."redirect (id int not null auto_increment, 
 		url text not null, referer text not null, views int default 1, primary key(id))");
-		mysql_query("INSERT INTO ".$db_table_prefix."redirect SET views=1,
+		sql_query("INSERT INTO ".$db_table_prefix."redirect SET views=1,
 			referer='".addslashes($_GET['referer'])."', url='".addslashes($_GET['url'])."'");
 		}
 	}
 header("Location: ".$_GET['url']); // Redirect browser to $url
 
-mysql_close();
+sql_close();
 
 exit();
 

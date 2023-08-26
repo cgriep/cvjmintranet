@@ -13,7 +13,7 @@ load_lang('adf');
 
 if($children = get_children (0, 100, $doctypes['paragraph'])) {
         reset($children);
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
                 if($value['type_id']==$doctypes['paragraph']) {
                         include(INC_PATH.'misc/paragraph.inc');
                         }
@@ -81,9 +81,9 @@ else 						{ $target_id = $_REQUEST['target_id']; }
 <input type="hidden" name="page" value="<?=$_REQUEST['page']?>" />
 <input type="hidden" name="target" value="<?=$target?>" />
 <input type="hidden" name="target_id" value="<?=$target_id?>" />
-<? if(count($_tabs) > 1) { ?>
+<?php if(count($_tabs) > 1) { ?>
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 while(list($tab, $label) = each($_tabs)) {
 	if($tab == $_REQUEST['page']) {
 		$background = $design['table_row_bright']; 
@@ -102,7 +102,7 @@ while(list($tab, $label) = each($_tabs)) {
 ?>
 <td bgcolor="<?=$design['default_background']?>" width="100%"><img src="img/pixel.gif" width="1" /></td></tr>
 </table>
-<? }
+<?php }
 if($main_node_attr['no_frame'] == 'true') {
 	echo '<table width="100%" cellpadding="'.$design['table_cellpadding'].'" cellspacing="0" border="0">';
 	$_height = 100;
@@ -114,7 +114,7 @@ else {
 ?>
 <tr>
 <td height="<?=$_height?>" valign="top" class="text">
-<?
+<?php
 $elements = $main_node->child_nodes();
 
 while(list($node_id, $node) = each($elements)) {
@@ -162,7 +162,7 @@ case 'list':
 		?><table width="100%" bgcolor="<?=$GLOBALS['design']['table_row_dark']?>" cellpadding="3" cellspacing="1" border="0"><tr>
 		<td class="text" bgcolor="<?=$GLOBALS['design']['table_row_bright']?>" align="center" valign="middle">
 		<input type="text" size="42" name="search" value="<?=$_REQUEST['search']?>" />
-		<input type="submit" name="docinput[start_search]" value="<?=LANG_SEARCH?>" /></td></tr></table><br /><?
+		<input type="submit" name="docinput[start_search]" value="<?=LANG_SEARCH?>" /></td></tr></table><br /><?php
 		}
 	$qres = sql_query(adf_compose_sql_query($tables, $cols, true, '', 0, 0, $_REQUEST['search']));
 	$row  = sql_fetch_row($qres);
@@ -193,7 +193,7 @@ case 'list':
 			alert('You may not change this item or your request was malformed.');
 			// -->
 			</script>
-			<?
+			<?php
 			}
 		}
 
@@ -232,7 +232,7 @@ case 'insert':
 				<?=str_replace('%%id%%', $insert_id, $main_node_attr['oncreate'])?>
 	                        // -->
 	                        </script>
-				<?
+				<?php
 				}
 			}
 		}
@@ -242,19 +242,19 @@ case 'insert':
 		}
 		
 	reset($cols);
-	while(list($key, $value) = each($cols)) {
+	foreach ( $cols as $key => $value) {
 		switch($value['source']) {
 			case 'db_table':
 				switch($value['format']) {
 					case 'random':
 						?>
 						<input type="hidden" name="docinput[insert][<?=$value['name']?>]" value="<?=random_id()?>" />
-						<?
+						<?php
 						break;
 					case 'hidden':
                                                 ?>
                                                 <input type="hidden" name="docinput[insert][<?=$value['name']?>]" value="<?=$value['value']?>" />
-                                                <?
+                                                <?php
                                                 break;
 					case 'number':
 					case 'text':
@@ -308,7 +308,7 @@ case 'insert':
 						<select name="docinput[insert]['.$value['name'].']">'."\n";
 			                        $countries = unserialize(join('', file(INC_PATH.DATA_PATH.'/countries.ser')));
 			                        while(list($ckey, $cvalue) = each($countries)) {
-			                                ?>      <option value="<?=$ckey?>"<? if($docinput['insert'][$value['name']] == $ckey) echo ' selected="true"'; ?>><?=$cvalue?></option><?
+			                                ?>      <option value="<?=$ckey?>"<?php if($docinput['insert'][$value['name']] == $ckey) echo ' selected="true"'; ?>><?=$cvalue?></option><?php
 			                                echo "\n";
 			                                }
 			                        echo '</select>';
@@ -380,22 +380,22 @@ case 'export':
 	$count = $row[0];
 
 	?><p>
-	<span class="text"><?
+	<span class="text"><?php
 	printf(LANG_DUMP_ITEMS, '<input type="text" name="from" value="0" size="7" />', '<input type="text" name="to" size="7" value="'.$count.'" />');
 	?> 
 	<select name="as">
-		<option value="xml"<? if($_REQUEST['as'] == 'xml') echo ' selected="selected"'; ?>>XML</option>
-		<option value="csv"<? if($_REQUEST['as'] == 'csv') echo ' selected="selected"'; ?>>CSV (Comma Separated Values)</option>
-		<option value="tsv"<? if($_REQUEST['as'] == 'tsv') echo ' selected="selected"'; ?>>TSV (Tab Separated Values)</option>
-		<option value="html"<? if($_REQUEST['as'] == 'html') echo ' selected="selected"'; ?>>HTML</option>
+		<option value="xml"<?php if($_REQUEST['as'] == 'xml') echo ' selected="selected"'; ?>>XML</option>
+		<option value="csv"<?php if($_REQUEST['as'] == 'csv') echo ' selected="selected"'; ?>>CSV (Comma Separated Values)</option>
+		<option value="tsv"<?php if($_REQUEST['as'] == 'tsv') echo ' selected="selected"'; ?>>TSV (Tab Separated Values)</option>
+		<option value="html"<?php if($_REQUEST['as'] == 'html') echo ' selected="selected"'; ?>>HTML</option>
 	</select>
 	</span>
-	<p><?
+	<p><?php
 	if(isset($_REQUEST['show_example']) && isset($_REQUEST['as']) && is_numeric($_REQUEST['from']) && is_numeric($_REQUEST['to']) && ($_REQUEST['from'] < $_REQUEST['to'])) {
-		?><span class="pSpaceBold">Example</span><?
-		?><pre><?
-		?><?=htmlentities(wordwrap(adf_dump_example ($_REQUEST['as'], adf_compose_sql_query($tables, $cols, false, $order, $_REQUEST['to']-$_REQUEST['from'], $_REQUEST['from']), $cols, $target), 71, "\n\t"))?><?
-		?></pre><? 
+		?><span class="pSpaceBold">Example</span><?php
+		?><pre><?php
+		?><?=htmlentities(wordwrap(adf_dump_example ($_REQUEST['as'], adf_compose_sql_query($tables, $cols, false, $order, $_REQUEST['to']-$_REQUEST['from'], $_REQUEST['from']), $cols, $target), 71, "\n\t"))?><?php
+		?></pre><?php 
 		}
 	break;
 }
@@ -404,24 +404,24 @@ case 'export':
 </tr>
 <tr>
 <td height="25" valign="top" align="right" class="text">
-<? if(isset($main_node_attr['footnote'])) { ?>
+<?php if(isset($main_node_attr['footnote'])) { ?>
 <?=$main_node_attr['footnote']?>
-<? } ?>
-<? if($main_node_attr['mode'] == 'insert') { ?>
+<?php } ?>
+<?php if($main_node_attr['mode'] == 'insert') { ?>
 	<input type="submit" name="insert" value="<?=LANG_ADD_NOW?>" />
-<? } elseif($main_node_attr['mode'] == 'export') { ?>
-	<? if(!isset($_REQUEST['dump_create']) || !isset($_REQUEST['as']) || !is_numeric($_REQUEST['from']) || !is_numeric($_REQUEST['to']) || ($_REQUEST['from'] > $_REQUEST['to'])) { ?>
+<?php } elseif($main_node_attr['mode'] == 'export') { ?>
+	<?php if(!isset($_REQUEST['dump_create']) || !isset($_REQUEST['as']) || !is_numeric($_REQUEST['from']) || !is_numeric($_REQUEST['to']) || ($_REQUEST['from'] > $_REQUEST['to'])) { ?>
 		<input type="submit" name="show_example" value="<?=LANG_SHOW_EXAMPLE?>" />
 		<input type="submit" name="dump_create" value="<?=LANG_CREATE_DUMP?>" />
-		<? } else { ?> 
+		<?php } else { ?> 
 			<br />
 			<br />
 			<center><a style="font-weight: bolder" href="<?=adf_dump($_REQUEST['as'],adf_compose_sql_query($tables, $cols, false, $order, $_REQUEST['to']-$_REQUEST['from'], $_REQUEST['from']), $cols, $target)?>">Download Dump</a></center>
-			<? } ?> 
-<? } elseif($main_node_attr['mode'] == 'edit') { ?>
+			<?php } ?> 
+<?php } elseif($main_node_attr['mode'] == 'edit') { ?>
 	<input type="hidden" name="save" value="1" />
 	<input type="submit" value="<?=LANG_SAVE?>" />
-	<?
+	<?php
 	if($main_node_attr['onsave'] != '' && $_REQUEST['save'] == '1') {
 		?>
 		<script language="javascript">
@@ -429,7 +429,7 @@ case 'export':
 			<?=str_replace('%%id%%', $insert_id, $main_node_attr['onsave'])?>
 	                // -->
 	        </script>
-		<?
+		<?php
 		}
 
 	} ?>
@@ -437,7 +437,7 @@ case 'export':
 </tr> 
 </table> 
 </form> 
-<?
+<?php
 } else {
 	echo '<p class="pSpace">Error: Access denied.</p>'; 
 	}

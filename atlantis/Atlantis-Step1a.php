@@ -14,7 +14,7 @@ if (session_is_registered('Charakter') && session_is_registered('Magisch') && $_
 	$Charakter = unserialize($_SESSION['Charakter']);
 	if (isset ($_REQUEST['Klasse']) && is_numeric($_REQUEST['Klasse']))
 	{
-		// evtl. vorhandene Spruchlisten löschen
+		// evtl. vorhandene Spruchlisten lï¿½schen
 		$Charakter->Spruchlisten = array ();
 		$Charakter->F_Klasse_id = $_REQUEST['Klasse'];
 		$_SESSION['Charakter'] = serialize($Charakter);		
@@ -25,19 +25,19 @@ if (session_is_registered('Charakter') && session_is_registered('Magisch') && $_
 		require 'Smarty/libs/Smarty.class.php';
 		$smarty = new Smarty;
 
-		if ($query = mysql_query('SELECT * FROM T_Spezialisierungsklassen ' .
+		if ($query = sql_query('SELECT * FROM T_Spezialisierungsklassen ' .
 			'WHERE Magisch AND Auswaehlbar ORDER BY Klasse'))
 		{
 			$klassen_values = array ();
 			$klassen_output = array ();
-			while ($row = mysql_fetch_array($query)) // Zeile holen
+			while ($row = sql_fetch_array($query)) // Zeile holen
 			{
 				$klassen_output[] = $row['Klasse'];
 				$klassen_values[] = $row['Klasse_id'];
 			}
 		} else
-			die('Fehler bei DB:' .	mysql_error());
-		mysql_free_result($query);
+			die('Fehler bei DB:' .	sql_error());
+		sql_free_result($query);
 		$smarty->assign('Character', $Charakter->alsFeld(false));
 		$smarty->assign('PageTitle', 'Auswahl der magischen Klasse');
 		$smarty->assign('mitAjax', true);
@@ -48,7 +48,7 @@ if (session_is_registered('Charakter') && session_is_registered('Magisch') && $_
 	}
 } else
 {
-	// Fehler: Dieses Skript ist nur für magische Charaktere gedacht     
+	// Fehler: Dieses Skript ist nur fï¿½r magische Charaktere gedacht     
 	header('Location: http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/Atlantis-Step2.php');
 }
 ?>

@@ -11,8 +11,8 @@ if ( $profile['editor'] != 1 ) {
     echo "<b>Seiten von ".get_user_nickname($_REQUEST["uid"])."</b><br />";
     $anz = 0;
     while ( $row = sql_fetch_array($qu) ) {
-      $no = get_nodedata($row[node_id], $flavour);
-      echo '<a href="?id='.$row[node_id].'">'.transform($no[title],$no[datatype][title]).'</a><br />';
+      $no = get_nodedata($row['node_id'], $flavour);
+      echo '<a href="?id='.$row['node_id'].'">'.transform($no['title'],$no['datatype']['title']).'</a><br />';
       $anz++;
     }
     echo "<br /><br />";
@@ -37,30 +37,29 @@ if ( $profile['editor'] != 1 ) {
     $sql = "SELECT COUNT(*) FROM ".TABLE_NODEDATA." WHERE name = 'author_id' AND value = '".$row[0]."'";
     if ( $qres2 = sql_query($sql) )
     {
-      $user[$row[0]][views] = $row[1];
-      $user[$row[0]][nickname] = get_user_nickname($row[0]);
-      $user[$row[0]][last_login] = $row[2];
-      $user[$row[0]][id] = $row[0];
+      $user[$row[0]]['views'] = $row[1];
+      $user[$row[0]]['nickname'] = get_user_nickname($row[0]);
+      $user[$row[0]]['last_login'] = $row[2];
+      $user[$row[0]]['id'] = $row[0];
       $rr = sql_fetch_row($qres2);
-      $user[$row[0]][Anzahl] = $rr[0];
+      $user[$row[0]]['Anzahl'] = $rr[0];
     }
     sql_free_result($qres2);
   }
   sql_free_result($qres);
   $sortarray = array();
-  while ( list($key, $value) = each($user) )
+  foreach ($user as $key => $value) 
   {
     $sortarray[] = $value[$Sort];
   }
   array_multisort($sortarray, SORT_DESC, $user);
-  reset($user);
-  while ( list($uid, $value) = each($user) ) {
+  foreach ( $user as $uid => $value) {
     echo "<tr>";
-    echo '<td align="right">'.$value[id]."</td>";
-    echo '<td><a href="?id='.$id.'&uid='.$value[id].'">'.$value[nickname]."</a></td>";
-    echo '</td><td align="right">'.$value[views];
+    echo '<td align="right">'.$value['id']."</td>";
+    echo '<td><a href="?id='.$id.'&uid='.$value['id'].'">'.$value['nickname']."</a></td>";
+    echo '</td><td align="right">'.$value['views'];
     echo '</td><td>'.$value[last_login];
-    echo '</td><td align="right">'.$value[Anzahl];
+    echo '</td><td align="right">'.$value['Anzahl'];
     echo "</td></tr>";
   }
   echo $design['table_end'];

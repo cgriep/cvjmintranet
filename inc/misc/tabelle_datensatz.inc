@@ -62,7 +62,7 @@
   if ( $Sortierfeld != "" ) $Sortierfeld = "ORDER BY $Sortierfeld";
   $sql = "select $Feldnamen from " . $document['Tabelle']." $Auswahlkriterien $Sortierfeld";
   //echo $sql;
-  if ( ! $query = sql_query("SELECT Count(*) FROM ".$document['Tabelle']." $Auswahlkriterien") ) die(mysql_error());
+  if ( ! $query = sql_query("SELECT Count(*) FROM ".$document['Tabelle']." $Auswahlkriterien") ) die(sql_error());
   $row = sql_fetch_row($query);
   sql_free_result($query);
   $Gesamtanzahl = $row[0];
@@ -78,7 +78,7 @@
     $colorswitch = 0;
     include(INC_PATH.'misc/forum_functions.inc');
     $farbe = $design['table_row_bright'];
-    while ( $data = mysql_fetch_array($query))
+    while ( $data = sql_fetch_array($query))
     {
       $Feld = strtok($document['Felder'], "|");
       $Feldanzahl = 0;
@@ -105,9 +105,9 @@
         echo '<td>'.$Feldbez.'</td><td>';
         if ( strpos($Feld, ">" ) === false && strpos($Feld, "*") === false )
         {
-          if ( mysql_field_type($query, $Feldanzahl) == "int" || mysql_field_type($query, $Feldanzahl) == "real")
+          if ( sql_field_type($query, $Feldanzahl) == "int" || sql_field_type($query, $Feldanzahl) == "real")
           {
-            if ( mysql_field_len($query, $Feldanzahl) == 1)
+            if ( sql_field_len($query, $Feldanzahl) == 1)
             {
               // Bool-Wert
               if ($data[$Feld] == 1)
@@ -121,12 +121,12 @@
               echo $data[$Feld];
             }
           }
-          elseif ( mysql_field_type($query, $Feldanzahl) == "datetime" )
+          elseif ( sql_field_type($query, $Feldanzahl) == "datetime" )
           {
             // Datumsfeld
             echo date("d.m.Y H:i",strtotime($data[$Feld]));
           }
-          elseif ( mysql_field_type($query, $Feldanzahl) == "timestamp" )
+          elseif ( sql_field_type($query, $Feldanzahl) == "timestamp" )
           {
             // Datumsfeld
             echo substr($data[$Feld], 8, 2) . ".";

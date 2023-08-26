@@ -30,27 +30,27 @@ if($profile['editor']=='1') {
 	Max per Page<br /><input type="text" name="docdata[ppp]" size="2" maxlength="2" value="<?=$document['ppp']?>">
 	<br /><br />Max total Posts<br /><input type="text" name="docdata[maxposts]" size="3" maxlength="3" value="<?=$document['maxposts']?>">
 	<input type="hidden" name="docdataflavour[ppp]" value="0">
-	<input type="hidden" name="docdataflavour[maxposts]" value="0"><?
+	<input type="hidden" name="docdataflavour[maxposts]" value="0"><?php
 	$result = get_sorted_children($first_item, 100, 'sorttime',$doctypes['guestbook_posting']);
 	if($childcount > 0) {
 		?><br /><br /><?=$design['table_begin']?><tr bgcolor="<?=$design['table_header']?>">
 		<td width="10%" nowrap>Nickname</td>
 		<td width="98%" nowrap>Message</td>
 		<td width="1%" nowrap>Edit</td>
-		<td width="1%" nowrap>Remove</td></tr><?
+		<td width="1%" nowrap>Remove</td></tr><?php
 		}
 	while(list($key, $value) = each($result)) {
 		?><tr bgcolor = "<?=$design['table_row_dark']?>">
 		<td nowrap>[ <a href="mailto:<?=transform($value['email'], 'clean')?>"><?=transform($value['title'], 'clean')?></a> ] </td>
-		<td nowrap><?=transform(substr($value['posting'],0,40), 'clean')?><?
+		<td nowrap><?=transform(substr($value['posting'],0,40), 'clean')?><?php
 		if(strlen($value['posting'])>40){echo '...';}
 		?></td><td nowrap> [ <a href="<?=get_url($key)?>">Edit</a> ]</td>
-		<td nowrap> <input type="checkbox" name="docinput[deleteposting][]" value="<?=$key?>"> Remove</td></tr><?
+		<td nowrap> <input type="checkbox" name="docinput[deleteposting][]" value="<?=$key?>"> Remove</td></tr><?php
 		}
 	if($childcount > 0) {
 		?><tr bgcolor="<?=$design['table_row_dark']?>">
 		<td colspan="3" width="99%">&nbsp;</td>
-		<td nowrap width="1%"><input type="checkbox" name="docinput[delall]" value="true"> Remove All</td></tr><?
+		<td nowrap width="1%"><input type="checkbox" name="docinput[delall]" value="true"> Remove All</td></tr><?php
 		echo $design['table_end'];
 		}
 	if($childcount > 100)  {
@@ -79,20 +79,20 @@ elseif($profile['editor']!='1' && !isset($docinput['newmessage'])) {
 	 	<br /><?=LANG_GUESTBOOK_HOMEPAGE?><br /><input type="text" name="docinput[url]"  size="<?=$design['input_size']?>" maxlength="60" value="http://">
 	 	<br /><?=LANG_MESSAGE?><br /><textarea name="docinput[posting]" cols="<?=$design['input_size']?>" rows="5"></textarea>
 	 	<br /><input type="submit" value="<?=LANG_GUESTBOOK_SIGNIN?>">
-	 	</form><?
+	 	</form><?php
 		
 		$result = get_sorted_children ($first_item ,$document['ppp'], 'sorttime',$doctypes['guestbook_posting']);
 		if($childcount > 0) echo '<br />'.$design['table_begin'];
 		while(list($key, $value) = each($result)) {
-			?><tr bgcolor = "<?=$design['table_row_dark']?>"><td width="70%"><?=LANG_NICKNAME?> [ <? 
-			if(ereg('@',$value['email'])) { ?><a href="mailto:<?=transform($value['email'], 'clean')?>"><?=transform($value['title'], 'clean')?></a><? }
+			?><tr bgcolor = "<?=$design['table_row_dark']?>"><td width="70%"><?=LANG_NICKNAME?> [ <?php 
+			if(ereg('@',$value['email'])) { ?><a href="mailto:<?=transform($value['email'], 'clean')?>"><?=transform($value['title'], 'clean')?></a><?php }
 			else { echo transform($value['title'], 'clean'); }
-			?> ] <?=LANG_GUESTBOOK_HOMEPAGE?> [ <?
+			?> ] <?=LANG_GUESTBOOK_HOMEPAGE?> [ <?php
 			if(strlen($value['url']) > 11 )  { echo'<a href="'.transform($value['url'], 'clean').'" target="_blank">'.$value['url'].'</a>'; }
 			else { echo 'none'; }
 			?> ]</td><td width="1%" nowrap><?=LANG_GUESTBOOK_POSTEDAT?> <?=transform($value['sorttime'], 'datetime')?>
 			</td></tr><tr bgcolor="<?=$design['table_row_bright']?>"><td colspan="2"><?=transform($value['posting'], 'usertext')?>
-			</td></tr><?
+			</td></tr><?php
 			}
 	if($childcount > 0) echo $design['table_end'];
 	if($childcount > $document['ppp']) {

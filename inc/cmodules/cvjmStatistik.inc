@@ -202,7 +202,7 @@ if ( $profile['editor'] != 1 )
     "' AND Rechnung=1 AND NOT Storno AND BStatus<=".BUCHUNG_FERTIG.
     ' AND BStatus <> '.BUCHUNG_STORNIERT.' AND '.$Jahr.
     ' GROUP BY YEAR(FROM_UNIXTIME(Datum)),MONTH(FROM_UNIXTIME(Datum)),F_Artikel_Nr'))
-    echo mysql_error();
+    echo sql_error();
   $paket = array();
   while ( $eintrag = sql_fetch_array($query) )
   {
@@ -263,7 +263,7 @@ if ( $profile['editor'] != 1 )
     "' AND Rechnung=1 AND NOT Storno AND BStatus<=".BUCHUNG_FERTIG.
     ' AND BStatus<>'.BUCHUNG_STORNIERT.' AND '.$Jahr.
     ' GROUP BY YEAR(FROM_UNIXTIME(Datum)),MONTH(FROM_UNIXTIME(Datum)),F_Artikel_Nr'))
-    echo mysql_error();
+    echo sql_error();
   $paket = array();
   while ( $eintrag = sql_fetch_array($query) )
   {
@@ -323,18 +323,18 @@ if ( $profile['editor'] != 1 )
   } // wenn Jahr übergeben wurde
   echo '<form action="" method="post">';
   echo 'Jahr ';
-  $query = mysql_query('SELECT DISTINCT FROM_UNIXTIME(Datum,"%Y") FROM '.
+  $query = sql_query('SELECT DISTINCT FROM_UNIXTIME(Datum,"%Y") FROM '.
      TABLE_RECHNUNGSEINTRAEGE.' ORDER BY Datum DESC');
   echo '<select name="docinput[Jahr]">';
   echo '<option value="-1">-alle-</option>';
-  while ( $jahr = mysql_fetch_row($query))  
+  while ( $jahr = sql_fetch_row($query))  
   {  	
   	 echo '<option ';
   	 if ( $jahr[0] == date('Y') ) echo 'selected="selected"';
      echo '>'.$jahr[0].'</option>'."\n";
   }
   echo '</select> ';
-  mysql_free_result($query); 
+  sql_free_result($query); 
   echo '<input type="submit" value="Anzeigen" />';
   echo '</form>';
 }

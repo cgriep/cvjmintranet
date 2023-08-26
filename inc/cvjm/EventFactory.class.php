@@ -13,12 +13,12 @@ class EventFactory
 	static function getEvent($event_id)
 	{
 		$sql = 'SELECT Art FROM '.TABLE_EVENTS.' WHERE Event_id='.$event_id;
-		$query = mysql_query($sql);
-		if ( ! $Event = mysql_fetch_array($query))
+		$query = sql_query($sql);
+		if ( ! $Event = sql_fetch_array($query))
 		{
 				throw new Exception('EventFactory: Konnte ID '.$event_id.' nicht laden!');
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		switch ( $Event[0] )
 		{
 			case EVENT_ART_TERMIN:

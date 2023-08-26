@@ -50,7 +50,7 @@ if ( $profile['editor'] != 1 )
       	else
       	{
       		// nach Kunde suchen
-			$Where = 'Name LIKE "%'.mysql_real_escape_string($_REQUEST['Search']).'%"';
+			$Where = 'Name LIKE "%'.sql_real_escape_string($_REQUEST['Search']).'%"';
       	}
       }
     }

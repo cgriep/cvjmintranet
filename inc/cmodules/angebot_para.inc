@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -47,7 +47,7 @@
         <br /><br /><?=LANG_GUELTIG_BIS?> (JJJJ-MM-DD)<br />
         <input type="text" name="docinput[expiration]"  size="<?=$design['input_size']?>"
         maxlength="20" value="<?=date("Y-m-d",$document["expiration_date"])?>" />
-        <br /><br /><input type="submit" name="saveangebot" value="<?=LANG_SUBMIT?>"></form><?
+        <br /><br /><input type="submit" name="saveangebot" value="<?=LANG_SUBMIT?>"></form><?php
     }
     else {
       $docid = $id;

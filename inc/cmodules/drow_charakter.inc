@@ -33,7 +33,7 @@ $xajax->printJavascript('./Skripte');
 
 if ( $document['Charakter_id'] == '')
 {
-	die('Ungültiger Charakter '.$document['Charakter_id']);
+	die('Ungï¿½ltiger Charakter '.$document['Charakter_id']);
 }
 
 $bbasedir = get_dir_name('files',$id).'/published/';
@@ -100,41 +100,41 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 		if ( isset($_REQUEST['E']) && is_numeric($_REQUEST['E']) && isset($_REQUEST['Eid']) && is_numeric($_REQUEST['Eid']))
 		{
 			// Eigenschaft entfernen
-			mysql_query('DELETE FROM T_Charakter_Eigenschaften WHERE F_Charakter_id='.$document['Charakter_id'].
+			sql_query('DELETE FROM T_Charakter_Eigenschaften WHERE F_Charakter_id='.$document['Charakter_id'].
 			' AND F_Eigenschaft_id='.$_REQUEST['E'].' AND EC_id='.$_REQUEST['Eid']);
-			if ( $veraenderbar && mysql_affected_rows() > 0 )
+			if ( $veraenderbar && sql_affected_rows() > 0 )
 			{
-				// Punkte ergänzen
-				$query = mysql_query('SELECT Erfahrungspunkte FROM T_Eigenschaften WHERE Eigenschaft_id='.$_REQUEST['E']);
-				$row = mysql_fetch_row($query);
-				mysql_free_result($query);
+				// Punkte ergï¿½nzen
+				$query = sql_query('SELECT Erfahrungspunkte FROM T_Eigenschaften WHERE Eigenschaft_id='.$_REQUEST['E']);
+				$row = sql_fetch_row($query);
+				sql_free_result($query);
 				$punkte = $row[0];
 				$sql = 'SELECT Sum(Erfahrungspunkte) FROM T_Charakter_Eigenschaften INNER JOIN T_Eigenschaften ON '.
 				'Eigenschaft_id=F_Eigenschaft_id WHERE F_Charakter_id='.$document['Charakter_id'];
-				$query = mysql_query($sql);
-				$row = mysql_fetch_row($query);
-				mysql_free_result($query);
+				$query = sql_query($sql);
+				$row = sql_fetch_row($query);
+				sql_free_result($query);
 				if ( $row[0] >= 100 )
 				{
 					// nur Hauspunkte verwendet
-					if  ( ! mysql_query('UPDATE T_Haeuser SET HausEP=HausEP+'.$punkte.' WHERE Haus_id='.$charakter['F_Haus_id']))
-					echo mysql_error();
+					if  ( ! sql_query('UPDATE T_Haeuser SET HausEP=HausEP+'.$punkte.' WHERE Haus_id='.$charakter['F_Haus_id']))
+					echo sql_error();
 				}
 				else
 				{
 					if ( $row[0] + $punkte <= 100 )
 					{
 						// nur Punkte anpassen
-						if (! mysql_query('UPDATE T_Charaktere SET EP=EP+'.$punkte.' WHERE Charakter_id='.$charakter['Charakter_id']))
-						echo mysql_error();
+						if (! sql_query('UPDATE T_Charaktere SET EP=EP+'.$punkte.' WHERE Charakter_id='.$charakter['Charakter_id']))
+						echo sql_error();
 						$charakter['EP'] += $punkte;
 					}
 					else
 					{
-						if (! mysql_query('UPDATE T_Charaktere SET EP=EP+'.(100-$row[0]).' WHERE Charakter_id='.$charakter['Charakter_id']))
-						echo mysql_error();
-						if ( ! mysql_query('UPDATE T_Haeuser SET HausEP=HausEP+'.($punkte+$row[0]-100).' WHERE Haus_id='.$charakter['F_Haus_id']))
-						echo mysql_error();
+						if (! sql_query('UPDATE T_Charaktere SET EP=EP+'.(100-$row[0]).' WHERE Charakter_id='.$charakter['Charakter_id']))
+						echo sql_error();
+						if ( ! sql_query('UPDATE T_Haeuser SET HausEP=HausEP+'.($punkte+$row[0]-100).' WHERE Haus_id='.$charakter['F_Haus_id']))
+						echo sql_error();
 						$charakter['EP'] += 100-$row[0];
 					}
 				}
@@ -145,7 +145,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 	?>
 
 <br />
-	<?
+	<?php
 
 	if ( isset($_REQUEST['Ref']))
 	echo 'Zur&uuml;ck zur <a href="?id='.$_REQUEST['Ref'].
@@ -174,8 +174,8 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 	{
 		print '<select name="charakter[F_Haus_id]">';
 		$sql = 'SELECT Haus_id, Hausname FROM T_Haeuser ORDER BY Hausname';
-		$query = mysql_query($sql);
-		while ( $row = mysql_fetch_array($query))
+		$query = sql_query($sql);
+		while ( $row = sql_fetch_array($query))
 		{
 			echo '<option value="'.$row['Haus_id'].'" ';
 			if ( $row['Haus_id'] == $charakter['F_Haus_id'])
@@ -184,7 +184,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 			}
 			echo '>'.$row['Hausname'].'</option>';
 		}
-		mysql_free_result($query);		
+		sql_free_result($query);		
 		print '</select>';		
 	}
 	else
@@ -206,7 +206,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 	{
 		echo 'in Erstellung';
 		$klasseveraenderbar = true;
-		// prüfen ob bereits Eigenschaften vorhanden sind, die die Klassenänderung verhindern
+		// prï¿½fen ob bereits Eigenschaften vorhanden sind, die die Klassenï¿½nderung verhindern
 		$sql = 'SELECT Count(*) FROM T_Charakter_Eigenschaften INNER JOIN T_Eigenschaften ON Eigenschaft_id=F_Eigenschaft_id '.
 		'WHERE (';
 
@@ -218,16 +218,16 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 			}
 		}
 		$sql .= '0) AND F_Charakter_id='.$charakter['Charakter_id'];
-		$query = mysql_query($sql);
-		if ( $row = mysql_fetch_row($query))
+		$query = sql_query($sql);
+		if ( $row = sql_fetch_row($query))
 		{
 			if ( $row[0] > 0) $klasseveraenderbar = false;
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 
 		if ( $profile['SteinsbergSL'] == 1  )
 		{
-			echo ' / SL geprüft: <input type="checkbox" value="1" name="docinput[geprueft]" />';
+			echo ' / SL geprï¿½ft: <input type="checkbox" value="1" name="docinput[geprueft]" />';
 		}
 	}
 	else
@@ -240,7 +240,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 <tr>
 	<td>Adlig</td>
 	<td id="Adel"><?php
-	if ( $profile['SteinsbergSL'] == 1 || $veraenderbar && $charakter['F_Rasse_id'] == 1) // nur Drow können adlig sein
+	if ( $profile['SteinsbergSL'] == 1 || $veraenderbar && $charakter['F_Rasse_id'] == 1) // nur Drow kï¿½nnen adlig sein
 	{
 		echo '<input type="checkbox" name="charakter[Adlig]" id="charakter[Adlig]"
 value="1" onChange="xajax_zeigeGunst('.$charakter['Charakter_id'].
@@ -285,14 +285,14 @@ value="1" onChange="xajax_zeigeGunst('.$charakter['Charakter_id'].
 		echo '<select name="charakter[F_Rasse_id]" id="charakter[F_Rasse_id]" onChange="xajax_sichereRasse('.
 		$charakter['Charakter_id'].',document.getElementById(\'charakter[F_Rasse_id]\').value)">';
 		$sql = 'SELECT Rasse, Rasse_id FROM T_Rassen ORDER BY Rasse';
-		$query = mysql_query($sql);
-		while ( $row = mysql_fetch_array($query))
+		$query = sql_query($sql);
+		while ( $row = sql_fetch_array($query))
 		{
 			echo '<option value="'.$row['Rasse_id'].'" ';
 			if ( $charakter['F_Rasse_id'] == $row['Rasse_id']) echo 'selected="selected"';
 			echo '>'.$row['Rasse'].'</option>';
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		echo '</select>';
 	}
 	else
@@ -332,8 +332,8 @@ onChange="xajax_zeigeGunststufe('.$charakter['Charakter_id'].',document.getEleme
 		',document.getElementById(\'charakter[Adlig]\').checked,
 document.getElementById(\'charakter[F_Position_id]\').value)">';
 		$sql = 'SELECT Position, Position_id FROM T_Positionen ORDER BY Position';
-		$query = mysql_query($sql);
-		while ( $row = mysql_fetch_array($query))
+		$query = sql_query($sql);
+		while ( $row = sql_fetch_array($query))
 		{
 			echo '<option value="'.$row['Position_id'].'" ';
 			if ( $charakter['F_Position_id'] == $row['Position_id'])
@@ -344,7 +344,7 @@ document.getElementById(\'charakter[F_Position_id]\').value)">';
 			}
 			echo '>'.$row['Position'].'</option>';
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		echo '</select>';
 	}
 	else
@@ -360,14 +360,14 @@ document.getElementById(\'charakter[F_Position_id]\').value)">';
 		echo '<select name="charakter[F_Gunststufe_id]" id="charakter[F_Gunststufe_id]" onChange="xajax_sichereGunststufe('.
 		$charakter['Charakter_id'].',document.getElementById(\'charakter[F_Gunststufe_id]\').value)">';
 		$sql = 'SELECT '.$charakter['Klasse'].', Gunststufe_id FROM T_Gunststufen ORDER BY Gunststufe_id';
-		$query = mysql_query($sql);
-		while ( $row = mysql_fetch_array($query))
+		$query = sql_query($sql);
+		while ( $row = sql_fetch_array($query))
 		{
 			echo '<option value="'.$row['Gunststufe_id'].'" ';
 			if ( $charakter['F_Gunststufe_id'] == $row['Gunststufe_id']) echo 'selected="selected"';
 			echo '>'.$row[$charakter['Klasse']].'</option>';
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		echo '</select>';
 	}
 	else
@@ -385,7 +385,7 @@ document.getElementById(\'charakter[F_Position_id]\').value)">';
 	title="Gunstpunkte" value="'.$charakter['Gunstpunkte'].'" onChange="xajax_sichereGunstpunkte('.$charakter['Charakter_id'].
 		',document.getElementById(\'charakter[Gunstpunkte]\').value)" />';
 		echo '<input type="text" name="charakter[Gunstpunkte_Temp]" id="charakter[Gunstpunkte_Temp]" size="5"
-	title="Temporäre Gunstpunkte" value="'.$charakter['Gunstpunkte_Temp'].'" />';
+	title="Temporï¿½re Gunstpunkte" value="'.$charakter['Gunstpunkte_Temp'].'" />';
 	}
 	else
 	{
@@ -406,11 +406,11 @@ document.getElementById(\'charakter[F_Position_id]\').value)">';
 	{
 		echo $charakter['EP'];
 	}
-	$query = mysql_query('SELECT Hausep FROM T_Haeuser WHERE Haus_id='.$charakter['F_Haus_id']);
-	$punkte = mysql_fetch_row($query);
+	$query = sql_query('SELECT Hausep FROM T_Haeuser WHERE Haus_id='.$charakter['F_Haus_id']);
+	$punkte = sql_fetch_row($query);
 	$hausep = $punkte[0];
 	echo ' / Haus: '.$hausep;
-	mysql_free_result($query);
+	sql_free_result($query);
 	?></td>
 </tr>
 <tr>
@@ -436,7 +436,7 @@ if ($profile['SteinsbergSL'] == '1' )
 {
 	?> 
 <tr>
-	<td colspan="5">Hinweise der SL zum Charakter (nur sichtbar für SL)<br />
+	<td colspan="5">Hinweise der SL zum Charakter (nur sichtbar fï¿½r SL)<br />
 	<textarea name="charakter[SLBemerkungen]" cols="60" rows="5"><?=$charakter['SLBemerkungen']?></textarea></td>
 </tr>
 <?php } ?>
@@ -457,9 +457,9 @@ if ($profile['SteinsbergSL'] == '1' )
 	<?php
 	$sql = 'SELECT * FROM T_Eigenschaften INNER JOIN T_Charakter_Eigenschaften ON F_Eigenschaft_id=Eigenschaft_id '.
 	'WHERE F_Charakter_id='.$charakter['Charakter_id'].' ORDER BY Eigenschaftsname';
-	$query = mysql_query($sql);
+	$query = sql_query($sql);
 	$summe = 0;
-	while ( $row = mysql_fetch_array($query))
+	while ( $row = sql_fetch_array($query))
 	{
 		echo '<tr>';
 		echo '<td colspan="2">'.$row['Eigenschaftsname'].'</td>';
@@ -476,16 +476,16 @@ if ($profile['SteinsbergSL'] == '1' )
 		echo '</td>';
 		echo '</tr>';
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	echo '<tr><td colspan="2"><b>EP Gesamt</b></td></td></td><td>'.$summe;
 	echo '</td></tr>';
-	// TODO : Min+MaxEP berücksichtigen
+	// TODO : Min+MaxEP berï¿½cksichtigen
 
 	if ( $profile['SteinsbergSL'] == 1 || $veraenderbar && ($hausep > 0 || $charakter['EP']>0 ) )
 	{
 		$summe = $charakter['EP'];
 		if ( $veraenderbar ) $summe += $hausep;
-		// Fertigkeiten hinzufügen
+		// Fertigkeiten hinzufï¿½gen
 		echo '<tr>';
 		if ( $profile['SteinsbergSL'] == 1 )
 		{
@@ -503,8 +503,8 @@ if ($profile['SteinsbergSL'] == '1' )
 		//' AND Eigenschaft_id NOT IN (SELECT F_Eigenschaft_id FROM '.
 		//'T_Charakter_Eigenschaften WHERE F_Charakter_id='.$charakter['Charakter_id'].')
 		' ORDER BY Eigenschaftsname';
-		$query = mysql_query($sql);
-		if ( mysql_num_rows($query) > 0 )
+		$query = sql_query($sql);
+		if ( sql_num_rows($query) > 0 )
 		{
 			if ( $profile['SteinsbergSL'] == '1')
 			{
@@ -512,7 +512,7 @@ if ($profile['SteinsbergSL'] == '1' )
 			}
 			echo '<select name="Fertigkeit" id="Fertigkeit" '.
 			'onChange="xajax_zeigeFertigkeit('.$charakter['Charakter_id'].',document.getElementById(\'Fertigkeit\').value)">';
-			while ($row = mysql_fetch_array($query))
+			while ($row = sql_fetch_array($query))
 			{
 				echo '<option value="'.$row['Eigenschaft_id'].'">'.$row['Eigenschaftsname'].' ('.$row['Art'].'/'.$row['Erfahrungspunkte'].')</option>';
 			}
@@ -520,13 +520,13 @@ if ($profile['SteinsbergSL'] == '1' )
 		}
 		else
 		{
-			echo 'Es gibt keine Fertigkeiten die der Charakter erwerben könnte.';
+			echo 'Es gibt keine Fertigkeiten die der Charakter erwerben kï¿½nnte.';
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		echo '</td>';
 		echo '</tr>';
 		echo '<tr><td colspan="2" id="Fertigkeitsbeschreibung"></td><td id="Fertigkeitsgunststufe"></td></tr>';
-		echo '<tr><td colspan="5" align="center"><input type="submit" value="Hinzufügen" /></td></tr>';
+		echo '<tr><td colspan="5" align="center"><input type="submit" value="Hinzufï¿½gen" /></td></tr>';
 	}
 	?>
 <tr>
@@ -555,7 +555,7 @@ if ( file_exists($bbasedir.'Spielerbild.jpg') ) {
 <input type="submit" name="savechar" value="Bild hochladen" /></form>
 </p>
 <p><a target="_Blank" href="/DrowCharakterbogen.class.php">Charakterbogen (PDF)</a></p>
-<?
+<?php
 $_SESSION['Charakter_id'] = $charakter['Charakter_id'];
 $_SESSION['id'] = $id;
 if ( isset($_REQUEST['Ref']))

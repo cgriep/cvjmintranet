@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -28,7 +28,7 @@ function sendicqmessage(user_id)
 // -->
 </script> 
 
-<?
+<?php
 
 if(SESSION_STATUS == 'ok') {
 	$friends = load_var('friends', SESSION_DBID);
@@ -66,14 +66,14 @@ else {
 	<input type="text" name="search" value="<?=stripslashes($search)?>" size="30" />&nbsp;
 	<input type="submit" value="<?=LANG_SEARCH?>" />
 	</form>
-	<? if(count($users) < 1) {
+	<?php if(count($users) < 1) {
 		echo LANG_NO_USER_RESULTS;
 		}
 	else { 
 		printf(LANG_USER_RESULTS.'<br /><br />', count($users));
 		echo $design['table_begin'];
 
-		while(list($key, $value) = each ($users)) { 
+		foreach ( $users as $key => $value)  { 
 			include(INC_PATH.'misc/memberlist.inc');
 			}
 

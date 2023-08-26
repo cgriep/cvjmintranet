@@ -49,7 +49,7 @@ if ( $profile["editor"] != 1 )
       " ON id=Artikel_Nr) INNER JOIN ".TABLE_ARTIKELARTEN." ON F_Art_id=Art_id ".
       " WHERE F_Preisliste_id=".$docinput["Preisliste"].$Where.
       " ORDER BY Art, Bezeichnung";
-   if (!$query = sql_query($sql)) echo mysql_error();
+   if (!$query = sql_query($sql)) echo sql_error();
     $Artikel = array();
     while ( $artikel = sql_fetch_array($query) )
     {

@@ -56,7 +56,7 @@ if($profile['simple_edit'] == 1) { ?>
                 &nbsp;<span title="Check, if the search function is allowed to find this document.">Searchable</span>
                 </td><td>
 		<input type="checkbox" value="1" name="doc[cacheable]"<?php if($document['cacheable'] == 1) echo ' CHECKED'; ?>>
-		&nbsp;<span title="Check, if you want this document to be cached.<? if(CACHE_TIME == 0) echo ' Note: You will have to enable the caching feature in admin/config.php too, as it is disabled at the moment.' ?>">Allow caching</span>
+		&nbsp;<span title="Check, if you want this document to be cached.<?php if(CACHE_TIME == 0) echo ' Note: You will have to enable the caching feature in admin/config.php too, as it is disabled at the moment.' ?>">Allow caching</span>
                 </td></tr><tr><td>
 		<span title="Optional keywords that will be used in HTML meta tags.">Meta-Keywords</span><br />
 		<input type="text" size="20" name="docdata[keywords]" value="<?=$document['keywords']?>">

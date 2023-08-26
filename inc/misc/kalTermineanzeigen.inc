@@ -2,7 +2,7 @@
 
 /**
  * Zeigt die aktiven Termine des Tages des eingeloggten Benutzers an
- * wird auf der Startseite verwendet, um einen Überblick über die anstehenden Dinge zu
+ * wird auf der Startseite verwendet, um einen ï¿½berblick ï¿½ber die anstehenden Dinge zu
  * erhalten.
  * 
  */
@@ -37,7 +37,7 @@ function sucheTermine($Tag, $Monat, $Jahr)
 	{
 		$fTermine = array();
 	}
-	while ( list($key, $value) = each($fTermine) )
+	foreach ( $fTermine as $key => $value)
 	{
 		if ( $value['Enddatum'] > mktime(23,59,59,$Monat,$Tag,$Jahr) )
 		{
@@ -52,7 +52,7 @@ function sucheTermine($Tag, $Monat, $Jahr)
 	{
 		$fTermine = array();
 	}
-	while ( list($key, $value) = each($fTermine) )
+	foreach ( $fTermine as $key => $value)
 	{
 		if ( $value['Datum'] < $Datum )
 		{
@@ -68,7 +68,7 @@ function sucheTermine($Tag, $Monat, $Jahr)
 	{
 		$fTermine = array();
 	}
-	while (list($key, $value) = each($fTermine) )
+	foreach ( $fTermine as $key => $value) 
 	{
 		if (($value['TurnusEnde'] == 0 ||
 		$value['TurnusEnde'] >= $Datum) &&
@@ -149,7 +149,7 @@ function sucheTermine($Tag, $Monat, $Jahr)
 		}
 		$Termine = sortiereTermine($Termine);
 	}
-	// Neue Terminstruktur - über Events 
+	// Neue Terminstruktur - Ã¼ber Events 
 	$fTermine = Event::searchEvents($Datum);
 	foreach ( $fTermine as $termin )
 	{
@@ -210,21 +210,22 @@ for ( $i=0; $i< 3; $i++)
 		}
 		if ( strtotime("$Jahr-$Monat-$Tag 23:59") < $value['Enddatum'] )
 		{
-			echo ' (ganztägig!)';
+			echo ' (ganztÃ¤gig!)';
 		}
 		switch ( $value['Turnus'] )
 		{
-			case 'd': echo ' täglich';
+			case 'd': echo ' tÃ¤glich';
 			break;
-			case 'w': echo ' wöchentlich';
+			case 'w': echo ' wÃ¶chentlich';
 			break;
 			case 'm': echo ' monatlich';
 			break;
-			case 'j': echo ' jährlich';
+			case 'j': echo ' jÃ¤hrlich';
 		}
 		echo '">'.transform($value['title'],'clean').'</a>';
 		echo '</div>';
 	}
+	if ( !is_array($Termine) ) { $Termine = array(); } 
 	echo '<div align="center"><strong>'.count($Termine).' Termine</strong></div>';
 	echo '</td>';
 	$Datum = strtotime('+1 day', $Datum);

@@ -1,5 +1,5 @@
 #!/usr/bin/php -q
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -63,7 +63,7 @@ $children = get_sorted_children (0, 10, 'timestamp', $doctypes['newsitem'], get_
 
 if(isset($children)) {
         reset($children);
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
 	fwrite($fp,
 '
 <item>

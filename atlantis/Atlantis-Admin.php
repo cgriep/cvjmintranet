@@ -2,7 +2,7 @@
 
 
 /**
- * Administrationsoberfläche für die Atlantis-Daten
+ * Administrationsoberflï¿½che fï¿½r die Atlantis-Daten
  * 2006 Christoph Griep
  */
 include ('atlantis.db.php');
@@ -13,18 +13,18 @@ include('atlantis.export.php');
 $feld = array();
 if ($sql != '')
 {
-	if(!$query = mysql_query($sql)) 
+	if(!$query = sql_query($sql)) 
 	{
-	  echo 'Fehler: '.$sql.'/'.mysql_error();	
+	  echo 'Fehler: '.$sql.'/'.sql_error();	
 	}
-	while ($zeile = mysql_fetch_array($query))
+	while ($zeile = sql_fetch_array($query))
 	{
 		$z = array();		
 		foreach ( $zeile as $key => $value )
 		{
 			if ( !is_numeric($key) && $key != $gruppe )
 			{
-				// Bilder Berücksichtigen 
+				// Bilder Berï¿½cksichtigen 
 			    if ( $key == 'Bild' && $id != '')
 			    {
 			    	$z[$key] = '<a href="zeigeBild.php?'.$id.'='.$zeile[$id.'_id'].
@@ -40,7 +40,7 @@ if ($sql != '')
 		else
 		  $feld[$action][] = $z;
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 }
 
 require 'Smarty/libs/Smarty.class.php';

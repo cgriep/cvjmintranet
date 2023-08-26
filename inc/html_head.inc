@@ -25,12 +25,12 @@ echo '<?xml version="1.0" encoding="'.FLAVOUR_CHARSET.'"?>';
 	<meta name="generator" content="adaptive website framework" />
 	<meta name="description" content="<?=$meta_description?>" />
 	<meta name="author" content="<?=$meta_author?>" />
-	<meta name="keywords" content="<?=$meta_keywords?>" /><?
+	<meta name="keywords" content="<?=$meta_keywords?>" /><?php
 
 	if(defined('URL_REWRITE') && URL_REWRITE == 1) { ?>
 
 	<base href="<?=get_base_url()?>" />
-<? }
+<?php }
 	include(BASE_PATH.INC_PATH."javascript.inc");
 	include(BASE_PATH.INC_PATH."css.inc");
 	?>

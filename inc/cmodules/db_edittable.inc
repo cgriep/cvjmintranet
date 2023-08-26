@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         The author is Christoph Griep (cgriep@fricom.com)
         Last update: 11.07.2003
@@ -37,7 +37,7 @@ if ( $profile['editor'] != "1" ) {
           echo "Datensatz gel&ouml;scht!<br />";
         else
           echo "Fehler beim L&ouml;schen!<br />";
-        //echo mysql_error();
+        //echo sql_error();
       }
     }
     else
@@ -99,7 +99,7 @@ if ( $profile['editor'] != "1" ) {
         
         if ( sql_query($sql) )
           echo "<b><i>&gt;&gt;&gt;Daten erfolgreich gesichert!</i></b><br />";
-        else echo "<b>Fehler: ".mysql_error()."</b> $sql<br />";
+        else echo "<b>Fehler: ".sql_error()."</b> $sql<br />";
       }
       if ( $_REQUEST[$document['IDFeld']] != "" )
           $sql = "select $Feldnamen from " . $document['Tabelle']." WHERE " .
@@ -118,19 +118,19 @@ if ( $profile['editor'] != "1" ) {
            echo LANG_SAVEDATA.'</i></b></td></tr>';
          }
          if ( isset($_REQUEST[$document['IDFeld']]) && $_REQUEST[$document['IDFeld']] != "" )
-           $data = mysql_fetch_array($query);
+           $data = sql_fetch_array($query);
          else
            unset($data);
          $i = 0;
-         while ( $i < mysql_num_fields($query) )
+         while ( $i < sql_num_fields($query) )
          {
-           $feld = mysql_fetch_field($query, $i);
+           $feld = sql_fetch_field($query, $i);
            unset($Werte);
            if ( isset($Auswahlfelder[$feld->name]) ) {
                // Auswahlbox
                $Werte = array();
                if ( ! $subquery = sql_query($Auswahlfelder[$feld->name]) )
-                 echo "Fehler: ".mysql_error();
+                 echo "Fehler: ".sql_error();
                while ( $row = sql_fetch_row($subquery) )
                {
                  $Werte[$row[0]] = $row[1];
@@ -140,14 +140,14 @@ if ( $profile['editor'] != "1" ) {
            echo "<tr><td>";
            echo $feld->name . "</td><td>";
            $nochWas = true;
-           if ( $feld->type == "int" && mysql_field_len($query, $i) == 1 )
+           if ( $feld->type == "int" && sql_field_len($query, $i) == 1 )
            {
              // bool-Type
              if ( $Bearbeiten ) {
              ?>
-             <input type="radio" value="1" name="<?=$feld->name?>"<? if($data[$i] == '1') echo ' CHECKED'; ?> /> Ja&nbsp;&nbsp;
-             <input type="radio" value="0" name="<?=$feld->name?>"<? if($data[$i] == '0') echo ' CHECKED'; ?> /> Nein
-             <?
+             <input type="radio" value="1" name="<?=$feld->name?>"<?php if($data[$i] == '1') echo ' CHECKED'; ?> /> Ja&nbsp;&nbsp;
+             <input type="radio" value="0" name="<?=$feld->name?>"<?php if($data[$i] == '0') echo ' CHECKED'; ?> /> Nein
+             <?php
              } else
                if ( $data[$i] == "1" ) echo "Ja"; else echo "Nein";
              $nochWas = false;
@@ -188,9 +188,9 @@ if ( $profile['editor'] != "1" ) {
            }
            $len = 40;
            if ( $nochWas ) {
-             if ( mysql_field_len($query, $i) > 0 ) {
-               echo 'maxlength="' . mysql_field_len($query, $i) . '" ';
-               if ( mysql_field_len($query, $i) < 40 ) $len = mysql_field_len($query, $i) + 2;
+             if ( sql_field_len($query, $i) > 0 ) {
+               echo 'maxlength="' . sql_field_len($query, $i) . '" ';
+               if ( sql_field_len($query, $i) < 40 ) $len = sql_field_len($query, $i) + 2;
              }
              echo 'size="' . $len . '">';
            }
@@ -208,7 +208,7 @@ if ( $profile['editor'] != "1" ) {
           echo '</td></tr><tr><td colspan="2"><hr /></td></tr>';
           $query = sql_query("SELECT ".$document["IDFeld"]." FROM ".$document["Tabelle"].
             " WHERE ".$document["IDFeld"]." = ''");
-          if ( strpos(mysql_field_flags($query, 0), "auto_increment") === false ) {}
+          if ( strpos(sql_field_flags($query, 0), "auto_increment") === false ) {}
           else
             echo '<tr><td colspan="2"><b>Freilassen f&uuml;r automatische Belegung.</b></td></tr>';
           sql_free_result($query);

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2002 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -57,11 +57,11 @@ if($profile['editor']) {
 		}
 	?>
                 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-                <input type="checkbox" value="1" name="doc[membersonly]"<? if($document['members_only']) echo 'CHECKED'; ?> />&nbsp;Members only<br />
-                <input type="checkbox" value="1" name="doc[doconly]"<? if($document['show_doc_only']) echo 'CHECKED'; ?> />&nbsp;Show document only<br />
-                <input type="checkbox" value="1" name="doc[hideleft]"<? if($document['hide_left_col']) echo 'CHECKED'; ?> />&nbsp;Hide left column<br />
-                <input type="checkbox" value="1" name="doc[hideright]"<? if($document['hide_right_col']) echo 'CHECKED'; ?> />&nbsp;Hide right column<br />
-                <input type="checkbox" value="1" name="doc[sslonly]"<? if($document['ssl_only']) echo 'CHECKED'; ?> />&nbsp;SSL only<br /><br />
+                <input type="checkbox" value="1" name="doc[membersonly]"<?php if($document['members_only']) echo 'CHECKED'; ?> />&nbsp;Members only<br />
+                <input type="checkbox" value="1" name="doc[doconly]"<?php if($document['show_doc_only']) echo 'CHECKED'; ?> />&nbsp;Show document only<br />
+                <input type="checkbox" value="1" name="doc[hideleft]"<?php if($document['hide_left_col']) echo 'CHECKED'; ?> />&nbsp;Hide left column<br />
+                <input type="checkbox" value="1" name="doc[hideright]"<?php if($document['hide_right_col']) echo 'CHECKED'; ?> />&nbsp;Hide right column<br />
+                <input type="checkbox" value="1" name="doc[sslonly]"<?php if($document['ssl_only']) echo 'CHECKED'; ?> />&nbsp;SSL only<br /><br />
                 <span title="Nummer des Autors, wenn nicht man selbst">
 		Author-ID<br />
 		<input name="doc[authorid]" type="text" value="<?=$document[author_id]?>" maxlength="5" />
@@ -79,13 +79,13 @@ if($profile['editor']) {
 
 		<!--end BEMA CODE -->
 		Release Date<br />
-		<input name="doc[releasedate]" value="0" type="radio"<? if($document['release_date'] == 0) echo ' CHECKED'; ?> /> Now<br />
-		<input name="doc[releasedate]" value="-1" type="radio"<? if($document['release_date'] != 0) echo 'CHECKED'; ?> />
+		<input name="doc[releasedate]" value="0" type="radio"<?php if($document['release_date'] == 0) echo ' CHECKED'; ?> /> Now<br />
+		<input name="doc[releasedate]" value="-1" type="radio"<?php if($document['release_date'] != 0) echo 'CHECKED'; ?> />
 		<input type="text" name="doc[release_date_string]" size="15" value="<?=date('j M Y H:i',$document['release_date'])?>" /><br />
 		<br />
 		Expiration Date<br />
-		<input name="doc[expirationdate]" value="0" type="radio"<? if($document['expiration_date'] == 0) echo ' CHECKED'; ?> /> Never<br />
-		<input name="doc[expirationdate]" value="-1" type="radio"<? if($document['expiration_date'] != 0) echo 'CHECKED'; ?> />
+		<input name="doc[expirationdate]" value="0" type="radio"<?php if($document['expiration_date'] == 0) echo ' CHECKED'; ?> /> Never<br />
+		<input name="doc[expirationdate]" value="-1" type="radio"<?php if($document['expiration_date'] != 0) echo 'CHECKED'; ?> />
 		<input type="text" name="doc[expiration_date_string]" size="15" value="<?=date('j M Y H:i',$document['expiration_date'])?>" /><br />
 		<br />
 
@@ -107,6 +107,6 @@ if($profile['editor']) {
 		<input type="hidden" name="id" value="<?=$id?>" />
                 <br /><br /><input type="submit" value="Apply" />
                 </form>
-		<?
+		<?php
 
 	}

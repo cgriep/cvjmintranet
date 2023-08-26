@@ -29,7 +29,7 @@ if ( $profile["editor"] != "1" )
     if ( sql_query($sql) )
       echo "&gt;&gt;&gt; Daten gespeichert.<br />";
     else
-      echo "Fehler: ".mysql_error();
+      echo "Fehler: ".sql_error();
   }
   if ( isset($docinput["Feiertag"]) && is_numeric($docinput["Feiertag"]) )
   {

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2004 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -35,7 +35,7 @@ function lftk_display_search_input ($name) {
 </tr>
 </table>
 <br />
-	<?
+	<?php
 	}
 
 function lftk_display_warning ($text) {
@@ -48,7 +48,7 @@ function lftk_display_warning ($text) {
 		</tr>
 		</table>
 	</td></tr>
-	</table><?
+	</table><?php
 	}
 
 function lftk_display_error ($text) {
@@ -61,7 +61,7 @@ function lftk_display_error ($text) {
 		</tr>
 		</table>
 	</td></tr>
-	</table><?
+	</table><?php
 	}
 
 function lftk_get_number_dropdown ($name, $from, $to, $select, $empty_option = FALSE) {
@@ -128,7 +128,7 @@ function lftk_get_table_header ($cols, $align, $autolink = FALSE, $all_bold = FA
 	
 	$result .= '<tr>'."\n";
 
-	while(list($key, $value) = each($cols)) {
+	foreach ( $cols as $key => $value) {
 		if(isset($align[$key])) {
 			$_align = $align[$key];
 			}
@@ -182,7 +182,7 @@ function lftk_get_table_row ($cols, $align) {
 
 	$result = '<tr bgcolor="'.$_row_color.'">'."\n";
 
-	while(list($key, $value) = each($cols)) {
+	foreach ( $cols as $key => $value) {
 		if(isset($align[$key])) {
 			$_align = $align[$key];
 			}
@@ -230,13 +230,13 @@ function lftk_add_tab($name, $label) {
         ?><td bgcolor="<?=$bg?>" width="1" background="img/edge_left.gif"><img src="img/pixel.gif" /></td><td
           bgcolor="<?=$bg?>" align="center" nowrap="nowrap"><a style="<?=$style?>"
           href="<?=$_SERVER['PHP_SELF'].'?page='.$name.'&target_id='.$target_id?>"><?=$label?></a></td><td bgcolor="<?=$bg?>" width="1"
-          background="img/edge_right.gif"><img src="img/pixel.gif" width="5" /></td><?
+          background="img/edge_right.gif"><img src="img/pixel.gif" width="5" /></td><?php
         }
 
 function lftk_display_page_links ($order, $count, $wrap_count, $first_item) {
         ?><table width="100%" cellpadding="3" cellspacing="0" border="0"><tr>
         <td class="text"><?=LANG_PAGE?></td>
-        <?
+        <?php
         global $lftk_config;
         $i = 0;
         $page = 0;
@@ -249,7 +249,7 @@ function lftk_display_page_links ($order, $count, $wrap_count, $first_item) {
                         else { echo '<td class="text">'; }
                         ?><a href="<?=$_SERVER['PHP_SELF']
                         ?>?page=<?=$GLOBALS['page']?>&order=<?=$order?>&first_item=<?=$i
-                        ?>&search=<?=urlencode($_REQUEST['search'])?>&target_id=<?=$GLOBALS['target_id']?>"><?=$page+1?></a><?
+                        ?>&search=<?=urlencode($_REQUEST['search'])?>&target_id=<?=$GLOBALS['target_id']?>"><?=$page+1?></a><?php
                         echo '</td>';
                         }
                 elseif($distance == ($max_dist + 1)*$wrap_count) {
@@ -262,6 +262,6 @@ function lftk_display_page_links ($order, $count, $wrap_count, $first_item) {
         echo '<td class="text" width="100%" align="right">';
         printf(LANG_ROWS_FOUND, $count);
         echo '</td>';
-        ?></tr></table><?
+        ?></tr></table><?php
         }
 

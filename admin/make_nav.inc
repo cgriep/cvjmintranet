@@ -41,7 +41,7 @@ else {
 
 $pre = '';
 
-while(list($key, $value) = each($admin_modules)) {
+foreach ($admin_modules as $key => $value) {
 	echo $pre.'<td class="nav_a">';
 	if($value['filename'] == basename($_SERVER['PHP_SELF'])) $value['title'] = '<b>'.$value['title'].'</b>';
 	echo('<a href="'.$value['filename'].'"><span style="font-size: 11px; color: #ffffff;" title="'.$value['description'].'">'.$value['title']."</span></a>\n");

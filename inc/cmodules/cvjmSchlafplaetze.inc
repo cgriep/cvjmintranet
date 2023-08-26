@@ -3,7 +3,7 @@
 
 cvjmSchlafplaetze
 AWF-Name: cvjmschlafplaetze
-entfällt sobald die Schlafplätze komplett in die Artikel integriert sind
+entfï¿½llt sobald die Schlafplï¿½tze komplett in die Artikel integriert sind
 */
 
 if ( $profile["editor"] != 1 )
@@ -14,7 +14,7 @@ if ( $profile["editor"] != 1 )
   if ( isset($docinput["SP"]) )
   {
     // Speichern
-    while ( list ($key, $value) = each($docinput["SP"]) )
+    foreach ( $docinput["SP"] as $key => $value)
     {
       if (is_numeric($value) )
       {
@@ -30,16 +30,16 @@ if ( $profile["editor"] != 1 )
         }
       }
       else
-          echo '&gt;&gt;&gt; Unzulässiger Wert $value - Zahl erwartet.<br />';
+          echo '&gt;&gt;&gt; Unzulï¿½ssiger Wert $value - Zahl erwartet.<br />';
     }
   }
   $sql = "SELECT * FROM ".TABLE_ARTIKEL." WHERE F_Art_id=".CVJMART_ORT.
     " ORDER BY Position";
-  if ( ! $query = sql_query($sql)) echo mysql_error();
+  if ( ! $query = sql_query($sql)) echo sql_error();
   echo '<table>';
   echo '<form action="'.get_url($id).'" method="post">';
   echo '<tr><td colspan="2"><input type="Submit" value="Speichern"></td></tr>';
-  echo '<tr><td>Schlafplätze</td><td>Bezeichnung</td></tr>';
+  echo '<tr><td>Schlafplï¿½tze</td><td>Bezeichnung</td></tr>';
   $Color = $design["table_row_bright"];
   while ( $artikel = sql_fetch_array($query) )
   {
@@ -66,7 +66,7 @@ if ( $profile["editor"] != 1 )
   echo '<tr><td colspan="2"><input type="Submit" value="Speichern"></td></tr>';
   echo '</form>';
   echo '</table>';
-  echo "Geben Sie -1 ein wenn an einem Ort keine Schlafplätze zur Verfügung stehen! 0 wird beim Zeltplatz verwendet.";
+  echo "Geben Sie -1 ein wenn an einem Ort keine Schlafplï¿½tze zur Verfï¿½gung stehen! 0 wird beim Zeltplatz verwendet.";
 }
 
 ?>
