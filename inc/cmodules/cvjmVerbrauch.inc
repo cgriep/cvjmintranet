@@ -10,8 +10,8 @@ define('TABLE_GROESSEN', 'cvjm_Verbrauchsgroessen');
 define('TABLE_KOSTEN', 'cvjm_Verbrauchspreise');
 define('TABLE_VERBRAUCH', 'cvjm_Verbrauchsdaten');
 
-$turnusse[0] = 't�glich';
-$turnusse[1] = 'w�chentlich';
+$turnusse[0] = 'täglich';
+$turnusse[1] = 'wöchentlich';
 $turnusse[2] = 'monatlich';
 
 function holeAktuellenPreis($groesse_id, $Datum = -1)
@@ -33,7 +33,7 @@ function holeAktuellenPreis($groesse_id, $Datum = -1)
 function verbrauchBerechnen($Datum, $Groesse, $Wert, $Fuellung = false, $NurBerechnung = false)
 {
     $Bemerkung = get_user_nickname();
-    // Eine Sekunde erh�hen, damit die F�llung immer die neuste am Tag ist
+    // Eine Sekunde erhöhen, damit die Füllung immer die neuste am Tag ist
 	if ( $Fuellung )	  
 	{
       $Datum++;
@@ -62,7 +62,7 @@ function verbrauchBerechnen($Datum, $Groesse, $Wert, $Fuellung = false, $NurBere
 	sql_free_result($query);
 	if (! $NurBerechnung)
 	{
-	// Eintrag einf�gen
+	// Eintrag einfügen
 	if (!sql_query('INSERT INTO ' . TABLE_VERBRAUCH .
 		' (F_Groesse_id,Datum,Wert,Bemerkung,Verbrauch) VALUES (' .
 		$Groesse . ',' . $Datum . ',' . $Wert . ',"' . $Bemerkung . '",1)'))  // Verbrauch muss ungleich null sein
@@ -165,7 +165,7 @@ if ($profile['editor'] != 1)
 	}
 	elseif (isset ($docinput['Groesse']) && is_numeric($docinput['Groesse']))
 	{
-		// Gr��e bearbeiten
+		// Größe bearbeiten
 		if (!is_numeric($docinput['Turnus']))
 			$docinput['Turnus'] = 0;
 		if (!is_numeric($docinput['Faktor']))
@@ -177,7 +177,7 @@ if ($profile['editor'] != 1)
 		$docinput['Datum'] = convertDatumToTimestamp($docinput['Datum']);
 		if ($docinput['Groesse'] == -1)
 		{
-			// Neue Gr��e
+			// Neue Größe
 			$sql = 'INSERT INTO ' . TABLE_GROESSEN . " (Bezeichnung,Einheit,Turnus,Faktor,Ableseeinheit) VALUES ('";
 			$sql .= sql_real_escape_string($docinput['Bezeichnung']) . "','" .
 			sql_real_escape_string($docinput['Einheit']) . "','" .
@@ -187,7 +187,7 @@ if ($profile['editor'] != 1)
 			  echo '<div class="Fehler">Fehler: ' . sql_error() . ' (' . $sql . ')</div>';			
 		} else
 		{
-			// Vorhandene Gr��e
+			// Vorhandene Größe
 			if (isset ($docinput['Einheit']))
 			{
 				$sql = 'UPDATE ' . TABLE_GROESSEN . " SET Bezeichnung='" . $docinput['Bezeichnung'] .
@@ -278,13 +278,13 @@ if ($profile['editor'] != 1)
 		$query = sql_query('SELECT * FROM ' . TABLE_GROESSEN . ' WHERE Groesse_id=' . $_REQUEST['Groesse']);
 		if (!$Groesse = sql_fetch_array($query))
 		{
-			$Groesse['Bezeichnung'] = 'Neue Verbrauchsgr��e';
+			$Groesse['Bezeichnung'] = 'Neue Verbrauchsgröße';
 			$Groesse['Faktor'] = 1;
 		}
 		sql_free_result($query);
 		if (isset ($_REQUEST['Stat']))
 		{
-			// Daten f�r Template vorbereiten
+			// Daten für Template vorbereiten
 			$Smarty->assign('Ueberschrift', $Groesse['Bezeichnung']);
 			$query = sql_query('SELECT * FROM ' . TABLE_VERBRAUCH . ' WHERE F_Groesse_id=' .
 			$Groesse['Groesse_id'] . ' ORDER BY Datum ASC');
@@ -435,10 +435,10 @@ if ($profile['editor'] != 1)
 		}
 		sql_free_result($query);
 		echo '<li><a href="' . get_url($id, "Groesse=-1") .
-		'">Neue Verbrauchsgr��e hinzuf�gen</a></li>';
+		'">Neue Verbrauchsgröße hinzufügen</a></li>';
 		echo '</ul>';
 		echo '<div class="noprint">';
-		echo '[ <a href="' . get_url($id, "Eingabe=Alle") . '">Eingabemaske f�r alle Werte</a> ] ';
+		echo '[ <a href="' . get_url($id, "Eingabe=Alle") . '">Eingabemaske für alle Werte</a> ] ';
 		echo '[ <a href="' . get_url($id, "Gesamt=Verbrauch") . '">Gesamtstatistik</a> ] ';
 		echo '</div>';	
 }

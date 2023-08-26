@@ -158,7 +158,7 @@ href="<?=get_url($id)?>&Anzeige=<?=$Anzeige?>">heute</a>
   $Param .= $Anzeige;
 ?>
 <strong>Ausgew�hlte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
-alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">pers�nliche Termine</a>
+alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persönliche Termine</a>
 (Mailbenachrichtigung <a href="<?=get_url($id, array('Config'=>1))?>">konfigurieren</a>)</p>
 
 <?php
@@ -429,7 +429,7 @@ href="<?=get_url($id)?>&Anzeige=<?=$Anzeige?>">heute</a>
   $Param .= $Anzeige;
 ?>
 <strong>Ausgew�hlte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
-alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">pers�nliche Termine</a>
+alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persönliche Termine</a>
 (Mailbenachrichtigung <a href="<?=get_url($id, array('Config'=>1))?>">konfigurieren</a>)</p>
 <p><form action="<?=get_url($id)?>" method="post" name="Springen2">zu Datum
 <input type="hidden" name="Anzeige" value="<?=$Anzeige?>">
@@ -512,6 +512,6 @@ if ( $profile['editor'] == "1" ) {
   echo "<br /><br />";
   create_editor_input("Farbe Aktueller Tag","Todaycolor", "text_input");
   echo "<br /><br />";
-  create_editor_input("Recht f�r Terminerstellung","Terminrecht", "text_input");
+  create_editor_input("Recht für Terminerstellung","Terminrecht", "text_input");
 }
 ?>

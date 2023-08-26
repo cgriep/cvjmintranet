@@ -72,7 +72,7 @@ if ( $profile['editor'] != 1 )
        	  $msql = 'UPDATE '.TABLE_ARTIKEL.' SET WHERE id=';
        	  
        }
-       // Preisliste erg�nzen
+       // Preisliste ergänzen
        if ( !sql_query('INSERT INTO '.TABLE_PREISE.' (F_Preisliste_id,Artikel_Nr,' .
        		'Preis) VALUES ('.$Preislisteid.','.$Artikelnr.','.$Preis.')'))
        {

@@ -22,15 +22,15 @@
     <option value="" <?php if ($document["Turnus"] == "" ) echo ' selected="selected"'; ?>
     >-einmalig-</option>
     <option value="d" <?php if ($document["Turnus"] == "d" ) echo ' selected="selected"'; ?>
-    >t�glich</option>
+    >täglich</option>
     <option value="w" <?php if ($document["Turnus"] == "w" ) echo ' selected="selected"'; ?>
-    >w�chentlich</option>
+    >wöchentlich</option>
     <option value="v" <?php if ($document["Turnus"] == "v" ) echo ' selected="selected"'; ?>
-    >14t�gig</option>
+    >14tägig</option>
     <option value="m" <?php if ($document["Turnus"] == "m" ) echo ' selected="selected"'; ?>
     >monatlich</option>
     <option value="j" <?php if ($document["Turnus"] == "j" ) echo ' selected="selected"'; ?>
-    >j�hrlich</option>
+    >jährlich</option>
     </select>&nbsp;&nbsp;Ende
     <input type="Text" name="docinput[TurnusDatum]" value="<?php
       if ( $document["TurnusEnde"] != 0 ) echo date("d.m.Y",$document["TurnusEnde"]);?>"
@@ -70,7 +70,7 @@
            $document['Terminrecht'] = $doc['Terminrecht'];
       }
       foreach ($groups as $key => $gruppe) {
-        // Nur Gruppenmitglieder k�nnen die Gruppe einladen!
+        // Nur Gruppenmitglieder können die Gruppe einladen!
         if ( InGruppe($key) || $profile[$document["Terminrecht"]] == "1" )
         {
           echo '<option value="' . $key . '"';
@@ -89,7 +89,7 @@
      if ( function_exists("OrtsName") ) {
        echo '<input type="hidden" name="docinput[Ort]" value="'.$Ort.'" id="Ortsauswahl" />';
        echo '<span name="Ortname" id="Ortsauswahltext">'.OrtsName($Ort,true).'</span>';
-       echo '&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl(\'Ortsauswahl\')">Ort ausw�hlen</a> ]';
+       echo '&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl(\'Ortsauswahl\')">Ort auswählen</a> ]';
       }else
       echo '<input type="Text" name="docinput[Ort]" size="'.$design['input_size'].
         '" value="'.$document["Ort"].'">';
@@ -104,7 +104,7 @@
     }
     ?>
     </td></tr>
-    <tr><td>Betroffene d�rfen Termin �ndern</td><td>
+    <tr><td>Betroffene dürfen Termin ändern</td><td>
     <input type="radio" value="1" name="docinput[Aendern]"
 <?php if ( $document["Aendern"] == 1 ) echo ' checked="checked"';
 ?> /> <?=LANG_YES?>&nbsp;&nbsp;

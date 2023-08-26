@@ -2,13 +2,13 @@
 /**
  * Modul Buchung
  * Parameter:
- * - Buchung_Nr (-1 f�r neue Buchung)
+ * - Buchung_Nr (-1 für neue Buchung)
  * - Adressen_id
  * - Save - Sichern der Daten (per docinput)
  *
  * AWF-Name: cvjmbuchung
  *
- * Vorlagen-Dateien m�ssen im Verzeichnis Vorlagen/Buchungen liegen
+ * Vorlagen-Dateien müssen im Verzeichnis Vorlagen/Buchungen liegen
  *
  * 07.02.07 - Beginn der Umstellung auf Smarty-Templates
  *
@@ -85,7 +85,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 				// Menge an einem Tag
 				$eintrag['wieviel'] = $wieviel;
 				$eintrag['Zuf'] = rand(0,100);
-				// Falls die Bezeichnung ge�ndert wurde
+				// Falls die Bezeichnung geändert wurde
 				if ( $eintrag['F_Bezeichnung'] != $eintrag['Bezeichnung'] && $eintrag['F_Bezeichnung'] != '')
 				{
 				$eintrag['Bezeichnung'] = stripslashes($eintrag['F_Bezeichnung']);
@@ -148,7 +148,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 if (isset ($docinput['DelBuchung']) && is_numeric($docinput['DelBuchung']) &&
 $profile[$document['SpeicherRecht']] == '1')
 {
-	// Eintr�ge in die internen Bemerkungen speichern
+	// Einträge in die internen Bemerkungen speichern
 	$Buchung = new Buchung($docinput['DelBuchung']);
 	$Buchung->stornieren(!isset($docinput['Storno']));
 	$docinput['Buchung_Nr'] = $Buchung->Buchung_Nr;
@@ -230,7 +230,7 @@ if (isset ($_REQUEST['Save']) && $profile[$document['SpeicherRecht']] == '1')
 }
 if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 {
-	// Status�nderungen
+	// Statusänderungen
 	$Buchung = new Buchung($_REQUEST['Buchung_Nr'], $_REQUEST['Adressen_id']);
 	if ($profile[$document['SpeicherRecht']] == '1' && ! $Buchung->isNeu())
 	{
@@ -266,7 +266,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 				}
 			}
 		}
-		// Abrechnung l�schen
+		// Abrechnung löschen
 		if (isset ($docinput['DelAbrechnung']) && is_numeric($docinput['DelAbrechnung']))
 		{
 			$Buchung->loescheAbrechnung($docinput['DelAbrechnung']);
@@ -289,11 +289,11 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 			}
 			else
 			{
-				echo '<div class="SchwererFehler">Keine g�ltigen Daten f�r die Verschiebung angegeben!</div>';
+				echo '<div class="SchwererFehler">Keine gültigen Daten für die Verschiebung angegeben!</div>';
 			}
 		}
 
-		// Selbstverpflegung ber�cksichtigen
+		// Selbstverpflegung berücksichtigen
 		if (isset ($docinput['Selbstverpflegung']) )
 		{
 			if ($docinput['Selbstverpflegung'] == 'J')
@@ -301,7 +301,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 				$tage = $Buchung->berechneUebernachtungen();
 				for ($i = 0; $i <= $tage; $i++)
 				{
-					// Doppelte Eintr�ge werden von der Datenbank abgewiesen
+					// Doppelte Einträge werden von der Datenbank abgewiesen
 					sql_query('INSERT INTO ' . TABLE_BUCHUNGSEINTRAEGE .
 					' (F_Buchung_Nr, F_Artikel_Nr, Menge, Datum) VALUES (' .
 					$Buchung->Buchung_Nr . ',' . CVJM_SELBSTVERPFLEGUNG . ',1,' .
@@ -310,19 +310,19 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 			}
 			elseif ($docinput['Selbstverpflegung'] == 'N')
 			{
-				// Alle Eintr�ge von Selbstverpflegung l�schen
+				// Alle Einträge von Selbstverpflegung löschen
 				if (!sql_query('DELETE FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' .
 				$Buchung->Buchung_Nr . ' AND F_Artikel_Nr=' . CVJM_SELBSTVERPFLEGUNG))
 				{
 					echo sql_error();
 				}
 			}
-		} // Selbstverpflegung setzen / l�schen
+		} // Selbstverpflegung setzen / löschen
 
 		// Selbstverpflegung feststellen
 		if (isset ($_REQUEST['SaveEdit']) )
 		{
-			// Eintr�ge speichern
+			// Einträge speichern
 			foreach ($docinput['Bezeichnung'] as $key => $value)
 			{
 				list ($Artikelnr, $datum) = explode(',', $key);
@@ -509,7 +509,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 
 		if (sql_num_rows($query) == 0)
 		{
-			$Smarty->assign('eintraege', '<tr><td colspan="7" class="zentriert">keine Eintr�ge vorhanden</td></tr>');
+			$Smarty->assign('eintraege', '<tr><td colspan="7" class="zentriert">keine Einträge vorhanden</td></tr>');
 		}
 		else
 		{
@@ -577,6 +577,6 @@ elseif ($profile["editor"] != 1)
 
 if ($profile["editor"] == "1")
 {
-	create_editor_input("Recht f�r Ver�nderungen", "SpeicherRecht", "text_input");
+	create_editor_input("Recht für Veränderungen", "SpeicherRecht", "text_input");
 }
 ?>

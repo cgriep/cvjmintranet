@@ -62,7 +62,7 @@ if ( $profile["editor"] != 1 )
     }
     echo '</select><td>';
     if ( $art["Anz"] == 0 )
-      echo '<a href="'.get_url($id,"docinput[DelArt]=".$art['Art_id']).'">L�schen</a>';
+      echo '<a href="'.get_url($id,"docinput[DelArt]=".$art['Art_id']).'">löschen</a>';
     else
       echo "(".$art["Anz"].")";
     echo "</td></tr>\n";

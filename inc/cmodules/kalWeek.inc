@@ -232,7 +232,7 @@
             echo 'bis '.date("d.m.Y H:i",$value["Enddatum"]);
           if ( strtotime("+$nextd days", mktime(0,0,0,$Monat,$Tag,$Jahr)) < $value["Enddatum"] )
           {
-            echo " (ganzt�gig!)";
+            echo " (ganztägig!)";
             $Termine[$key]["Ok".$I] = strtotime("+$nextd days", mktime(0,0,0,$Monat,$Tag,$Jahr));
           }
           echo '">'.transform($value['title'],'clean')."</a>";

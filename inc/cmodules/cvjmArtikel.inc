@@ -27,7 +27,7 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 	{
 		if ( isset($docinput['DArtikel_Nr']) && is_numeric($docinput['DArtikel_Nr']) )
 		{
-			// Unterartikel l�schen
+			// Unterartikel löschen
 			sql_query('DELETE FROM '.$tabelle.' WHERE F_Artikel_id = '.
 			$docinput['Artikel_Nr'].' AND F_Unterartikel_id = '.$docinput['DArtikel_Nr']);
 		}
@@ -154,7 +154,7 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 			"docinput[DArtikel_Nr]"=>$unterartikel["id"],"docinput[UTable]"=>$tabellennummer));
 			echo '#'.$tabelle.'" onClick="javascript:return window.confirm(\'Unterartikel '.
 			stripslashes($unterartikel["Bezeichnung"]);
-			echo ' wirklich l�schen?\');"><img src="/img/small_edit/delete.gif" border="0"/>';
+			echo ' wirklich löschen?\');"><img src="/img/small_edit/delete.gif" border="0"/>';
 			echo '</td></tr>';
 			if ( $Color == "helleZeile")
 			$Color = "dunkleZeile";
@@ -274,7 +274,7 @@ if ( $profile['editor']!= 1 )
 	if ( isset($docinput['Bezeichnung']) && isset($docinput['Einheit']) &&
 	isset($docinput['Save']))
 	{
-		// Pr�fen, ob Artikel mit gleicher Bezeichnung schon vorhanden ist
+		// prüfen, ob Artikel mit gleicher Bezeichnung schon vorhanden ist
 		$query = sql_query('SELECT * FROM '.TABLE_ARTIKEL." WHERE Bezeichnung='".
 		sql_real_escape_string($docinput['Bezeichnung'])."' AND id<>".$docinput['Artikel_Nr']);
 		if ( sql_num_rows($query) > 0 )
@@ -371,7 +371,7 @@ if ( $profile['editor']!= 1 )
 			ob_start();
 			zeigeArtikelTabelle(TABLE_ARTIKELGRUPPEN, 'Artikel, die mitgebucht und berechnet werden');
 
-			// zugeh�rige Artikel
+			// zugehörige Artikel
 			zeigeArtikelTabelle(TABLE_ARTIKELBEZIEHUNGEN, 'Zugeh�rige Artikel (werden nicht berechnet)');
 
 			$Smarty->assign('Tabellen', ob_get_contents());
@@ -381,7 +381,7 @@ if ( $profile['editor']!= 1 )
 		// Preise anzeigen
 		if ( isset($docinput['SavePreis']) )
 		{
-			// Preislistenpreis �ndern
+			// Preislistenpreis ändern
 			foreach ( $docinput['Preis'] as $key => $value )
 			{
 				$value = str_replace(',','.',$value);

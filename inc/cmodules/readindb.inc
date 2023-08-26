@@ -61,7 +61,7 @@ if ( $profile['editor'] != "1" ) {
       if ( !sql_query($sql) )
         echo "<b>misslungen</b> $SchulNr / $Nr <br />";
       else {
-        //echo sql_affected_rows () ." ge�ndert.<br />";
+        //echo sql_affected_rows () ." geändert.<br />";
         $qu = sql_query("SELECT * FROM Schulen WHERE eMail = '$eMail'");
         if ( sql_num_rows($qu) == 0)
         {

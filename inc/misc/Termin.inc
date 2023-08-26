@@ -40,7 +40,7 @@ function sortiereTermine($Termine)
     $okey = $key;
     if ( strpos($key, '&') !== false ) $okey = substr($key, 0, strpos($key, '&'));
     if ( $value['parent_id'] == $id || $document['AlleAnzeigen'] == '1') {
-      // Pr�fen, ob Betroffen
+      // prüfen, ob Betroffen
       if ( isset($_REQUEST['Gruppe']) )
       {
         // nur Gruppe anzeigen
@@ -121,7 +121,7 @@ function sortiereTermine($Termine)
   return $Termine;
 }
 
-// pr�ft, ob der Ansehende Mitglied der Gruppe ist
+// prüft, ob der Ansehende Mitglied der Gruppe ist
 function InGruppe($Gruppe, $prof = -1, $save = true)
 {
   if ( $prof == -1 ) {
@@ -136,7 +136,7 @@ function InGruppe($Gruppe, $prof = -1, $save = true)
   }
   return false;
 }
-// pr�ft, ob der Ansehende Autor oder Betroffene Person ist
+// prüft, ob der Ansehende Autor oder Betroffene Person ist
 function InPerson($Person, $author='', $save = true)
 {
   if ( SESSION_STATUS != 'ok' ) return false;
@@ -147,7 +147,7 @@ function InPerson($Person, $author='', $save = true)
 function sendErinnerung($Wem, $document, $Besonderes = '') {
   global $id;
   if ( $Besonderes != '' ) $Besonderes .= "\n\n";
-  if ( strpos($Besonderes,'gel�scht') !== false )
+  if ( strpos($Besonderes,'gelöscht') !== false )
   {
     $Message = 'Termin '.transform($document['title'],'clean').
       ' am '.transform($document['Datum'],'datetime')."\n";

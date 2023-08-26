@@ -3,14 +3,14 @@
 
 require_once ('inc/xajax/xajax.inc.php');
 
-/* Datenbank- und AWF-Funktionalit�t einbinden */
+/* Datenbank- und AWF-Funktionalität einbinden */
 include ('inc/functions.inc');
 include ('inc/licence.key');
 include ('inc/sessions.inc');
 include ('inc/caching.inc');
 include ('inc/config.inc');
 
-/* pr�fen ob eine Session f�r den Benutzer existiert */
+/* prüfen ob eine Session für den Benutzer existiert */
 if (!isset ($session_userid) || $session_userid == '')
 {
 	die('Unauthorisiert!');
@@ -32,7 +32,7 @@ function zeigeTeilnahmeArt($node_id, $art)
 	$test = "";
 	foreach (  explode("\n",$docinfo['Bereiche']) as $Bereich)
 	{
-		// Nur Optionen anzeigen die f�r die entsprechende Teilnahmeart verf�gbar sind.
+		// Nur Optionen anzeigen die für die entsprechende Teilnahmeart verfügbar sind.
 		$option =  explode(';',$Bereich);
 		if ( !isset($option[1]) || trim($option[1]) == $art || ($art != 'SC' && $art != 'NSC')) 
 		{

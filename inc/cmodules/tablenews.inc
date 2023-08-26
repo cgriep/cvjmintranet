@@ -71,7 +71,7 @@ if($profile['editor']!='1') {
 
 if(isset($pchildren)) {
         reset($pchildren);
-        while (list ($docid, $value) = each ($pchildren)) {
+        foreach ($pchildren as $docid => $value ) {
                 if($value['title'] != '' || $value['body']) {
                         include(INC_PATH.'misc/paragraph.inc');
                         }
@@ -108,7 +108,7 @@ if(isset($children)) {
 elseif($profile['editor']=='1') {
   if(isset($pchildren)) {
     reset($pchildren);
-    while (list ($docid, $value) = each ($pchildren)) {
+    foreach ($pchildren as $docid => $value ) {
       if($value['title'] != '') {
         include(INC_PATH.'misc/paragraph.inc');
       }

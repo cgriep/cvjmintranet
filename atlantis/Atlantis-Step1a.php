@@ -14,7 +14,7 @@ if (session_is_registered('Charakter') && session_is_registered('Magisch') && $_
 	$Charakter = unserialize($_SESSION['Charakter']);
 	if (isset ($_REQUEST['Klasse']) && is_numeric($_REQUEST['Klasse']))
 	{
-		// evtl. vorhandene Spruchlisten l�schen
+		// evtl. vorhandene Spruchlisten löschen
 		$Charakter->Spruchlisten = array ();
 		$Charakter->F_Klasse_id = $_REQUEST['Klasse'];
 		$_SESSION['Charakter'] = serialize($Charakter);		
@@ -48,7 +48,7 @@ if (session_is_registered('Charakter') && session_is_registered('Magisch') && $_
 	}
 } else
 {
-	// Fehler: Dieses Skript ist nur f�r magische Charaktere gedacht     
+	// Fehler: Dieses Skript ist nur für magische Charaktere gedacht     
 	header('Location: http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/Atlantis-Step2.php');
 }
 ?>

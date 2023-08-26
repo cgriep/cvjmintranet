@@ -34,15 +34,15 @@ class AdressBemerkung
 	{
 		if ($this->Anhang != '')
 		{
-			// Datei l�schen
+			// Datei löschen
 			$ext = pathinfo($this->Anhang);
 			$datei = getAdressenAnhangLink($this->F_Adressen_id, $this->Bemerkung_id, $ext['extension']);
 			if (!unlink($datei))
 			{
-			throw new Exception('Datei ' . $datei . ' konnte nicht gel�scht werden');
+			throw new Exception('Datei ' . $datei . ' konnte nicht gelöscht werden');
 			}
 			sql_query('UPDATE ' . TABLE_ADRESSENBEMERKUNGEN .
-			' SET Anhang = NULL,Bemerkung=CONCAT(Bemerkung,\'Anhang gel�scht ' . date('d.m.Y H:i') . ' ' .
+			' SET Anhang = NULL,Bemerkung=CONCAT(Bemerkung,\'Anhang gelöscht ' . date('d.m.Y H:i') . ' ' .
 			get_user_nickname() . '\') WHERE Bemerkung_id=' . $this->Bemerkung_id);
 		}
 	}
@@ -79,7 +79,7 @@ class AdressBemerkung
 		{
 			// Korrektur
 			$sql = "UPDATE " . TABLE_ADRESSENBEMERKUNGEN . " SET Bemerkung='" .
-			sql_real_escape_string($this->Bemerkung) . "\nge�ndert " . date("d.m.Y H:i") . " " .
+			sql_real_escape_string($this->Bemerkung) . "\ngeändert " . date("d.m.Y H:i") . " " .
 			get_user_nickname() . "',Datum=$this->Datum,Wiedervorlage=$this->Wiedervorlage," .
 			"Anhang='" . sql_real_escape_string($this->Anhang) . "' WHERE Bemerkung_id=" . $this->Bemerkung_id;
 		} else

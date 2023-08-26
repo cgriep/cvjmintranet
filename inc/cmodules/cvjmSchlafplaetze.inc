@@ -3,7 +3,7 @@
 
 cvjmSchlafplaetze
 AWF-Name: cvjmschlafplaetze
-entf�llt sobald die Schlafpl�tze komplett in die Artikel integriert sind
+entf�llt sobald die Schlafplätze komplett in die Artikel integriert sind
 */
 
 if ( $profile["editor"] != 1 )
@@ -39,7 +39,7 @@ if ( $profile["editor"] != 1 )
   echo '<table>';
   echo '<form action="'.get_url($id).'" method="post">';
   echo '<tr><td colspan="2"><input type="Submit" value="Speichern"></td></tr>';
-  echo '<tr><td>Schlafpl�tze</td><td>Bezeichnung</td></tr>';
+  echo '<tr><td>Schlafplätze</td><td>Bezeichnung</td></tr>';
   $Color = $design["table_row_bright"];
   while ( $artikel = sql_fetch_array($query) )
   {
@@ -66,7 +66,7 @@ if ( $profile["editor"] != 1 )
   echo '<tr><td colspan="2"><input type="Submit" value="Speichern"></td></tr>';
   echo '</form>';
   echo '</table>';
-  echo "Geben Sie -1 ein wenn an einem Ort keine Schlafpl�tze zur Verf�gung stehen! 0 wird beim Zeltplatz verwendet.";
+  echo "Geben Sie -1 ein wenn an einem Ort keine Schlafplätze zur Verf�gung stehen! 0 wird beim Zeltplatz verwendet.";
 }
 
 ?>

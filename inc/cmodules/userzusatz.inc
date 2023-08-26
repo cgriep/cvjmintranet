@@ -55,7 +55,7 @@ if ( $profile['editor'] != 1 ) {
   }
   echo $design['table_end'];
   sql_free_result($qres);
-  echo '<br /><input type="Submit" value="Feld hinzuf�gen">';
+  echo '<br /><input type="Submit" value="Feld hinzufügen">';
   echo '</form><br /></td></tr></table>';
 }
 ?>

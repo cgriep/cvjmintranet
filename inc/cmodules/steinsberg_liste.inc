@@ -451,7 +451,7 @@ else
 <a href="?id=<?=$id?>&Liste=N&Veranstaltung=<?=$Veranstaltung?>">NSC-Liste</a> |
 <a href="?id=<?=$id?>&Liste=SN&Veranstaltung=<?=$Veranstaltung?>">Nicht-SC-Liste</a> |
 <a href="?id=<?=$id?>&Liste=EG&Veranstaltung=<?=$Veranstaltung?>">Eingangsliste</a> |
-<a href="?id=<?=$id?>&Liste=SL&Veranstaltung=<?=$Veranstaltung?>">SL-�bersicht</a>
+<a href="?id=<?=$id?>&Liste=SL&Veranstaltung=<?=$Veranstaltung?>">SL-Übersicht</a>
 </p>
 <p>eMail an <a href="<?=get_url($id,'Liste='.$Liste.'&Veranstaltung='.$Veranstaltung.
 '&EMail=1')?>">obige Personen</a> senden</p>

@@ -18,7 +18,7 @@ function holeArtikelID($Artikelname)
 
 
 // Sucht einen Artikel mit Zusatz
-// gut f�r Altersangaben (Fr�hst�ck -> Fr�hst�ck 6-8 Jahre) etc.
+// gut für Altersangaben (Frühstück -> Frühstück 6-8 Jahre) etc.
 function holeUnterArtikelID($Artikelid, $Zusatz)
 {
   $sql = 'SELECT T1.id FROM '.TABLE_ARTIKEL.' AS T1 INNER JOIN '.TABLE_ARTIKEL.
@@ -107,7 +107,7 @@ function BerechneEinzelnSchlafplaetze($Ortid)
   return $Plaetze;
 }
 
-// Ergibt die Schlafpl�tze eines Ortes, -1 wenn keine
+// Ergibt die Schlafplätze eines Ortes, -1 wenn keine
 function BerechneSchlafplaetze($Ortid)
 {
   $Plaetze = BerechneEinzelnSchlafplaetze($Ortid);
@@ -140,7 +140,7 @@ function BerechneSchlafplaetze($Ortid)
   return $Plaetze;
 }
 
-// ergibt die Gesamtanzahl der Schlafpl�tze (0 ... )
+// ergibt die Gesamtanzahl der Schlafplätze (0 ... )
 function BerechneAlleSchlafplaetze($Buchungid, $datum=0, $auswahlID='')
 {
   $sql = 'SELECT DISTINCT F_Artikel_Nr FROM '.TABLE_BUCHUNGSEINTRAEGE;
@@ -169,7 +169,7 @@ function holePreis($id, $Preisliste, $Stunde = false)
     ' WHERE F_Preisliste_id = '.$Preisliste.' AND Artikel_Nr = '.$id) ) echo 'Fehler '.sql_error();
   if ( ! $preis = sql_fetch_row($query) )
   {
-    // parent pr�fen
+    // parent prüfen
     $parent= holeArtikelParentID($id);
     if ( $parent > 0 )
       $erg = holePreis($parent, $Preisliste, $Stunde);
@@ -204,7 +204,7 @@ function holeOberArtikel($artikel_id, $buchung, $tabelle = TABLE_ARTIKELBEZIEHUN
   return $vorhanden;
 }
 
-// gibt die ID des (ersten) Oberartikels zur�ck wenn in der Buchung vorhanden
+// gibt die ID des (ersten) Oberartikels Zurück wenn in der Buchung vorhanden
 function pruefeAlleOberArtikel($artikel_id, $buchung, $tabelle = TABLE_ARTIKELBEZIEHUNGEN)
 {
   $sql = 'SELECT F_Artikel_id FROM '.TABLE_ARTIKELBEZIEHUNGEN.
@@ -249,7 +249,7 @@ function holeEndPreis($artikel_id, $buchung, $Stunde = false)
 }
 /**
  * Sucht Artikelnachfolger in Bezug auf die Position eines andere Artikels.
- * Es geht also um die Positionierung im Artikelbaum. Die Einr�cktiefe bleibt
+ * Es geht also um die Positionierung im Artikelbaum. Die Einrücktiefe bleibt
  * dabei gleich.
  * Es wird der Artikel gefunden, der vor bzw. nach dem Artikel liegt.
  * @param $Artikel der Artikel auf den sich bezogen wird (kompletter Datensatz)
@@ -260,7 +260,7 @@ function findeArtikelPos($Artikel, $Richtung)
   // Sucht
   if ( $Richtung == 'h' )
   {
-    // der Vorg�nger
+    // der Vorgänger
     $query = sql_query('SELECT MAX(Position) FROM '.TABLE_ARTIKEL.
      ' WHERE Einruecken<='.$Artikel['Einruecken'].' AND Position < '.$Artikel['Position'].
       ' AND F_Art_id='.$Artikel['F_Art_id']);

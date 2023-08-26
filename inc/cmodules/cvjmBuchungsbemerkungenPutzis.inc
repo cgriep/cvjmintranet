@@ -5,7 +5,7 @@
   Bemerkungen zu einer Buchung
   z.B. Zerbruch, Ausleihen etc.
 
-  Parameter: docinput[Buchung_Nr] mit der Buchungsnummer f�r die eingegeben werden soll
+  Parameter: docinput[Buchung_Nr] mit der Buchungsnummer für die eingegeben werden soll
 */
 
 
@@ -25,7 +25,7 @@ if ( $profile["editor"] != 1 )
         {
           if ( $docinput["Nr"][$key] != -1 && is_numeric($docinput["Nr"][$key]) )
           {
-            // Pr�fen ob ge�ndert
+            // prüfen ob geändert
             $sql = "SELECT Hinweis FROM ".TABLE_BUCHUNGSBEMERKUNGEN." WHERE Bemerkung_id=".
               $docinput["Nr"][$key];
             $query = sql_query($sql);
@@ -34,7 +34,7 @@ if ( $profile["editor"] != 1 )
             if ( $row[0] != trim(addslashes($value)) )
             {
               $sql = "UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis='".trim(addslashes($value)).
-                "', Logtext=CONCAT('".date("d.m.Y H:i")." ge�ndert ".
+                "', Logtext=CONCAT('".date("d.m.Y H:i")." geändert ".
                 get_user_nickname()."\n',Logtext) WHERE Bemerkung_id = ".$docinput["Nr"][$key];
               if ( ! sql_query($sql) ) echo sql_error();
               $erzeugt = true;
@@ -53,9 +53,9 @@ if ( $profile["editor"] != 1 )
         }
         else if ( $docinput["Nr"][$key] != -1 )
         {
-          // vorhandene Bemerkung l�schen
-          $sql = "UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis=CONCAT(Hinweis,'\n-Eintrag gel�scht-')".
-              ", Logtext=CONCAT('".date("d.m.Y H:i")." gel�scht ".
+          // vorhandene Bemerkung löschen
+          $sql = "UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis=CONCAT(Hinweis,'\n-Eintrag gelöscht-')".
+              ", Logtext=CONCAT('".date("d.m.Y H:i")." gelöscht ".
               get_user_nickname()."\n',Logtext) WHERE Bemerkung_id = ".$docinput["Nr"][$key];
           if ( ! sql_query($sql) ) echo sql_error();
         }
@@ -78,7 +78,7 @@ if ( $profile["editor"] != 1 )
   }
   if ( $document['title'] != '') echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
   {
-    // �bersicht �ber die aktuellen Belegungen
+    // Übersicht über die aktuellen Belegungen
     echo '<form action="'.get_url($id).'" method="post">';
     echo $design["table_begin"];
     echo '<tr class="ueberschrift"><th>Ankunft</th>'.
@@ -104,8 +104,8 @@ if ( $profile["editor"] != 1 )
       echo "<br />\n";
       switch ( $buchung["BStatus"] )
       {
-        case BUCHUNG_GELOESCHT: // gel�scht
-          echo '<img src="img/CVJM/geloescht.gif" border="0" title="Vorreservierung gel�scht">';
+        case BUCHUNG_GELOESCHT: // gelöscht
+          echo '<img src="img/CVJM/geloescht.gif" border="0" title="Vorreservierung gelöscht">';
           break;
         case 0:
           echo '<img src="img/CVJM/vorres.gif" border="0" title="Vorreservierung">';

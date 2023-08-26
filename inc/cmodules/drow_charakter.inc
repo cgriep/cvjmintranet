@@ -33,7 +33,7 @@ $xajax->printJavascript('./Skripte');
 
 if ( $document['Charakter_id'] == '')
 {
-	die('Ung�ltiger Charakter '.$document['Charakter_id']);
+	die('ungültiger Charakter '.$document['Charakter_id']);
 }
 
 $bbasedir = get_dir_name('files',$id).'/published/';
@@ -104,7 +104,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 			' AND F_Eigenschaft_id='.$_REQUEST['E'].' AND EC_id='.$_REQUEST['Eid']);
 			if ( $veraenderbar && sql_affected_rows() > 0 )
 			{
-				// Punkte erg�nzen
+				// Punkte ergänzen
 				$query = sql_query('SELECT Erfahrungspunkte FROM T_Eigenschaften WHERE Eigenschaft_id='.$_REQUEST['E']);
 				$row = sql_fetch_row($query);
 				sql_free_result($query);
@@ -206,7 +206,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 	{
 		echo 'in Erstellung';
 		$klasseveraenderbar = true;
-		// pr�fen ob bereits Eigenschaften vorhanden sind, die die Klassen�nderung verhindern
+		// prüfen ob bereits Eigenschaften vorhanden sind, die die Klassenänderung verhindern
 		$sql = 'SELECT Count(*) FROM T_Charakter_Eigenschaften INNER JOIN T_Eigenschaften ON Eigenschaft_id=F_Eigenschaft_id '.
 		'WHERE (';
 
@@ -227,7 +227,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 
 		if ( $profile['SteinsbergSL'] == 1  )
 		{
-			echo ' / SL gepr�ft: <input type="checkbox" value="1" name="docinput[geprueft]" />';
+			echo ' / SL geprüft: <input type="checkbox" value="1" name="docinput[geprueft]" />';
 		}
 	}
 	else
@@ -240,7 +240,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 <tr>
 	<td>Adlig</td>
 	<td id="Adel"><?php
-	if ( $profile['SteinsbergSL'] == 1 || $veraenderbar && $charakter['F_Rasse_id'] == 1) // nur Drow k�nnen adlig sein
+	if ( $profile['SteinsbergSL'] == 1 || $veraenderbar && $charakter['F_Rasse_id'] == 1) // nur Drow können adlig sein
 	{
 		echo '<input type="checkbox" name="charakter[Adlig]" id="charakter[Adlig]"
 value="1" onChange="xajax_zeigeGunst('.$charakter['Charakter_id'].
@@ -436,7 +436,7 @@ if ($profile['SteinsbergSL'] == '1' )
 {
 	?> 
 <tr>
-	<td colspan="5">Hinweise der SL zum Charakter (nur sichtbar f�r SL)<br />
+	<td colspan="5">Hinweise der SL zum Charakter (nur sichtbar für SL)<br />
 	<textarea name="charakter[SLBemerkungen]" cols="60" rows="5"><?=$charakter['SLBemerkungen']?></textarea></td>
 </tr>
 <?php } ?>
@@ -479,7 +479,7 @@ if ($profile['SteinsbergSL'] == '1' )
 	sql_free_result($query);
 	echo '<tr><td colspan="2"><b>EP Gesamt</b></td></td></td><td>'.$summe;
 	echo '</td></tr>';
-	// TODO : Min+MaxEP ber�cksichtigen
+	// TODO : Min+MaxEP berücksichtigen
 
 	if ( $profile['SteinsbergSL'] == 1 || $veraenderbar && ($hausep > 0 || $charakter['EP']>0 ) )
 	{

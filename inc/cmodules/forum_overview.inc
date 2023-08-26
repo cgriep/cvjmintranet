@@ -75,7 +75,7 @@ else {
         <td width="80%"><?=LANG_FORUM_DESCRIPTION?></td>
         </tr><?php
         $colorswitch = '0';
-        while(list($key, $value) = each($result)) {
+        foreach ( $result as $key => $value) {
                 echo '<tr bgcolor = "';
                 $colorswitch = getswitchcolor();
                 ?>"><td nowrap><b><a href="<?=get_url($key)?>"><?=transform($value['title'], 'clean')?></a></b><?php

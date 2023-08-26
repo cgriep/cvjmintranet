@@ -8,7 +8,7 @@
         Last update: 21.08.2003
 */
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ( $_REQUEST as $key => $val)  {
         $$key = $val;
         }
 

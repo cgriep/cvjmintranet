@@ -30,7 +30,7 @@ if ( isset($_SESSION['Anmelderecht']) && is_numeric($_REQUEST['Ver']) )
 			mail(get_user_email($spieler),  
 			$veranstaltung['title'].' - Anmeldung abgelehnt',
 			'Hallo '.$p['Vorname'].' '.$p['Name'].",\n\n".
-			'du hast dich f�r '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
+			'du hast dich für '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
 			date("d.m.Y",strtotime($veranstaltung['Ende'])).' im Haus '.$p['VGruppe'.$_REQUEST['Ver']].
 			' angemeldet. Leider hat der Hausverantwortliche '.
 			'deine Anmeldung abgelehnt. Damit ist deine Anmeldung nichtig.'."\n".
@@ -57,7 +57,7 @@ if ( isset($_SESSION['Anmelderecht']) && is_numeric($_REQUEST['Ver']) )
 			mail(get_user_email($spieler),  
 			$veranstaltung['title'].' - Anmeldung akzeptiert',
 			'Hallo '.$p['Vorname'].' '.$p['Name'].",\n\n".
-			'du hast dich f�r '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
+			'du hast dich für '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
 			date("d.m.Y",strtotime($veranstaltung['Ende'])).' im Haus '.$p['VGruppe'.$_REQUEST['Ver']].
 			' angemeldet. Der Hausverantwortliche hat deine Anmeldung akzeptiert.'."\n".
 			'Damit ist deine Anmeldung verbindlich. Bitte trage nun deine Charakterdaten ein.'."\n\n".
@@ -72,7 +72,7 @@ if ( isset($_SESSION['Anmelderecht']) && is_numeric($_REQUEST['Ver']) )
 
 // Auflistung aller H�user
 // wenn angemeldeter = Verantwortlicher dann Anzeige der Anmeldungen pro Veranstaltung
-// und Button f�r Annahme / Ablehnung
+// und Button für Annahme / Ablehnung
 
 if ( $document['title'] != '') echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
 if ( $document['body'] != '') echo transform($document['body'],$document['datatype']['body']).'<br />';

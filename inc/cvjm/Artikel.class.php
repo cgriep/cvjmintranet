@@ -14,11 +14,11 @@ class Artikel extends DBEntity
 		parent::__construct(TABLE_ARTIKEL);
 		if ( ! is_numeric($artikel_id))
 		{
-			throw new Exception('Ung�ltige Artikel-id: '.$artikel_id.'!');
+			throw new Exception('ungültige Artikel-id: '.$artikel_id.'!');
 		}
 		if ( $artikel_id > 0 )
 		{
-			// TODO: id in Artikel_id �ndern
+			// TODO: id in Artikel_id ändern
 			$sql = 'SELECT * FROM '.TABLE_ARTIKEL.' WHERE id='.$artikel_id;
 			$query = sql_query($sql);
 			if ( ! $Artikel = sql_fetch_array($query))
@@ -27,7 +27,7 @@ class Artikel extends DBEntity
 			}
 			sql_free_result($query);
 			$this->uebertrageFelder($Artikel);
-			// TODO: umstellung von id auf Artikel_id f�r konsistenze Bezeichnungen
+			// TODO: umstellung von id auf Artikel_id für konsistenze Bezeichnungen
 			$this->Artikel_id = $this->id;
 		}
 		else
@@ -44,7 +44,7 @@ class Artikel extends DBEntity
 	function uebertrageFelder($felder)
 	{
 		parent::uebertrageFelder($felder);
-		// Besonderheit: Checkboxen ber�cksichtigen
+		// Besonderheit: Checkboxen berücksichtigen
 		foreach ( array('Anzeigen','Rabattfaehig','Geringwertig', 'Steuerpflicht', 'PersonJN') as $Feld)
 		{
 			if ( ! isset($felder[$Feld]))
@@ -62,7 +62,7 @@ class Artikel extends DBEntity
 		return !is_numeric($this->Artikel_id) || $this->Artikel_id <= 0;
 	}
 	/**
-	 * L�scht den Artikel
+	 * Löscht den Artikel
 	 */
 	function loeschen()
 	{
@@ -81,7 +81,7 @@ class Artikel extends DBEntity
 	private function AendereArtikelPosition($Artikel_Nr, $Position)
 	{
 		if ( ! is_numeric($Position) || ! is_numeric($Artikel_Nr)) return;
-		// Position�nderung
+		// Positionänderung
 		if ( ! $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.' WHERE Position='.
 		$Position.' AND F_Art_id='.$this->F_Art_id.	' AND id<>'.$Artikel_Nr) )
 		{
@@ -103,7 +103,7 @@ class Artikel extends DBEntity
 	 */
 	function save($verschieben = false)
 	{
-		// Numerische �berpr�fung
+		// Numerische überprüfung
 		foreach ( array('Anzeigen', 'Geringwertig', 'Rabattfaehig', 'Einruecken',
 		'Position','Steuerpflicht', 'F_MWSt', 'F_Lieferant_id', 'Einkaufspreis',
 		'F_Art_id','PersonJN', 'F_PruefungArt', 'LetztePruefung') as $feld)
@@ -147,7 +147,7 @@ class Artikel extends DBEntity
 		else
 		{
 			// Neue Position suchen
-			if ( $this->Position == 0)	 // Position f�r den Artikel freimachen
+			if ( $this->Position == 0)	 // Position für den Artikel freimachen
 			{
 				$query = sql_query('SELECT MAX(Position) FROM '.TABLE_ARTIKEL.' WHERE F_Art_id='.$this->F_Art_id);
 				$Pos = sql_fetch_row($query);
@@ -181,7 +181,7 @@ class Artikel extends DBEntity
 			$sql .= ')';
 			if ( ! sql_query($sql))
 			{
-				throw new Exception ('Artikel einf�gen: '.$sql.'/'.sql_error());
+				throw new Exception ('Artikel einfügen: '.$sql.'/'.sql_error());
 			}
 			$this->Artikel_id = sql_insert_id();
 			$this->id = $this->Artikel_id;
@@ -212,7 +212,7 @@ class Artikel extends DBEntity
 		$this->OriginalF_Art_id = $this->F_Art_id;
 	}
 	/**
-	 * Liste mit den m�glichen Pr�fungsarten
+	 * Liste mit den möglichen prüfungsarten
 	 *
 	 */
 	function PruefungsArten()
@@ -291,9 +291,9 @@ class Artikel extends DBEntity
 		return $anz[0];
 	}
 	/**
-	 * gibt den Pfad der Artikel �ber mehrere Ebenen zur�ck. Ist Ebene = 0, so wird nur der
-	 * Artikelname selbst zur�ckgegeben, sonst eine Pfadangabe der Form X > Y > Z
-	 * @param int $Ebenen die Anzahl der zur�ckgegebenen Ebenen
+	 * gibt den Pfad der Artikel über mehrere Ebenen Zurück. Ist Ebene = 0, so wird nur der
+	 * Artikelname selbst Zurückgegeben, sonst eine Pfadangabe der Form X > Y > Z
+	 * @param int $Ebenen die Anzahl der Zurückgegebenen Ebenen
 	 * @return array Feld (Bezeichnung) mit dem Artikelpfad
 	 */
 	function getArtikelPfad($Ebenen = 0)
@@ -315,7 +315,7 @@ class Artikel extends DBEntity
 		return implode(' > ', $this->getArtikelPfad($Ebenen));
 	}
 	/**
-	 * liefert den n�chsth�heren Artikel einer Art bezogen auf die Position
+	 * liefert den nächsthöheren Artikel einer Art bezogen auf die Position
 	 * @return Artikel das Artikelobjekt oder NULL wenn keiner vorhanden
 	 */
 	function getArtikelParent()
@@ -353,7 +353,7 @@ class Artikel extends DBEntity
 	}
 	/**
 	 *
-	 * stellt ein Feld mit den vorhandenen Mehrwertsteuern zur Verf�gung
+	 * stellt ein Feld mit den vorhandenen Mehrwertsteuern zur Verfügung
 	 * @return array assoziatives Feld mit ID -> Beschreibung
 	 */
 	function getMWSTListe()
@@ -398,8 +398,8 @@ class Artikel extends DBEntity
 		}
 	}
 	/**
-	 * liefert ein Feld von Preisen aus den verschiedenen Preislisten f�r den Artikel
-	 * Das Feld ist nach der G�ltigkeit der Preislisten sortiert.
+	 * liefert ein Feld von Preisen aus den verschiedenen Preislisten für den Artikel
+	 * Das Feld ist nach der Gültigkeit der Preislisten sortiert.
 	 * @return array Feld mit Preis und Preislisteneintrag
 	 */
 	function getPreise()
@@ -423,7 +423,7 @@ class Artikel extends DBEntity
 	 * der Einzelpreis oder der Preis pro Stunde.
 	 * @param int $Preisliste_id die ID der Preisliste
 	 * @param boolean $Stunde true, wenn der Stundenpreis verlangt ist, false sonst
-	 * @return double der gew�nschte Preis des Artikels
+	 * @return double der gewünschte Preis des Artikels
 	 */
 	function holePreis($Preisliste_id, $Stunde = false)
 	{
@@ -438,7 +438,7 @@ class Artikel extends DBEntity
 		}
 		if ( ! $preis = sql_fetch_row($query) )
 		{
-			// parent pr�fen
+			// parent prüfen
 			$parent= $this->getArtikelParent();
 			if ( $parent != NULL )
 			{
@@ -470,7 +470,7 @@ class Artikel extends DBEntity
 	/**
 	 * Bewegt einen Artikel im Baum.
 	 * @param char $richtung die Richtung (l, r, u, o)
-	 * @param boolean $einzeln true, wenn nur der Artikel ver�ndert werden soll, false wenn alle Unterartikel mitbewegt werden sollen
+	 * @param boolean $einzeln true, wenn nur der Artikel verändert werden soll, false wenn alle Unterartikel mitbewegt werden sollen
 	 */
 	function bewegen($richtung, $einzeln = true)
 	{
@@ -561,7 +561,7 @@ class Artikel extends DBEntity
 	}
 	/**
 	 * Sucht Artikelnachfolger in Bezug auf die Position eines andere Artikels.
-	 * Es geht also um die Positionierung im Artikelbaum. Die Einr�cktiefe bleibt
+	 * Es geht also um die Positionierung im Artikelbaum. Die Einrücktiefe bleibt
 	 * dabei gleich.
 	 * Es wird der Artikel gefunden, der vor bzw. nach dem Artikel liegt.
 	 * @param char $Richtung h (hoch), r (runter) oder egal: Nachfolger des Nachfolgers (zweimal r)
@@ -581,7 +581,7 @@ class Artikel extends DBEntity
 		}
 		if ( $Richtung == 'h' )
 		{
-			// der Vorg�nger
+			// der Vorgänger
 			$query = sql_query('SELECT MAX(Position) FROM '.TABLE_ARTIKEL.
 			' WHERE Einruecken<='.$this->Einruecken.' AND Position < '.$Position.
 			' AND F_Art_id='.$this->F_Art_id);
@@ -639,26 +639,26 @@ class Artikel extends DBEntity
 		return $Pos[0];
 	}
 	/**
-	 * berechnet die Schlafpl�tze an diesem Ort, ohne die Unterorte zur ber�cksichtigen.
+	 * berechnet die Schlafplätze an diesem Ort, ohne die Unterorte zur berücksichtigen.
 	 * Sonderfall:
-	 * -1 wenn es keine Schlafpl�tze gibt
-	 * 0 wenn es beliebig viele Schlafpl�tze gibt (Zeltplatz)
-	 * @return int die Schlafpl�tze am aktuelle Artikel, -1 wenn dort keine Schlafpl�tze vorliegen, 0 beim Zeltpl�tz
+	 * -1 wenn es keine Schlafplätze gibt
+	 * 0 wenn es beliebig viele Schlafplätze gibt (Zeltplatz)
+	 * @return int die Schlafplätze am aktuelle Artikel, -1 wenn dort keine Schlafplätze vorliegen, 0 beim ZeltPlätz
 	 */
 	function BerechneEinzelnSchlafplaetze()
 	{		
 		return $this->Schlafplatz;
 	}
 	/**
-	 * Berechnet die Schlafpl�tze eines Ortes. Dabei werden eventuell zugeh�rige
-	 * Unterartikel ber�cksichtigt. Im Ergebnis bekommt man 0 oder mehr Schlafpl�tze. Sofern es gar keine
-	 * Schlafpl�tze gibt, wird -1 zur�ckgegeben.
-	 * @return int die Gesamt-Schlafpl�tze am Ort, oder -1 wenn es keine gibt
+	 * Berechnet die Schlafplätze eines Ortes. Dabei werden eventuell zugehörige
+	 * Unterartikel berücksichtigt. Im Ergebnis bekommt man 0 oder mehr Schlafplätze. Sofern es gar keine
+	 * Schlafplätze gibt, wird -1 Zurückgegeben.
+	 * @return int die Gesamt-Schlafplätze am Ort, oder -1 wenn es keine gibt
 	 */
 	function BerechneSchlafplaetze()
 	{
 		$Plaetze = $this->BerechneEinzelnSchlafplaetze();
-		// Bestimmt die Position des n�chsten Artikels
+		// Bestimmt die Position des nächsten Artikels
 		if ( ! $query = sql_query('SELECT Position FROM '.TABLE_ARTIKEL.
 		' WHERE Position>'.$this->Position.' AND Einruecken<='.$this->Einruecken.
 		' AND F_Art_id='.$this->F_Art_id.' ORDER BY Position LIMIT 1'))
@@ -679,7 +679,7 @@ class Artikel extends DBEntity
 			$p = $a->BerechneEinzelnSchlafplaetze();
 			if ( $p >= 0 )
 			{
-				// Artikel ohne Schlafpl�tze ignorieren
+				// Artikel ohne Schlafplätze ignorieren
 				if ( $Plaetze < 0 ) $Plaetze = 0;
 				$Plaetze += $p;
 			}
@@ -712,8 +712,8 @@ class Artikel extends DBEntity
 		}
 	}
 	/**
-	 * gibt an, ob die Abrechnung des Artikels nach �bernachtungen erfolgt
-	 * @return boolean true, wenn die Abrechnung nach �bernachtungen erfolgt
+	 * gibt an, ob die Abrechnung des Artikels nach Übernachtungen erfolgt
+	 * @return boolean true, wenn die Abrechnung nach Übernachtungen erfolgt
 	 */
 	function isAbrechnungNachUebernachtungen()
 	{
@@ -745,7 +745,7 @@ class Artikel extends DBEntity
 	/**
 	 * baut ein Feld mit Artikel auf, das die Artikel der Art des aktuellen Artikels im Form eines Baumes
 	 * abbilden. Der aktuelle Artikel wird in der Mitte des Feldes positioniert.
-	 * @param int/String $Anzahl die Anzahl der Artikel in der Baumliste oder 'Alle' f�r alle.
+	 * @param int/String $Anzahl die Anzahl der Artikel in der Baumliste oder 'Alle' für alle.
 	 * @return array ein Feld mit den Artikeln
 	 */
 	function baueArtikelBaumAuf($Anzahl = 10)
@@ -783,7 +783,7 @@ class Artikel extends DBEntity
 	// ---------------------------------------------------------------
 	/**
 	 * Nummeriert die Positionen der Artikel im Artikelbaum neu durch, so dass jeder Artikel eine
-	 * eindeutige Nummer erh�lt.
+	 * eindeutige Nummer erhält.
 	 */
 	static function neuNummerieren()
 	{
@@ -839,7 +839,7 @@ class Artikel extends DBEntity
 		return $Artikel;
 	}
 	/**
-	 * liefert eine Liste aller Speiser�ume (erkennbar am Namen "Saal". Das Feld ist nach
+	 * liefert eine Liste aller Speiseräume (erkennbar am Namen "Saal". Das Feld ist nach
 	 * Namen sortiert.
 	 * @return array Feld mit Artikelobjekten
 	 */
@@ -891,7 +891,7 @@ class Artikel extends DBEntity
 	}
 	/**
 	 * Sucht einen Artikel nach dem angegebenen Text. Gesucht wird in den Feldern Bezeichnung und Barcode. 
-	 * Der Barcode muss genau �bereinstimmen, die Bezeichnung wird mit Wildcards druchsucht. 
+	 * Der Barcode muss genau übereinstimmen, die Bezeichnung wird mit Wildcards druchsucht. 
 	 * @return array ein Feld der passenden Artikel 
 	 */
 	static function search($text)
@@ -919,7 +919,7 @@ class Artikel extends DBEntity
 			$nr = substr($row[0],4);
 			if ( ! is_numeric($nr))
 			{
-				throw new Exception('Vorhandene EAN '.$row[0].' ist ung�ltig.');
+				throw new Exception('Vorhandene EAN '.$row[0].' ist ungültig.');
 			}
 			$nr = $nr + 1;
 			$nr = 'CVJM'.sprintf('%08d',$nr);

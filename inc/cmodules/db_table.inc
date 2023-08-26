@@ -92,11 +92,11 @@ if ( $profile['editor']=='1' )
   echo '<br /><br />';
   create_editor_input('Link-Feld','LinkFeld','text_input');
   echo '<br /><br />';
-  create_editor_input('Link-URL (ID wird angeh�ngt)','LinkURL','text_input');
+  create_editor_input('Link-URL (ID wird angehngt)','LinkURL','text_input');
   echo '<br /><br />';
   create_editor_input('Berechtigung neuer Datensatz','NewDS','text_input');
   echo '<br /><br />';
-  create_editor_input('Anzahl Datens�tze pro Seite','Anzahl','text_input');
+  create_editor_input('Anzahl Datensätze pro Seite','Anzahl','text_input');
 }
 
 ?>

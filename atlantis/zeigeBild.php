@@ -4,7 +4,7 @@
  * Created on 15.11.2006
  * Christoph Griep
  * 
- * Aufrufm�glichkeiten:
+ * Aufrufmöglichkeiten:
  * - "Bild": Das Bild des aktuellen Charakters wird angezeigt
  * - "Rasse":Bild der angegebenen Rasse (id) wird angezeigt
  * - "Klasse"
@@ -62,14 +62,14 @@
   // Bild ausgeben
   if ( $Bild != '' )
   {      
-     // Senden des Response-Headers f�r den Inhaltstyp der gelieferten
+     // Senden des Response-Headers für den Inhaltstyp der gelieferten
      // Daten 
      header ( 'Content-Type: image/jpeg');
      // Senden der eigentlichen Bilddaten als (einzigen) Inhalt der
      // Response
      if ( isset($_REQUEST['Groesse']) && is_numeric($_REQUEST['Groesse']))
      {
-     	// Bildgr��e ver�ndern
+     	// Bildgröße verändern
      	$altesBild=imagecreatefromstring ($Bild);       
         $breite = imageSX($altesBild);
         $hoehe = imageSY($altesBild);
@@ -93,7 +93,7 @@
        echo ( $Bild );
   }
   else
-    die ( 'Ung�ltige ID oder Bild nicht vorhanden!');
+    die ( 'ungültige ID oder Bild nicht vorhanden!');
   sql_close(); 
 
 ?>

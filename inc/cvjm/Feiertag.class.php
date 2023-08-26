@@ -11,7 +11,7 @@ class Feiertag extends DBEntity {
 		parent::__construct(TABLE_FEIERTAGE);
 		if ( ! is_numeric($feiertag_id))
 		{
-			throw new Exception('Ung�ltige Feiertag-id: '.$feiertag_id.'!');
+			throw new Exception('ungültige Feiertag-id: '.$feiertag_id.'!');
 		}
 		if ( $feiertag_id > 0 )
 		{

@@ -4,7 +4,7 @@
 /**
  * Klasse Charakter
  * Kapselt die Eigenschaften eines Spielcharakters mit seinen Fertigkeiten
- * Enth�lt zus�tzlich diverse Implemtierungen der Atlantis-Regeln
+ * Enthält zus�tzlich diverse Implemtierungen der Atlantis-Regeln
  * 2006 Christoph Griep
  * 
  */
@@ -39,13 +39,13 @@ class Charakter
 		'Kurzbeschreibung',
 		'Historie'
 	);
-	// IDs des �bernat�rliches-Wesen-Vorteils
+	// IDs des übernat�rliches-Wesen-Vorteils
 	const UEBERNATUERLICHLEICHT = 396;
 	const UEBERNATUERLICHGANZ = 398;
 	// ID der Klassen
 	const SCHAMANE = 7;
 	const ELEMENTARIST = 11;
-	// Fertigkeiten f�r Meister und Gro�meisterpr�fungen
+	// Fertigkeiten für Meister und Gro�meisterprüfungen
 	const MEISTER = 509;
 	const GROSSMEISTER = 508;
 	const MAGIEPUNKTE = 510;
@@ -95,12 +95,12 @@ class Charakter
 		  return $wert; 
 	}
 	/**
-	 * Erh�ht die Contageanzahl um die angegebene Anzahl und erg�nzt die Historie
+	 * Erh�ht die Contageanzahl um die angegebene Anzahl und ergänzt die Historie
 	 * des Charakters um einen entsprechenden Eintrag. Ist es ein Atlantiscon, 
 	 * so werden zus�tzlich die Atlantis-Contage erh�ht.
-	 * Pro Contag wird au�erdem ein Punkt f�r Fertigkeiten gegeben.
-	 * @param int Anzahl- die Anzahl der Contage, die erg�nzt werden
-	 * @param string Con der Name des Cons f�r die Historie
+	 * Pro Contag wird au�erdem ein Punkt für Fertigkeiten gegeben.
+	 * @param int Anzahl- die Anzahl der Contage, die ergänzt werden
+	 * @param string Con der Name des Cons für die Historie
 	 * @param boolean Atlantis true, wenn es ein Atlantiscon ist
 	 * @return false, wenn ein Fehler aufgetreten ist, true sonst
 	 */
@@ -111,7 +111,7 @@ class Charakter
 		$this->Contage += $Anzahl;
 		if ($Atlantis)
 			$this->Atlantiscontage += $Anzahl;
-		$s = 'Erfahrung erg�nzt ' . date('d.m.Y H:i') . ': ' . $Con .
+		$s = 'Erfahrung ergänzt ' . date('d.m.Y H:i') . ': ' . $Con .
 		' (' . $Anzahl . ' Contage';
 		if ($Atlantis)
 			$s .= ',Atlantis';
@@ -158,7 +158,7 @@ class Charakter
 				$this->Verboten[] = $row['Fertigkeit_id'];
 			else
 			{
-				// �bernat�rliche kostenlose Rassenvorteile sind von Anfang an aktiviert
+				// übernat�rliche kostenlose Rassenvorteile sind von Anfang an aktiviert
 				if ($row['Art'] == self :: VORTEILUEBERNATUERLICH )
 				{
 					if ( $row['Kosten'] + $row['Kosten1'] == 0)
@@ -173,7 +173,7 @@ class Charakter
 		return $Kosten;
 	}
 	/**
-	 * Gibt den Namen der Rasse des Charakters zur�ck
+	 * Gibt den Namen der Rasse des Charakters Zurück
 	 * @return der Name der Rasse
 	 */
 	function getRasse()
@@ -186,9 +186,9 @@ class Charakter
 		return $rasse['Rasse'];
 	}
 	/**
-	 * Pr�ft ob eine Fertigkeit erlaubt ist.
+	 * prüft ob eine Fertigkeit erlaubt ist.
 	 * Dazu darf sie nicht verboten sein 
-	 * @param int id der Fertigkeit, die gepr�ft werden soll
+	 * @param int id der Fertigkeit, die geprüft werden soll
 	 * @return boolean true, wenn die Fertigkeit erlaubt ist, false sonst 
 	 */
 	function fertigkeitErlaubt($fertigkeit_id)
@@ -204,7 +204,7 @@ class Charakter
 	{
 		if (is_numeric($fertigkeit_id))
 		{
-			// Besonderheit: Abh�ngigkeiten pr�fen 
+			// Besonderheit: Abh�ngigkeiten prüfen 
 			if (!$query = sql_query('SELECT * FROM T_FertigkeitenAbhaengigkeiten ' .
 				'INNER JOIN T_Fertigkeiten ON Fertigkeit_id=F_Fertigkeiten_id2 ' .
 				'WHERE F_Fertigkeiten_id2=' . $fertigkeit_id))
@@ -279,7 +279,7 @@ class Charakter
 				$f = sql_fetch_array($query);
 				sql_free_result($query);
 				$punkte = $f['Kosten1'];
-				// �bernat�rliche Dinge werden anders berechnet
+				// übernat�rliche Dinge werden anders berechnet
 				if ($f['Art'] == self :: VORTEILUEBERNATUERLICH || $f['Art'] == self :: NACHTEILUEBERNATUERLICH)
 					$punkte = 0;
 
@@ -288,8 +288,8 @@ class Charakter
 				 * {
 				if ($_SESSION['�Vorteilpunkte'] + $row['Kosten1'] > Min($MaxUePunkte, abs($_SESSION['�Nachteilpunkte'])))
 				{
-					$_SESSION['Fehler'] = 'Maximal ' . $MaxUePunkte . ' �bernat�rliche Vorteilpunkte, �bernat�rliche ' .
-					'Vorteilpunkte m�ssen mit �bernat�rlichen Nachteilpunkten ' .
+					$_SESSION['Fehler'] = 'Maximal ' . $MaxUePunkte . ' übernat�rliche Vorteilpunkte, übernat�rliche ' .
+					'Vorteilpunkte müssen mit übernat�rlichen Nachteilpunkten ' .
 					'ausgeglichen sein';
 					FertigkeitHinzufuegen(- $row['Fertigkeit_id']);
 				if (abs($_SESSION['�Nachteilpunkte'] + $row['Kosten1']) > $MaxUePunkte)
@@ -310,7 +310,7 @@ class Charakter
 				{
 				if (abs($Charakter->Hilfspunkte['Nachteilpunkte'] + $row['Kosten1']) > 40)
 				{
-					$_SESSION['Fehler'] = 'Maximal 40 Nachteilpunkte k�nnen vergeben werden.';
+					$_SESSION['Fehler'] = 'Maximal 40 Nachteilpunkte können vergeben werden.';
 					FertigkeitHinzufuegen(- $row['Fertigkeit_id']);
 				 */
 			}
@@ -332,7 +332,7 @@ class Charakter
 	}
 	function fertigkeitEntfernen($fertigkeit_id)
 	{
-		// TODO: Fehler auswerten und als String zur�ckgeben!
+		// TODO: Fehler auswerten und als String Zurückgeben!
 		// TODO: Abh�ngige Dinge auswerten und entfernen
 		$Fehler = 'Diese Fertigkeit ist nicht vorhanden!';
 		if (isset ($this->Fertigkeiten[$fertigkeit_id]))
@@ -340,7 +340,7 @@ class Charakter
 			if (isset ($this->Fertigkeiten[$fertigkeit_id]['Pflicht']) && $this->Fertigkeiten[$fertigkeit_id]['Pflicht'])
 			{
 				// vorgegebene Fertigkeit!
-				$Fehler = 'Vorgegebene Fertigkeiten k�nnen nicht entfernt werden!';
+				$Fehler = 'Vorgegebene Fertigkeiten können nicht entfernt werden!';
 			} else
 			{
 				if (isset ($this->Fertigkeiten['Spezialisierung_id']))
@@ -349,11 +349,11 @@ class Charakter
 					$punkte = $this->Fertigkeiten[$fertigkeit_id]['Kosten1'];
 				if (isset ($this->Fertigkeiten[$fertigkeit_id]['Kosten']))
 					$punkte += $this->Fertigkeiten[$fertigkeit_id]['Kosten'];
-				// �bernat�rliches wird extra abgerechnet 
+				// übernat�rliches wird extra abgerechnet 
 				if ($this->Fertigkeiten[$fertigkeit_id]['Art'] == self :: VORTEILUEBERNATUERLICH || $this->Fertigkeiten[$fertigkeit_id]['Art'] == self :: NACHTEILUEBERNATUERLICH)
 					$punkte = 0;
 				$this->Punkte += $punkte;
-				// �bernat�rliche Fertigkeiten l�schen wenn der Vorteil entfernt wird
+				// übernat�rliche Fertigkeiten löschen wenn der Vorteil entfernt wird
 				if ($fertigkeit_id == self :: UEBERNATUERLICHLEICHT || $fertigkeit_id == self :: UEBERNATUERLICHGANZ)
 				{
 					foreach ($this->Fertigkeiten as $key => $value)
@@ -451,7 +451,7 @@ class Charakter
 		}
 		// Spruchlisten speichern
 		// Dies kann nur bei der Neuerstellung erfolgen, da die Spruchlisten 
-		// danach nicht mehr zu �ndern sind 
+		// danach nicht mehr zu ändern sind 
 		sql_query('DELETE FROM T_CharakterSpruchlisten WHERE F_Charakter_id=' . $this->Charakter_id);
 		foreach ($this->Spruchlisten as $key => $spruchliste)
 		{
@@ -485,8 +485,8 @@ class Charakter
 		}
 	}
 	/**
-	 * Gibt an, ob der Charakter �bernat�rlich ist. 
-	 * @return boolean true, wenn es ein �bernat�rlicher Charakter ist, false sonst  
+	 * Gibt an, ob der Charakter übernat�rlich ist. 
+	 * @return boolean true, wenn es ein übernat�rlicher Charakter ist, false sonst  
 	 */
 	function isUebernatuerlich()
 	{
@@ -522,8 +522,8 @@ class Charakter
 			$this->Charakter_id = $characterid;
 			// Rasse festlegen
 			$this->setRasse($this->F_Rasse_id);
-			// Sicherheitshalber werden nun die Rassenfertigkeiten wieder gel�scht,
-			// falls �nderungen vorgenommen wurden
+			// Sicherheitshalber werden nun die Rassenfertigkeiten wieder gelöscht,
+			// falls änderungen vorgenommen wurden
 			$this->Fertigkeiten = array ();
 
 			// Vor- und Nachteile auslesen			
@@ -566,8 +566,8 @@ class Charakter
 	}
 	/**
 	 * Bestimmt ob eine Fertigkeit gew�hlt werden darf oder nicht. Dabei werden die 
-	 * R�nge, die Punkte und die Spezialisierungen ber�cksichtigt.
-	 * @param int id der Fertigkeiten, die gepr�ft werden soll
+	 * R�nge, die Punkte und die Spezialisierungen berücksichtigt.
+	 * @param int id der Fertigkeiten, die geprüft werden soll
 	 * @param int id der Spezialisierung
 	 * @param int id des Ranges
 	 * @return boolean true, wenn die Fertigkeit gew�hlt werden darf, false sonst 
@@ -578,11 +578,11 @@ class Charakter
 			return false;
 		if (!isset ($this->Fertigkeiten[$fertigkeit_id]))
 		{
-			// TODO: �nderung der Kosten + eigentliche Kosten
+			// TODO: änderung der Kosten + eigentliche Kosten
 			$Kosten = $this->holeFertigkeitPunkte($fertigkeit_id, $spezialisierung_id);
 			if ($Kosten <= $this->Punkte)
 			{
-				// Fertigkeit ist m�glich. Aber stimmt auch der Rang?
+				// Fertigkeit ist möglich. Aber stimmt auch der Rang?
 				if ($this->RangErlaubt[$spezialisierung_id][$rang_id])
 				{
 					return true;
@@ -594,8 +594,8 @@ class Charakter
 	}
 	/**
 	* Bestimmt ob ein Vor-/Nachteil gew�hlt werden darf oder nicht. Dabei werden die 
-	* Punkte ber�cksichtigt. 
-	* @param int id der Fertigkeiten, die gepr�ft werden soll
+	* Punkte berücksichtigt. 
+	* @param int id der Fertigkeiten, die geprüft werden soll
 	* @return boolean true, wenn die Fertigkeit gew�hlt werden darf, false sonst 
 	*/
 	function vorteilMoeglich($fertigkeit_id)
@@ -633,7 +633,7 @@ class Charakter
 		return false;
 	}
 	/**
-	 * Berechnet die Anzahl der verf�gbaren Punkte f�r �bernat�rliche F�higkeiten.
+	 * Berechnet die Anzahl der verf�gbaren Punkte für übernat�rliche F�higkeiten.
 	 * Sie berechnen sich nach 30+Anzahl Contage-aktivierte Fertigkeiten
 	 * @return int die Anzahl der verbleibenden Punkte
 	 */
@@ -647,7 +647,7 @@ class Charakter
 				if ($f['Stufe'] > 0)
 				{
 					$punkte += $f['Kosten1'];
-				    // �nderung der Kosten direkt aus der Rassentabelle holen 
+				    // änderung der Kosten direkt aus der Rassentabelle holen 
 				    $query = sql_query('SELECT Kosten FROM T_Rassenfertigkeiten ' .
 						'WHERE F_Fertigkeit_id='.$f['Fertigkeit_id'].' AND F_Rasse_id='.$this->F_Rasse_id);
 				    if ( $ff = sql_fetch_array($query))
@@ -661,7 +661,7 @@ class Charakter
 		return 30 - $punkte + $this->Contage;
 	}
 	/**
-	 * Initialisiert die Felder f�r die Bestimmung der R�nge und Spezialisierungen
+	 * Initialisiert die Felder für die Bestimmung der R�nge und Spezialisierungen
 	 */
 	function bestimmeSpezialisierungsraenge()
 	{
@@ -683,7 +683,7 @@ class Charakter
 		}
 		sql_free_result($query);
 
-		// Einlesen der notwendigen Punkte f�r Adept/Meister/Gro�meister 
+		// Einlesen der notwendigen Punkte für Adept/Meister/Gro�meister 
 		$Punktanzahlen = array ();
 		$Adeptenpunkte = array ();
 		$RangErlaubt = array ();
@@ -731,7 +731,7 @@ class Charakter
 				if (!isset ($Spezialisierungen[$fertigkeit['F_Klasse_id']][$id]))
 					$Spezialisierungen[$fertigkeit['F_Klasse_id']][$id] = 0;
 				$Spezialisierungen[$fertigkeit['F_Klasse_id']][$id] += $fertigkeit['Kosten'];
-				// Gesamtpunktzahl f�r die Spezialisierung
+				// Gesamtpunktzahl für die Spezialisierung
 				if (!isset ($SpezPunkte[$fertigkeit['F_Klasse_id']][$id]))
 					$SpezPunkte[$fertigkeit['F_Klasse_id']][$id] = 0;
 				$SpezPunkte[$fertigkeit['F_Klasse_id']][$id] += $fertigkeit['Kosten'];
@@ -748,7 +748,7 @@ class Charakter
 				}
 			}
 
-		// Pr�fen, ob man Adept / Meister / Gro�meister geworden ist
+		// prüfen, ob man Adept / Meister / Gro�meister geworden ist
 		foreach ($SpezPunkte as $klasse => $spez)
 		{
 			$idallg = bestimmeAllgemeinSpezialisierung($klasse);
@@ -763,10 +763,10 @@ class Charakter
 				if ($allgemeinPunkte >= $Adeptenpunkte[$klasse])
 				{
 					// Adept in dieser Spezialisierung!
-					// Allgemein und Spruchlisten m�ssen erlaubt werden
+					// Allgemein und Spruchlisten müssen erlaubt werden
 					$RangErlaubt[$id][2] = true;
 					$RangErlaubt[$idallg][2] = true;
-					// Pr�fen, ob die Anzahl an Adeptenspezialisierungen �berschritten ist
+					// prüfen, ob die Anzahl an Adeptenspezialisierungen überschritten ist
 					$Raenge[2]['Anzahl'] = 0;
 					foreach ($RangErlaubt as $dieId => $rang)
 						if ($rang[2])
@@ -791,10 +791,10 @@ class Charakter
 				// Man kann nur bei einer Spezialisierung Meister werden.
 				if ($klasse != -1 && $id != -1 && $allgemeinPunkte >= $Punktanzahlen[$klasse][$id]['Meisterpunkte'] && $Punktanzahlen[$klasse][$id]['Meisterpunkte'] > 0)
 				{
-					// TODO Pr�fen, ob Meisterfertigkeit vorhanden ist!
+					// TODO prüfen, ob Meisterfertigkeit vorhanden ist!
 
 					$RangErlaubt[$id][3] = true;
-					// Pr�fen, ob die Anzahl an Adeptenspezialisierungen �berschritten ist
+					// prüfen, ob die Anzahl an Adeptenspezialisierungen überschritten ist
 					$Raenge[3]['Anzahl'] = 0;
 					foreach ($RangErlaubt as $dieId => $rang)
 						if (isset ($rang[3]) && $rang[3])
@@ -823,15 +823,15 @@ class Charakter
 		$this->vorhandeneSpruchlisten = $vorhandeneSpruchlisten;
 	}
 	/**
-	 * Erstellt ein Feld mit den m�glichen Fertigkeiten, die der Charakter in 
+	 * Erstellt ein Feld mit den möglichen Fertigkeiten, die der Charakter in 
 	 * der gew�hlten Spezialisierung w�hlen kann. Dabei werden die R�nge und die 
-	 * Punkte ber�cksichtigt.
+	 * Punkte berücksichtigt.
 	 * @param int id der Spezialisierung deren Fertigkeiten angezeigt werden sollen
 	 * @return array ein Fertigkeit_id-indiziertes Feld mit den Fertigkeiten  
 	 */
 	function bestimmeMoeglicheFertigkeiten($spezialisierung_id)
 	{
-		// Pr�fen ob Spezialisierung erlaubt und wenn ja in welchen R�ngen
+		// prüfen ob Spezialisierung erlaubt und wenn ja in welchen R�ngen
 		$erlaubt = array ();
 		for ($i = 1; $i < 5; $i++)
 		{
@@ -864,8 +864,8 @@ class Charakter
 		return $fertigkeiten;
 	}
 	/**
-	 * Erstellt ein Feld mit den m�glichen Vor- und Nachteilen, die der Charakter 
-	 * w�hlen kann. Dabei werden die verf�gbaren Punkte ber�cksichtigt.
+	 * Erstellt ein Feld mit den möglichen Vor- und Nachteilen, die der Charakter 
+	 * w�hlen kann. Dabei werden die verf�gbaren Punkte berücksichtigt.
 	 * @param String die Art der Vor-/Nachteile (V, Uv, N, Un)
 	 * @return array ein Fertigkeit_id-indiziertes Feld mit den Vor-/Nachteilen  
 	 */
@@ -904,7 +904,7 @@ class Charakter
 			if ($value['Art'] == $art)
 			{
 				$kosten += $value['Kosten1'];
-				// �nderung der Kosten direkt aus der Rassentabelle holen 
+				// änderung der Kosten direkt aus der Rassentabelle holen 
 				$query = sql_query('SELECT Kosten FROM T_RassenFertigkeiten ' .
 						'WHERE F_Fertigkeit_id='.$value['Fertigkeit_id'].
 ' AND F_Rasse_id='.$this->F_Rasse_id);
@@ -956,7 +956,7 @@ class Charakter
 	} // getKlasseSpruchlistenAnzahl
 	/**
 	 * Berechnet die Spezialisierungsklassen, die R�nge usw. 
-	 * Diese Methode muss nach �nderungen an den Fertigkeiten aufgerufen werden,
+	 * Diese Methode muss nach änderungen an den Fertigkeiten aufgerufen werden,
 	 * damit die erlaubten R�nge, Spezialisierungen usw. korrekt angegeben werden.
 	 *  
 	 */
@@ -970,7 +970,7 @@ class Charakter
 				// es werden alle Spruchlisten angezeigt.
 				$Spruchlisten = implode(',', array_keys($this->Spruchlisten));
 			} else
-			{ // Es sind nur Spr�che der vorhandenen Spruchlisten m�glich
+			{ // Es sind nur Spr�che der vorhandenen Spruchlisten möglich
 				$Spruchlisten = implode(',', $this->vorhandeneSpruchlisten);
 			}
 			// sicherheitshalber
@@ -1048,8 +1048,8 @@ class Charakter
 		return $feld;
 	}
 	/**
-	  * Bestimmt, wie viele Punkte f�r Vor- und Nachteile vergeben werden d�rfen
-	  * Legt die Punktzahl gem�� des Atlantis-Regelwerks fest.
+	  * Bestimmt, wie viele Punkte für Vor- und Nachteile vergeben werden d�rfen
+	  * Legt die Punktzahl gemä des Atlantis-Regelwerks fest.
 	  * @param String die Art der Vorteile (V, N, Uv, Un)
 	  * @return int die Punktanzahl 
 	  */
@@ -1058,14 +1058,14 @@ class Charakter
 		$MaxPunkte = 0;
 		switch ($art)
 		{
-			case self :: VORTEIL : // Maximalpunkte f�r normale Vorteile
+			case self :: VORTEIL : // Maximalpunkte für normale Vorteile
 				$MaxPunkte = 50;
 				break;
-			case self :: NACHTEIL : // Maximalpunkte f�r normale Nachteile
+			case self :: NACHTEIL : // Maximalpunkte für normale Nachteile
 				$MaxPunkte = 40;
 				break;
 			case self :: VORTEILUEBERNATUERLICH :
-			case self :: NACHTEILUEBERNATUERLICH : // Maximalpunkte f�r Vor- und Nachteile �bernat�rlicher Art
+			case self :: NACHTEILUEBERNATUERLICH : // Maximalpunkte für Vor- und Nachteile übernat�rlicher Art
 				if (isset ($this->Fertigkeiten[self :: UEBERNATUERLICHLEICHT]))
 					$MaxPunkte = 125;
 				if (isset ($this->Fertigkeiten[self :: UEBERNATUERLICHGANZ]))
@@ -1076,7 +1076,7 @@ class Charakter
 	} // getMaximalVorteilsPunkte
 	/**
 	 * Wandelt die Klasse in ein indiziertes Feld um
-	 * @param boolean true, wenn die Fertigkeiten ebenfalls �bergeben werden sollen
+	 * @param boolean true, wenn die Fertigkeiten ebenfalls übergeben werden sollen
 	 * @return array ein Feld mit den verschiedenen Daten des Charakters 
 	 */
 	function alsFeld($mitFertigkeiten = false)

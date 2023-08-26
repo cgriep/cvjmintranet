@@ -1,7 +1,7 @@
 <?php
 /*
  * Created on 12.11.2006
- * Serverkomponente f�r die AJAX-Anfragen der Templates
+ * Serverkomponente für die AJAX-Anfragen der Templates
  *
  * Christoph Griep
  */
@@ -79,7 +79,7 @@ function zeigeRasse($rassen_id)
 
 function zeigeSpruchliste($id)
 {	
-	$s = '(keine Eintr�ge vorhanden)';
+	$s = '(keine Einträge vorhanden)';
 	if ( is_numeric($id))
 	{
 	  $query = sql_query('SELECT Klasse, Spezialisierung, Meisterpunkte, Grossmeisterpunkte, ' .

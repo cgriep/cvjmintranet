@@ -189,17 +189,17 @@ foreach ($children as $docid => $value) {
        echo 'bis '.date('d.m.Y H:i',$value['Enddatum']);
     if ( strtotime("$Jahr-$Monat-$Tag 23:59") < $value['Enddatum'] )
     {
-      echo ' (ganzt�gig!)';
+      echo ' (ganztägig!)';
     }
     switch ( $value['Turnus'] )
     {
-      case 'd': echo ' t�glich';
+      case 'd': echo ' täglich';
         break;
-      case 'w': echo ' w�chentlich';
+      case 'w': echo ' wöchentlich';
         break;
       case 'm': echo ' monatlich';
         break;
-      case 'j': echo ' j�hrlich';
+      case 'j': echo ' jährlich';
     }
     echo '">'.transform($value['title'],'clean')."</a>";
     echo '</div>';

@@ -25,7 +25,7 @@ if($profile['editor']!='1') {
   <br />
   <?php if(SESSION_STATUS != 'ok') { ?>
     <?=LANG_YOUR_EMAIL_ADDRESS?><br />
-    <strong>Sie m�ssen eingeloggt sein, um Nachrichten zu versenden!</strong>
+    <strong>Sie müssen eingeloggt sein, um Nachrichten zu versenden!</strong>
     <br />
   <?php }
   else { ?>
@@ -92,8 +92,8 @@ if($profile['editor']!='1') {
     clear_cache($id);
     remove_profile('editor_'.$id);
     $id = $document['parent_id'];
-    echo "<b>Das Dokument wurde gel�scht!</b><br />";
-    echo "�bergeordnetes Dokument:<br />";
+    echo "<b>Das Dokument wurde gelöscht!</b><br />";
+    echo "Übergeordnetes Dokument:<br />";
     $document = get_node($id, $flavour);
   }
   elseif ( $_REQUEST["action"] == "edit" && $document['author_id'] == SESSION_DBID) {
@@ -142,8 +142,8 @@ if($profile['editor']!='1') {
   if ( $document['Link'] != "" ) {
     echo '<strong>Zum Aufsuchen dieser Seite <a target="_blank" href="/redirect.php?url=';
     echo urlencode($document["Link"]).'">hier klicken</a></strong>.<br /><br />';
-    echo '(die Seite �ffnet sich in einem eigenen Fenster. Sie befindet sich auf einer anderen Website. Ihr Inhalt liegt ';
-    echo 'au�erhalb des Einflu�bereiches der Betreiber dieser Seite.)<br /><br />';
+    echo '(die Seite öffnet sich in einem eigenen Fenster. Sie befindet sich auf einer anderen Website. Ihr Inhalt liegt ';
+    echo 'außerhalb des Einflußbereiches der Betreiber dieser Seite.)<br /><br />';
   }
   if(isset($parents)) {
     echo('[ <a href="'.get_url($document['parent_id'],'first_item='.$first_item).'">'.LANG_SHOW_COMPLETE_DOC.'</a> ]  ');
@@ -168,7 +168,7 @@ else {
   }
   elseif ( isset($document["redirect"]) )
   {
-     // Redirection l�schen
+     // Redirection löschen
      delete_nodedata($id, "redirect", "", $flavour);
   }
   // Image Input

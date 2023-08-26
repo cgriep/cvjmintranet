@@ -3,7 +3,7 @@
 
 require_once ('inc/xajax/xajax.inc.php');
 
-/* Datenbank- und AWF-Funktionalit�t einbinden */
+/* Datenbank- und AWF-Funktionalität einbinden */
 include ('inc/functions.inc');
 include ('inc/licence.key');
 include ('inc/sessions.inc');
@@ -11,7 +11,7 @@ include ('inc/caching.inc');
 include ('inc/config.inc');
 include ('inc/misc/drow.inc');
 
-/* pr�fen ob eine Session f�r den Benutzer existiert */
+/* prüfen ob eine Session für den Benutzer existiert */
 if (!isset ($session_userid) || $session_userid == '')
 {
 	die('Unauthorisiert!');
@@ -37,7 +37,7 @@ function sichereGunstpunkte($charakter_id, $punkte)
 	$objResponse = new xajaxResponse();
 	if (!is_numeric($charakter_id) || ! is_numeric($punkte) )
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente: '.$charakter_id.' Punkte: '.$punkte));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente: '.$charakter_id.' Punkte: '.$punkte));
 		return $objResponse;
 	}
 	if ( $profile['SteinsbergSL'] != 1 )
@@ -65,7 +65,7 @@ function sichereRasse($charakter_id, $rasse)
 	$objResponse = new xajaxResponse();
 	if (!is_numeric($charakter_id) || ! is_numeric($rasse) )
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente: '.$charakter_id.' Rasse: '.$rasse));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente: '.$charakter_id.' Rasse: '.$rasse));
 		return $objResponse;
 	}
 	// Charakter holen
@@ -73,7 +73,7 @@ function sichereRasse($charakter_id, $rasse)
 	$charakter['F_Rasse_id'] = $rasse;
 	if ( $rasse != 1 ) 
 	{
-		$charakter['Adlig'] = 0; // nur Drow k�nnen adlig sein
+		$charakter['Adlig'] = 0; // nur Drow können adlig sein
 		$objResponse->addAssign('charakter[Adlig]', 'checked', '');
 		$objResponse->addAssign('charakter[Adlig]', 'disabled', 'disabled');
 	}
@@ -98,7 +98,7 @@ function sichereGunststufe($charakter_id, $gunststufe)
 	$objResponse = new xajaxResponse();
 	if (!is_numeric($charakter_id) || ! is_numeric($gunststufe) )
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente: '.$charakter_id.' Gusntstufe: '.$gunststufe));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente: '.$charakter_id.' Gusntstufe: '.$gunststufe));
 		return $objResponse;
 	}
 	// Charakter holen
@@ -122,7 +122,7 @@ function sichereName($charakter_id, $name, $id)
 	$objResponse = new xajaxResponse();
 	if (!is_numeric($charakter_id) || trim($name) == '' || ! is_numeric($id))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente: '.$charakter_id.' Name: '.$name));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente: '.$charakter_id.' Name: '.$name));
 		return $objResponse;
 	}
 	// Charakter holen
@@ -146,7 +146,7 @@ function zeigeGunst($charakter_id, $adel, $position)
 	$objResponse = new xajaxResponse();
 	if (!is_numeric($charakter_id) || ! in_array($adel, array('true', 'false')) || ! is_numeric($position)  )
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente.'.$charakter_id));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'.$charakter_id));
 		return $objResponse;
 	}
 	// Charakter holen
@@ -178,7 +178,7 @@ function zeigeFertigkeit($charakter_id, $fertigkeit_id)
 	$objResponse = new xajaxResponse();
 	if (!is_numeric($fertigkeit_id) || ! is_numeric($charakter_id))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente.'.$fertigkeit_id));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'.$fertigkeit_id));
 		return $objResponse;
 	}
 	// Fertigkeit holen
@@ -204,7 +204,7 @@ function zeigeGunststufe($charakter_id, $klasse)
 	$objResponse = new xajaxResponse();
 	if (!is_numeric($charakter_id) || ! in_array($klasse, array('Krieger', 'Kleriker', 'Magier')) )
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente.'.$klasse.'/'.$charakter_id));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'.$klasse.'/'.$charakter_id));
 		return $objResponse;
 	}
 	$charakter = array();
@@ -252,7 +252,7 @@ function zeigeGunststufe($charakter_id, $klasse)
 		{
 			$summe += $hausep;
 		}
-		// Fertigkeiten hinzuf�gen
+		// Fertigkeiten hinzufügen
 		$sql = 'SELECT Eigenschaftsname, Eigenschaft_id, Erfahrungspunkte, Art FROM T_Eigenschaften WHERE Erfahrungspunkte<='.$summe.' AND '.$charakter['Klasse'].'_Gunststufe>0 AND '.
 		$charakter['Klasse'].'_Gunststufe<='.$charakter['F_Gunststufe_id'].
 		//' AND Minimum_Gunstpunkte<='.$Gunst.
@@ -272,7 +272,7 @@ function zeigeGunststufe($charakter_id, $klasse)
 		}
 		else
 		{
-			$ergebnis = 'Es gibt keine Fertigkeiten die der Charakter erwerben k�nnte.';
+			$ergebnis = 'Es gibt keine Fertigkeiten die der Charakter erwerben könnte.';
 		}
 		sql_free_result($query);
 		$objResponse->addAssign('Fertigkeiten', 'innerHTML', utf8_encode($ergebnis));
@@ -289,7 +289,7 @@ function entferneArtikel($buchung_nr, $artikel_id, $datum, $menge,$artikelnummer
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($artikel_id) || ! is_numeric($datum) || ! is_numeric($menge))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ung�ltige Argumente.'));
+		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'));
 	}
 	else
 	{

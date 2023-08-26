@@ -96,11 +96,11 @@ if($profile['editor']!='1') {
   else {
     if ( $_REQUEST["Ok"] == "1" ) {
       send_message ($document["author_id"], "Termin $id wurde am ".date("d.m.Y H:i").
-        " best�tigt.\n\nTitel: ".transform($document["title"],clean)."\nInhalt: ".
+        " bestätigt.\n\nTitel: ".transform($document["title"],clean)."\nInhalt: ".
         transform($docinput["body"],clean)."\n".
         "Erstellt von ".get_user_nickname($document["author_id"])."\n", SESSION_DBID, '',
-        "Terminbest�tigung ".transform($document["title"],"clean"));
-      echo "<B>&gt;&gt; Termin best�tigt.</b><br />";
+        "Terminbestätigung ".transform($document["title"],"clean"));
+      echo "<B>&gt;&gt; Termin bestätigt.</b><br />";
     }
     if ( $_REQUEST['Erinnerung'] == '1' ) {
       sendeAllen($document);
@@ -156,7 +156,7 @@ if($profile['editor']!='1') {
       unset($document);
       global $flavour;
       $document = get_node($id, $flavour);
-      sendeAllen($document, 'Termin�nderung durch '.get_user_email().' am '.date('d.m.Y H:i'));
+      sendeAllen($document, 'Terminänderung durch '.get_user_email().' am '.date('d.m.Y H:i'));
     }
     if ( $_REQUEST['Bearbeiten'] == 1 && (inPerson($document['Person'], $document['author_id'],$document['Aendern']=='1') ||
          inGruppe($document['Gruppe'],-1,$document['Aendern']=='1'))) {
@@ -166,12 +166,12 @@ if($profile['editor']!='1') {
     else if ( isset($_REQUEST['delete']) && $_REQUEST['delete'] == 1 &&
      (inPerson($document['Person'], $document['author_id'],$document['Aendern']=='1') ||
          inGruppe($document['Gruppe'],-1,$document['Aendern']=='1')) ) {
-      sendeAllen($document, 'Termin von '.get_user_nickname().' am '.date('d-m-Y H:i').' gel�scht: ');
+      sendeAllen($document, 'Termin von '.get_user_nickname().' am '.date('d-m-Y H:i').' gelöscht: ');
       destroy_node($id);
       remove_profile('editor_'.$id);
       $id = $document['parent_id'];
-      echo '<b>Der Termin wurde gel�scht!</b><br />';
-      echo '�bergeordnetes Dokument:<br />';
+      echo '<b>Der Termin wurde gelöscht!</b><br />';
+      echo 'Übergeordnetes Dokument:<br />';
       $document = get_node($id, $flavour);
       echo '<a href="'.get_url($id).'">'.transform($document['title'], $document['datatype']['title']).'</a>';
     }
@@ -192,7 +192,7 @@ if($profile['editor']!='1') {
       foreach ( $wer as $key => $value) {
         echo transform($value,"user_id");
         if ( $value == SESSION_DBID )
-          echo ' <a href="'.get_url($id,"Ok=1").'">(Termin best�tigen)</a>';
+          echo ' <a href="'.get_url($id,"Ok=1").'">(Termin bestätigen)</a>';
         echo "<br />";
       }
     }
@@ -228,10 +228,10 @@ if($profile['editor']!='1') {
     if ( $document["Turnus"] != "" ) echo "<b>Turnus</b>";
     echo '</td><td>';
     if ( $document["Turnus"] == "m" ) echo "monatlich";
-    else if ( $document["Turnus"] == "w" ) echo "w�chentlich";
-    else if ( $document["Turnus"] == "d" ) echo "t�glich";
-    else if ( $document["Turnus"] == "j" ) echo "j�hrlich";
-    else if ( $document["Turnus"] == "v" ) echo "14t�gig";
+    else if ( $document["Turnus"] == "w" ) echo "wöchentlich";
+    else if ( $document["Turnus"] == "d" ) echo "täglich";
+    else if ( $document["Turnus"] == "j" ) echo "jährlich";
+    else if ( $document["Turnus"] == "v" ) echo "14tägig";
     echo '</td><td>';
     if ( $document["TurnusEnde"] != 0 )
       echo "<strong>Letzter Termin</strong></td><td>".date("d.m.Y",$document["TurnusEnde"]);
@@ -251,7 +251,7 @@ if($profile['editor']!='1') {
     if ( inGruppe($document["Gruppe"],-1,$document["Aendern"]=="1") ||
          inPerson($document["Person"], $document["author_id"],$document["Aendern"]=="1") ) {
       echo '[ <a href="'.get_url($id,'Bearbeiten=1').'">Bearbeiten</a> ] ';
-      echo '[ <a href="'.get_url($id,'delete=1').'">L�schen</a> ]';
+      echo '[ <a href="'.get_url($id,'delete=1').'">löschen</a> ]';
       echo "<br />";
       echo "<br />";
     }
@@ -313,6 +313,6 @@ else { // Editor-Modus
   echo '<br /><br />';
   create_editor_input('User comments at bottom','comments','onoff_input');
   echo '<br /><br />';
-  create_editor_input('Alle User d�rfen �ndern','Aendern','onoff_input');
+  create_editor_input('Alle User dürfen ändern','Aendern','onoff_input');
 }
 ?>

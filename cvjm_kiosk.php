@@ -1,10 +1,10 @@
 <?php
 /**
- * Webserver-Seite f�r die Funktionen des Kiosk
+ * Webserver-Seite für die Funktionen des Kiosk
  *
  */
 
-/* Datenbank- und AWF-Funktionalit�t einbinden */
+/* Datenbank- und AWF-Funktionalität einbinden */
 include ('inc/functions.inc');
 include ('inc/licence.key');
 include ('inc/sessions.inc');
@@ -267,7 +267,7 @@ function Kiosk_LiesArtikelRekursiv($art, $artikel_id, $preisliste)
 				htmlspecialchars(str_replace('Kiosk','',$result['Bezeichnung'])).'</Bezeichnung><Barcode>'.$result['Barcode'].
 					'</Barcode><Preis>'.(round($result['Preis']*(100+$result['MWST']))/100).
 					'</Preis>';
-				// Unterartikel pr�fen
+				// Unterartikel prüfen
 				$xml .= Kiosk_LiesArtikelRekursiv('unterartikel', $result['id'], $preisliste);
 				if ( $art == 'unterartikel')
 				{

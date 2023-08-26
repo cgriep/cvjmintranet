@@ -1,11 +1,11 @@
 <?php
 /*
    cvjmEintragZusammenfassung
-   Zeigt Buchungseintr�ge zusammengefasst an
+   Zeigt BuchungsEinträge zusammengefasst an
    Wahlweise mit oder ohne Preis
 
    Parameter:
-   Edit - wenn gesetzt, mit Editierungsm�glichkeit
+   Edit - wenn gesetzt, mit Editierungsmöglichkeit
    Buchung_Nr - Buchungsnummer
    Alle - wenn gesetzt, wird jeder Eintrag einzeln angezeigt
 
@@ -25,7 +25,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
        $daten[$meinkey2] = $eintrag['Datum'];
      reset($meinvalue);
      array_multisort($daten, SORT_ASC, SORT_NUMERIC, $meinvalue);
-     // �berschrift
+     // überschrift
      echo '<tr><td colspan="3"></td><td colspan="3"><strong>'.$Artikelarten[$meinkey].
         '</strong></td></tr>';
      // Sortieren nach Datum
@@ -146,7 +146,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
         "docinput[Art]"=>$eintrag["F_Art_id"],
         "docinput[Page]"=>holeArtikelMasterParent($eintrag["F_Art_id"],
           $eintrag["Position"], $eintrag["Einruecken"])) ).
-        '" title="zur Belegungs�bersicht">';
+        '" title="zur BelegungsÜbersicht">';
       echo substr($Wochentage[date("w",$eintrag["Datum"])],0,2)." ";
       // TODO: Datum editierbar machen ****
       echo $datum."</a></td>\n";
@@ -167,7 +167,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
         echo '#Einzelheiten" onClick="javascript:return window.confirm(\'Eintrag '.
           stripslashes($eintrag["Bezeichnung"]).
           " ".$datum;
-        echo ' wirklich l�schen?\');"><img src="/img/small_edit/delete.gif" border="0"/></a>';
+        echo ' wirklich löschen?\');"><img src="/img/small_edit/delete.gif" border="0"/></a>';
       }
       echo "</td></tr>\n";
       if ( $Color == "helleZeile" )

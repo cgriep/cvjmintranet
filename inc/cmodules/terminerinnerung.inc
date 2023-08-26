@@ -53,7 +53,7 @@ elseif($profile['editor']!='1') {
   if($document['title'] != '')
       echo '<h2>'.transform($document['title'], $document['datatype']['title']).'</h2>';
   
-  echo 'Erinnerung f�r Termin '.$_REQUEST['Termin_id'];
+  echo 'Erinnerung für Termin '.$_REQUEST['Termin_id'];
   echo '<form action="'.get_url($id,'Termin_id='.$_REQUEST['Termin_id']).'" method="post">';
   echo 'Vorhandene Erinnerungen (markieren zum Entfernen)<br />' .
   		'<select name="docinput[Entfernen][]" multiple="multiple">';
@@ -89,7 +89,7 @@ elseif($profile['editor']!='1') {
   echo 'an Gruppe ';
   echo '<select name="docinput[Gruppe][]" size="5" multiple="multiple">';
   foreach ($groups as $key => $gruppe) {
-        // Nur Gruppenmitglieder k�nnen die Gruppe einladen!
+        // Nur Gruppenmitglieder können die Gruppe einladen!
         if ( InGruppe($key) || $profile[$document['Terminrecht']] == '1' )
         {
           echo '<option value="' . $key . '"';
@@ -103,7 +103,7 @@ elseif($profile['editor']!='1') {
   echo '<input type="submit" value="Erinnerungseinstellungen speichern" ' .
   		'name="SaveErinnerung"/>';
   echo '</form>';
-  echo('[ <a href="'.get_url($_REQUEST['Termin_id']).'">Zur�ck zum Termin'.
+  echo('[ <a href="'.get_url($_REQUEST['Termin_id']).'">Zurück zum Termin'.
       '</a> ]');
 }
 ?>

@@ -58,7 +58,7 @@ if ( isset($profile[CVJM_VERWALTUNGSGRUPPE]))
 if ( is_numeric($_REQUEST['Delete']) )
 {
   $qu = sql_query('SELECT Autor FROM '.TABLE_AUFTRAG.' WHERE id = '.$_REQUEST['Delete'].' AND Autor = '.$Benutzer);
-  if ( sql_num_rows($qu) == 1 ) { // Nur l�schen, wenn der Auftrag einem geh�rt
+  if ( sql_num_rows($qu) == 1 ) { // Nur löschen, wenn der Auftrag einem geh�rt
     $sql = 'DELETE FROM '.TABLE_AUFTRAG.' WHERE id = '.$_REQUEST['Delete'];
     if ( ! sql_query($sql) ) echo "<strong>&gt;&gt; L�schfehler: ". sql_error().'</strong><br /><br />';
     else
@@ -81,8 +81,8 @@ if ( isset($_REQUEST['Titel']) )
   {
     if ( $_REQUEST['Titel'] == '' ) // Nur mit Titel speichern
     {
-      echo '<strong>&gt;&gt;&gt; Sie m�ssen einen Titel eingeben! ';
-      echo '<a href="javascript:history.back();">Zur�ck</a></a></strong><br /><br />';
+      echo '<strong>&gt;&gt;&gt; Sie müssen einen Titel eingeben! ';
+      echo '<a href="javascript:history.back();">Zurück</a></a></strong><br /><br />';
     }
     else
     {      
@@ -93,9 +93,9 @@ if ( isset($_REQUEST['Titel']) )
           $_REQUEST['Bemerkung'], $_REQUEST['Prioritaet'], $Betroffen, $BearbeitenBis, $_REQUEST['Ort'],
           $_REQUEST['Status']);
         $Bem = sql_real_escape_string($row['Bemerkung'])."\n".
-         'ge�ndert durch '.html_entity_decode(get_user_nickname());
+         'geändert durch '.html_entity_decode(get_user_nickname());
     	$Bem2 = sql_real_escape_string($row['Beschreibung'])."\n".$Bem;
-        mail(get_user_email($row['Autor']), '[Auftrag '.$_REQUEST['Titel'].'] ge�ndert',
+        mail(get_user_email($row['Autor']), '[Auftrag '.$_REQUEST['Titel'].'] geändert',
            'Von: '.get_user_email(SESSION_DBID)."\nDatum: ".date('d.m.Y H:i')."\n".
            $Bem2, 'From: '.get_user_email(SESSION_DBID));
       }
@@ -108,9 +108,9 @@ if ( isset($_REQUEST['Titel']) )
     }
   }
   else
-   echo '<strong>&gt;&gt;&gt; Sie m�ssen eine g�ltige Priorit�t, Status und Ort angeben!</strong><br />';
+   echo '<strong>&gt;&gt;&gt; Sie müssen eine gültige Priorität, Status und Ort angeben!</strong><br />';
 }
-// Abfrage, ob der Status eines Auftrages ge�ndert werden soll
+// Abfrage, ob der Status eines Auftrages geändert werden soll
 if ( isset($_REQUEST['Auftrag']) && isset($_REQUEST['NewStatus']) &&
      is_numeric($_REQUEST['Auftrag']) && is_numeric($_REQUEST['NewStatus']) ) {
   $qu = sql_query('SELECT Beschreibung,Bemerkung, Autor, Titel FROM '.TABLE_AUFTRAG.' WHERE id = '.$_REQUEST['Auftrag']);
@@ -147,9 +147,9 @@ if ( ! ((isset($_REQUEST['EditAuftrag']) && is_numeric($_REQUEST['EditAuftrag'])
   //  $profile['AuftragUnterbrochen'] = 1;
  // }
   if ( isset($_REQUEST['MyWork']) )
-    echo '<h2>Auftr�ge von '.get_user_nickname($Benutzer).', Stand '.date('d.m.Y H:i').'</h2>';
+    echo '<h2>Aufträge von '.get_user_nickname($Benutzer).', Stand '.date('d.m.Y H:i').'</h2>';
   else
-    echo '<h2>Auftr�ge f�r '.get_user_nickname($Benutzer).', Stand '.date('d.m.Y H:i').'</h2>';
+    echo '<h2>Aufträge für '.get_user_nickname($Benutzer).', Stand '.date('d.m.Y H:i').'</h2>';
   //if ( $profile['AuftragUnterbrochen'] != 1 )
   //  echo '[ <a href=''.get_url($id,'Unterbrochen=0').''>Unterbrochene ausblenden</a> ] ';
   //else
@@ -180,9 +180,9 @@ if ( ! ((isset($_REQUEST['EditAuftrag']) && is_numeric($_REQUEST['EditAuftrag'])
   if ( isset($_REQUEST["SearchOrt"]))
     echo '[ <a href="'.get_url($id,$BenutzerURL).'">'.LANG_ALLEORTE.'</a> ] ';
   if ( isset($_REQUEST["MyWork"]) )
-    echo '[ <a href="'.get_url($id).'">Nur Auftr�ge f�r mich anzeigen</a> ] ';
+    echo '[ <a href="'.get_url($id).'">Nur Aufträge für mich anzeigen</a> ] ';
   else
-    echo '[ <a href="'.get_url($id,'MyWork=1'.$BenutzerURL).'">Auftragsstatus erteilter Auftr�ge anzeigen</a> ] ';
+    echo '[ <a href="'.get_url($id,'MyWork=1'.$BenutzerURL).'">Auftragsstatus erteilter Aufträge anzeigen</a> ] ';
 echo '</div>';
   echo $design['table_begin'];
   echo '<table width="100%" border="1" style="border-collapse:collapse;border-color: '.
@@ -282,12 +282,12 @@ echo '</div>';
     if ( sql_num_rows($qu) == 1 )
       echo " ".LANG_AUFTRAG;
     else
-      echo " Auftr�ge";
+      echo " Aufträge";
   }
   sql_free_result($qu);
   echo "<br /><br />";
   
-  // Auftr�ge anderer ansehen
+  // Aufträge anderer ansehen
   if ( isset($profile[CVJM_VERWALTUNGSGRUPPE]) )
     {
       // Berechtigter Nutzer: Anzeige der User
@@ -301,7 +301,7 @@ echo '</div>';
       //reset($user);
       //array_multisort($user, SORT_ASC);
       echo '<hr class="noprint" /><form action="'.get_url($id).'" method="post" class="noprint">';
-      echo "Auftr�ge von Benutzer ";
+      echo "Aufträge von Benutzer ";
       echo '<select name="docinput[Benutzer]" size="1">';
       $u = $user;
       asort($u);
@@ -353,7 +353,7 @@ if ( is_numeric($_REQUEST["EditAuftrag"]) || isset($_REQUEST["newauf"]))
       echo "Auftrag erstellt von ".transform($row["Autor"],"user_id")." am ";
       echo transform(strtotime($row["Datum"]),"datetime");
       if ( $row["Datum"] != $row["Aenderung"] )
-        echo " zuletzt ge�ndert am ".transform(strtotime($row["Aenderung"]),"datetime");
+        echo " zuletzt geändert am ".transform(strtotime($row["Aenderung"]),"datetime");
       echo "<br />";
     }
     sql_free_result($qu);
@@ -443,8 +443,8 @@ if ( ! isset($profile["AlleAuftraege"]) ) echo get_url($id,'Alle=1'.$BenutzerURL
   if ( isset($_REQUEST["SearchOrt"]))
     echo '[ <a href="'.get_url($id,$BenutzerURL).'">'.LANG_ALLEORTE.'</a> ] ';
   if ( isset($_REQUEST["MyWork"]) )
-    echo '[ <a href="'.get_url($id).'">Nur Auftr�ge f�r mich anzeigen</a> ] ';
+    echo '[ <a href="'.get_url($id).'">Nur Aufträge für mich anzeigen</a> ] ';
   else
-    echo '[ <a href="'.get_url($id,'MyWork=1'.$BenutzerURL).'">Auftragsstatus erteilter Auftr�ge anzeigen</a> ] ';
+    echo '[ <a href="'.get_url($id,'MyWork=1'.$BenutzerURL).'">Auftragsstatus erteilter Aufträge anzeigen</a> ] ';
 echo '</div>';
 ?>

@@ -123,7 +123,7 @@ if ($profile['editor'] != '1')
 			if ( $Geld = sql_fetch_array($query))
 			{
 				$Geld = $Geld[0];
-				// 1. alle Eintr�ge nach Kiosk verschieben
+				// 1. alle Einträge nach Kiosk verschieben
 				$sql = 'INSERT INTO cvjm_Kiosk SELECT * FROM cvjm_Kiosk_Mitarbeiter '.	 
 				'WHERE Benutzer="'.$docinput['Einzahlen'].'"';
 			
@@ -137,7 +137,7 @@ if ($profile['editor'] != '1')
 
 				if ( ! sql_query($sql) )
 				{
-					throw new Exception('Fehler l�schen: '.sql_error());
+					throw new Exception('Fehler löschen: '.sql_error());
 				}
 				$sql = 'INSERT INTO cvjm_Kiosk (Menge, Preis, Bezeichnung, Benutzer, Datum, F_Artikel_id) '.
 				' VALUES (-1, '.$Geld.', "Einzahlung Mitarbeiter '.

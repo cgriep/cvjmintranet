@@ -41,7 +41,7 @@
 <tr>
 <td>
 <?php
-/*  Schnipsel f�r Felder 1-5 mit Namen und Hintergrundbilddatei ../img/design/feriendorf/ebene1_th.gif bis   ../img/design/feriendorf/ebene5_th.gif und Sprungbefehl
+/*  Schnipsel für Felder 1-5 mit Namen und Hintergrundbilddatei ../img/design/feriendorf/ebene1_th.gif bis   ../img/design/feriendorf/ebene5_th.gif und Sprungbefehl
 */
 
 if ( !isset($flavour) ) $flavour = $default_flavour;

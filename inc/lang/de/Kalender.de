@@ -1,6 +1,6 @@
 JANUARY	Januar
 FEBRUARY	Februar
-MARCH	M‰rz
+MARCH	M√§rz
 APRIL	April
 MAY	Mai
 JUNE	Juni
@@ -19,8 +19,8 @@ THREEMONTH	3 Monate
 YEAR	Jahr
 NORIGHT	Sie haben nicht die Berechtigung, diesen Termin anzusehen!
 MEMOSEND	Erinnerungen gesendet.
-TERMINUPDATE	Termin ge‰ndert.
+TERMINUPDATE	Termin ge√§ndert.
 TITLE_REQUIRED	Der Titel muss angegeben werden!
-ANZEIGE_BESCHRAENKT_PERSON	Anzeige beschr‰nkt auf persˆnliche Termine von %%WER%%.
-ANZEIGE_BESCHRAENKT_BETROFFEN	Anzeige beschr‰nkt auf Termine, von denen %%WER%% betroffen ist.
-ANZEIGE_BESCHRAENKT_GRUPPE	Anzeige beschr‰nkt auf Termine der Gruppe %%WER%%.
+ANZEIGE_BESCHRAENKT_PERSON	Anzeige beschr√§nkt auf pers√∂nliche Termine von %%WER%%.
+ANZEIGE_BESCHRAENKT_BETROFFEN	Anzeige beschr√§nkt auf Termine, von denen %%WER%% betroffen ist.
+ANZEIGE_BESCHRAENKT_GRUPPE	Anzeige beschr√§nkt auf Termine der Gruppe %%WER%%.

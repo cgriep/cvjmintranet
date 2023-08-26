@@ -12,8 +12,8 @@ function BuchungstabelleAnzeigen($Where, $nurAnsicht = true, $WhereSeminar = '')
 	global $docinput;
 	global $document;
 	// Liste der vorhandenen Buchungen
-	// �bersicht �ber die aktuellen Belegungen
-	$Status = 'BStatus = -1'; // zun�chst nichts anzeigen
+	// Übersicht über die aktuellen Belegungen
+	$Status = 'BStatus = -1'; // zunächst nichts anzeigen
 	if ( isset($_REQUEST['Search'] ))
 	{
 		if ( isset($docinput['Reservierungen']) )
@@ -138,7 +138,7 @@ function BuchungstabelleAnzeigen($Where, $nurAnsicht = true, $WhereSeminar = '')
 	$Smarty->assign('Seiten', $Gesamtanzahl/$AnzahlProSeite);
 	$Smarty->assign('Seite', $Seite);
 	$sql = 'SELECT Buchung_Nr, Von FROM '.TABLE_BUCHUNGEN.' INNER JOIN '.TABLE_ADRESSEN.' ON F_Adressen_id=Adressen_id '.$Where;
-	//Seminar erg�nzen
+	//Seminar ergänzen
 	if ( $WhereSeminar != '')
 	{
 		$sql .= ' UNION SELECT Buchung_Nr, Von FROM '.TABLE_BUCHUNGEN.' INNER JOIN ('.TABLE_SEMINARTEILNEHMER.

@@ -14,7 +14,7 @@ function SendPostingMail($mid, $docinput, $neu = true)
   global $doctypes;
   reset($parents);
   global $document;
-  // Neueintr�ge bearbeiten
+  // Neueinträge bearbeiten
   if ( $document["type_id"] == $doctypes["forum_forum"] )
   {
     global $id;

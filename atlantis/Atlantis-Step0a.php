@@ -5,7 +5,7 @@ include ('character.class.php');
 
 if (!session_is_registered('Charakter')) // Name 
 {
-	// Zur�ck zur Namenseingabe
+	// Zurück zur Namenseingabe
 	header('Location: http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/Atlantis-Step0.php');
 } else
 {

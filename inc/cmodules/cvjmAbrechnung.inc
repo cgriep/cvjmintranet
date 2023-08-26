@@ -5,12 +5,12 @@
  *   Modul cvjmAbrechnung
  *  AWF-Name: cvjmabrechnung
 *
-*   Vorlagen-Dateien m�ssen im Verzeichnis Vorlagen/Buchung liegen
+*   Vorlagen-Dateien müssen im Verzeichnis Vorlagen/Buchung liegen
 *
  *  Parameter:
  *  docinput[Buchung_Nr] - Die Buchungsnummer
  *  Storno: Status bei Stornierungen. Zun�chst wird eine Abrechnung gemacht, danach der
- *          neue Status gesetzt und die Buchungseintr�ge gel�cht.
+ *          neue Status gesetzt und die BuchungsEinträge gel�cht.
 */
 
 include (INC_PATH . 'cvjm_ajax.php');
@@ -47,14 +47,14 @@ function entferneBerechneteEintraege($Rechnung_id, $Buchung_nr)
 			echo $eintrag['F_artikel_Nr'] . ": $anzahl vorh, " . $eintrag['Menge'] . ' auf Rechnung<br />';
 			if ($eintrag['Menge'] - $anzahl == 0)
 			{
-				// Eintrag vorhanden - l�schen
+				// Eintrag vorhanden - löschen
 				if (!sql_query('DELETE FROM ' . TABLE_RECHNUNGSEINTRAEGE .
 					" WHERE F_Rechnung_id=$Rechnung_id AND F_Artikel_Nr=" . $eintrag['F_Artikel_Nr'] .
 					' AND Datum=' . $eintrag['Datum']))
 					echo sql_error();
 			} else
 			{
-				// Eintrag vorhanden - �ndern
+				// Eintrag vorhanden - ändern
 				if (!sql_query('UPDATE ' . TABLE_RECHNUNGSEINTRAEGE .
 					' SET Menge=' . ($eintrag['Menge'] - $anzahl) .
 					" WHERE F_Rechnung_id=$Rechnung_id AND F_Artikel_Nr=" . $eintrag['F_Artikel_Nr'] .
@@ -76,7 +76,7 @@ function ergaenzeFreibetraege($eintrag, $eintraege, $nullMenge = '')
 		$eintrag['Menge'] = 0;
 	if ($eintrag['Menge'] != 0 && ($eintrag['Typ'] == ABRECHNUNGSTYP_KOPFNACHT || $eintrag['Typ'] == ABRECHNUNGSTYP_KOPF || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGNACHT || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGPAUSCHAL || $eintrag['Typ'] == ABRECHNUNGSTYP_PAUSCHAL))
 	{
-		// Datum allgemein: es ist egal wann die zugeh�rigen Dinge gebucht sind
+		// Datum allgemein: es ist egal wann die zugehörigen Dinge gebucht sind
 		$eintrag['Datum'] = 0;
 	}
 	$query = sql_query('SELECT * FROM ' . TABLE_ARTIKELBEZIEHUNGEN .
@@ -120,7 +120,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Menge'] = $eintrag['Menge'];
 	// unterscheidung: Welche Steuer muss ausgewiesen werden?     
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['MWST'] = $MWST[$eintrag['F_MWSt']];
-	// Alles was nicht geringwertig ist kann erm��igt werden
+	// Alles was nicht geringwertig ist kann ermäßigt werden
 	if (!$eintrag['Steuerpflicht'])
 	{
 		$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['MWST'] = Min($buchung['Steuerbehandlung'], $MWST[$eintrag['F_MWSt']]);
@@ -140,7 +140,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Dauer'] = $eintrag['Dauer'];
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Preis'] = holePreis($eintrag['id'], $buchung['F_Preisliste_id'], $eintrag['Dauer'] > 0);
 	$neuMenge = $eintrag['Menge'];
-	// Sonderf�lle pr�fen
+	// Sonderf�lle prüfen
 	// Schritt 1: Essen?
 	if ($eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNG || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGNACHT || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGPAUSCHAL)
 	{
@@ -164,7 +164,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 		}
 		if ($eintrag['id'] != CVJM_SELBSTVERPFLEGUNG && $neuMenge > 0)
 		{
-			// Pr�fen, ob Pauschale Vegetarisch anf�llt
+			// prüfen, ob Pauschale Vegetarisch anf�llt
 			if ($buchung['Vegetarier'] > 0 && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_VEGETARIER]))
 			{
 				// Eintrag bauen:
@@ -177,7 +177,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$vegetarier['Dauer'] = 0;
 				$Abrechnungseintraege = EintragAufnehmen($vegetarier, $buchung, $Abrechnungseintraege);
 			}
-			// Pr�fen, ob Pauschale Schweinefleischlos anf�llt
+			// prüfen, ob Pauschale Schweinefleischlos anf�llt
 			if ($buchung['Schweinelos'] > 0 && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_SCHWEINEFLEISCHLOS]))
 			{
 				// Eintrag bauen:
@@ -190,7 +190,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$vegetarier['Dauer'] = 0;
 				$Abrechnungseintraege = EintragAufnehmen($vegetarier, $buchung, $Abrechnungseintraege);
 			}
-			// Pr�fen, ob Pauschale 'ohne Hilfe' anf�llt
+			// prüfen, ob Pauschale 'ohne Hilfe' anf�llt
 			if (!$buchung['Kuechenhilfe'] && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_OHNEMITHILFE]))
 			{
 				// nur wenn noch keine Hilfe an diesem Tag
@@ -284,7 +284,7 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 				}
 				if ($Abrechnungseintraege[$datum][$artikel_id]['Berechnen'] > 0)
 				{
-					// gibt es Freieintr�ge, bei denen der Abrechnungszeitraum egal ist?
+					// gibt es FreiEinträge, bei denen der Abrechnungszeitraum egal ist?
 					if (isset ($Abrechnungseintraege[0][$artikel_id]['Frei']))
 					{
 						$frei = $Abrechnungseintraege[0][$artikel_id]['Frei'];
@@ -364,9 +364,9 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 			}
 		} // foreach
 	}
-	// Nun noch alle Eintr�ge in die Datenbank schreiben
+	// Nun noch alle Einträge in die Datenbank schreiben
 	$gesamt = 0;
-	// TODO: Wof�r ist $vorhanden???
+	// TODO: Wofür ist $vorhanden???
 	$vorhanden = 0;
 	foreach ($Abrechnungseintraege as $datum => $artikel)
 		foreach ($artikel as $artikel_id => $value)
@@ -389,7 +389,7 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 				// wenn teilweise Berechnung
 				if (($value['Menge'] != $value['Berechnen'] && $value['Menge'] != 0) || ($value['Berechnen'] == 0 && $value['Freieintrag'])) //&& ! $value['Uebernachtung']) )
 				{
-					// die �berz�hligen Artikel werden mit Preis 0 eingetragen
+					// die überz�hligen Artikel werden mit Preis 0 eingetragen
 					// Uhrzeit ist dann 00:00:01
 					if (!sql_query('INSERT INTO ' . TABLE_RECHNUNGSEINTRAEGE .
 						' (F_Rechnung_id, Datum,MWSt,Rabatt,Art,Einheit,Menge,Dauer,' .
@@ -471,7 +471,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 			// TODO: Wozu dient das: ? && $tag != $eintrag['Datum'])
 		{
 			$tag = $eintrag['Datum'];
-			// Pr�fen, ob Pauschale Vegetarisch anf�llt
+			// prüfen, ob Pauschale Vegetarisch anf�llt
 			if ($buchung['Vegetarier'] > 0)
 			{
 				$mySql .= $sql . $eintrag['Datum'] . ',';
@@ -688,7 +688,7 @@ function Rechnungspositionen($rechnung)
 		}
 	} // while
 	if (sql_num_rows($query) == 0)
-		echo '<tr><td colspan="11" class="zentriert">keine Eintr�ge vorhanden</td></tr>';
+		echo '<tr><td colspan="11" class="zentriert">keine Einträge vorhanden</td></tr>';
 	else
 	{
 		$Gesamtsumme += ZusammenfassungAnzeigen($Meineintrag, $Color, $Art);
@@ -704,7 +704,7 @@ function Rechnungspositionen($rechnung)
 			echo "</td></tr>\n";
 		}
 		echo '<tr><td colspan="3"></td><td colspan="6"><strong><em>Gesamtsumme</em></strong>';
-		echo ' (' . sql_num_rows($query) . ' Eintr�ge)</td>';
+		echo ' (' . sql_num_rows($query) . ' Einträge)</td>';
 		echo '<td align="right">' . number_format($Gesamtsumme, 2);
 		echo "</td></tr>\n";
 		//if ( $buchung['MwStAusweisen'])
@@ -759,7 +759,7 @@ function ZusammenfassungAnzeigen($eintrag, $Color, & $LetzteArt)
 	global $buchung;
 	global $Rabattsumme;
 	global $MwStSumme;
-	// �berschrift
+	// überschrift
 	if ($eintrag['Art'] != $LetzteArt)
 	{
 		$LetzteArt = $eintrag['Art'];
@@ -953,7 +953,7 @@ function ZusammenfassungAnzeigen($eintrag, $Color, & $LetzteArt)
 		echo '#Einzelheiten" onClick="javascript:return window.confirm(\'Eintrag ' .
 		stripslashes($eintrag['F_Bezeichnung']) .
 		' ' . $datum;
-		echo ' wirklich l�schen?\');"><img src="/img/small_edit/delete.gif" border="0"/></a>';
+		echo ' wirklich löschen?\');"><img src="/img/small_edit/delete.gif" border="0"/></a>';
 		echo "</td></tr>\n";
 		return $gesamt;
 	}
@@ -1019,7 +1019,7 @@ if ($profile['editor'] != 1)
 			$Buchung = new Buchung($docinput['Buchung_Nr']);
 			$buchung = holeBuchung($docinput['Buchung_Nr']);
 			$anzString = '';
-			// wenn keine Anzahlung get�tigt wurde (Bemerkung leer) dann auf 0 setzen
+			// wenn keine Anzahlung getätigt wurde (Bemerkung leer) dann auf 0 setzen
 			// damit die Anzahlung aus der Liste der offenen Anzahlungen rausf�llt 
 			$Buchung->anzahlungNullen();
 			$Buchung->logAction('Rechnung Nr. '.$docinput['Rechnungsnummer'].' erstellt');
@@ -1092,7 +1092,7 @@ if ($profile['editor'] != 1)
 		' ON Adressen_id = F_Adressen_id WHERE Buchung_Nr = ' . $docinput['Buchung_Nr']);
 		if ($buchung = sql_fetch_array($bquery))
 		{
-			echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchung')) . '">Zur Buchungs�bersicht</a> ]</div>';
+			echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchung')) . '">Zur BuchungsÜbersicht</a> ]</div>';
 			// Kopf: Wichtige Daten
 			ZeigeBuchungskopf($buchung);
 			// Ende Kopf
@@ -1155,14 +1155,14 @@ if ($profile['editor'] != 1)
 					sql_real_escape_string($buchung['Titel']) . "','" . 
 					$Anredearten[$buchung['F_Anrede_id']] . "'," . $buchung['Von'] . ',' .
 						$buchung['Bis'] . ',' . strtotime(date('Y-m-d')) . ',' . 
-						$Anzahlung . ',0,3,' . // 3- Best�tigung
+						$Anzahlung . ',0,3,' . // 3- Bestätigung
 					$buchung['Adressen_id'] . ',' . $buchung['Kunden_Nr'] .
 					',' . $buchung['Buchung_Nr'] . ',0)';
 					if (!sql_query($sql))
 						echo '<div class="SchwererFehler">Fehler $sql: ' . sql_error() . '</div>';
 					$docinput['Rechnung_id'] = sql_insert_id();
 					$_SESSION['LetzteRechnung'] = $docinput['Rechnung_id'];
-					// Nun noch die Eintr�ge �bernehmen
+					// Nun noch die Einträge übernehmen
 					$sql = 'INSERT INTO ' . TABLE_RECHNUNGSEINTRAEGE . ' (F_Rechnung_id, Datum,MWSt,' .
 					'Rabatt,Art,Einheit,Menge,Dauer,F_Bezeichnung,F_Preis,F_Artikel_Nr) VALUES (' .
 					$docinput['Rechnung_id'] . ',';
@@ -1193,7 +1193,7 @@ if ($profile['editor'] != 1)
 					// Minimalkosten fuer Anzahlung: 50
 					if ($gesamt < 50)
 						$gesamt = 50;
-					// Pr�fen: Wenn Anzahlung noch nicht vorhanden, dann eintragen
+					// prüfen: Wenn Anzahlung noch nicht vorhanden, dann eintragen
 					if (($buchung['Anzahlung'] == '' || $buchung['Anzahlung'] == 0) && $buchung['Anzahlungsbemerkung'] == '')
 					{
 						sql_query('UPDATE ' . TABLE_BUCHUNGEN . ' SET Anzahlung=' . $gesamt .
@@ -1207,10 +1207,10 @@ if ($profile['editor'] != 1)
 				else
 					$docinput['Rechnung_id'] = $_SESSION['LetzteRechnung'];
 			} // neue Abrechnung
-			// Status�nderung:
+			// Statusänderung:
 			if (isset ($docinput['Storno']) && is_numeric($docinput['Storno']) && $docinput['Storno'] == BUCHUNG_STORNIERT)
 			{
-				// Wenn Storno dann kann nun gel�scht werden!
+				// Wenn Storno dann kann nun gelöscht werden!
 				echo '<strong>&gt;&gt;&gt; Storniere Buchung...</strong>';
 				if (!sql_query('DELETE FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' . $buchung['Buchung_Nr']))
 					echo sql_error();
@@ -1239,7 +1239,7 @@ if ($profile['editor'] != 1)
 			// Mehrwertsteuer erlassen
 			if (isset ($_REQUEST['MWST']) && is_numeric($_REQUEST['MWST']))
 			{
-				// Berechnung des Nachlasses f�r MWST
+				// Berechnung des Nachlasses für MWST
 				$steuer = array_search('Gesch�ftsbetrieb', $Steuerarten);
 
 				// CVJM_PAUSCHALE holen
@@ -1308,10 +1308,10 @@ if ($profile['editor'] != 1)
 			{
 				entferneBerechneteEintraege($docinput['Rechnung_id'], $buchung['Buchung_Nr']);
 			}
-			// Editieren einzelner Eintr�ge
+			// Editieren einzelner Einträge
 			if (isset ($_REQUEST['SaveEdit']))
 			{
-				// Eintr�ge speichern
+				// Einträge speichern
 				foreach ($docinput['Bezeichnung'] as $key => $value)
 				{
 					list ($Artikelnr, $datum) = explode(',', $key);
@@ -1369,7 +1369,7 @@ if ($profile['editor'] != 1)
 					
 			if (isset ($docinput['Kundenwahl']) && isset ($docinput[Kunde]) && $docinput['Kunde'] != '') 
 			{
-				// die Kunden aufz�hlen und eine Auswahl m�glich machen
+				// die Kunden aufz�hlen und eine Auswahl möglich machen
 					// Anzeigen der gefundenen Kunden
 					$query = sql_query('SELECT * FROM ' . TABLE_ADRESSEN . ' WHERE Name LIKE "%' .
 					$docinput['Kunde'] . '%" ORDER BY Name');
@@ -1440,17 +1440,17 @@ if ($profile['editor'] != 1)
 					echo '<form action="' . get_url($id) . '#Einzelheiten" method="post">';
 					echo '<input type="hidden" name="docinput[Rechnung_id]" value="' . $rechnung['Rechnung_id'] . '" />';
 					echo '<tr><td colspan="9" class="zentriert"><input type="Submit" ';
-					echo 'name="SaveEdit" value="Eintr�ge speichern">';
+					echo 'name="SaveEdit" value="Einträge speichern">';
 					echo "</td></tr>\n";
 				} else
 				{
 					echo '<tr><td colspan="9" class="zentriert">';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1&Alle=1#Einzelheiten');
-					echo '">Eintr�ge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
+					echo '">Einträge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1#Einzelheiten');
-					echo '">Eintr�ge bearbeiten</a> ]';
+					echo '">Einträge bearbeiten</a> ]';
 				    if ( $buchung['AnzahlungsBemerkung'] == '')
 					{
 					  echo ' [ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
@@ -1466,7 +1466,7 @@ if ($profile['editor'] != 1)
 				if (isset ($_REQUEST['Edit']))
 				{
 					echo '<tr><td colspan="9" class="zentriert"><input type="Submit" ';
-					echo 'name="SaveEdit" value="Eintr�ge speichern">';
+					echo 'name="SaveEdit" value="Einträge speichern">';
 					echo "</td></tr>\n";
 					echo '</form>';
 				} else
@@ -1474,10 +1474,10 @@ if ($profile['editor'] != 1)
 					echo '<tr><td colspan="9" class="zentriert">';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1&Alle=1#Einzelheiten');
-					echo '">Eintr�ge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
+					echo '">Einträge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1#Einzelheiten');
-					echo '">Eintr�ge bearbeiten</a> ] ';
+					echo '">Einträge bearbeiten</a> ] ';
 					if ( $buchung['AnzahlungsBemerkung'] == '')
 					{
 					  echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
@@ -1504,5 +1504,5 @@ if ($profile['editor'] != 1)
 	echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchung')) . '">Zur Buchungs&uuml;bersicht</a> ]</div>';
 } // editor
 else
-	create_editor_input('Recht f�r Ver�nderungen', 'SpeicherRecht', 'text_input');
+	create_editor_input('Recht für Veränderungen', 'SpeicherRecht', 'text_input');
 ?>

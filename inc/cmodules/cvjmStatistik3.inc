@@ -33,7 +33,7 @@ if ( $profile["editor"] != 1 )
         TABLE_RECHNUNGEN." ON F_Rechnung_id=Rechnung_id) INNER JOIN ".TABLE_ARTIKEL.
         " ON id=F_Artikel_Nr) INNER JOIN ".TABLE_BUCHUNGEN.
         " ON Buchung_Nr=F_Buchung_Nr WHERE Rechnung=1 AND BStatus<=".BUCHUNG_FERTIG.
-        " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht ber�cksichtigt
+        " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht berücksichtigt
         " AND F_Art_id=".CVJMART_ORT.
         " AND Datum BETWEEN $anfang AND $ende".
         " AND Menge > 0 AND NOT Storno ORDER BY Datum");
@@ -47,7 +47,7 @@ if ( $profile["editor"] != 1 )
       {
         if ( $schlafplaetze > 0 )
         {
-          // H�tten-�bernachtung
+          // H�tten-Übernachtung
           $bereich = getOrtsname(holeArtikelMasterParent($eintrag["F_Art_id"],
             $eintrag["Position"],$eintrag["Einruecken"]));
           $eintrag["Datum"] = strtotime(date("Y-m-d", $eintrag["Datum"]));
@@ -96,10 +96,10 @@ if ( $profile["editor"] != 1 )
         }
       }
     }
-    echo "<h2>In ".$docinput["Monat"]."/".$docinput["Jahr"]." vorhandene �bernachtungen:</h2>";
+    echo "<h2>In ".$docinput["Monat"]."/".$docinput["Jahr"]." vorhandene Übernachtungen:</h2>";
     foreach ( $uebernachtungen as $bereich => $jahre )
     {
-      echo '�bernachtungen in '.$bereich.':'.$jahre["Anzahl"].'<br />';
+      echo 'Übernachtungen in '.$bereich.':'.$jahre["Anzahl"].'<br />';
     }
     echo '<br />';
     echo "In ".$docinput["Monat"]."/".$docinput["Jahr"]." neu hinzugekommene Personen:<br />";
@@ -108,7 +108,7 @@ if ( $profile["editor"] != 1 )
       TABLE_RECHNUNGEN." ON F_Rechnung_id=Rechnung_id) INNER JOIN ".TABLE_ARTIKEL.
       " ON id=F_Artikel_Nr) INNER JOIN ".TABLE_BUCHUNGEN.
      " ON Buchung_Nr=F_Buchung_Nr WHERE Rechnung=1 AND BStatus<=".BUCHUNG_FERTIG.
-      " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht ber�cksichtigt
+      " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht berücksichtigt
       " AND Von BETWEEN $anfang AND $ende".
       " AND Menge > 0 AND NOT Storno ORDER BY Datum");
     $anz = 0;
@@ -120,7 +120,7 @@ if ( $profile["editor"] != 1 )
          foreach ( $erstesDatum as $bereich => $wert )
            $anz += $wert;
        }
-       // Rausrechnen: �bernachtungen
+       // Rausrechnen: Übernachtungen
     }
     echo $anz." Personen";
   }

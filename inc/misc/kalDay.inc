@@ -205,7 +205,7 @@ echo " ".$Tag.". $mn";?></div>
           echo 'bis '.date("d.m.Y H:i",$value["Enddatum"]);
         if ( strtotime("$Jahr-$Monat-$Tag 23:59") < $value["Enddatum"] )
         {
-          echo " (ganzt�gig!)";
+          echo " (ganztägig!)";
           $Termine[$key]["Ok"] = true;
         }
         echo '">'.transform($value['title'],'clean')."</a>";

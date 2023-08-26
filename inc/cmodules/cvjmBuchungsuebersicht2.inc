@@ -1,7 +1,7 @@
 <?php
 /**
 
-Modul Buchungs�bersicht monatlich
+Modul BuchungsÜbersicht monatlich
 
 AWF-Name: cvjmbuchungsuebersicht2
 
@@ -41,7 +41,7 @@ if ($profile['editor'] != 1)
 		$Tag = convertDatumToTimestamp($_REQUEST['Datum']);
 		$dat = '&Datum=' . $_REQUEST['Datum'];
 	}
-	// Auswahlfelder f�r Arten
+	// Auswahlfelder für Arten
 	$Kategorien = array ();
 	if (!isset ($docinput['Kategorie']))
 		$docinput['Kategorie'] = explode(',', $profile['Kategorie' . $id]);
@@ -119,7 +119,7 @@ if ($profile['editor'] != 1)
 				$row['Tage'][$i] = array ();
 				while (isset ($buchung) && $buchung['Datum'] >= strtotime('+' . ($i -VORLAUF) . ' day', $Tag) && $buchung['Datum'] < strtotime(($i +1 - VORLAUF) . ' day', $Tag))
 				{
-					// Durchnummerierung der Buchung f�r Farben
+					// Durchnummerierung der Buchung für Farben
 					if (!isset ($BuchungFarbe[$buchung['Buchung_Nr']]) && Count($BuchungFarbe) < Count($Belegungsfarbe))
 						$BuchungFarbe[$buchung['Buchung_Nr']] = $Belegungsfarbe[Count($BuchungFarbe)];
 					$buchung['Color'] = $BuchungFarbe[$buchung['Buchung_Nr']];

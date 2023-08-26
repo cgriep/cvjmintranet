@@ -17,7 +17,7 @@ if ( $profile['editor'] != "1" ) {
   if ( isset($_REQUEST[$document['IDFeld']]) && is_numeric($_REQUEST[$document['IDFeld']]))
   {
     // Hier die Feldnamen eintragen, Reihenfolge ist wichtig!
-    $sql = "select Rubrik, Seminarnr ,Name ,Erg�nzung ,Zielgruppe, " .
+    $sql = "select Rubrik, Seminarnr ,Name ,Ergänzung ,Zielgruppe, " .
     		"Ankunft, Abfahrt, Anfang, Ende, Werbetext, Bemerkungen, " .
     		"Lernziele, Leitung, Kooperation, Leistungen, NameKosten1 " .
     		",Kosten1,NameKosten2 ,Kosten2, NameKosten3 , Kosten3 , " .
@@ -31,7 +31,7 @@ if ( $profile['editor'] != "1" ) {
   // *********************************
 // Tabelle damit Daten immer untereinander stehen
       echo '<h1>'.$data['Name'].'</h1>';
-      echo $data['Erg�nzung'].'<br />';
+      echo $data['Ergänzung'].'<br />';
       if ( $data['Zielgruppe']!= '') 
         echo 'Zielgruppe: '.$data['Zielgruppe'].'<br />';
       echo 'Zeitraum der Veranstaltung: '.date('d.m.Y',strtotime($data['Ankunft']));
@@ -77,7 +77,7 @@ if ( $profile['editor'] != "1" ) {
       echo '<dd>'.$data['MinAlter'].'</dd>';
       echo '</dl>';
 //Anmeldung
-      echo "Die Anmeldung erfolgt schriftlich �ber das Anmeldeformular. Anmeldeschluss ist der ";
+      echo "Die Anmeldung erfolgt schriftlich über das Anmeldeformular. Anmeldeschluss ist der ";
       echo date('d.m.Y',strtotime($data['Anmeldeschluss']));
       echo '<br/>';
 

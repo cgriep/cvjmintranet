@@ -3,19 +3,19 @@
 /*
 
    cvjmAuftragstools.inc
-   Hilfsfunktionen f�r Auftr�ge
+   Hilfsfunktionen für Aufträge
 
 */
 
 /**
-*  Betroffen enth�lt kommasepariert die Betroffenen des Auftrages in der form:
+*  Betroffen enthält kommasepariert die Betroffenen des Auftrages in der form:
 *  gXX  - Gruppe XX
 *  XX - Benutzer XX
 *  XX ist die jeweilige AWF-Nummer
 * @param string $Titel
 * @param string $Beschreibung 
 * @param integer $Prioritaet
-* @param string $Betroffen - kommaseparierte Liste der Betroffenen (ID, gID f�r Gruppen)
+* @param string $Betroffen - kommaseparierte Liste der Betroffenen (ID, gID für Gruppen)
 * @param date $BearbeitenBis
 * @param integer $Ort
 * @param integer $Status 1-4, 4=erledigt
@@ -77,7 +77,7 @@ function insertAuftrag($Titel, $Beschreibung, $Prioritaet = 2, $Betroffen, $Bear
            ")\n".$ZusatzText.'Datum: '.date('d.m.Y H:i')."\n".
            'Zugewiesen an: '.$Adressat."\n".
            addslashes($Beschreibung)."\nOrt: ".Ortsname($Ort, false).
-           "\nPriorit�t: ". $Prioritaeten[$Prioritaet]['name']."\n".
+           "\nPriorität: ". $Prioritaeten[$Prioritaet]['name']."\n".
            $BearbeitenBis,             
            'From: '.get_user_nickname($Autor).' <'.get_user_email($Autor).'>');
         }
@@ -91,7 +91,7 @@ function insertAuftrag($Titel, $Beschreibung, $Prioritaet = 2, $Betroffen, $Bear
             '[Auftrag '.$Titel.'] '.LANG_ERTEILT,  
             'Von: '.get_user_email($Autor).' ('.get_user_nickname($Autor).
              ")\n$ZusatzText.'Datum: ".date('d.m.Y H:i')."\n".
-             $Beschreibung."\nOrt: ".Ortsname($Ort,false)."\nPriorit�t: ".
+             $Beschreibung."\nOrt: ".Ortsname($Ort,false)."\nPriorität: ".
              $Prioritaeten[$Prioritaet]['name'],
              'From: '.get_user_nickname($Autor).' <'.get_user_email($Autor).'>');
        }
@@ -115,7 +115,7 @@ function updateAuftrag($Auftrag, $Titel, $Beschreibung, $Bemerkung, $Prioritaet,
       if ( ! is_numeric($Ort) ) $Ort = -1 ;
       if ( ! is_numeric($Status) ) $Status = 0;
       if ( ! is_numeric($BearbeitenBis)) $BearbeitenBis = 0;
-      // Update, nur Autoren d�rfen Auftrag �ndern
+      // Update, nur Autoren dürfen Auftrag ändern
       $sql = 'UPDATE '.TABLE_AUFTRAG." SET Titel = '".sql_real_escape_string($Titel);
       $sql .= "', Bemerkung = '".sql_real_escape_string($Bemerkung);
       $sql .= "', Beschreibung = '".sql_real_escape_string($Beschreibung)."',";

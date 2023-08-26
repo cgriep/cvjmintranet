@@ -15,7 +15,7 @@ if ( $profile['editor']!= 1 )
 	include_once (INC_PATH . 'cvjm_ajax.php');
 	$xajax->printJavascript('./javascript');
 	
-	// Speichern der Eintr�ge
+	// Speichern der Einträge
 	
 	
 	require_once(INC_PATH.'Smarty/Smarty.class.php');

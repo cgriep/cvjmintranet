@@ -19,7 +19,7 @@ init_published_roots();
 
 reset($published_roots);
 
-while (list ($docid, $value) = each ($published_roots)) {
+foreach ( $published_roots as $docid => $value)  {
 	if(file_exists('img/design/nav/'.$docid.'.png')) {
 		?><tr><td align="center"><?=get_image_tag('img/design/nav/'.$docid.'.png',$value['title'],get_url($docid))?><br clear="all" />
 		<a href="<?=get_url($docid)?>"><?=htmlentities($value['title'])?></a><br /><br /></td></tr><?php

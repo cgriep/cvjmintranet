@@ -49,7 +49,7 @@ class Adresse extends DBEntity
 		return ! is_numeric($this->Adressen_id) || $this->Adressen_id <= 0;
 	}
 	/**
-	 * L�scht die Adresse
+	 * Löscht die Adresse
 	 */
 	function loeschen()
 	{
@@ -57,21 +57,21 @@ class Adresse extends DBEntity
 		{
 			sql_query('UPDATE ' . TABLE_ADRESSEN . ' SET Geloescht=1 WHERE Adressen_id=' . $this->Adressen_id);
 			$this->Geloescht = 1;
-			$this->logAction('Adresse als gel�scht markiert.');
+			$this->logAction('Adresse als gelöscht markiert.');
 		}
 	}
 	/**
-	 * Setzt die angegebenen Kategorien f�r die Adresse.
-	 * Sollte add false sein, so werden alle vorhandenen vorher gel�scht, ansonsten die Kategorie hinzugef�gt.
-	 * @param array Kategorien die Kategorie_id der gew�nschten Kategorien
-	 * @param boolean add false, wenn alle Kategorien im Array sind (vorhandene Kategorien werden gel�scht), true sonst (Kategorien werden hinzugef�gt)
+	 * Setzt die angegebenen Kategorien für die Adresse.
+	 * Sollte add false sein, so werden alle vorhandenen vorher gelöscht, ansonsten die Kategorie hinzugef�gt.
+	 * @param array Kategorien die Kategorie_id der gewünschten Kategorien
+	 * @param boolean add false, wenn alle Kategorien im Array sind (vorhandene Kategorien werden gelöscht), true sonst (Kategorien werden hinzugef�gt)
 	 */
 	function setAdressKategorien($Kategorien, $add = false)
 	{
 		if ( ! $add)
 		{
 			sql_query('DELETE FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Adressen_id='.$this->Adressen_id);
-			$this->logAction('Kategorien gel�scht.');
+			$this->logAction('Kategorien gelöscht.');
 		}
 		foreach ($Kategorien as $value)
 		{
@@ -81,7 +81,7 @@ class Adresse extends DBEntity
 		}
 	}
 	/**
-	 * setzt oder l�scht eine einzelne Kategorie
+	 * setzt oder löscht eine einzelne Kategorie
 	 * @param int $Kategorie_id die ID der Kategorie
 	 * @param boolean $ein true, wenn die Kategorie gesetzt werden soll, false sonst
 	 */
@@ -89,14 +89,14 @@ class Adresse extends DBEntity
 	{
 		if ( $this->isNeu() || ! is_numeric($Kategorie_id))
 		{
-			throw new Exception('setKategorie: Es wurde ein ung�ltige Adressen-id �bergeben!');
+			throw new Exception('setKategorie: Es wurde ein ungültige Adressen-id übergeben!');
 		}
 		if ( !$ein )
 		{
 			sql_query('DELETE FROM ' .	TABLE_ADRESSEN_KATEGORIE .
 			' WHERE F_Adressen_id = ' . $this->Adressen_id.' AND F_Kategorie_id='.
 			$Kategorie_id);
-			$this->logAction('Kategorie Nr. '.$Kategorie_id.' gel�scht.');
+			$this->logAction('Kategorie Nr. '.$Kategorie_id.' gelöscht.');
 		}
 		else
 		{
@@ -124,7 +124,7 @@ class Adresse extends DBEntity
 		$this->Adressen_id = -1;
 		$this->save();
 		$this->logAction('Als Kopie von Adressen_id '.$Originalid.' erstellt.');
-		// Kategorien und Institutionen �bernehmen
+		// Kategorien und Institutionen übernehmen
 		if ( $Kat == 'O' )
 		{
 			sql_query('INSERT INTO ' . TABLE_ADRESSEN_INSTITUTIONEN. ' (F_Adressen_id,F_UAdressen_id) VALUES ('.
@@ -142,9 +142,9 @@ class Adresse extends DBEntity
 	}
 	/**
 	 * Hole die Kategorien dieser Adresse. Ist alle wahr, so werden alle vorhandenen
-	 * Kategorien mit der Anzahl und einem Kennzeichen ob eingeteilt oder nicht zur�ckgegeben
+	 * Kategorien mit der Anzahl und einem Kennzeichen ob eingeteilt oder nicht Zurückgegeben
 	 * Im letzten Fall sind zus�tzlich die Felder Da und Anz vorhanden.
-	 * @param boolean alle true, wenn alle Kategorien geholt werden soll, false wenn nur die vorhandenen zur�ckgegeben werden sollen
+	 * @param boolean alle true, wenn alle Kategorien geholt werden soll, false wenn nur die vorhandenen Zurückgegeben werden sollen
 	 * @return array ein Feld der Kategorien dieser Adresse
 	 */
 	function getKategorien($alle = false)
@@ -272,23 +272,23 @@ class Adresse extends DBEntity
 	/*
 	 if (isset ($docinput['Edit']) && $docinput['Edit'] >= 5 && $docinput['Edit'] <= 7)
 	 {
-	 // Alle Versandmarker l�schen
+	 // Alle Versandmarker löschen
 	 if (!isset ($docinput['Kategorie']))
 	 {
 	 switch ($docinput['Edit'])
 	 {
-	 case 5 : // alle L�schen
+	 case 5 : // alle löschen
 	 if (!sql_query('UPDATE ' . TABLE_ADRESSEN .
 	 ' SET Versandmarker=0,Stand=Stand'))
 	 echo sql_error();
 	 break;
-	 case 6 : // Institutionen L�schen
+	 case 6 : // Institutionen löschen
 	 if (!sql_query('UPDATE ' . TABLE_ADRESSEN . ',' . TABLE_ADRESSEN_INSTITUTIONEN .
 	 ' SET Versandmarker=0,Stand=Stand ' .
 	 'WHERE F_Adressen_id=Adressen_id'))
 	 echo sql_error();
 	 break;
-	 case 7 : // Ansprechpartner l�schen
+	 case 7 : // Ansprechpartner löschen
 	 if (!sql_query('UPDATE ' . TABLE_ADRESSEN . ',' . TABLE_ADRESSEN_INSTITUTIONEN .
 	 ' SET Versandmarker=0,Stand=Stand ' .
 	 'WHERE F_UAdressen_id=Adressen_id'))
@@ -303,7 +303,7 @@ class Adresse extends DBEntity
 	 $docinput['Kategorie']))
 	 echo sql_error();
 	 $docinput['Edit'] = 4;
-	 unset ($docinput['Kategorie']); // L�schen damit nicht nur die Kategorie angezeigt wird
+	 unset ($docinput['Kategorie']); // löschen damit nicht nur die Kategorie angezeigt wird
 	 }
 	 */
 	/**
@@ -490,7 +490,7 @@ class Adresse extends DBEntity
 	 * @param int $Bemerkung_id ID der Bemerkung
 	 * @param String $ext die Endung, die die Datei hat
 	 * @param String $Art Art des Anhangs
-	 * @param String $Zusatz ein Zusatz zum Dateinamen, der am Ende der Datei angeh�ngt wird
+	 * @param String $Zusatz ein Zusatz zum Dateinamen, der am Ende der Datei angehngt wird
 	 * @return String der Dateiname bezogen auf das Hauptverzeichnis des Servers
 	 */
 	function getAdressenAnhangLink($Bemerkung_id, $ext=CVJM_ENDUNG, $Art='Bemerkung',$Zusatz='')
@@ -592,14 +592,14 @@ class Adresse extends DBEntity
 		return $this->Kunden_Nr;
 	}
 	/**
-	 * setzt oder entfernt den Versandmarker auf einer Adresse, ohne den Stand zu ver�ndern
+	 * setzt oder entfernt den Versandmarker auf einer Adresse, ohne den Stand zu verändern
 	 * @param boolean $ein true, wenn der Marker gesetzt werden soll, false sonst
 	 */
 	function setVersandmarker($ein = true)
 	{
 		if ( $this->isNeu() )
 		{
-			throw new Exception('setVersandmarker: Es wurde ein ung�ltige Adressen-id �bergeben!');
+			throw new Exception('setVersandmarker: Es wurde ein ungültige Adressen-id übergeben!');
 		}
 		if ( $ein )
 		{
@@ -621,7 +621,7 @@ class Adresse extends DBEntity
 	{
 		if ( $this->isNeu() || ! is_numeric($institution_id))
 		{
-			throw new Exception('setInstitution: Es wurde eine ung�ltige Adressen-id �bergeben!');
+			throw new Exception('setInstitution: Es wurde eine ungültige Adressen-id übergeben!');
 		}
 		if ( $ein )
 		{
@@ -649,7 +649,7 @@ class Adresse extends DBEntity
 	{
 		if ( $this->isNeu() || ! is_numeric($ansprechpartner_id))
 		{
-			throw new Exception('setAnsprechpartner: Es wurde ein ung�ltige Adressen-id �bergeben!');
+			throw new Exception('setAnsprechpartner: Es wurde ein ungültige Adressen-id übergeben!');
 		}
 		if ( $ein )
 		{
@@ -684,7 +684,7 @@ class Adresse extends DBEntity
 		}
 	}
 	/**
-	 * gibt Strasse, PLZ, Ort und Telefon �bersichtlich zur�ck.
+	 * gibt Strasse, PLZ, Ort und Telefon Übersichtlich Zurück.
 	 * @param boolean $html true, wenn HTML-Zeilenumbr�che verwendet werden sollen, false sonst
 	 * @return String die Felder in drei Zeilen
 	 */
@@ -701,7 +701,7 @@ class Adresse extends DBEntity
 		}
 	}
 	/**
-	 * Hilfsfunktion, gibt den Inhalt des jeweiligen Feldes zur�ck
+	 * Hilfsfunktion, gibt den Inhalt des jeweiligen Feldes Zurück
 	 * @param String $feld der Name des Feldes
 	 * @return String der Inhalt des Feldes, leer wenn Fehler
 	 */
@@ -727,7 +727,7 @@ class Adresse extends DBEntity
 		}
 	}
 	/**
-	 * ergibt eine Zeichenkette mit HTML-Markup f�r die Vorlagen
+	 * ergibt eine Zeichenkette mit HTML-Markup für die Vorlagen
 	 * @param int $fuerID die ID des Ansprechpartners / der Institution
 	 * @param array $Vorlagen Feld mit den Namen der Vorlagendateiein
 	 * @return String HTML-Zeichenkette mit den Vorlagenlinks  
@@ -750,10 +750,10 @@ class Adresse extends DBEntity
 		if (!unlink($this->getAdressenAnhangLink($id, $ext["extension"])))
 		{
 			throw new Exception("Datei " . $this->getAdressenAnhangLink($id, $ext["extension"]) .
-			" konnte nicht gel�scht werden");
+			" konnte nicht gelöscht werden");
 		}
 		sql_query("UPDATE " . TABLE_ADRESSENBEMERKUNGEN .
-		" SET Anhang = NULL,Bemerkung=CONCAT(Bemerkung,'Anhang gel�scht " . date("d.m.Y H:i") . " " .
+		" SET Anhang = NULL,Bemerkung=CONCAT(Bemerkung,'Anhang gelöscht " . date("d.m.Y H:i") . " " .
 			get_user_nickname() . "') WHERE Bemerkung_id=" . $id);
 	}
 	function holeHistory($url)
@@ -769,7 +769,7 @@ class Adresse extends DBEntity
 	 * protokolliert eine Aktion auf der Buchung im Logfile. Eine Speicherung erfolgt nicht,
 	 * da die Methode im Verlauf des Speichervorgangs aufgerufen werden kann.
 	 * @param String $action die Aktion die zu protokollieren ist
-	 * @param boolean $save true, wenn die �nderung gespeichert werden soll, false sonst
+	 * @param boolean $save true, wenn die änderung gespeichert werden soll, false sonst
 	 */
 	function logAction($action, $save = true)
 	{
@@ -827,7 +827,7 @@ class Adresse extends DBEntity
 					'WHERE F_UAdressen_id=Adressen_id');
 	}
 	/**
-	 * Setzt den Versandmarker f�r alle Adressen der angegebenen Kategorie
+	 * Setzt den Versandmarker für alle Adressen der angegebenen Kategorie
 	 * @param int $Kategorie die ID der Kategorie, die gesetzt werden soll
 	 */
 	static function setVersandmarkerKategorie($Kategorie)
@@ -842,8 +842,8 @@ class Adresse extends DBEntity
 		$Kategorie);
 	}
 	/**
-	 * hole die Anreden aus der Datenbank. Gibt entweder eine spezielle Anrede zur�ck oder ein Feld aller vorhandenen
-	 * @param int $anrede_id die ID der Anrede, die zur�ckgegeben werden soll. -1 wenn alle Anreden zur�ckgegeben werden sollen.
+	 * hole die Anreden aus der Datenbank. Gibt entweder eine spezielle Anrede Zurück oder ein Feld aller vorhandenen
+	 * @param int $anrede_id die ID der Anrede, die Zurückgegeben werden soll. -1 wenn alle Anreden Zurückgegeben werden sollen.
 	 * @return String/array die Anrede oder das Feld der Anreden
 	 */
 	static function getAnredearten($anrede_id = -1)

@@ -2,7 +2,7 @@
 
 
 /**
- * Administrationsoberfl�che f�r die Atlantis-Daten
+ * Administrationsoberfl�che für die Atlantis-Daten
  * 2006 Christoph Griep
  */
 include ('atlantis.db.php');

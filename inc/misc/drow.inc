@@ -27,7 +27,7 @@ function add_fertigkeit($char_id, $fertigkeit_id, $Anzahl='')
 		{
 			$sql = 'UPDATE T_Charaktere SET EP=EP-'.$punkte[0].' WHERE Charakter_id='.$char_id;
 			sql_query($sql);
-			// wenn zu wenig Punkte -> Haus pr�fen
+			// wenn zu wenig Punkte -> Haus prüfen
 			$sql = 'SELECT F_Haus_id, EP, Hausep FROM T_Charaktere INNER JOIN T_Haeuser ON F_Haus_id=Haus_id WHERE Charakter_id='.$char_id;
 			$query = sql_query($sql);
 			if ( $row = sql_fetch_array($query) )
@@ -83,7 +83,7 @@ function save_charakter($char_id, $charakter)
 	$sql .= implode(',', $a);
 	if ( $add <> 0 )
 	{
-		// Punkte f�r Contage bearbeiten
+		// Punkte für Contage bearbeiten
 		$sql .= ', Contage=Contage+'.$add.', EP=EP+'.$add;
 	}
 	$sql .= ' WHERE Charakter_id='.$char_id;

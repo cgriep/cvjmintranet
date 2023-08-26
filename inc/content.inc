@@ -35,10 +35,10 @@ if($show_all) {
 	}
 
 // cmodule caching
-if(time() - filemtime(CACHE_FILENAME) < $cache_time && $cache_time != 0) 
-	{
+if(defined('CACHE_FILENAME') && ( time() - filemtime(CACHE_FILENAME) < $cache_time && $cache_time != 0) )
+{
 	readfile(CACHE_FILENAME);
-	}
+}
 else {
 		if(CACHING != 'on') 	ob_start();
 

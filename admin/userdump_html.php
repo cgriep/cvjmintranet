@@ -12,7 +12,7 @@ error_reporting(1); // Disable Warnings
 
 define('SESSION_STATUS', 'ok');
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ($_REQUEST as $key => $val= {
         $$key = $val;
         }
 

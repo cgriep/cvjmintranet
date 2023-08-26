@@ -1,7 +1,7 @@
 <?php
 /**
  * cvjmWeidelisten
- * Weideliste f�r CVJM Feriendorf Herbstein
+ * Weideliste für CVJM Feriendorf Herbstein
  * 
  */
 
@@ -65,11 +65,11 @@ if ( isset($_REQUEST['Weideliste']) )
 	
 	$Smarty->assign('Tiere', array('Schafe', 'Ziegen', 'Ponys'));
 	$Smarty->assign('Orte', array(
-		'R�derwiesen (Zeltplatz)',
+		'Röderwiesen (Zeltplatz)',
 		'Struth JB (Hauptwiese)',
 		'Struth JB (oberhalb BH)',
 		'Struth FB (Hauptwiese)',
-		'Struth FB_2 (zwischen FH1 und R�derwiesen)',
+		'Struth FB_2 (zwischen FH1 und Röderwiesen)',
 		'Struth FB_3 (oberhalb FH6-10)',
 		'Streuobstwiese',
 		'Ellersbach 1 (andere Seite)',

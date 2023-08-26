@@ -26,7 +26,7 @@ if($profile['simple_edit'] == 1) { ?>
                 <select name="doc[type_id]">
                 <?php
                 reset($doctypes);
-                while (list ($docname, $value) = each ($doctypes)) {
+                foreach ( $doctypes as $docname =>  $value) {
 			if($docdescriptions[$value] != '') {
                                 $docname = $docdescriptions[$value];
                                 if(strlen($docname) > 20) { $docname = substr($docname, 0, 20).'...'; }

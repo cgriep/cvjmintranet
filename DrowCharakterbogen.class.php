@@ -43,7 +43,7 @@ class Charakterbogen extends FPDF
 			$t = explode("\n", $teil);
 			for ($i = 0; $i < Count($t) - 1; $i++)
 			$alles[] = $t[$i] . "\n";
-			// Letzten Eintrag ohne newline anh�ngen
+			// Letzten Eintrag ohne newline anhängen
 			$alles[] = $t[$i];
 		}
 		$gesamt = '';
@@ -101,7 +101,7 @@ function erstelleSeite($charid, $pdf)
 	}
 	else
 	{
-		throw new error("Keine Charakterseite f�r diesen Charakter gefunden!");
+		throw new error("Keine Charakterseite für diesen Charakter gefunden!");
 	}
 	sql_free_result($query);
 	$charakter = get_charakter($charid);
@@ -113,7 +113,7 @@ function erstelleSeite($charid, $pdf)
 	if ( file_exists($bbasedir.'Spielerbild.jpg') ) {
 		$pdf->Image($bbasedir.'Spielerbild.jpg', 180, 38, 20, 30, 'JPG');
 	}
-	// Rahmen f�r das Bild
+	// Rahmen für das Bild
 	$pdf->Rect(180, 38, 20, 30);
 	$pdf->SetFont('Arial', '', 10);
 	$pdf->Ln();
@@ -178,7 +178,7 @@ function erstelleSeite($charid, $pdf)
 	{
 		if ( $Art != $row['Art'])
 		{
-			// pr�fen ob stapel 
+			// prüfen ob stapel 
 			if ( $Eigenschaft != '' )
 			{
 				$pdf->Cell(10, 5, $Anz,1 );
@@ -234,7 +234,7 @@ function erstelleSeite($charid, $pdf)
 		}
 		else
 		{
-			// pr�fen Stapel 
+			// prüfen Stapel 
 			if ( $Eigenschaft != '' )
 			{
 				$pdf->Cell(10, 5, $Anz,1);
@@ -292,7 +292,7 @@ function erstelleSeite($charid, $pdf)
 			$veranstaltung = substr($key, 4);
 			if ( is_numeric($veranstaltung))
 			{
-				// Achtung: Flavour = 1 - > Standardsprache, ggf. �ndern wenn andere genutzt
+				// Achtung: Flavour = 1 - > Standardsprache, ggf. ändern wenn andere genutzt
 				$node = get_nodedata($veranstaltung, 1);
 				$pdf->Cell(80, 5, $node['title']);
 				$pdf->Ln();
@@ -308,7 +308,7 @@ if ((is_numeric($_REQUEST['Charakter_id']) || is_numeric($_REQUEST['Veranstaltun
 session_is_registered('Charakter_id') && session_is_registered('id') )
 {
 	$charid = array();
-	// Datenbank �ffnen 
+	// Datenbank öffnen 
 	if ( is_numeric($_REQUEST['Charakter_id']) && session_is_registered('SL'))
 	{
 		$charid[] = $_REQUEST['Charakter_id'];

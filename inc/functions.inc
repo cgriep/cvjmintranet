@@ -89,7 +89,7 @@ function replace_pattern ($text, $array, $override = false, $mode = 'fast') {
 function email_to_string ($email) {
         // michael@liquidbytes.net -> michael at liquidbytes dot net
         if($email == '') return '';
-        $search  = array ("." => ' '.LANG_DOT.' ', "@" => " at ");
+        $search  = array ("." => ' '.LANG_DOT.' ', "@" => " at ");        
         return strtr($email, $search);
         }
 
@@ -112,9 +112,9 @@ function isemail ($email, $override = false) {
 function url_to_link ($in, $override = false) {
         // makes URLs and email addresses "clickable"
         if(DISABLE_URL_TO_LINK == 1 && !$override) return $in;
-        $out = preg_replace( "([[:alnum:]]+)://([^[:space:]]*)([[:alnum:]#?/&=])/i",
+        $out = preg_replace( "/([[:alnum:]]+)\:\/\/([^[:space:]]*)([[:alnum:]#?\/&=])/i",
                 "<a href=\"\\1://\\2\\3\" target=\"_blank\">\\1://\\2\\3</a>", $in);
-        $out = preg_replace( "(([a-z0-9_]|\\-|\\.)+@([^[:space:]]*)([[:alnum:]-]))/i",
+        $out = preg_replace( "/(([a-z0-9_]|\\-|\\.)+@([^[:space:]]*)([[:alnum:]-]))/i",
                 "<a href=\"mailto:\\1\">\\1</a>", $out);
         return $out;
         }
@@ -170,7 +170,6 @@ function get_user_email ($user_id = -1) {
 
         // enforce secure db queries
         if(!is_numeric($user_id)) return false;
-
         if($user_id == -1) {
                 if(!defined("SESSION_DBID")) { return false; }
                 $user_id = SESSION_DBID;
@@ -181,7 +180,7 @@ function get_user_email ($user_id = -1) {
                         sql_free_result($email);
                         return stripslashes($prow[0]);
                         }
-        return "";
+        return "n/a";
         }
 
 function get_user_id ($email) {
@@ -210,9 +209,9 @@ function get_user_nickname ($user_id = -1) {
         $nickname = sql_query ("SELECT value FROM ".TABLE_USERDATA." WHERE user_id=".$user_id." AND name='nickname'");
                 if(sql_num_rows($nickname) > 0) {
                         $prow = sql_fetch_row($nickname);
-                               sql_free_result($nickname);
+                        sql_free_result($nickname);                        
                         return stripslashes($prow[0]);
-                        }
+                }                
         return email_to_string(get_user_email($user_id));
         }
 

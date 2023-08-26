@@ -7,14 +7,14 @@
         The author is Michael Mayer (michael@liquidbytes.net)
         Last update: 07.06.2002
         Erweitert:
-        - L�d bei Bedarf ein im Misc-liegendes Modul, dessen Name im Administrationsfeld
+        - Läd bei Bedarf ein im Misc-liegendes Modul, dessen Name im Administrationsfeld
           eingegeben werden kann
         - Zeigt fremde Userdaten an wenn Parameter UNr in Gebrauch
 */
 
 if($profile["editor"] == 1) {
 
-        create_editor_input('Zus�tzliches Infomodul (im misc-Ordner)', 'zus_info', 'text_input');
+        create_editor_input('Zusätzliches Infomodul (im misc-Ordner)', 'zus_info', 'text_input');
         echo '<br /><br />';
         create_editor_input('Extended Info', 'ext_info', 'onoff_input');
         echo '<br /><br />';

@@ -15,7 +15,7 @@ if ( $profile["editor"] != 1 )
 	include(INC_PATH."misc/cvjmBuchungstools.inc");
 	if ( $document['title'] != '') echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
 	// Liste der vorhandenen Buchungen
-	// �bersicht �ber die aktuellen Belegungen
+	// Übersicht über die aktuellen Belegungen
 	echo $design["table_begin"];
 	echo '<tr bgcolor="'.$design["table_header"].
 	'"><th>Wieder-<br />vorlage</th><th>Datum</th><th>Bemerkung</th><th>Adresse</th><th>Buchung</th></tr>';
@@ -54,7 +54,7 @@ if ( $profile["editor"] != 1 )
 		{
 			switch ( $buchung["BStatus"] )
 			{
-				case 9: // gel�scht
+				case 9: // gelöscht
 					echo '<img src="img/small_edit/notok.gif" border="0" title="Vorreservierung gel&ouml;scht">';
 					break;
 				case 0:
@@ -111,7 +111,7 @@ if ( $profile["editor"] != 1 )
 	$Where = 'WHERE Anzahlung>0 AND BStatus < '.BUCHUNG_FERTIG.
 	' AND BStatus <> '.BUCHUNG_STORNIERT.
 	' AND AnzahlungsBemerkung="" AND Rechnung=3 AND Rechnungsdatum<'.
-	strtotime('-'.$document['WiedervorlageTagAnzahl'].' days'); // Best�tigung
+	strtotime('-'.$document['WiedervorlageTagAnzahl'].' days'); // Bestätigung
 	$sql = 'SELECT Rechnung_id,F_Buchung_Nr, Name,Vorname, '.TABLE_RECHNUNGEN.
 	'.F_Adressen_id, Von, Bis, '.
 	'Zusatz, PLZ, Ort, Anzahlung, Rechnungsdatum FROM '.

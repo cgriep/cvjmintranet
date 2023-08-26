@@ -238,6 +238,6 @@ else {
 } // if search
 } // if Editor
 else
-  create_editor_input("Zus�tzlich durchsuchte Datenbanken", "DBNamen", "area_input");
+  create_editor_input("Zusätzlich durchsuchte Datenbanken", "DBNamen", "area_input");
 
 ?>

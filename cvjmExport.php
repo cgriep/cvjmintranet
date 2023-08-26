@@ -30,7 +30,7 @@ require('inc/misc/CVJM.inc');
 
 /**
  * Schreibt den Inhalt eines Datenbankfeldes aufbereitet in die CSV-Datei
- * Dabei werden verkn�pfte Felder aufgel�st und Datumsangaben etc. leserlich
+ * Dabei werden verknüpfte Felder aufgelöst und Datumsangaben etc. leserlich
  * ausgegeben
  * @param String $feldname der Feldname der angezeigt werden soll (nach mysql)
  * @param String $feld der Inhalt des auzugebenden Feldes 

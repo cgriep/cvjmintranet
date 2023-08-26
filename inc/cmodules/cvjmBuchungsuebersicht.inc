@@ -2,12 +2,12 @@
 
 /**
  *
- * Modul Buchungs�bersicht
+ * Modul BuchungsÜbersicht
 *
 * AWF-Name: cvjmbuchungsuebersicht
 *
 * Parameter:
-* Buchung_Nr - Nummer der anzuzeigenden Buchung; -1 f�r allgemeine �bersicht
+* Buchung_Nr - Nummer der anzuzeigenden Buchung; -1 für allgemeine Übersicht
 * Tag - erster Tag der Anzeige
 * Tage - Anzahl der anzuzeigenden Tage
 * docinput[Page] - id der Kategorie, die angezeigt werden soll
@@ -187,7 +187,7 @@ if ($profile['editor'] != 1)
 		sql_free_result($query);
 
 		TagDefinition($buchung);
-		// vorhandene Buchungen im Bereich l�schen
+		// vorhandene Buchungen im Bereich löschen
 		foreach (explode(",", $docinput["Artikelnummern"]) as $key => $value)
 		{
 			entbucheArtikel($_REQUEST['Buchung_Nr'], $value, $_REQUEST["Tag"] . "-" .
@@ -282,7 +282,7 @@ if ($profile['editor'] != 1)
 		} // wenn nicht Gesamt
 		$Artikelarten = holeArtikelarten();
 		if (!sql_query('UPDATE ' . TABLE_BUCHUNGEN . " SET Logtext=CONCAT('" . date("d.m.Y H:i") .
-		" " . $Artikelarten[$docinput["Art"]] . " ge�ndert " . get_user_nickname() . "\n',Logtext) " .
+		" " . $Artikelarten[$docinput["Art"]] . " geändert " . get_user_nickname() . "\n',Logtext) " .
 		" WHERE Buchung_Nr=" . $_REQUEST["Buchung_Nr"]))
 		{
 		echo sql_error();

@@ -7,7 +7,7 @@ require_once(INC_PATH.'cvjm/DBEntity.class.php');
 DEFINE('TABLE_EVENTS','cvjm_Events');
 DEFINE('TABLE_EVENT_BETROFFENE','cvjm_Event_Betroffene');
 
-// Turnusarten f�r den Kalender
+// Turnusarten für den Kalender
 define('EVENT_TURNUS_EINMALIG', 100);
 define('EVENT_TURNUS_TAEGLICH', 101);
 define('EVENT_TURNUS_WOECHENTLICH', 102);
@@ -19,7 +19,7 @@ define('EVENT_TURNUS_ZWEIMONATLICH', 106);
 // Referenzen 
 define('EVENT_REFERENZ_BUCHUNG', 'BuNr');
 define('EVENT_REFERENZ_ARTIKEL', 'ArtNr');
-// Statusarten f�r Auftr�ge
+// Statusarten für Aufträge
 define('EVENT_STATUS_OFFEN',1);
 define('EVENT_STATUS_INARBEIT', 2);
 define('EVENT_STATUS_UNTERBRECHUNG', 3);
@@ -38,7 +38,7 @@ define('EVENT_BETROFFENER_USER', 0);
 define('EVENT_BETROFFENER_GRUPPE', 1);
 define('EVENT_BETROFFENER_EXTERN', 2);
 
-// Best�tigungsstatus
+// Bestätigungsstatus
 define('EVENT_BESTAETIGUNG_KEINE', 0);
 define('EVENT_BESTAETIGUNG_ANGEFORDERT', 1);
 define('EVENT_BESTAETIGUNG_GESENDET', 2);
@@ -51,7 +51,7 @@ define('EVENT_BESTAETIGUNG_ABGESAGT', 7);
 class Event extends DBEntity
 {
 	static $Tage = array( 'S', 'M', 'D', 'M', 'D', 'F', 'S');
-	static $Monate = array('Januar', 'Februar', 'M�rz', 'April',
+	static $Monate = array('Januar', 'Februar', 'März', 'April',
 	'Mai', 'Juni', 'Juli', 'August', 'September',
 	'Oktober', 'November', 'Dezember');
 
@@ -150,7 +150,7 @@ class Event extends DBEntity
 	function uebertrageFelder($felder)
 	{
 		parent::uebertrageFelder($felder);
-		// Besonderheit: Checkboxen ber�cksichtigen
+		// Besonderheit: Checkboxen berücksichtigen
 		//TODO
 		foreach ( array('Anzeigen','Rabattfaehig','Geringwertig', 'Steuerpflicht', 'PersonJN') as $Feld)
 		{
@@ -174,7 +174,7 @@ class Event extends DBEntity
 	}
 	function save()
 	{
-		// Sicherheitspr�fungen
+		// Sicherheitsprüfungen
 		foreach (array('Autor','Status','Ort','Datum','Dauer','Turnus','TurnusEnde','Art') as $feld)
 		{
 			if (!is_numeric($this->$feld))
@@ -259,7 +259,7 @@ class Event extends DBEntity
 		}
 	}
 	/**
-	 * liefert den Beschreibungsstring mit Ersetzungen f�r Systemevents (Querverweise zu Buchung etc.)
+	 * liefert den Beschreibungsstring mit Ersetzungen für Systemevents (Querverweise zu Buchung etc.)
 	 * @return string der String in HTML-Form mit Querverweisen
 	 */
 	function getBeschreibung()
@@ -267,8 +267,8 @@ class Event extends DBEntity
 
 	}
 	/**
-	 * liefert eine Zeichenkette mit der �bersicht �ber den Event
-	 * @return string eine HTML-Zeichenkette mit der �bersicht
+	 * liefert eine Zeichenkette mit der Übersicht über den Event
+	 * @return string eine HTML-Zeichenkette mit der Übersicht
 	 */
 	function getUebersicht()
 	{
@@ -285,8 +285,8 @@ class Event extends DBEntity
 		 */
 	}
 	/**
-	 * liefert eine Zeichenkette mit der Art des Termins. Muss f�r erbende Objekte entsprechend
-	 * �berladen werden.
+	 * liefert eine Zeichenkette mit der Art des Termins. Muss für erbende Objekte entsprechend
+	 * überladen werden.
 	 * @return string Zeichenkette mit den Namen der Eventart
 	 */
 	function getArt()
@@ -309,8 +309,8 @@ class Event extends DBEntity
 		return Event::$Turnusse[$this->Turnus];
 	}
 	/**
-	 * zeigt an, ob der Eintrag nach der Erstellung noch mindestens einmal ge�ndert wurde
-	 * @return true, wenn eine �nderung vorgenommen wurde
+	 * zeigt an, ob der Eintrag nach der Erstellung noch mindestens einmal geändert wurde
+	 * @return true, wenn eine änderung vorgenommen wurde
 	 */
 	function wurdeGeaendert()
 	{
@@ -340,7 +340,7 @@ class Event extends DBEntity
 		return ($this->istBetroffen() && $this->Aendern) || $this->Autor == SESSION_DBID;
 	}
 	/**
-	 * pr�ft AWT-Spezifische User- und Gruppenberechtigungen
+	 * prüft AWT-Spezifische User- und Gruppenberechtigungen
 	 * @return true, wenn der Benutzer betroffen ist, false sonst
 	 */
 	function istBetroffen($Betroffen_id = SESSION_DBID)
@@ -504,8 +504,8 @@ class Event extends DBEntity
 	}
 	/**
 	 * setzt eine Nachricht zusammen die per Mail gesendet wird.
-	 * Muss f�r sp�teer Klassen abgeleitet werden.
-	 * @param string $Text ein zus�tzlicher Text, der vor den eigentlichen Daten angezeigt wird
+	 * Muss für späteer Klassen abgeleitet werden.
+	 * @param string $Text ein zusätzlicher Text, der vor den eigentlichen Daten angezeigt wird
 	 * @return string der Nachrichtentext
 	 */
 	function getMessageText($Text='')
@@ -522,7 +522,7 @@ class Event extends DBEntity
 		{
 			$Text .= "\nOrt: ".$Ort;
 		}
-		$Text .= "\nPriorit�t: ".$this->getPrioritaet();
+		$Text .= "\nPriorität: ".$this->getPrioritaet();
 		
 		if (Count($this->Betroffene) > 0)
 		{
@@ -542,7 +542,7 @@ class Event extends DBEntity
 	}
 	/**
 	 * Benachrichtigt alle Betroffenen 
-	 * @param string $zusatztext der Text, der zus�tzlich zu den Rahmendaten angezeigt wird
+	 * @param string $zusatztext der Text, der zusätzlich zu den Rahmendaten angezeigt wird
 	 */
 	function sendBenachrichtigung($zusatztext='')
 	{
@@ -585,9 +585,9 @@ class Event extends DBEntity
 		}
 	}
 	/**
-	 * sendet eine Mail mit der Benachrichtigung �ber den Event an den angegebenen User
+	 * sendet eine Mail mit der Benachrichtigung über den Event an den angegebenen User
 	 * @param int $user_id die ID des zu benachrichtigenden Benutzers
-	 * @param string $zusatztext ein zus�tzlicher Text, der vor den Ereignisdaten angezeigt wird
+	 * @param string $zusatztext ein zusätzlicher Text, der vor den Ereignisdaten angezeigt wird
 	 * @return boolean true wenn die Mail erfolgreich abgesendet wurde, false sonst
 	 */
 	function sendeMail($user_id, $zusatztext = '')
@@ -598,8 +598,8 @@ class Event extends DBEntity
 				'From: '.get_user_nickname($this->Autor).' <'.get_user_email($this->Autor).'>');
 	}
 	/**
-	 * Liefert eine Liste aus Gruppen und Benutzern von AWF. Der Key ist bei Gruppen mit einem f�hrenden
-	 * g versehen (g13 f�r Gruppe 13). Bei Benutzern wird nur eine Zahl verwendet.
+	 * Liefert eine Liste aus Gruppen und Benutzern von AWF. Der Key ist bei Gruppen mit einem führenden
+	 * g versehen (g13 für Gruppe 13). Bei Benutzern wird nur eine Zahl verwendet.
 	 * @return array Liste der Benutzer und Gruppen
 	 */
 	function getListOfGroupsAndUsers()
@@ -643,7 +643,7 @@ class Event extends DBEntity
 	}
 	
 	/**
-	 * Liefert ein Feld von Events, die im angegebenen Datum f�r den aktuellen Benutzer aktiv sind.
+	 * Liefert ein Feld von Events, die im angegebenen Datum für den aktuellen Benutzer aktiv sind.
 	 * @param date $Datum das Datum an dem die Events gesucht werden
 	 * @param date $EndDatum das Enddatum eines Bereichs in dem Events gesucht werden sollen
 	 * @return array Feld der Events, null wenn keine vorhanden
@@ -666,8 +666,8 @@ class Event extends DBEntity
 			}
 		}
 		sql_free_result($query);
-		// Turnusevents hinzuf�gen
-		// Monatlich - Tag muss �bereinstimmen, Monat + Jahr egal 
+		// Turnusevents hinzufügen
+		// Monatlich - Tag muss übereinstimmen, Monat + Jahr egal 
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_MONATLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAYOFMONTH(FROM_UNIXTIME(Datum))=DAYOFMONTH(FROM_UNIXTIME('.$Datum.')) ORDER BY Datum';
@@ -686,7 +686,7 @@ class Event extends DBEntity
 			}
 		}
 		sql_free_result($query);		
-		// W�chentlich - Wochentag muss gleich sein  
+		// wöchentlich - Wochentag muss gleich sein  
 		$sql = ' SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_WOECHENTLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAYOFWEEK(FROM_UNIXTIME(Datum))=DAYOFWEEK(FROM_UNIXTIME('.$Datum.')) ORDER BY Datum';
@@ -706,7 +706,7 @@ class Event extends DBEntity
 		}
 		sql_free_result($query);
 		
-		// t�glich alles egal 
+		// täglich alles egal 
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_TAEGLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';		
 		$sql .= ' AND Datum<='.$Datum.' ORDER BY Datum';
 		if ( ! $query = sql_query($sql))
@@ -725,7 +725,7 @@ class Event extends DBEntity
 		}
 		sql_free_result($query);
 		
-		// 14t�gig - Tag muss �bereinstimmen, Kalenderwoche/2 muss gleiche Zahl ergeben  
+		// 14tägig - Tag muss übereinstimmen, Kalenderwoche/2 muss gleiche Zahl ergeben  
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_14TAEGIG;
 		$sql .= ' AND Datum<='.$Datum.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND DAY(FROM_UNIXTIME(Datum))=DAY(FROM_UNIXTIME('.$Datum.')) ';
@@ -746,7 +746,7 @@ class Event extends DBEntity
 		}
 		sql_free_result($query);
 		
-		// Monatlich - Tag muss �bereinstimmen, Jahr egal 
+		// Monatlich - Tag muss übereinstimmen, Jahr egal 
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_JAEHRLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAY(FROM_UNIXTIME(Datum))=DAY(FROM_UNIXTIME('.$Datum.'))';
@@ -767,7 +767,7 @@ class Event extends DBEntity
 		}
 		sql_free_result($query);
 				
-		// Zweimonatlich - Tag muss �bereinstimmen, Monat/2 muss gleiche Zahl ergeben
+		// Zweimonatlich - Tag muss übereinstimmen, Monat/2 muss gleiche Zahl ergeben
 		$sql = 'SELECT Event_id FROM '.TABLE_EVENTS.' WHERE Turnus='.EVENT_TURNUS_ZWEIMONATLICH.' AND (TurnusEnde=0 OR TurnusEnde>='.$Datum.')';
 		$sql .= ' AND Datum<='.$Datum;
 		$sql .= ' AND DAY(FROM_UNIXTIME(Datum))=DAY(FROM_UNIXTIME('.$Datum.'))';
@@ -791,7 +791,7 @@ class Event extends DBEntity
 		return $ergebnis;
 	}
 	/**
-	 * sendet Best�tigungs-Mails f�r Events wo dies angefordert wurde und setzt dann die den Status entsprechend
+	 * sendet Bestätigungs-Mails für Events wo dies angefordert wurde und setzt dann die den Status entsprechend
 	 */
 	static function sendeBestaetigungsMails()
 	{
@@ -801,9 +801,9 @@ class Event extends DBEntity
 		while ( $zeile = sql_fetch_row($query))
 		{
 			$Event = new Event($zeile[1]);
-			//echo "Sende Mail f�r Event ".$zeile[1]." an ".$zeile[2]."\n";
+			//echo "Sende Mail für Event ".$zeile[1]." an ".$zeile[2]."\n";
 			$Event->sendeMail($zeile[2], 'Bitte beachten Sie das folgende Ereignis:');
-			// Status �ndern
+			// Status ändern
 			sql_query('UPDATE '.TABLE_EVENT_BETROFFENE.' SET Bestaetigungsstatus='.EVENT_BESTAETIGUNG_GESENDET.
 			' WHERE Betroffene_id='.$zeile[0]);
 		}
@@ -819,7 +819,7 @@ class Event extends DBEntity
 		{
 			$Event = new Event($zeile[1]);
 			$Event->sendeMail($zeile[2]);
-			// Status �ndern
+			// Status ändern
 			sql_query('UPDATE '.TABLE_EVENT_BETROFFENE.
 			' SET Erinnerungsstatus=-Erinnerungsstatus '.
 			' WHERE Betroffene_id='.$zeile[0]);

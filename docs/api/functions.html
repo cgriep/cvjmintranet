@@ -54,7 +54,7 @@ define('START', getmicrotime ());
 	global $profile;
 	if(DISABLE_WILDCARDS == 1 || $profile['editor'] == 1) return $text;
 	reset($array);
-	while (list ($key, $value) = each ($array)) {
+	foreach ( $array as $key => $value)  {
 		$text = str_replace('%%'.$key.'%%', $value, $text);
 		}
 	return $text;
@@ -69,7 +69,7 @@ define('START', getmicrotime ());
 		$text = strtr($text, $array);
 		}
 	else {
-		while (list ($key, $value) = each ($array)) {
+		foreach ( $array as $key => $value) {
 			// variable?
 			if($value[0] == '$') {
 				if(strstr($value, ']')) {

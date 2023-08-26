@@ -11,7 +11,7 @@ class Buchung extends DBEntity
 	 * der Kunde der Buchung
 	 */
 	var $Adresse;
-	// Liste mit den Buchungen, die Artikel enthalten, die beim letzten Buchen hinzugef�gt wurden
+	// Liste mit den Buchungen, die Artikel enthalten, die beim letzten Buchen hinzugefügt wurden
 	var $Fehlerliste = array();
 
 	// Konstruktor
@@ -24,7 +24,7 @@ class Buchung extends DBEntity
 			if ( $Adressen_id <= 0)
 			{
 				$this->Adresse = null;
-				//throw new Exception('Keine g�ltige Adressen_id bei neuer Buchung angegeben!');
+				//throw new Exception('Keine gültige Adressen_id bei neuer Buchung angegeben!');
 $this->F_Adressen_id = -1;
 			}
 			else
@@ -79,23 +79,23 @@ $this->F_Adressen_id = -1;
 		{
 			$a = new Adresse($Adressen_id);
 			// Wichtig: Format beachten, da Frontend Bezug darauf nimmt
-			$this->logAction('Kunde von KuNr '.$this->Adresse->getKundennummer().' auf '.$a->getKundennummer().' ge�ndert.', false);
+			$this->logAction('Kunde von KuNr '.$this->Adresse->getKundennummer().' auf '.$a->getKundennummer().' geändert.', false);
 			$this->F_Adressen_id = $Adressen_id;
 			$this->Adresse = $a;
 		}
 		else
 		{
-			throw new Exception ('KundeAendern: '.$Adressen_id.' ist keine g�ltige Angabe.');
+			throw new Exception ('KundeAendern: '.$Adressen_id.' ist keine gültige Angabe.');
 		}
 	}
 	/**
-	 * liefert ein Feld mit den Kundennummern der bisherigen Kunden. Enth�lt mindestens die aktuelle 
+	 * liefert ein Feld mit den Kundennummern der bisherigen Kunden. Enthält mindestens die aktuelle 
 	 * Kundennummer.
 	 * @return array Feld mit den Kundennummern bisheriger Kunden. 
 	 */
 	function bisherigeKunden()
 	{
-		// auf Kundenwechsel pr�fen
+		// auf Kundenwechsel prüfen
 		return array();
 		$kunden =array($this->Adresse->Kunden_Nr);
 		$text = $this->Logtext;
@@ -117,9 +117,9 @@ $this->F_Adressen_id = -1;
 		return $kunden;
 	}
 	/**
-	 * liefert eine Zeichenkette mit der History, wobei Sonderfunktionen ber�cksichtigt sind. Die Zeichenkette
-	 * enth�lt HTML-Querverweise.
-	 * @param string $url die URL an die verwiesen wird. Sie wird um die Adressen_id erg�nzt und sollte mit "=" enden.
+	 * liefert eine Zeichenkette mit der History, wobei Sonderfunktionen berücksichtigt sind. Die Zeichenkette
+	 * enthält HTML-Querverweise.
+	 * @param string $url die URL an die verwiesen wird. Sie wird um die Adressen_id ergänzt und sollte mit "=" enden.
 	 * @return string die History mit HTML-Verlinkungen
 	 */
 	function holeHistory($url)
@@ -158,7 +158,7 @@ $this->F_Adressen_id = -1;
 	 * protokolliert eine Aktion auf der Buchung im Logfile. Eine Speicherung erfolgt nicht,
 	 * da die Methode im Verlauf des Speichervorgangs aufgerufen werden kann.
 	 * @param String $action die Aktion die zu protokollieren ist
-	 * @param boolean $save true, wenn die �nderung gespeichert werden soll, false sonst
+	 * @param boolean $save true, wenn die änderung gespeichert werden soll, false sonst
 	 */
 	function logAction($action, $save = true)
 	{
@@ -170,15 +170,15 @@ $this->F_Adressen_id = -1;
 		}
 	}
 	/**
-	 * L�scht eine Buchung
+	 * Löscht eine Buchung
 	 */
 	function loeschen()
 	{
 		// TODO!
 	}
 	/**
-	 * Storniert die Buchung und entfernt alle Buchungseintr�ge. Diese werden unter Internes aufgef�hrt.
-	 * @param boolean $nurLeeren true, wenn die Eintr�ge entfernt werden sollen, die Buchung aber unber�hrt bleibt, true wenn die Buchung storniert werden soll
+	 * Storniert die Buchung und entfernt alle BuchungsEinträge. Diese werden unter Internes aufgeführt.
+	 * @param boolean $nurLeeren true, wenn die Einträge entfernt werden sollen, die Buchung aber unberührt bleibt, true wenn die Buchung storniert werden soll
 	 */
 	function stornieren($nurLeeren = false)
 	{
@@ -186,9 +186,9 @@ $this->F_Adressen_id = -1;
 		{
 			throw new Exception('stornieren: Die Buchung '.$this->Buchung_Nr.' ist neu oder fertig!');
 		}
-		// Eintr�ge in die internen Bemerkungen speichern
+		// Einträge in die internen Bemerkungen speichern
 		$s .= 'Letzter Status: '.$this->Buchungsstatus();
-		$s .= "\nStorniert am " . date('d.m.Y H:i') . "\nGebucht waren folgende Eintr�ge:\n";
+		$s .= "\nStorniert am " . date('d.m.Y H:i') . "\nGebucht waren folgende Einträge:\n";
 		$query = sql_query('SELECT DISTINCT F_Artikel_Nr FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' . $this->Buchung_Nr);
 		while ($eintrag = sql_fetch_array($query))
 		{
@@ -212,11 +212,11 @@ $this->F_Adressen_id = -1;
 		}
 		else
 		{
-			$this->logAction('Alle Eintr�ge ausgebucht');
+			$this->logAction('Alle Einträge ausgebucht');
 		}
 		// durch das Protokollieren wird die gesamte Buchung gespeichert
 
-		// Alle Eintr�ge der Buchung l�schen
+		// Alle Einträge der Buchung löschen
 		sql_query('DELETE FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' . $this->Buchung_Nr);
 	}
 	/**
@@ -269,7 +269,7 @@ $this->F_Adressen_id = -1;
 		{
 			$this->Kuechenhilfe = 1;
 		}
-		// Status pr�fen. Sobald ein Eingang vorliegt, ist es eine Reservierung
+		// Status prüfen. Sobald ein Eingang vorliegt, ist es eine Reservierung
 		if ($this->Eingang != 0)
 		{
 			if ($this->BStatus < BUCHUNG_RESERVIERUNG)
@@ -284,7 +284,7 @@ $this->F_Adressen_id = -1;
 		}
 		if (! $this->isNeu() )
 		{
-			// Pr�fen, ob sich die Personenanzahl ge�ndert hat.
+			// prüfen, ob sich die Personenanzahl geändert hat.
 			if ($this->personenAnzahl() != $this->OriginalPersonenanzahl)
 			{
 				// wenn ja, Essen und Programm anpassen
@@ -296,9 +296,9 @@ $this->F_Adressen_id = -1;
 				ABRECHNUNGSTYP_VERPFLEGUNG . ',' . ABRECHNUNGSTYP_VERPFLEGUNGNACHT . ')';
 				if (!sql_query($sql))
 				{
-					throw new Exception('Fehler bei Personen�nderung '.$sql.': ' . sql_error());
+					throw new Exception('Fehler bei Personenänderung '.$sql.': ' . sql_error());
 				}
-				$this->logAction('Personenanzahl ge�ndert von '.$this-OriginalPersonenanzahl.' auf '.$this->personenAnzahl());
+				$this->logAction('Personenanzahl geändert von '.$this-OriginalPersonenanzahl.' auf '.$this->personenAnzahl());
 			}
 			// Update
 			$sql = 'UPDATE ' . TABLE_BUCHUNGEN . ' SET ';
@@ -326,7 +326,7 @@ $this->F_Adressen_id = -1;
 			$sql .= ',AnzahlungsBemerkung="' . sql_real_escape_string($this->AnzahlungsBemerkung) . '"';
 			$sql .= ',F_Aufenthaltsraum_id=' . $this->F_Aufenthaltsraum_id;
 			$sql .= ',F_Adressen_id=' . $this->F_Adressen_id;
-			// Pr�fen ob Speiseraum sich ge�ndert hat
+			// prüfen ob Speiseraum sich geändert hat
 			if ($this->F_Speiseraum_id != $this->OriginalSpeiseraum_id)
 			{
 				// Speiseraum setzen.
@@ -346,7 +346,7 @@ $this->F_Adressen_id = -1;
 						$this->Buchung_Nr . ',' . $this->F_Speiseraum_id . ',1,'.$i.')');
 					}
 				}
-				$this->logAction('Speiseraum ge�ndert von '.$this->OriginalSpeiseraum_id.' nach '.$this->F_Speiseraum_id);
+				$this->logAction('Speiseraum geändert von '.$this->OriginalSpeiseraum_id.' nach '.$this->F_Speiseraum_id);
 			}
 			for ($i = 1; $i < 7; $i++)
 			{
@@ -360,8 +360,8 @@ $this->F_Adressen_id = -1;
 			{
 				$sql .= 'Buchung_Nr=' . $this->Buchung_Nr . ',';
 			}
-			// �nderung protokolieren
-			$this->logAction('ge�ndert', false);
+			// änderung protokolieren
+			$this->logAction('geändert', false);
 			$sql .= 'Logtext="' . sql_real_escape_string($this->Logtext).'"';
 			$sql .= ' WHERE Buchung_Nr = ' . $this->Buchung_Nr;
 			if (!sql_query($sql))
@@ -414,14 +414,14 @@ $this->F_Adressen_id = -1;
 			}
 			$this->Buchung_Nr = sql_insert_id();
 		}
-		// Originalinformation sichern f�r sp�tere Anpassungen
+		// Originalinformation sichern für sp�tere Anpassungen
 		$this->OriginalPersonenanzahl = $this->personenAnzahl();
 		$this->OriginalSpeiseraum_id = $this->F_Speiseraum_id;
 		$this->OriginalBuchung_Nr = $this->Buchung_Nr;
 		$this->BuchungStand = time();
 	}
 	/**
-	 * ergibt die Menge, die standardm��ig bei einer bestimmten Abrechnungsart angewendet werden soll.
+	 * ergibt die Menge, die standardmäßig bei einer bestimmten Abrechnungsart angewendet werden soll.
 	 * @param int $Abrechnungstyp der Abrechnungstyp
 	 * @return int die Menge die eingesetzt werden soll
 	 */
@@ -439,7 +439,7 @@ $this->F_Adressen_id = -1;
 		}
 	}
 	/**
-	 * ergibt die Menge, die standardm��ig bei einer bestimmten Abrechnungsart angewendet werden soll.
+	 * ergibt die Menge, die standardmäßig bei einer bestimmten Abrechnungsart angewendet werden soll.
 	 * @param int $Abrechnungstyp der Abrechnungstyp
 	 * @return int die Menge die eingesetzt werden soll
 	 */
@@ -449,7 +449,7 @@ $this->F_Adressen_id = -1;
 		return $this->standardMenge($a->getAbrechnungstyp());
 	}
 	/**
-	 * gibt die Altersgruppe in lesbarer Form zur�ck
+	 * gibt die Altersgruppe in lesbarer Form Zurück
 	 * @return String der Name der Altersgruppe
 	 */
 	function getAltersgruppe()
@@ -465,7 +465,7 @@ $this->F_Adressen_id = -1;
 		}
 	}
 	/**
-	 * gibt den Inhalt des Felder zur�ck. Hier k�nnen auch berechnete Inhalte
+	 * gibt den Inhalt des Felder Zurück. Hier können auch berechnete Inhalte
 	 * abgefragt werden.
 	 * @param String $feld der Feldname des gesuchten Feldes
 	 * @return String der Inhalt des Feldes oder eine leere Zeichenkette
@@ -499,7 +499,7 @@ $this->F_Adressen_id = -1;
 	}
 	/**
 	 * liefert den Namen der Altersgruppe mit der angegebenen Nummer
-	 * @param int $nr die Nummer der gew�nschten Altersgruppe (von 1 bis 6)
+	 * @param int $nr die Nummer der gewünschten Altersgruppe (von 1 bis 6)
 	 * @return String der Name der Altersgruppe
 	 */
 	function getAlterswertName($nr)
@@ -517,8 +517,8 @@ $this->F_Adressen_id = -1;
 		}
 	}
 	/**
-	 *  gibt eine Liste mit den Anzahlen der Personen zur�ck
-	 * @return array ein nummeriertes Feld f�r die Altersgruppen. Indizes sind m und w sowie Anzeige mit dem Namen der Altersgruppe
+	 *  gibt eine Liste mit den Anzahlen der Personen Zurück
+	 * @return array ein nummeriertes Feld für die Altersgruppen. Indizes sind m und w sowie Anzeige mit dem Namen der Altersgruppe
 	 */
 	function getPersonenListe()
 	{
@@ -555,7 +555,7 @@ $this->F_Adressen_id = -1;
 		return $anz;
 	}
 	/**
-	 * liefert ein Feld der m�glichen Speiser�ume inkl. der Option "keiner". Das Feld ist mit der Artikel_id
+	 * liefert ein Feld der möglichen Speiseräume inkl. der Option "keiner". Das Feld ist mit der Artikel_id
 	 * des Saals indiziert. Soweit der Saal durch eine andere Buchung belegt ist, wird deren Nummer hinter dem
 	 * Namen des Saals angezeigt.
 	 * @return array indiziertes Feld mit den Namen der Speises�le.
@@ -610,9 +610,9 @@ $this->F_Adressen_id = -1;
 	}
 
 	/**
-	 * liefert ein Feld mit der Liste aller R�ume, die als Gruppenraum m�glich sind (also keine
-	 * Schlafpl�tze haben). Zus�tzlich wird ein Eintrag f�r "keiner" angeboten.
-	 * @returns array ein Feld id->Bezeichnung der Gruppenr�ume.
+	 * liefert ein Feld mit der Liste aller Räume, die als Gruppenraum möglich sind (also keine
+	 * Schlafplätze haben). Zusätzlich wird ein Eintrag für "keiner" angeboten.
+	 * @returns array ein Feld id->Bezeichnung der Gruppenräume.
 	 */
 	function getGruppenraumListe()
 	{
@@ -637,8 +637,8 @@ $this->F_Adressen_id = -1;
 		return $Gruppenraum;
 	}
 	/**
-	 * Bestimmt die Anzahl der �bernachtungen der Buchung
-	 * @return die Anzahl der �bernachtungen in Tagen
+	 * Bestimmt die Anzahl der Übernachtungen der Buchung
+	 * @return die Anzahl der Übernachtungen in Tagen
 	 */
 	function berechneUebernachtungen()
 	{
@@ -653,7 +653,7 @@ $this->F_Adressen_id = -1;
 		return $this->BStatus >= BUCHUNG_FERTIG;
 	}
 	/**
-	 * Schaltet die Buchung zum Seminar bzw. wieder zur�ck
+	 * Schaltet die Buchung zum Seminar bzw. wieder Zurück
 	 * @param boolean $Seminar true, wenn es sich um ein Seminar handelt, false sonst
 	 */
 	function macheSeminar($Seminar)
@@ -667,7 +667,7 @@ $this->F_Adressen_id = -1;
 		$this->logAction('zum Seminar gemacht');
 	}
 	/**
-	 * Ver�ndert den Status der Buchung.
+	 * Verändert den Status der Buchung.
 	 * @param int $art 1- setzt den Status auf Reservierung, 2- setzt den Status auf intern
 	 */
 	function reaktivieren($art)
@@ -717,7 +717,7 @@ $this->F_Adressen_id = -1;
 			case 0: return 'Vorreservierung';
 			case 1: return '1. Nachfrage';
 			case BUCHUNG_VORRESERVIERUNG: return '2. Nachfrage'; // < 2 ist vorreserviert
-			case BUCHUNG_GELOESCHT: return 'Vorreservierung gel�scht';
+			case BUCHUNG_GELOESCHT: return 'Vorreservierung gelöscht';
 			case BUCHUNG_RESERVIERUNG: return 'Reservierung';
 			case BUCHUNG_FERTIG: return 'Abgerechnet'; // > 20 ist abgerechnet
 			case BUCHUNG_STORNIERT: return 'Storniert';
@@ -728,8 +728,8 @@ $this->F_Adressen_id = -1;
 		}
 	}
 	/**
-	 * Entfernt eine Abrechnung der Buchung endg�ltig
-	 * @param abrechnung_id die ID der zu l�schenden Abrechnung
+	 * Entfernt eine Abrechnung der Buchung endgültig
+	 * @param abrechnung_id die ID der zu löschenden Abrechnung
 	 */
 	function loescheAbrechnung($abrechnung_id)
 	{
@@ -738,7 +738,7 @@ $this->F_Adressen_id = -1;
 			sql_query('DELETE FROM ' . TABLE_RECHNUNGSEINTRAEGE . ' WHERE F_Rechnung_id=' .
 			$abrechnung_id);
 			sql_query('DELETE FROM ' . TABLE_RECHNUNGEN . ' WHERE Rechnung_id=' . $abrechnung_id);
-			// wenn das die letzte Abrechnung war, dann die Anzahlung l�schen
+			// wenn das die letzte Abrechnung war, dann die Anzahlung löschen
 			$query = sql_query('SELECT Count(*) FROM ' . TABLE_RECHNUNGEN . ' WHERE F_Buchung_Nr=' .
 			$this->Buchung_Nr);
 			if ($row = sql_fetch_row($query))

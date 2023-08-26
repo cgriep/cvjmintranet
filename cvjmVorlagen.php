@@ -80,7 +80,7 @@ function sortiereDatenNachDatum($daten)
     {
        if ( $art == 0 )
        {
-       		// neue �berschrift - bisherige Daten sortieren
+       		// neue Überschrift - bisherige Daten sortieren
     		array_multisort($tempdaten, SORT_NUMERIC, $keypositionen);
 				foreach($felder as $f => $feld)
     		{ 
@@ -90,7 +90,7 @@ function sortiereDatenNachDatum($daten)
         			$daten[$zeichen.$feld][] = $tdaten[$zeichen.$feld][$pos];
         		}
     		}
-    		// aktuelle �berschrift einf�gen
+    		// aktuelle Überschrift einfügen
     		foreach($felder as $f => $feld)
     		{ 
 				$daten[$zeichen.$feld][] = $tdaten[$zeichen.$feld][$key];
@@ -100,7 +100,7 @@ function sortiereDatenNachDatum($daten)
        }
        else 
        {
-       		// Daten �bertragen
+       		// Daten übertragen
        		$tempdaten[] = $daten['SORT'.$zeichen.'DATUM'][$key];       
        		$keypositionen[] = $key;
        }
@@ -190,11 +190,11 @@ function Kuechenzettel($Buchung_Nr, $daten)
 function InstitutionErsetzen($daten)
 {
   global $Anredearten;
-  // Institution �berpr�fen falls Buchung!
+  // Institution überprüfen falls Buchung!
   if ( isset($daten['F_INSTITUTION']) && is_numeric($daten['F_INSTITUTION']) &&
        $daten['F_INSTITUTION']> 0 )
   {
-    // statt Kundendaten die Daten der Institution �bernehmen
+    // statt Kundendaten die Daten der Institution übernehmen
     $query = sql_query('SELECT * FROM '.TABLE_ADRESSEN.' WHERE Adressen_id='.$daten['F_INSTITUTION']);
     if ( $adresse = sql_fetch_array($query) )
     {
@@ -252,7 +252,7 @@ function InstitutionErsetzen($daten)
 
 function fuelleSchlafplaetze($daten = array() )
 {
-  // Berechnet die vorhandenen Schlafm�glichkeiten
+  // Berechnet die vorhandenen Schlafmöglichkeiten
   // muss nach DatenZusammenfassen aufgerufen werden
   global $Artikelarten;
   global $attribute;
@@ -324,7 +324,7 @@ function fuelleSchlafplaetze($daten = array() )
             $attribute['VBEZEICHNUNG'][] = $attribute['ZBEZEICHNUNG'][$key];
           else
             $attribute['VBEZEICHNUNG'][] = '';          
-          // Position dieses Schl�ssels merken
+          // Position dieses Schlüssels merken
           $merkartikel[$bereichid] = Count($daten['VARTIKELNR'])-1;
           //echo $bereichname.'//'.$merkartikel[$bereichid];
         }
@@ -380,7 +380,7 @@ function fuelleSchlafplaetze($daten = array() )
           $attribute['VBEZEICHNUNG'][] = $attribute['ZBEZEICHNUNG'][$key];
         else
           $attribute['VBEZEICHNUNG'][] = '';
-        // Sonderbehandlung Orte: Auff�hrung bei Unterbringung
+        // Sonderbehandlung Orte: Aufführung bei Unterbringung
         if ( $daten['ZART'][$key] == $Artikelarten[CVJMART_ORT] )
         {
           $daten['UNTERBRINGUNGANZAHL'][$artikelnr] = 1;
@@ -480,7 +480,7 @@ function berechneGesamtsumme($daten = array() )
   {
     //if ( is_numeric($daten['ZGESAMT'][$key]) )
     {
-      // Preis r�ckg�ngig machen
+      // Preis rückgüngig machen
       $daten['GESAMTPREIS'] = AddPreis($daten['GESAMTPREIS'],$daten['ZGESAMT'][$key],false);
       $daten['GESAMTMWST'] = AddPreis($daten['GESAMTMWST'],$daten['ZMWSTSUMME'][$key],false);
       if ( ! isset($werte[$daten['ZMWST'][$key]]) )
@@ -557,7 +557,7 @@ function fuelleDaten($sql, $daten = array() )
   {
     foreach ( $ds as $key => $value )
     {
-      // besondere Felder f�llen
+      // besondere Felder füllen
       if ( ! is_numeric($key) )
       switch ( $key )
       {        
@@ -672,7 +672,7 @@ function fuelleDaten($sql, $daten = array() )
               $daten['DOKUMENTNR'] = 'V-'.$ds['Rechnung_id'];
               break;
             case 3:
-              $daten['BELEGART'] = 'Reservierungsbest�tigung';
+              $daten['BELEGART'] = 'Reservierungsbestätigung';
               $daten['DOKUMENTNR'] = 'B-'.$ds['Rechnung_id'];
               break;
             default:
@@ -803,7 +803,7 @@ function fuelleDaten($sql, $daten = array() )
       } // switch
       $daten['DATUMAKTUELL'] = date('d.m.Y');
     } // foreach
-    // Privat-Daten �bernehmen (falls noch eine Institution kommt)
+    // Privat-Daten übernehmen (falls noch eine Institution kommt)
     if ( isset($daten['NAME']) )
     {
       $daten['P_ZUSATZ'] = $daten['ZUSATZ'];
@@ -902,7 +902,7 @@ function DatenZusammenfassen($daten)
       }
       $ndatum = mktime(0,0,0,$ndatum[1],$ndatum[0],$ndatum[2]);
       // Bei Orten: Erlaube das Zusammenfassen bei unterschiedlichen Mengen
-      // damit '0' f�r die �bernachtungsz�hlung ber�cksichtigt wird
+      // damit '0' für die Übernachtungszählung berücksichtigt wird
       if ( $LetzterArtikel == $daten['BEZEICHNUNG'][$key] &&
            strtotime('-1 day',$ndatum) == $datum &&
            ($LetzteMenge == $daten['MENGE'][$key] || $LetzteMenge == 0 ) &&
@@ -924,7 +924,7 @@ function DatenZusammenfassen($daten)
       {
         if ( $VonDatum != 0 )
         {
-          // Ver�nderung - bisherigen Stand abspeichern
+          // Veränderung - bisherigen Stand abspeichern
           if ( $VonDatum != $BisDatum )
           {
             $d1 = explode('.',$VonDatum);
@@ -944,7 +944,7 @@ function DatenZusammenfassen($daten)
             $einzelmenge = number_format($Menge/$LetzteMenge,0);
           else
             $einzelmenge = 0;
-          // Pr�fen: Bei Essen und Unterbringung Einheit �ndern:
+          // Prüfen: Bei Essen und Unterbringung Einheit ändern:
           // Anzahl/Tag*'Personen'
           if ( ($LetzteArt == $Artikelarten[CVJMART_VERPFLEGUNG] ||
                $LetzteArt == $Artikelarten[CVJMART_PAUSCHALEKOPF] ||
@@ -1022,7 +1022,7 @@ function DatenZusammenfassen($daten)
         // Neuer Anfang
         if ( $LetzteArt != $daten['ART'][$key])
         {
-          // Art-�berschrift
+          // Art-Überschrift
           $LetzteArt = $daten['ART'][$key];
           $daten['SORTZDATUM'][] = 0;
           $daten['ZDATUM'][] = '';
@@ -1039,7 +1039,7 @@ function DatenZusammenfassen($daten)
           $daten['ZDAUER'][] = '';
           $daten['ZBEZEICHNUNG'][] = $LetzteArt;
           $daten['ZARTIKELNR'][] = '';
-          // �berschriften sollen fett gedruckt werden
+          // Überschriften sollen fett gedruckt werden
           $attribute['ZBEZEICHNUNG'][] = 'b';
         }
         $Startdatumzahl = $daten['SORTDATUM'][$key];
@@ -1059,7 +1059,7 @@ function DatenZusammenfassen($daten)
       }
     } // foreach
     reset($daten['DATUM']);
-    // �nderungen des letzten Eintrages abspeichern
+    // änderungen des letzten Eintrages abspeichern
     if ( $VonDatum != $BisDatum )
     {
       $d1 = explode('.',$VonDatum);
@@ -1080,7 +1080,7 @@ function DatenZusammenfassen($daten)
             $einzelmenge = number_format($Menge/$LetzteMenge,0);
     else
             $einzelMenge = 0;
-    // Pr�fen: Bei Essen und Unterbringung Einheit �ndern:
+    // Prüfen: Bei Essen und Unterbringung Einheit ändern:
     // Anzahl/Tag*'Personen'
     if ( ($LetzteArt == $Artikelarten[CVJMART_VERPFLEGUNG] ||
                $LetzteArt == $Artikelarten[CVJMART_PAUSCHALEKOPF] ||
@@ -1294,7 +1294,7 @@ switch ($Datenbank )
     $Adressenid = $daten['F_ADRESSEN_ID'];
     $daten['ADRESSEN_ID'] = $Adressenid;
     sql_query('UPDATE '.TABLE_BUCHUNGEN.' SET Logtext=CONCAT("'.date('d.m.Y H:i').
-      ' K�chenzettel erzeugt '.$username.'\n",Logtext) WHERE Buchung_Nr = '.$id);
+      ' Küchenzettel erzeugt '.$username.'\n",Logtext) WHERE Buchung_Nr = '.$id);
   break;
   case 'Seminar':
       // Seminardaten des Seminars mit gegebener id

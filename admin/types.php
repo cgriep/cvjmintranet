@@ -10,7 +10,7 @@
 
 error_reporting(1); // Disable Warnings
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ($_REQUEST as $key => $val= {
         $$key = $val;
         }
 

@@ -134,10 +134,10 @@ if ( $profile['editor'] != 1 )
         sql_free_result($query);
       }
       else
-        die('Ung�ltige Adressen-id!');
+        die('ungültige Adressen-id!');
     }
   }
-  // Teilnehmerdaten �ndern
+  // Teilnehmerdaten ändern
   if ( isset($docinput['SeminarPreis']) && is_array($docinput['SeminarPreis']) )
   {
     foreach($docinput['SeminarPreis'] as $Adressen_id => $Preis )
@@ -171,7 +171,7 @@ if ( $profile['editor'] != 1 )
       }
     }
   }
-  // Teilnehmer l�schen
+  // Teilnehmer löschen
   if ( isset($docinput['DelTeili']) && is_array($docinput['DelTeili']) )
   {
      foreach($docinput['DelTeili'] as $key => $Adressen_id )
@@ -233,8 +233,8 @@ if ( $profile['editor'] != 1 )
   $Schweinelos = 0;
   while ( $teilnehmer = sql_fetch_array($query) )
   {
-     // Ausgabe der Teilnehmer und M�glichkeit, diesen einen Brief zu schreiben.
-     // Eingabefeld f�r Anzahlung, -bemerkung
+     // Ausgabe der Teilnehmer und möglichkeit, diesen einen Brief zu schreiben.
+     // Eingabefeld für Anzahlung, -bemerkung
      if ( $teilnehmer['SeminarGruppe'] == 0 ) $teilnehmer['SeminarGruppe'] = '';      
      
      if ( $teilnehmer['Geburtsdatum'] != 0 )
@@ -286,7 +286,7 @@ if ( $profile['editor'] != 1 )
       $Gesamt += $Anzahlen[$i][0]+$Anzahlen[$i][1];
     }
     $sql .= "Logtext=CONCAT('".date("d.m.Y H:i").
-       " Teilnehmerzahl/Vegetarier/Schweinelos per Seminar auf $Gesamt/$Vegetarier/$Schweinelos ge�ndert ".
+       " Teilnehmerzahl/Vegetarier/Schweinelos per Seminar auf $Gesamt/$Vegetarier/$Schweinelos geändert ".
       get_user_nickname()."\n',Logtext) ";
     if ( ! sql_query("UPDATE ".TABLE_BUCHUNGEN." SET ".$sql." WHERE Buchung_Nr=".$Buchung->Buchung_Nr))
       echo sql_error();

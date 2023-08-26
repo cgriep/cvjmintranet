@@ -2,7 +2,7 @@
 
 /**
  * Holt einen Buchungsdatensatz mit der angegebenen Buchungsnummer
- * Der Datensatz enth�lt die gesamte Buchung plus den Adressdatensatz des Kunden 
+ * Der Datensatz enthält die gesamte Buchung plus den Adressdatensatz des Kunden 
  * @param int $Buchung_Nr die buchungsnummer
  * @return array Buchungs- und Adressdatensatz 
  */
@@ -20,8 +20,8 @@ function holeBuchung($Buchung_Nr)
 }
 
 /**
-  * Bucht einen Artikel zur Buchung und erg�nzt alle zugeh�rigen Artikel der Gruppe
- * Wenn die Menge des zuzubuchenden Artikels 0 betr�gt wird er nur ein einziges Mal
+  * Bucht einen Artikel zur Buchung und ergänzt alle zugehörigen Artikel der Gruppe
+ * Wenn die Menge des zuzubuchenden Artikels 0 beträgt wird er nur ein einziges Mal
  * zugebucht. 
  * Um mehrere Tage auf einmal zu buchen, Datum in Form von Anfangsdatum-Enddatum angeben
  * @param int $buchung_nr Die Buchungsnummer
@@ -29,7 +29,7 @@ function holeBuchung($Buchung_Nr)
  * @param int/String $datum das Datum als Timestamp oder Timestamp-Timestamp als von-bis
  * @param double $menge die Menge
  * @param double $dauer die Dauer
- * @param int $ebene die Ebene des Artikels f�r rekursives Einbuchen. Maximal 10 Ebenen werden gebucht. 
+ * @param int $ebene die Ebene des Artikels für rekursives Einbuchen. Maximal 10 Ebenen werden gebucht. 
  */
 function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebene=0)
 {
@@ -66,7 +66,7 @@ function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebe
        // Datensatz vorhanden. Dann muss die Menge angepasst werden.
        if ( $art["Menge"] == 0 )
        {
-         // Pr�fen, ob schon vorhanden
+         // prüfen, ob schon vorhanden
          if ( ! $q = sql_query("SELECT Count(F_Artikel_Nr) FROM ".TABLE_BUCHUNGSEINTRAEGE.
            " WHERE F_Buchung_Nr=".$buchung_nr." AND F_Artikel_Nr=".$artikel_id) )
              echo sql_error();
@@ -76,7 +76,7 @@ function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebe
            if ( $row[0] == 1 )
            {
              $meineMenge = 1;
-             // Derartige Pauschalen sollen am n�chsten Tag gebucht werden, wenn nicht
+             // Derartige Pauschalen sollen am nächsten Tag gebucht werden, wenn nicht
              // anders angegeben (weil sonst im "0"-Bereich der frei-Pauschalen)
              if ( $art["Beginn"] == 0 )
                $art["Beginn"] = 86400;
@@ -97,7 +97,7 @@ function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebe
          else
            $ndauer = $dauer;
          pruefeArtikelVorhanden($buchung_nr, $art["F_Unterartikel_id"], $ndatum, $ndauer, $ebene+1);
-         // Rekursives Einbuchen der Artikel. Ge�ndert 07.12.06
+         // Rekursives Einbuchen der Artikel. geändert 07.12.06
          bucheArtikel($buchung_nr, $art['F_Unterartikel_id'], $ndatum, $meineMenge, $ndauer);
          /**
          if ( ! sql_query("INSERT INTO ".TABLE_BUCHUNGSEINTRAEGE.
@@ -113,14 +113,14 @@ function bucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $dauer=0, $ebe
        }
     }
     sql_free_result($query);
-    // Eintr�ge mit Menge 0 l�schen
+    // Einträge mit Menge 0 löschen
     sql_query("DELETE FROM ".TABLE_BUCHUNGSEINTRAEGE.
       " WHERE F_Buchung_Nr=$buchung_nr AND Menge=0");
   } // Datum nicht numerisch
 }
 
-// Bucht einen Artikel zur Buchung und erg�nzt alle zugeh�rigen Artikel der Gruppe
-// Wenn die Menge des zuzubuchenden Artikels 0 betr�gt wird er komplett gel�scht
+// Bucht einen Artikel zur Buchung und ergänzt alle zugehörigen Artikel der Gruppe
+// Wenn die Menge des zuzubuchenden Artikels 0 beträgt wird er komplett gelöscht
 function entbucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $ebene=0)
 {
   // Absicherung: Keine Endlosschleifen bei rekursiver Einbuchung
@@ -165,7 +165,7 @@ function entbucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $ebene=0)
     {
        if ( $art['Menge'] == 0 )
        {
-         // Pr�fen, ob schon vorhanden
+         // prüfen, ob schon vorhanden
          if ( ! $q = sql_query("SELECT Count(F_Artikel_Nr) FROM ".TABLE_BUCHUNGSEINTRAEGE.
            " WHERE F_Buchung_Nr=".$buchung_nr." AND F_Artikel_Nr=".$artikel_id.
            " AND Menge>0") )
@@ -211,9 +211,9 @@ function entbucheArtikel($buchung_nr, $artikel_id, $datum, $menge=1, $ebene=0)
             echo "Fehler $sql: ".sql_error();
          */
        }
-    } // f�r alle Unterartikel
+    } // für alle Unterartikel
     sql_free_result($query);
-    // Eintr�ge mit Menge 0 l�schen
+    // Einträge mit Menge 0 löschen
     sql_query('DELETE FROM '.TABLE_BUCHUNGSEINTRAEGE.
       " WHERE F_Buchung_Nr=$buchung_nr AND Menge=0");
   } // Datum nicht numerisch

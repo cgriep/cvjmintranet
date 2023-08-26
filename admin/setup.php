@@ -16,7 +16,7 @@ set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 
 define('AWF_VERSION', trim(join('', file($_BASEPATH.'/inc/VERSION'))));
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ($_REQUEST as $key => $val= {
         $$key = $val;
         }
 

@@ -2,7 +2,7 @@
 
 
 /**
- * Administrationsoberfl�che f�r die Atlantis-Daten
+ * Administrationsoberfl�che für die Atlantis-Daten
  * 2006 Christoph Griep
  */
 include ('atlantis.db.php');
@@ -24,7 +24,7 @@ if ($sql != '')
 		{
 			if ( !is_numeric($key) && $key != $gruppe )
 			{
-				// Bilder Ber�cksichtigen 
+				// Bilder berücksichtigen 
 			    if ( $key == 'Bild' && $id != '')
 			    {
 			    	$z[$key] = '<a href="zeigeBild.php?'.$id.'='.$zeile[$id.'_id'].

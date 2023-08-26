@@ -1,7 +1,7 @@
 <?php
-/** Artikel hinzuf�gen
+/** Artikel hinzufügen
  * wird innerhalb einer n-spaltigen Tabelle verwendet.
- * dadurch wird die Ausrichtung an die vorher angezeigten Artikel gew�hrleistet
+ * dadurch wird die Ausrichtung an die vorher angezeigten Artikel gewährleistet
  * Die Suchanfrage steht in $docinput['ArtikelSearch']
  * @param Buchung $Buchung das Buchungsobjekt
  * @param int $spalten die Spaltenanzahl die angezeigt werden soll
@@ -21,11 +21,11 @@ function anzeigeArtikelHinzufuegen($buchung, $spalten = 9)
 }
 
 /**
- *  tr�gt Artikel in die Datenbank ein
+ *  trägt Artikel in die Datenbank ein
  * @param docinput[ArtikelSearch] - muss gesetzt sein
- * @param docinput[Menge] - numerisch, enth�lt die Menge
- *	@param docinput[Preis] - Preis ( nur Rechnungseintr�ge)
- * @param docinput[Rabatt] - Rabatt (nur Rechnungseintr�ge)
+ * @param docinput[Menge] - numerisch, enthält die Menge
+ *	@param docinput[Preis] - Preis ( nur RechnungsEinträge)
+ * @param docinput[Rabatt] - Rabatt (nur RechnungsEinträge)
  * @param docinput[Rechnung_id] / REQUEST[Buchung_Nr] - die id
  * @return array die Liste mit den Fehlern beim Buchen
  */
@@ -54,7 +54,7 @@ function ArtikelHinzufuegen($tabelle)
 			{
 				if ( $tabelle == TABLE_RECHNUNGSEINTRAEGE )
 				{					
-					// Neuen Eintrag hinzuf�gen
+					// Neuen Eintrag hinzufügen
 					$sql = 'INSERT INTO '.TABLE_RECHNUNGSEINTRAEGE.
 					' (F_Rechnung_id,F_Preis,F_Bezeichnung,Einheit,Rabatt,MWSt,Art,'.
 					'Menge,Dauer,Datum,F_Artikel_Nr)'.
@@ -147,7 +147,7 @@ function ArtikelHinzufuegen($tabelle)
 				}
 			}
 		} // foreach
-	} // wenn zus�tzliche Artikel angegeben
+	} // wenn zusätzliche Artikel angegeben
 	return $l;
 }
 

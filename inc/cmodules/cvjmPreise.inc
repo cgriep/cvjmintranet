@@ -19,7 +19,7 @@ if ( $profile['editor'] != 1 )
     echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
   if ( isset($docinput['DelPreisliste']) && is_numeric($docinput['DelPreisliste']) )
   {
-    // Preisliste l�schen
+    // Preisliste löschen
     $query = sql_query('SELECT * FROM '.TABLE_BUCHUNGEN.
       ' WHERE F_Preisliste_id='.$docinput['DelPreisliste']);
     if ( sql_num_rows($query) == 0 )
@@ -28,12 +28,12 @@ if ( $profile['editor'] != 1 )
         $docinput['DelPreisliste']);
       sql_query('DELETE FROM '.TABLE_PREISLISTEN.' WHERE Preisliste_id='.
         $docinput['DelPreisliste']);
-      echo '&gt;&gt;&gt; Preisliste wurde gel�scht.<br />';
+      echo '&gt;&gt;&gt; Preisliste wurde gelöscht.<br />';
 
     }
     else
       echo '<div class="SchwererFehler">&gt;&gt;&gt; Preisliste wird in '.sql_num_rows($query).
-        ' Buchungen benutzt und kann nicht gel�scht werden.</div>';
+        ' Buchungen benutzt und kann nicht gelöscht werden.</div>';
     sql_free_result($query);
   }
   if ( isset($_REQUEST['Kopie']) && is_numeric($_REQUEST['Kopie']) )
@@ -186,7 +186,7 @@ if ( $profile['editor'] != 1 )
         $value2 = trim(str_replace(',','.',$docinput['PreiseStunde'][$key]));
         if ( $value == '' && $value2 == '' )
         {
-          // Preis l�schen
+          // Preis löschen
           if ( ! sql_query('DELETE FROM '.TABLE_PREISE.' WHERE F_Preisliste_id='.$docinput['Preisliste'].
             " AND Artikel_Nr=$key")) echo "Fehler: ".sql_error();
         }
@@ -244,7 +244,7 @@ if ( $profile['editor'] != 1 )
       echo '<input type="Checkbox" name="docinput[Mitarbeiterliste]" value="v" ';
       if ( $Mitarbeiterliste )
         echo 'checked="checked"';
-      echo ' title="Liste als Mitarbeiterpreisliste markieren (f�r Kiosk)"';
+      echo ' title="Liste als Mitarbeiterpreisliste markieren (für Kiosk)"';
       echo '/>';      
       echo "<br />\n";
       echo 'Bemerkung<br />';
@@ -274,7 +274,7 @@ if ( $profile['editor'] != 1 )
     $query = sql_query("SELECT * FROM ".TABLE_BUCHUNGEN." WHERE F_Preisliste_id=".$docinput["Preisliste"]);
     if ( sql_num_rows($query) == 0 )
       echo ' [ <a href="'.get_url($id,"docinput[DelPreisliste]=".$docinput["Preisliste"]).
-        '">Preisliste l�schen</a> ]';
+        '">Preisliste löschen</a> ]';
     else
       echo ' Preisliste wird in '.sql_num_rows($query).' Buchungen benutzt<br />';
     sql_free_result($query);
@@ -306,7 +306,7 @@ if ( $profile['editor'] != 1 )
       echo '<tr><td colspan="6" align="center">';
       echo '<input type="Submit" name="SavePreis" value="Speichern" />';
       echo '<br />Geben Sie 0 ein wenn der Artikel nichts kostet, geben Sie nichts
-      (auch keine 0) ein, um einen Preis zu l�schen.';
+      (auch keine 0) ein, um einen Preis zu löschen.';
       echo '</td></tr>';
     $Where = '';
     if ( $_REQUEST['Edit'] > 0 )
@@ -420,7 +420,7 @@ if ( $profile['editor'] != 1 )
       echo '<tr><td colspan="6" align="center">';
       echo '<input type="Submit" name="SavePreis" value="Speichern" />';
       echo '<br />Geben Sie 0 ein wenn der Artikel nichts kostet, geben Sie nichts
-      (auch keine 0) ein, um einen Preis zu l�schen.';
+      (auch keine 0) ein, um einen Preis zu löschen.';
       echo '</td></tr>';
       echo '</form>'."\n";
       echo '<form action="'.get_url($id).'" method="post">';
@@ -441,7 +441,7 @@ if ( $profile['editor'] != 1 )
     $query = sql_query("SELECT * FROM ".TABLE_BUCHUNGEN." WHERE F_Preisliste_id=".$docinput["Preisliste"]);
     if ( sql_num_rows($query) == 0 )
       echo ' [ <a href="'.get_url($id,"docinput[DelPreisliste]=".$docinput["Preisliste"]).
-        '">Preisliste l�schen</a> ]';
+        '">Preisliste löschen</a> ]';
     else
       echo ' Preisliste wird in '.sql_num_rows($query).' Buchungen benutzt';
     sql_free_result($query);

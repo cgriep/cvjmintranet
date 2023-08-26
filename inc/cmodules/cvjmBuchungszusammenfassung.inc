@@ -1,7 +1,7 @@
 <?php
 /*
 
-Modul Buchungs�bersicht
+Modul BuchungsÜbersicht
 
 AWF-Name: cvjmbuchungszusammenfassung
 
@@ -43,7 +43,7 @@ function ArtikelAnzeigen($art, $Tag)
   $ids = array();
   while ( $row = sql_fetch_array($qu) )
   {
-  	// Nur Schlaforte ber�cksichtigen
+  	// Nur Schlaforte berücksichtigen
 	$a = new Artikel($row['id']); 
   	if ( $a->BerechneSchlafplaetze() > -1)
   	{

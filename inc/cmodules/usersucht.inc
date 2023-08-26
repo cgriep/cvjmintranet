@@ -92,7 +92,7 @@ elseif(isset($docinput['update_user']) && $docinput['update_user'] == 'true' && 
 
  if ( $Wer != "sucht000" )
  {
-   echo "�ndere eMail-Kennwort ...<br />";
+   echo "ändere eMail-Kennwort ...<br />";
 
 # This is the difficult part, the Telnet header
 $header1=chr(0xFF).chr(0xFB).chr(0x1F).chr(0xFF).chr(0xFB).
@@ -145,11 +145,11 @@ $output = substr($output, strpos("<br />", $output)+6);
 //echo $output;
  // if ( ! (strpos($output, "Re-enter new password") === false) &&
  //         strpos($output, "Bad password") === false && strpos($output, "Warning") === false )
-  echo "<br /><b><big>Kennwort erfolgreich ge�ndert.</big></b><br />";
+  echo "<br /><b><big>Kennwort erfolgreich geändert.</big></b><br />";
  //else
 // {
-  //echo '<big><font color="red">Fehler beim �ndern des Kennwortes:<br /></font>';
-  //echo "Das eMailkennwort konnte nicht ge�ndert werden. Bitte verwenden Sie mindestens ein Zeichen, dass kein Buchstabe ist. Ihr Kennwort zum Login in dieses System wurde ge&auml;ndert, w&auml;hrend Ihr eMailkennwort noch das alte ist. &Auml;ndern Sie das Kennwort erneut, um beide Kennw�rter auf den gleichen Stand zu bringen.<br />";
+  //echo '<big><font color="red">Fehler beim ändern des Kennwortes:<br /></font>';
+  //echo "Das eMailkennwort konnte nicht geändert werden. Bitte verwenden Sie mindestens ein Zeichen, dass kein Buchstabe ist. Ihr Kennwort zum Login in dieses System wurde ge&auml;ndert, w&auml;hrend Ihr eMailkennwort noch das alte ist. &Auml;ndern Sie das Kennwort erneut, um beide Kennw�rter auf den gleichen Stand zu bringen.<br />";
   //}
   }
           }

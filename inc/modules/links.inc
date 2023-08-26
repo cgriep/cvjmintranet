@@ -11,8 +11,8 @@
 
           Der Disclaimer kann so direkt in die Links.txt eingebaut werden...
                 1|*|3|<b>Disclaimer</b><br /><center>
-                1|*|3|Gem&auml;&szlig; � 5 Abs.1 TDG sind wir ausschlie&szlig;lich nur f&uuml;r die eigenen Inhalte verantwortlich. F&uuml;r Links<br />
-                1|*|3|auf fremde Inhalte dritter Anbieter sind wir gem&auml;&szlig; � 5 Abs.2 TDG nur verantwortlich, wenn wir von<br />
+                1|*|3|Gem&auml;&szlig; § 5 Abs.1 TDG sind wir ausschlie&szlig;lich nur f&uuml;r die eigenen Inhalte verantwortlich. F&uuml;r Links<br />
+                1|*|3|auf fremde Inhalte dritter Anbieter sind wir gem&auml;&szlig; § 5 Abs.2 TDG nur verantwortlich, wenn wir von<br />
                 1|*|3|einem rechtswidrigen oder strafbaren Gehalt positive Kenntnis haben und es technisch m&ouml;glich und<br />
                 1|*|3|zumutbar ist, deren Nutzung zu verhindern. Auch sind wir nicht verpflichtet, in periodischen<br />
                 1|*|3|Abst&auml;nden den Inhalt von Angeboten Dritter auf deren Rechtswidrigkeit oder Strafbarkeit zu &uuml;ber-<br />

@@ -60,7 +60,7 @@ if ( $profile['editor'] != 1 )
   echo get_user_nickname($Benutzer).')</h2>';
   if ( SESSION_STATUS != 'ok' )
   {
-    echo 'Sie m�ssen sich einloggen damit Sie den Stundenzettel ansehen k�nnen.<br />';
+    echo 'Sie müssen sich einloggen damit Sie den Stundenzettel ansehen können.<br />';
   } // SESSION nicht ok
   else
   {
@@ -92,14 +92,14 @@ if ( $profile['editor'] != 1 )
       {
         unset($_REQUEST['Monatsabschluss']);
         unset($docinput['Bemerkung']);
-        echo '<strong>&gt;&gt;&gt; Fehler: Ung�ltiger Anfangszeitpunkt!</strong><br />';
+        echo '<strong>&gt;&gt;&gt; Fehler: ungültiger Anfangszeitpunkt!</strong><br />';
         $docinput['Datum'] = time();
       }
       if ( ($docinput['Bis'] = strtotime(date('Y-m-d',$stand).' '.$docinput['Bis']) ) === -1 )
       {
         unset($_REQUEST['Monatsabschluss']);
         unset($docinput['Bemerkung']);
-        echo '<strong>&gt;&gt;&gt; Fehler: Ung�ltiger Endzeitpunkt!</strong><br />';
+        echo '<strong>&gt;&gt;&gt; Fehler: ungültiger Endzeitpunkt!</strong><br />';
       }
       // Monatsabschluss
       if ( isset($_REQUEST['Monatsabschluss']) && isset($profile[$document['Zugriffsrecht']]) )
@@ -124,7 +124,7 @@ if ( $profile['editor'] != 1 )
           $sql .= sql_real_escape_string($docinput["Bemerkung"])."', Art='".
           sql_real_escape_string($docinput['Art'])."' WHERE id=".$docinput["ZID"];
           if ( sql_query($sql))
-            echo "<strong>&gt;&gt;&gt; Arbeitszeit ge�ndert.<br /></strong>";
+            echo "<strong>&gt;&gt;&gt; Arbeitszeit geändert.<br /></strong>";
           else
             echo "<string>&gt;&gt;&gt; Fehler </strong>".sql_error()."<br />";
         }
@@ -221,7 +221,7 @@ if ( $profile['editor'] != 1 )
       echo '<div align="center" class="noprint">[ <a href="'.get_url($id,
         "docinput[Benutzer]=$Benutzer&docinput[Datum]=".date("d.m.Y",
           strtotime("-1 month",$docinput["Datum"])));
-      echo '">Monat zur�ck</a> ] [ <a href="'.get_url($id,"docinput[Benutzer]=$Benutzer&docinput[Datum]=".
+      echo '">Monat Zurück</a> ] [ <a href="'.get_url($id,"docinput[Benutzer]=$Benutzer&docinput[Datum]=".
         date("d.m.Y",strtotime("+1 month",$docinput["Datum"])));
       echo '">Monat vor</a> ]</div>';
       echo '<form action="'.get_url($id).'" name="Springen" method="post" class="noprint">';
@@ -263,7 +263,7 @@ if ( $profile['editor'] != 1 )
       echo '<input type="Submit" value="anzeigen">';
       echo '[ <a href="'.get_url($id,"Monatsabschluss=$Benutzer&docinput[Datum]=".
         date("d.m.Y",$docinput["Datum"])).
-        '">Monat f�r Mitarbeiter abschlie�en/freigeben</a>]';
+        '">Monat für Mitarbeiter abschlie�en/freigeben</a>]';
        echo '</form>';
     }
   } // SESSION ist ok

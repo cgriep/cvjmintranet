@@ -2,7 +2,7 @@
 
 /**
  * Zeigt die aktiven Termine des Tages des eingeloggten Benutzers an
- * wird auf der Startseite verwendet, um einen �berblick �ber die anstehenden Dinge zu
+ * wird auf der Startseite verwendet, um einen Überblick über die anstehenden Dinge zu
  * erhalten.
  * 
  */

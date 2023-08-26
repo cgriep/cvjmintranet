@@ -29,7 +29,7 @@ if(!isset($_REQUEST['comment_item'])) { $_REQUEST['comment_item'] = 0; }
  if(isset($msgchilds) && is_array($msgchilds) && count($msgchilds) >= 1) {
   reset($msgchilds);
   $noflavcomments = true;
-  while (list ($docid, $value) = each ($msgchilds)) {
+  foreach ($msgchilds as $docid => $value)  {
    if($value['body'] && $value['title']) {
    $noflavcomments = false;
    if(strlen($value['body'])>200) {

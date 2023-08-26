@@ -64,7 +64,7 @@ if($profile['editor']) {
                 <input type="checkbox" value="1" name="doc[sslonly]"<?php if($document['ssl_only']) echo 'CHECKED'; ?> />&nbsp;SSL only<br /><br />
                 <span title="Nummer des Autors, wenn nicht man selbst">
 		Author-ID<br />
-		<input name="doc[authorid]" type="text" value="<?=$document[author_id]?>" maxlength="5" />
+		<input name="doc[authorid]" type="text" value="<?=$document['author_id']?>" maxlength="5" />
                  <br />
 		<!--begin BEMA CODE
 		This code is used to keep the the publication date the same, even if the news was edited after it has been submitted.-->

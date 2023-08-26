@@ -4,11 +4,11 @@
  * AWF-Modul cvjmkorrespondenzverwaltung
  * Dateiname: cvjmKorrespondenzverwaltung
  *
- * Erm�glicht die Ersetzung einer vorhandenen Korrespondenz durch eine neue Datei
+ * Ermöglicht die Ersetzung einer vorhandenen Korrespondenz durch eine neue Datei
  *
  *  Parameter:
  *  docinput[Datei]: vollst�ndiger Pfad zur Datei
- *  docinput[Herkunft]: id und Parameter der Seite, auf die zur�ckverwiesen wird
+ *  docinput[Herkunft]: id und Parameter der Seite, auf die Zurückverwiesen wird
  *  docinput[Adressen_id]: id der Adresse, deren Dateien bearbeitet werden
  */
 
@@ -34,7 +34,7 @@ if ( $profile["editor"] != 1 )
 	if ( $document['title'] != '')
 	echo '<h1>'.transform($document['title'],$document['datatype']['title'])."</h1>\n";
 	$Adresse = new Adresse($docinput['Adressen_id']);
-	echo 'f�r '.$Adresse->Vollname().'<br />';
+	echo 'für '.$Adresse->Vollname().'<br />';
 	if ( ! isset($_FILES["NeueDatei"]['name']) || $_FILES["NeueDatei"]['name'] == "" )
 	{
 		echo '<form action="'.get_url($id).'" method="post" enctype="multipart/form-data">';
@@ -64,7 +64,7 @@ if ( $profile["editor"] != 1 )
 	}
 	else
 	{
-		// Datei hochladen und zur�ck
+		// Datei hochladen und Zurück
 		if ( $_FILES["NeueDatei"]["name"] != '' )
 		{
 			if (! isset($docinput['Datei']) || $docinput['Datei'] == '')
@@ -117,7 +117,7 @@ if ( $profile["editor"] != 1 )
 		}
 		echo ".<br />";
 	}
-	echo '<a href="'.$docinput['BackID'].'">Zur�ck</a>';
+	echo '<a href="'.$docinput['BackID'].'">Zurück</a>';
 	// get_url($docinput["BackID"],$params)
 }  // wenn nicht editor
 

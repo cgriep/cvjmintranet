@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstrakte Grundklasse f�r Datenbankobjekte
+ * Abstrakte Grundklasse für Datenbankobjekte
  */
 abstract class DBEntity
 {
@@ -16,7 +16,7 @@ abstract class DBEntity
 		}
 		while ($feld = sql_fetch_array($query))
 		{
-			// �bertragen der Felder in die Attribute des Klasse
+			// übertragen der Felder in die Attribute des Klasse
 			$name = $feld['Field'];
 			$this->$name = $feld['Default'];
 			if ( $feld['Default'] == null)
@@ -31,12 +31,12 @@ abstract class DBEntity
 		sql_free_result($query);
 	}
 	/**
-	 * �bertr�gt alle Felder aus dem Datensatz ins Objekt
+	 * überträgt alle Felder aus dem Datensatz ins Objekt
 	 * @param array $datensatz ein assoziatives Feld mit den Feldnamen => Feldinhalt
 	 */
 	public function uebertrageFelder($datensatz)
 	{
-		// �bertragen der Felder in die Attribute des Klasse
+		// übertragen der Felder in die Attribute des Klasse
 		foreach ( $datensatz as $key => $value )
 		{
 			$this->$key = $value;

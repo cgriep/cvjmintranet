@@ -16,7 +16,7 @@ include(INC_PATH."misc/cvjmArtikeltools.inc");
 OrtsAuswahlScriptEinfuegen();
 $Artikelarten = holeArtikelarten();
 
-// CSS-Styles f�r ein- und ausgeblendete Nodes
+// CSS-Styles für ein- und ausgeblendete Nodes
 ?>
 <style type="text/css">
 <!--
@@ -124,7 +124,7 @@ if ( $profile["editor"] != 1 )
       echo ">".$value."</option>";
     }
     echo '</select>';
-    echo '<input type="Submit" value="Kategorie �ndern">';
+    echo '<input type="Submit" value="Kategorie ändern">';
     echo '</form><br />';
   }
   else
@@ -269,7 +269,7 @@ if ( isset($_REQUEST["OrtName"]) && is_numeric($_REQUEST["Ort"]) && is_numeric($
   }
 }
 
-// �ndern
+// ändern
 if ( isset($_REQUEST["OrtNeu"]) && is_numeric($_REQUEST["Ort"]) ) {
   if ( $_REQUEST["OrtNeu"] != "" ) {
     if ( isset($_REQUEST["Anzeigen"])) $Anzeigen = 1;
@@ -278,7 +278,7 @@ if ( isset($_REQUEST["OrtNeu"]) && is_numeric($_REQUEST["Ort"]) ) {
       "', Anzeigen=".$Anzeigen." WHERE id = ".$_REQUEST["Ort"]) ) echo sql_error();
   }
 }
-// L�schen, verschieben
+// löschen, verschieben
 if ( is_numeric($_REQUEST["DelV"])  ) {
     $qu = sql_query("SELECT parent FROM ".TABLE_ARTIKEL." WHERE id = ".$_REQUEST["DelV"]);
     if ( $row = sql_fetch_array($qu) )
@@ -292,7 +292,7 @@ if ( is_numeric($_REQUEST["DelV"])  ) {
       echo sql_error();
     $_REQUEST["Ort"] = $parent;
 }
-// L�schen, vollst�ndig
+// löschen, vollst�ndig
 if ( is_numeric($_REQUEST["DelX"])  ) {
   DeleteAll($_REQUEST["DelX"]);
 }
@@ -359,8 +359,8 @@ if($profile['editor']!='1') {
   }
   /*
   if ( is_numeric($_REQUEST["Ort"]) && $_REQUEST["Ort"] >= 0 ) {
-    echo '<a href="'.get_url($id,'DelV='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' l�schen, Untereintr&auml;ge aufr&uuml;cken</a><br />';
-    echo '<a href="'.get_url($id,'DelX='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' l�schen, Untereintr&auml;ge entfernen</a><br />';
+    echo '<a href="'.get_url($id,'DelV='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' löschen, Untereintr&auml;ge aufr&uuml;cken</a><br />';
+    echo '<a href="'.get_url($id,'DelX='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' löschen, Untereintr&auml;ge entfernen</a><br />';
     echo '<a href="'.get_url($id,'Copy='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' verschieben</a><br />';
   }
   */

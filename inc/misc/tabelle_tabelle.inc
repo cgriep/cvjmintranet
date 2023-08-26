@@ -162,7 +162,7 @@
         }
         else
         {
-          echo ">"; // >- Feld (nur �berschrift
+          echo ">"; // >- Feld (nur Überschrift
         }
         echo '</td>';
         $Feldanzahl++;

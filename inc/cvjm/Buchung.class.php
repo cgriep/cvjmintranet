@@ -81,7 +81,7 @@ class Buchung extends DBEntity
 		}
 	} // Buchung erstellen
 	/**
-	 * �ndert den Kunden auf die angegebene Adresse. Der Datensatz wird nicht gespeichert!
+	 * ändert den Kunden auf die angegebene Adresse. Der Datensatz wird nicht gespeichert!
 	 * @param int $Adressen_id die ID der Kundenadresse
 	 */
 	function KundeAendern($Adressen_id)
@@ -90,7 +90,7 @@ class Buchung extends DBEntity
 		{
 			$a = new Adresse($Adressen_id);
 			// Wichtig: Format beachten, da Frontend Bezug darauf nimmt
-			$this->logAction('Kunde von KuNr '.$this->Adresse->getKundennummer().' auf '.$a->getKundennummer().' ge�ndert.', false);
+			$this->logAction('Kunde von KuNr '.$this->Adresse->getKundennummer().' auf '.$a->getKundennummer().' geändert.', false);
 			$this->F_Adressen_id = $Adressen_id;
 			$this->Adresse = $a;
 		}
@@ -100,7 +100,7 @@ class Buchung extends DBEntity
 		}
 	}
 	/**
-	 * liefert ein Feld mit den Kundennummern der bisherigen Kunden. Enth�lt mindestens die aktuelle 
+	 * liefert ein Feld mit den Kundennummern der bisherigen Kunden. Enthält mindestens die aktuelle 
 	 * Kundennummer.
 	 * @return array Feld mit den Kundennummern bisheriger Kunden. 
 	 */
@@ -126,8 +126,8 @@ class Buchung extends DBEntity
 	}
 	/**
 	 * liefert eine Zeichenkette mit der History, wobei Sonderfunktionen beruecksichtigt sind. Die Zeichenkette
-	 * enth�lt HTML-Querverweise.
-	 * @param string $url die URL an die verwiesen wird. Sie wird um die Adressen_id erg�nzt und sollte mit "=" enden.
+	 * enthält HTML-Querverweise.
+	 * @param string $url die URL an die verwiesen wird. Sie wird um die Adressen_id ergänzt und sollte mit "=" enden.
 	 * @return string die History mit HTML-Verlinkungen
 	 */
 	function holeHistory($url)
@@ -205,7 +205,7 @@ class Buchung extends DBEntity
 	 * protokolliert eine Aktion auf der Buchung im Logfile. Eine Speicherung erfolgt nicht,
 	 * da die Methode im Verlauf des Speichervorgangs aufgerufen werden kann.
 	 * @param String $action die Aktion die zu protokollieren ist
-	 * @param boolean $save true, wenn die �nderung gespeichert werden soll, false sonst
+	 * @param boolean $save true, wenn die änderung gespeichert werden soll, false sonst
 	 */
 	function logAction($action, $save = true)
 	{
@@ -217,15 +217,15 @@ class Buchung extends DBEntity
 		}
 	}
 	/**
-	 * L�scht eine Buchung
+	 * Löscht eine Buchung
 	 */
 	function loeschen()
 	{
 		// TODO!
 	}
 	/**
-	 * Storniert die Buchung und entfernt alle Buchungseintr�ge. Diese werden unter Internes aufgefuehrt. 
-	 * @param boolean $nurLeeren true, wenn die Eintr�ge entfernt werden sollen, die Buchung aber unberuehrt bleibt, true wenn die Buchung storniert werden soll
+	 * Storniert die Buchung und entfernt alle BuchungsEinträge. Diese werden unter Internes aufgefuehrt. 
+	 * @param boolean $nurLeeren true, wenn die Einträge entfernt werden sollen, die Buchung aber unberuehrt bleibt, true wenn die Buchung storniert werden soll
 	 */
 	function stornieren($nurLeeren = false)
 	{
@@ -233,9 +233,9 @@ class Buchung extends DBEntity
 		{
 			throw new Exception('stornieren: Die Buchung '.$this->Buchung_Nr.' ist neu oder fertig!');
 		}
-		// Eintr�ge in die internen Bemerkungen speichern
+		// Einträge in die internen Bemerkungen speichern
 		$s .= 'Letzter Status: '.$this->Buchungsstatus();
-		$s .= "\nStorniert am " . date('d.m.Y H:i') . "\nGebucht waren folgende Eintr�ge:\n";
+		$s .= "\nStorniert am " . date('d.m.Y H:i') . "\nGebucht waren folgende Einträge:\n";
 		$query = sql_query('SELECT DISTINCT F_Artikel_Nr FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' . $this->Buchung_Nr);
 		while ($eintrag = sql_fetch_array($query))
 		{
@@ -259,9 +259,9 @@ class Buchung extends DBEntity
 		}
 		else
 		{
-			$this->logAction('Alle Eintr�ge ausgebucht');
+			$this->logAction('Alle Einträge ausgebucht');
 		}
-		// Alle Eintr�ge der Buchung l�schen
+		// Alle Einträge der Buchung löschen
 		sql_query('DELETE FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' . $this->Buchung_Nr);
 		$this->save();
 	}
@@ -330,7 +330,7 @@ class Buchung extends DBEntity
 		}
 		if (! $this->isNeu() )
 		{
-			// Pruefen, ob sich die Personenanzahl ge�ndert hat.
+			// Pruefen, ob sich die Personenanzahl geändert hat.
 			if ($this->personenAnzahl() != $this->OriginalPersonenanzahl)
 			{
 				// wenn ja, Essen und Programm anpassen
@@ -342,9 +342,9 @@ class Buchung extends DBEntity
 				ABRECHNUNGSTYP_VERPFLEGUNG . ',' . ABRECHNUNGSTYP_VERPFLEGUNGNACHT . ')';
 				if (!sql_query($sql))
 				{
-					throw new Exception('Fehler bei Personen�nderung '.$sql.': ' . sql_error());
+					throw new Exception('Fehler bei Personenänderung '.$sql.': ' . sql_error());
 				}
-				$this->logAction('Personenanzahl ge�ndert von '.$this-OriginalPersonenanzahl.' auf '.$this->personenAnzahl());
+				$this->logAction('Personenanzahl geändert von '.$this-OriginalPersonenanzahl.' auf '.$this->personenAnzahl());
 			}
 			// Update
 			$sql = 'UPDATE ' . TABLE_BUCHUNGEN . ' SET ';
@@ -372,12 +372,12 @@ class Buchung extends DBEntity
 			$sql .= ',AnzahlungsBemerkung="' . sql_real_escape_string($this->AnzahlungsBemerkung) . '"';
 			$sql .= ',F_Aufenthaltsraum_id=' . $this->F_Aufenthaltsraum_id;
 			$sql .= ',F_Adressen_id=' . $this->F_Adressen_id;
-			// Pruefen ob Speiseraum sich ge�ndert hat
+			// Pruefen ob Speiseraum sich geändert hat
 			if ($this->F_Aufenthaltsraum_id != $this->OriginalGruppenRaum_id)
 			{
-				$this->logAction('Gruppenraum ge�ndert von '.$this->OriginalGruppenRaum_id.' nach '.$this->F_Aufenthaltsraum_id);
+				$this->logAction('Gruppenraum geändert von '.$this->OriginalGruppenRaum_id.' nach '.$this->F_Aufenthaltsraum_id);
 			}			
-			// Pruefen ob Speiseraum sich ge�ndert hat
+			// Pruefen ob Speiseraum sich geändert hat
 			if ($this->F_Speiseraum_id != $this->OriginalSpeiseraum_id)
 			{
 				// Speiseraum setzen.
@@ -397,7 +397,7 @@ class Buchung extends DBEntity
 						$this->Buchung_Nr . ',' . $this->F_Speiseraum_id . ',1,'.$i.')');
 					}
 				}
-				$this->logAction('Speiseraum ge�ndert von '.$this->OriginalSpeiseraum_id.' nach '.$this->F_Speiseraum_id);
+				$this->logAction('Speiseraum geändert von '.$this->OriginalSpeiseraum_id.' nach '.$this->F_Speiseraum_id);
 			}
 			for ($i = 1; $i < 7; $i++)
 			{
@@ -411,8 +411,8 @@ class Buchung extends DBEntity
 			{
 				$sql .= 'Buchung_Nr=' . $this->Buchung_Nr . ',';
 			}
-			// �nderung protokolieren
-			$this->logAction('ge�ndert', false);
+			// änderung protokolieren
+			$this->logAction('geändert', false);
 			$sql .= 'Logtext="' . sql_real_escape_string($this->Logtext).'"';
 			$sql .= ' WHERE Buchung_Nr = ' . $this->Buchung_Nr;
 			if (!sql_query($sql))
@@ -465,7 +465,7 @@ class Buchung extends DBEntity
 			}
 			$this->Buchung_Nr = sql_insert_id();
 		}
-		// Originalinformation sichern fuer sp�tere Anpassungen
+		// Originalinformation sichern fuer spätere Anpassungen
 		$this->OriginalPersonenanzahl = $this->personenAnzahl();
 		$this->OriginalSpeiseraum_id = $this->F_Speiseraum_id;
 		$this->OriginalGruppenRaum_id = $this->F_Aufenthaltsraum_id;
@@ -477,7 +477,7 @@ class Buchung extends DBEntity
 		$this->BuchungStand = time();
 	}
 	/**
-	 * ergibt die Menge, die standardm��ig bei einer bestimmten Abrechnungsart angewendet werden soll.
+	 * ergibt die Menge, die standardmäßig bei einer bestimmten Abrechnungsart angewendet werden soll.
 	 * @param int $Abrechnungstyp der Abrechnungstyp
 	 * @return int die Menge die eingesetzt werden soll
 	 */
@@ -495,7 +495,7 @@ class Buchung extends DBEntity
 		}
 	}
 	/**
-	 * ergibt die Menge, die standardm��ig bei einer bestimmten Abrechnungsart angewendet werden soll.
+	 * ergibt die Menge, die standardmäßig bei einer bestimmten Abrechnungsart angewendet werden soll.
 	 * @param int $Abrechnungstyp der Abrechnungstyp
 	 * @return int die Menge die eingesetzt werden soll
 	 */
@@ -521,7 +521,7 @@ class Buchung extends DBEntity
 		}
 	}
 	/**
-	 * gibt den Inhalt des Felder zurueck. Hier k�nnen auch berechnete Inhalte
+	 * gibt den Inhalt des Felder zurueck. Hier können auch berechnete Inhalte
 	 * abgefragt werden.
 	 * @param String $feld der Feldname des gesuchten Feldes
 	 * @return String der Inhalt des Feldes oder eine leere Zeichenkette
@@ -611,16 +611,16 @@ class Buchung extends DBEntity
 		return $anz;
 	}
 	/**
-	 * liefert ein Feld der m�glichen Speiser�ume inkl. der Option "keiner". Das Feld ist mit der Artikel_id
+	 * liefert ein Feld der möglichen Speiseräume inkl. der Option "keiner". Das Feld ist mit der Artikel_id
 	 * des Saals indiziert. Soweit der Saal durch eine andere Buchung belegt ist, wird deren Nummer hinter dem
 	 * Namen des Saals angezeigt.
-	 * @return array indiziertes Feld mit den Namen der Speises�le.
+	 * @return array indiziertes Feld mit den Namen der Speisesäle.
 	 */
 	function getSpeiseraumListe()
 	{
 		$Speiseraum = array ();
 		$Speiseraum[-1] = '- unbekannt -';
-		$Speiseraum[-2] = '- nicht gew�nscht -';
+		$Speiseraum[-2] = '- nicht gewünscht -';
 		$raeume = Artikel::getSpeiseraeume();
 		foreach ( $raeume as $raum )
 		{
@@ -667,15 +667,15 @@ class Buchung extends DBEntity
 	}
 
 	/**
-	 * liefert ein Feld mit der Liste aller R�ume, die als Gruppenraum m�glich sind (also keine
-	 * Schlafpl�tze haben). Zus�tzlich wird ein Eintrag f�r "keiner" angeboten.
-	 * @returns array ein Feld id->Bezeichnung der Gruppenr�ume.
+	 * liefert ein Feld mit der Liste aller Räume, die als Gruppenraum möglich sind (also keine
+	 * Schlafplätze haben). Zusätzlich wird ein Eintrag für "keiner" angeboten.
+	 * @returns array ein Feld id->Bezeichnung der Gruppenräume.
 	 */
 	function getGruppenraumListe()
 	{
 		$Gruppenraum = array ();
 		$Gruppenraum[-1] = ' - keiner -';
-		$Gruppenraum[-2] = ' - nicht gew�nscht -';
+		$Gruppenraum[-2] = ' - nicht gewünscht -';
 		if ( ! $this->isNeu() )
 		{
 			$sql = "SELECT DISTINCT id FROM " . TABLE_ARTIKEL . " INNER JOIN " . TABLE_BUCHUNGSEINTRAEGE .
@@ -695,8 +695,8 @@ class Buchung extends DBEntity
 		return $Gruppenraum;
 	}
 	/**
-	 * Bestimmt die Anzahl der �bernachtungen der Buchung
-	 * @return die Anzahl der �bernachtungen in Tagen
+	 * Bestimmt die Anzahl der Übernachtungen der Buchung
+	 * @return die Anzahl der Übernachtungen in Tagen
 	 */
 	function berechneUebernachtungen()
 	{
@@ -711,7 +711,7 @@ class Buchung extends DBEntity
 		return $this->BStatus >= BUCHUNG_FERTIG;
 	}
 	/**
-	 * Schaltet die Buchung zum Seminar bzw. wieder zur�ck
+	 * Schaltet die Buchung zum Seminar bzw. wieder Zurück
 	 * @param boolean $Seminar true, wenn es sich um ein Seminar handelt, false sonst
 	 */
 	function macheSeminar($Seminar)
@@ -725,7 +725,7 @@ class Buchung extends DBEntity
 		$this->logAction('zum Seminar gemacht');
 	}
 	/**
-	 * Ver�ndert den Status der Buchung.
+	 * Verändert den Status der Buchung.
 	 * @param int $art 1- setzt den Status auf Reservierung, 2- setzt den Status auf intern
 	 */
 	function reaktivieren($art)
@@ -775,7 +775,7 @@ class Buchung extends DBEntity
 			case 0: return 'Vorreservierung';
 			case 1: return '1. Nachfrage';
 			case BUCHUNG_VORRESERVIERUNG: return '2. Nachfrage'; // < 2 ist vorreserviert
-			case BUCHUNG_GELOESCHT: return 'Vorreservierung gel�scht';
+			case BUCHUNG_GELOESCHT: return 'Vorreservierung gelöscht';
 			case BUCHUNG_RESERVIERUNG: return 'Reservierung';
 			case BUCHUNG_FERTIG: return 'Abgerechnet'; // > 20 ist abgerechnet
 			case BUCHUNG_STORNIERT: return 'Storniert';
@@ -786,14 +786,14 @@ class Buchung extends DBEntity
 		}
 	}
 	/**
-	 * Bildrepr�sentation des Status
+	 * Bildrepräsentation des Status
 	 */
 	function buchungsStatusBild()
 	{
 		switch ( $this->BStatus )
 		{
-			case BUCHUNG_GELOESCHT: // gel�scht
-				return '<img src="img/CVJM/geloescht.gif" title="Vorreservierung gel�scht">';
+			case BUCHUNG_GELOESCHT: // gelöscht
+				return '<img src="img/CVJM/geloescht.gif" title="Vorreservierung gelöscht">';
 			case 0:
 				return '<img src="img/CVJM/vorres.gif" title="Vorreservierung">';
 				break;
@@ -817,7 +817,7 @@ class Buchung extends DBEntity
 	}
 	/**
 	 * Entfernt eine Abrechnung der Buchung endg�ltig
-	 * @param abrechnung_id die ID der zu l�schenden Abrechnung
+	 * @param abrechnung_id die ID der zu löschenden Abrechnung
 	 */
 	function loescheAbrechnung($abrechnung_id)
 	{
@@ -826,7 +826,7 @@ class Buchung extends DBEntity
 			sql_query('DELETE FROM ' . TABLE_RECHNUNGSEINTRAEGE . ' WHERE F_Rechnung_id=' .
 			$abrechnung_id);
 			sql_query('DELETE FROM ' . TABLE_RECHNUNGEN . ' WHERE Rechnung_id=' . $abrechnung_id);
-			// wenn das die letzte Abrechnung war, dann die Anzahlung l�schen
+			// wenn das die letzte Abrechnung war, dann die Anzahlung löschen
 			$query = sql_query('SELECT Count(*) FROM ' . TABLE_RECHNUNGEN . ' WHERE F_Buchung_Nr=' .
 			$this->Buchung_Nr);
 			if ($row = sql_fetch_row($query))
@@ -837,7 +837,7 @@ class Buchung extends DBEntity
 				$this->Buchung_Nr);
 			}
 			sql_free_result($query);
-			$this->logAction('Abrechnung id ' . $abrechnung_id . ' gel�scht ');
+			$this->logAction('Abrechnung id ' . $abrechnung_id . ' gelöscht ');
 		}
 	}
 	/**
@@ -873,9 +873,9 @@ class Buchung extends DBEntity
 			*/
 			$this->logAction('Buchungzeitraum verschoben von '.date('d.m.Y',$this->Von).
 			'-'.date('d.m.Y',$this->Bis).' nach '.date('d.m.Y',$neuVon).'-'.date('d.m.Y',$neuBis), false);
-			// Verschiebung aller Eintr�ge auf das neue Datum
+			// Verschiebung aller Einträge auf das neue Datum
 			$differenz = $neuVon - $this->Von;
-			// Reihenfolge festlegen, um bei �berschneidungen doppelte Schl�ssel zu vermeiden
+			// Reihenfolge festlegen, um bei Überschneidungen doppelte Schlüssel zu vermeiden
 			if ( $differenz < 0 )
 			{
 				$Order .= ' ASC';
@@ -887,7 +887,7 @@ class Buchung extends DBEntity
 			if ( ! sql_query('UPDATE ' . TABLE_BUCHUNGSEINTRAEGE . ' SET Datum=Datum+'.$differenz.
 			' WHERE F_Buchung_Nr=' . $this->Buchung_Nr.' ORDER BY Datum '.$Order) )
 			{
-				throw new Exception('Buchungseintr�ge '.$this->Buchung_Nr.' verschieben: '.sql_error());;
+				throw new Exception('BuchungsEinträge '.$this->Buchung_Nr.' verschieben: '.sql_error());;
 			}
 			$diff1 = $neuBis - $neuVon;
 			$diff2 = $this->Bis - $this->Von;
@@ -909,7 +909,7 @@ class Buchung extends DBEntity
 			$this->save();			
 		} else
 		{
-			throw new Exception('Keine g�ltigen Daten f�r Verschiebung angegeben!');
+			throw new Exception('Keine gültigen Daten für Verschiebung angegeben!');
 		}
 		return $erg;
 	}
@@ -954,14 +954,14 @@ class Buchung extends DBEntity
 		}
 		else
 		{
-			// Alle Eintr�ge von Selbstverpflegung löschen
+			// Alle Einträge von Selbstverpflegung löschen
 			if (!sql_query("DELETE FROM " . TABLE_BUCHUNGSEINTRAEGE . " WHERE F_Buchung_Nr=" .
 			$this->Buchung_Nr . " AND F_Artikel_Nr=" . CVJM_SELBSTVERPFLEGUNG))
 			throw new Exception(sql_error());
 		}
-	} // Selbstverpflegung setzen / l�schen
+	} // Selbstverpflegung setzen / löschen
 	/**
-	 * pr�ft ob eine Buchung Selbstverpflegung enth�lt
+	 * prüft ob eine Buchung Selbstverpflegung enthält
 	 * @return boolean true bei Selbstverpflegung, false sonst
 	 */
 	function isSelbstverpflegung()
@@ -983,7 +983,7 @@ class Buchung extends DBEntity
 		return $this->Selbstverpflegungsfeld;
 	}
 	/**
-	 * Pr�ft ob Verpflegung gebucht ist
+	 * prüft ob Verpflegung gebucht ist
 	 * @return true, wenn Verpflegung gebucht ist, false sonst
 	 */
 	function verpflegungVorhanden()
@@ -1024,8 +1024,8 @@ class Buchung extends DBEntity
 		return $Verpflegung;
 	}
 	/**
-	 * Bestimmt die Anzahl der Schl�ssel, die bei einer Buchung ausgegeben wurden
-	 * @return int die Anzahl der ausgegebenen Schl�ssel
+	 * Bestimmt die Anzahl der Schlüssel, die bei einer Buchung ausgegeben wurden
+	 * @return int die Anzahl der ausgegebenen Schlüssel
 	 */
 	function schluesselAnzahl()
 	{
@@ -1036,14 +1036,14 @@ class Buchung extends DBEntity
 		return $Schluessel[0];
 	}
 	/**
-	 * Speichert die Artikel einer Buchung in der Tabelle f�r Buchungseintr�ge
+	 * Speichert die Artikel einer Buchung in der Tabelle für BuchungsEinträge
 	 * @param docinput Feld mit den Artikel die gespeichert werden sollen
 	 */
 	function speichereArtikel($docinput)
 	{
 		if ($Speicherbar)
 		{
-			// Eintr�ge speichern
+			// Einträge speichern
 			foreach ($this->Bezeichnung as $key => $value)
 			{
 				list ($Artikelnr, $datum) = explode(',', $key);
@@ -1081,7 +1081,7 @@ class Buchung extends DBEntity
 					throw new Exception("Fehler $sql: " . sql_error());
 				}
 			}
-			$this->logAction('Artikeldaten ver�ndert');
+			$this->logAction('Artikeldaten verändert');
 		} // speichereArtikel
 	}
 	function entferneEintrag($Eintrag)
@@ -1089,14 +1089,14 @@ class Buchung extends DBEntity
 		// Eintrag entfernen
 		list ($Artikelnr, $Datum) = explode(',', $Eintrag);
 		$this->entbucheArtikel($Artikelnr, $Datum, 0);
-		$this->logAction('Artikel ' . $Artikelnr . ' f�r ' .date('d.m.Y', $Datum) .
-		' gel�scht');
+		$this->logAction('Artikel ' . $Artikelnr . ' für ' .date('d.m.Y', $Datum) .
+		' gelöscht');
 	}
 	/**
-	 * �ndert die Menge eines vorhandenen Artikels um plus oder minus eins.
+	 * ändert die Menge eines vorhandenen Artikels um plus oder minus eins.
 	 * @param int $Artikelnr die Artikelnummer
-	 * @param char $Richtung P f�r plus, M f�r minus ein.
-	 * @param int $Datum das Datum an dem der Artikel ver�ndert werden soll
+	 * @param char $Richtung P für plus, M für minus ein.
+	 * @param int $Datum das Datum an dem der Artikel verändert werden soll
 	 */
 	function aendereMenge($Artikelnr, $Richtung, $Datum)
 	{
@@ -1108,8 +1108,8 @@ class Buchung extends DBEntity
 		{
 			$this->entbucheArtikel($Artikelnr, $Datum);
 		}
-		$this->logAction('Artikel ' . $Artikelnr . ' f�r ' .date('d.m.Y', $Datum) .
-		' ver�ndert '.$Richtung);
+		$this->logAction('Artikel ' . $Artikelnr . ' für ' .date('d.m.Y', $Datum) .
+		' verändert '.$Richtung);
 	}
 	/**
 	 * Berechnet die erste gebuchte Mahlzeit der Buchung.
@@ -1199,7 +1199,7 @@ class Buchung extends DBEntity
 		return implode(',',$Bereiche);
 	}
 	/**
-	 * zeigt die doppelten Artikel aus der Fehlerliste an. Dabei werden die Eintr�ge aus dem Feld gel�scht,
+	 * zeigt die doppelten Artikel aus der Fehlerliste an. Dabei werden die Einträge aus dem Feld gelöscht,
 	 * damit sie nicht mehrfach ausgegeben werden.
 	 */
 	function getFehlerliste()
@@ -1209,7 +1209,7 @@ class Buchung extends DBEntity
 		return $f;
 	}
 	/**
-	 * Pr�ft ob ein Artikel am angebenen Datum in einer anderen Buchung vorkommt
+	 * prüft ob ein Artikel am angebenen Datum in einer anderen Buchung vorkommt
 	 * @param int $artikel_id die ID des Artikel
 	 * @param int $datum der timestamp des Datums
 	 * @param int $dauer Dauer
@@ -1249,15 +1249,15 @@ class Buchung extends DBEntity
 		return $this->Fehlerliste;
 	}
 	/**
-	 * Bucht einen Artikel zur Buchung und erg�nzt alle zugeh�rigen Artikel der Gruppe
-	 * Wenn die Menge des zuzubuchenden Artikels 0 betr�gt wird er nur ein einziges Mal
+	 * Bucht einen Artikel zur Buchung und ergänzt alle zugehörigen Artikel der Gruppe
+	 * Wenn die Menge des zuzubuchenden Artikels 0 beträgt wird er nur ein einziges Mal
 	 * zugebucht.
 	 * Um mehrere Tage auf einmal zu buchen, Datum in Form von Anfangsdatum-Enddatum angeben
 	 * @param int $artikel_id die ID des Artikels
 	 * @param int/String $datum das Datum als Timestamp oder Timestamp-Timestamp als von-bis
 	 * @param double $menge die Menge
 	 * @param double $dauer die Dauer
-	 * @param int $ebene die Ebene des Artikels f�r rekursives Einbuchen. Maximal 10 Ebenen werden gebucht.
+	 * @param int $ebene die Ebene des Artikels für rekursives Einbuchen. Maximal 10 Ebenen werden gebucht.
 	 * @param boolean $unberechnet gibt an, ob der Artikel berechnet werden soll oder nicht	 
 	 */
 	function bucheArtikel($artikel_id, $datum, $menge=1, $dauer=0, $unberechnet=false, $ebene=0)
@@ -1320,7 +1320,7 @@ class Buchung extends DBEntity
 				// Datensatz vorhanden. Dann muss die Menge angepasst werden.
 				if ( $art["Menge"] == 0 )
 				{
-					// Pr�fen, ob schon vorhanden
+					// prüfen, ob schon vorhanden
 					if ( ! $q = sql_query("SELECT Count(F_Artikel_Nr) FROM ".TABLE_BUCHUNGSEINTRAEGE.
 					" WHERE F_Buchung_Nr=".$this->Buchung_Nr." AND F_Artikel_Nr=".$artikel_id) )
 					{
@@ -1366,23 +1366,23 @@ class Buchung extends DBEntity
 					}
 					$ndauer = str_replace(',','.',$ndauer);			
 					$this->pruefeArtikelVorhanden($art["F_Unterartikel_id"], $ndatum, $ndauer);
-					// TODO: Pr�fen der Auswertungsliste
-					// Rekursives Einbuchen der Artikel. Ge�ndert 07.12.06
+					// TODO: prüfen der Auswertungsliste
+					// Rekursives Einbuchen der Artikel. geändert 07.12.06
 					$this->bucheArtikel($art['F_Unterartikel_id'], $ndatum, $meineMenge, $ndauer, $unberechnet, $ebene+1);
 				}
 			}
 			sql_free_result($query);
-			// Eintr�ge mit Menge 0 l�schen
+			// Einträge mit Menge 0 löschen
 			sql_query('DELETE FROM '.TABLE_BUCHUNGSEINTRAEGE.' WHERE F_Buchung_Nr='.$this->Buchung_Nr.' AND Menge=0');
 			if ( $ebene == 0)
 			{
-				$this->logAction('Artikel ' . $artikel_id . ' f�r ' .	date('d.m.Y', $datum) . ' gebucht ('.$menge.')');
+				$this->logAction('Artikel ' . $artikel_id . ' für ' .	date('d.m.Y', $datum) . ' gebucht ('.$menge.')');
 			}
 		} // Datum nicht numerisch
 	}
 
-	// Bucht einen Artikel zur Buchung und erg�nzt alle zugeh�rigen Artikel der Gruppe
-	// Wenn die Menge des zuzubuchenden Artikels 0 betr�gt wird er komplett gel�scht
+	// Bucht einen Artikel zur Buchung und ergänzt alle zugehörigen Artikel der Gruppe
+	// Wenn die Menge des zuzubuchenden Artikels 0 beträgt wird er komplett gelöscht
 	function entbucheArtikel($artikel_id, $datum, $menge=1, $ebene=0)
 	{
 		// Absicherung: Keine Endlosschleifen bei rekursiver Einbuchung
@@ -1435,7 +1435,7 @@ class Buchung extends DBEntity
 			{
 				if ( $art['Menge'] == 0 )
 				{
-					// Pr�fen, ob schon vorhanden
+					// prüfen, ob schon vorhanden
 					if ( ! $q = sql_query("SELECT Count(F_Artikel_Nr) FROM ".TABLE_BUCHUNGSEINTRAEGE.
 					" WHERE F_Buchung_Nr=".$this->Buchung_Nr." AND F_Artikel_Nr=".$artikel_id.
 					" AND Menge>0") )
@@ -1482,20 +1482,20 @@ class Buchung extends DBEntity
 					// Rekursiv ausbuchen
 					$this->entbucheArtikel($art['F_Unterartikel_id'], $loeschDatum, $meineMenge, $ebene+1);
 				}
-			} // f�r alle Unterartikel
+			} // für alle Unterartikel
 			sql_free_result($query);
-			// Eintr�ge mit Menge 0 l�schen
+			// Einträge mit Menge 0 löschen
 			sql_query('DELETE FROM '.TABLE_BUCHUNGSEINTRAEGE.
 			' WHERE F_Buchung_Nr='.$this->Buchung_Nr.' AND Menge=0');
 			if ( $ebene == 0)
 			{
-				$this->logAction('Artikel ' . $artikel_id . ' f�r ' .	date('d.m.Y', $datum) . ' entfernt ('.$menge.')');
+				$this->logAction('Artikel ' . $artikel_id . ' für ' .	date('d.m.Y', $datum) . ' entfernt ('.$menge.')');
 			}
 		} // Datum nicht numerisch
 	}
 	/**
 	 * liefert ein assoziatives Feld mit den Namen der Institutionen.
-	 * Zus�tzlich gibt es das Feld "keine".
+	 * Zusätzlich gibt es das Feld "keine".
 	 * @return array ein Feld assoziatives Feld mit den ID->Namen der Institutionen
 	 */
 	function getInstitutionsliste()
@@ -1516,15 +1516,15 @@ class Buchung extends DBEntity
 		return $this->Institutionen;
 	}
 	/**
-	 * liefert ein Feld mit den Buchungseintr�gen
-	 * @param array die Buchungseintr�ge
+	 * liefert ein Feld mit den BuchungsEinträgen
+	 * @param array die BuchungsEinträge
 	 */
 	function getBuchungsEintraege()
 	{
 		if ( ! isset($this->Buchungseintraege))
 		{
 		 $this->Buchungseintraege = array();
-		 // Sind Buchungseintr�ge vorhanden?
+		 // Sind BuchungsEinträge vorhanden?
 		 $q = sql_query("SELECT * FROM " . TABLE_BUCHUNGSEINTRAEGE . " WHERE F_Buchung_Nr=" . $this->Buchung_Nr);
 		 while ($anz = sql_fetch_row($q))
 		 {
@@ -1557,10 +1557,10 @@ class Buchung extends DBEntity
 		return $this->Bemerkungen;
 	}
 	/**
-	 *  ergibt die Gesamtanzahl der Schlafpl�tze (0 ... )
-	 * @param int $datum das Datum ab dem die Schlafpl�tze berechnet werden sollen, 0 wenn alle
-	 * @param String $auswahlID Kommaseparierte ID-Liste der Orte, deren Schlafpl�tze berechnet werden sollen
-	 * @return int die Anzahl der Schlafpl�tze, 0 oder mehr
+	 *  ergibt die Gesamtanzahl der Schlafplätze (0 ... )
+	 * @param int $datum das Datum ab dem die Schlafplätze berechnet werden sollen, 0 wenn alle
+	 * @param String $auswahlID Kommaseparierte ID-Liste der Orte, deren Schlafplätze berechnet werden sollen
+	 * @return int die Anzahl der Schlafplätze, 0 oder mehr
 	 */
 	function BerechneAlleSchlafplaetze($datum=0, $auswahlID='')
 	{
@@ -1773,7 +1773,7 @@ class Buchung extends DBEntity
 			$row = $this->readSmilycard();
 			if ( ! $row )
 			{
-				// 	Vorbelegungen f�r Unterbringung
+				// 	Vorbelegungen für Unterbringung
 				$bereiche = $this->bereicheAlsListe(CVJMART_ORT); // hole Belegungen
 				// no smilycard yet - create one
 				$sql = 'INSERT INTO cvjm_Smilycard (Buchung_Nr, Unterbringung, Datum, Historie) VALUES ('.
@@ -1786,7 +1786,7 @@ class Buchung extends DBEntity
 					throw new Exception('Konnte keine neue Smilycard anlegen');
 				}
 			}
-			// Aufbereitung f�r Anzeige
+			// Aufbereitung für Anzeige
 			$row['Unterbringung'] = explode(',', $row['Unterbringung']);
 			$row['Herkunft'] = explode(',', $row['Herkunft']);
 			$row['Programm'] = explode(',', $row['Programm']);
@@ -1801,7 +1801,7 @@ class Buchung extends DBEntity
 	 */
 	static function getAltersgruppen()
 	{
-		// Altergruppen f�r die Altersangabe
+		// Altergruppen für die Altersangabe
 		$query = sql_query('SELECT * FROM '.TABLE_ALTERSGRUPPEN.' ORDER BY Reihenfolge');
 		while ( $anrede = sql_fetch_array($query) )
 		{

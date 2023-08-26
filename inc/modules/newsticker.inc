@@ -62,7 +62,7 @@ else {
 	$item = new rdfFile(BASE_PATH.INC_PATH.DATA_PATH."rdf/$source");
 	$item->parse(true);
 	?><span style="font-size: 10px"><?php
-	while(list($key, $value) = each ($item->Items)) {
+	foreach ($item->Items as $key => $value) {
 		?><img src="<?=$design['nav_bullet']?>" border="0" width="10" height="7">&nbsp;<a target="_blank" href="<?php
 		echo $value['Link'].'">'.$value['Title'].'</a><br />';
 		}

@@ -22,8 +22,8 @@ if(SESSION_STATUS == 'ok' && $profile[$document['fileposter']] == '1') {
     clear_cache($id);
     remove_profile('editor_'.$id);
     $id = $document['parent_id'];
-    echo "<b>Das Dokument wurde gel�scht!</b><br />";
-    echo "�bergeordnetes Dokument:<br />";
+    echo "<b>Das Dokument wurde gelöscht!</b><br />";
+    echo "Übergeordnetes Dokument:<br />";
     $document = get_node($id, $flavour);
   }
   if ( $_REQUEST['savefile'] == '1') {

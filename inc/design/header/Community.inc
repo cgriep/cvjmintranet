@@ -20,7 +20,7 @@
         init_parents();
         if(isset($parents)) {
                 reset($parents);
-                while (list($docid, $value) = each ($parents)) {
+                foreach ($parents as $docid => $value) {
                         $section_title = '<a style="color:#dbb600" href="'.get_url($docid).'">'.$value['title'].'</a> &gt; '.$section_title;
                         }
                 }
