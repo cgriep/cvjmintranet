@@ -3,7 +3,7 @@
 
 cvjmSchlafplaetze
 AWF-Name: cvjmschlafplaetze
-entf�llt sobald die Schlafplätze komplett in die Artikel integriert sind
+entfällt sobald die Schlafplätze komplett in die Artikel integriert sind
 */
 
 if ( $profile["editor"] != 1 )
@@ -30,7 +30,7 @@ if ( $profile["editor"] != 1 )
         }
       }
       else
-          echo '&gt;&gt;&gt; Unzul�ssiger Wert $value - Zahl erwartet.<br />';
+          echo '&gt;&gt;&gt; Unzulässiger Wert $value - Zahl erwartet.<br />';
     }
   }
   $sql = "SELECT * FROM ".TABLE_ARTIKEL." WHERE F_Art_id=".CVJMART_ORT.
@@ -66,7 +66,7 @@ if ( $profile["editor"] != 1 )
   echo '<tr><td colspan="2"><input type="Submit" value="Speichern"></td></tr>';
   echo '</form>';
   echo '</table>';
-  echo "Geben Sie -1 ein wenn an einem Ort keine Schlafplätze zur Verf�gung stehen! 0 wird beim Zeltplatz verwendet.";
+  echo "Geben Sie -1 ein wenn an einem Ort keine Schlafplätze zur Verfügung stehen! 0 wird beim Zeltplatz verwendet.";
 }
 
 ?>

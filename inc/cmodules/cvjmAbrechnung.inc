@@ -9,8 +9,8 @@
 *
  *  Parameter:
  *  docinput[Buchung_Nr] - Die Buchungsnummer
- *  Storno: Status bei Stornierungen. Zun�chst wird eine Abrechnung gemacht, danach der
- *          neue Status gesetzt und die BuchungsEinträge gel�cht.
+ *  Storno: Status bei Stornierungen. Zunächst wird eine Abrechnung gemacht, danach der
+ *          neue Status gesetzt und die BuchungsEinträge gelöcht.
 */
 
 include (INC_PATH . 'cvjm_ajax.php');
@@ -140,14 +140,14 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Dauer'] = $eintrag['Dauer'];
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Preis'] = holePreis($eintrag['id'], $buchung['F_Preisliste_id'], $eintrag['Dauer'] > 0);
 	$neuMenge = $eintrag['Menge'];
-	// Sonderf�lle prüfen
+	// Sonderfälle prüfen
 	// Schritt 1: Essen?
 	if ($eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNG || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGNACHT || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGPAUSCHAL)
 	{
 		// Pro Kopf und Altersgruppe
 		if (PersonenAnzahl($buchung) != $eintrag['Menge'])
 		{
-			// zus�tzliches Essen
+			// zusätzliches Essen
 			echo '<div class="Fehler">';
 			echo date('d.m.Y', $eintrag['Datum']) . ': ';
 			echo 'Essensanzahl ' . $eintrag['Bezeichnung'] .
@@ -164,7 +164,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 		}
 		if ($eintrag['id'] != CVJM_SELBSTVERPFLEGUNG && $neuMenge > 0)
 		{
-			// prüfen, ob Pauschale Vegetarisch anf�llt
+			// prüfen, ob Pauschale Vegetarisch anfällt
 			if ($buchung['Vegetarier'] > 0 && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_VEGETARIER]))
 			{
 				// Eintrag bauen:
@@ -177,7 +177,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$vegetarier['Dauer'] = 0;
 				$Abrechnungseintraege = EintragAufnehmen($vegetarier, $buchung, $Abrechnungseintraege);
 			}
-			// prüfen, ob Pauschale Schweinefleischlos anf�llt
+			// prüfen, ob Pauschale Schweinefleischlos anfällt
 			if ($buchung['Schweinelos'] > 0 && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_SCHWEINEFLEISCHLOS]))
 			{
 				// Eintrag bauen:
@@ -190,7 +190,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$vegetarier['Dauer'] = 0;
 				$Abrechnungseintraege = EintragAufnehmen($vegetarier, $buchung, $Abrechnungseintraege);
 			}
-			// prüfen, ob Pauschale 'ohne Hilfe' anf�llt
+			// prüfen, ob Pauschale 'ohne Hilfe' anfällt
 			if (!$buchung['Kuechenhilfe'] && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_OHNEMITHILFE]))
 			{
 				// nur wenn noch keine Hilfe an diesem Tag
@@ -256,7 +256,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Preis'] = 0;
 		}
 	}
-	// Freibetr�ge aufnehmen
+	// Freibeträge aufnehmen
 	$Abrechnungseintraege = ergaenzeFreibetraege($eintrag, $Abrechnungseintraege, $neuMenge);
 	return $Abrechnungseintraege;
 }
@@ -272,7 +272,7 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 		//echo date('d.m.Y H:i',$datum).'<br />';
 		foreach ($artikel as $artikel_id => $value)
 		{
-			// Freibetr�ge verrechnen
+			// Freibeträge verrechnen
 			if (isset ($value['Menge']))
 			{
 				// Debug
@@ -389,7 +389,7 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 				// wenn teilweise Berechnung
 				if (($value['Menge'] != $value['Berechnen'] && $value['Menge'] != 0) || ($value['Berechnen'] == 0 && $value['Freieintrag'])) //&& ! $value['Uebernachtung']) )
 				{
-					// die überz�hligen Artikel werden mit Preis 0 eingetragen
+					// die überzähligen Artikel werden mit Preis 0 eingetragen
 					// Uhrzeit ist dann 00:00:01
 					if (!sql_query('INSERT INTO ' . TABLE_RECHNUNGSEINTRAEGE .
 						' (F_Rechnung_id, Datum,MWSt,Rabatt,Art,Einheit,Menge,Dauer,' .
@@ -461,7 +461,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 		$mySql = '';
 		if ($essenBezahlt < $eintrag['Menge'])
 		{
-			// zus�tzliches Essen
+			// zusätzliches Essen
 			echo '<div class="Fehler">';
 			echo date('d.m.Y', $eintrag['Datum']) . ': ';
 			echo 'Weniger Essen ' . $eintrag['Bezeichnung'] .
@@ -471,7 +471,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 			// TODO: Wozu dient das: ? && $tag != $eintrag['Datum'])
 		{
 			$tag = $eintrag['Datum'];
-			// prüfen, ob Pauschale Vegetarisch anf�llt
+			// prüfen, ob Pauschale Vegetarisch anfällt
 			if ($buchung['Vegetarier'] > 0)
 			{
 				$mySql .= $sql . $eintrag['Datum'] . ',';
@@ -698,7 +698,7 @@ function Rechnungspositionen($rechnung)
 			echo '</td>';
 			echo '<td align="right">' . number_format($Gesamtsumme + $Rabattsumme, 2);
 			echo "</td></tr>\n";
-			echo '<tr><td colspan="3"></td><td colspan="6">abz�glich Rabatt';
+			echo '<tr><td colspan="3"></td><td colspan="6">abzüglich Rabatt';
 			echo '</td>';
 			echo '<td align="right">' . number_format(- $Rabattsumme, 2);
 			echo "</td></tr>\n";
@@ -1020,7 +1020,7 @@ if ($profile['editor'] != 1)
 			$buchung = holeBuchung($docinput['Buchung_Nr']);
 			$anzString = '';
 			// wenn keine Anzahlung getätigt wurde (Bemerkung leer) dann auf 0 setzen
-			// damit die Anzahlung aus der Liste der offenen Anzahlungen rausf�llt 
+			// damit die Anzahlung aus der Liste der offenen Anzahlungen rausfällt 
 			$Buchung->anzahlungNullen();
 			$Buchung->logAction('Rechnung Nr. '.$docinput['Rechnungsnummer'].' erstellt');
 		}
@@ -1106,7 +1106,7 @@ if ($profile['editor'] != 1)
 				$query = sql_query('SELECT * FROM ' . TABLE_BUCHUNGSBEMERKUNGEN .
 				' WHERE F_Buchung_Nr = ' . $docinput['Buchung_Nr'] . ' ORDER BY Bemerkung_id DESC');
 				echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchungsbemerkungen'), 'docinput[Buchung_Nr]=' .
-				$docinput['Buchung_Nr']) . '">Bemerkungen hinzuf�gen</a> ]';
+				$docinput['Buchung_Nr']) . '">Bemerkungen hinzufägen</a> ]';
 				echo '</div>';
 				if (sql_num_rows($query) > 0)
 				{
@@ -1240,7 +1240,7 @@ if ($profile['editor'] != 1)
 			if (isset ($_REQUEST['MWST']) && is_numeric($_REQUEST['MWST']))
 			{
 				// Berechnung des Nachlasses für MWST
-				$steuer = array_search('Gesch�ftsbetrieb', $Steuerarten);
+				$steuer = array_search('Geschäftsbetrieb', $Steuerarten);
 
 				// CVJM_PAUSCHALE holen
 				$sql = 'SELECT * FROM (' . TABLE_ARTIKEL . ' INNER JOIN ' . TABLE_MWST .
@@ -1251,7 +1251,7 @@ if ($profile['editor'] != 1)
 				{
 					$NachlassMWST = Min($artikel['MWST'], $buchung['Steuerbehandlung']);
 					$nachlass = -number_format($_REQUEST['MWST']/(1+$NachlassMWST/100),2); 
-					// Einf�gen eines entsprechenden Artikels 
+					// Einfügen eines entsprechenden Artikels 
 					$sql = 'INSERT INTO ' . TABLE_RECHNUNGSEINTRAEGE .
 						' (F_Rechnung_id, Datum,MWSt,Rabatt,Art,Einheit,Menge,Dauer,' .
 						'F_Bezeichnung,F_Preis,F_Artikel_Nr) VALUES (' .
@@ -1262,12 +1262,12 @@ if ($profile['editor'] != 1)
 						sql_real_escape_string($artikel['Bezeichnung']) . '",' . str_replace(',','.',$nachlass) . ',-1)';
 					if (!sql_query($sql))
 					{
-						echo '<div class="SchwererFehler">Der Mahrwertsteuernachlass konnte nicht in die Datenbank eingef�gt werden!</div>';
+						echo '<div class="SchwererFehler">Der Mahrwertsteuernachlass konnte nicht in die Datenbank eingefügt werden!</div>';
 						echo sql_error().'/'.$sql;
 					}
 					else
 					{
-						echo '<div class="Erledigt">Die Mehrwertsteuer wurde durch Einf�gen eines Nachlasses genullt.</div>';
+						echo '<div class="Erledigt">Die Mehrwertsteuer wurde durch Einfügen eines Nachlasses genullt.</div>';
 					}
 
 				} else
@@ -1280,7 +1280,7 @@ if ($profile['editor'] != 1)
 
 			if (isset ($_REQUEST['Menge']) && isset ($_REQUEST['Richtung']) && isset ($_REQUEST['Datum']) && is_numeric($_REQUEST['Menge']))
 			{
-				// Eintragsmenge erh�hen
+				// Eintragsmenge erhöhen
 				$Richtung = $_REQUEST['Richtung'];
 				if ($Richtung != '+' && $Richtung != '-')
 					$Richtung = '+';
@@ -1359,8 +1359,8 @@ if ($profile['editor'] != 1)
 				}
 			}			    			
 			$Smarty->assign('id', $id);
-			$Smarty->assign_by_ref('docinput', $docinput);
-			$Smarty->assign_by_ref('rechnung', $rechnung);						
+			$Smarty->assignbyref('docinput', $docinput);
+			$Smarty->assignbyref('rechnung', $rechnung);						
 			asort($DokArten);
 			$Smarty->assign('DokArten_values', array_keys($DokArten));
 			$Smarty->assign('DokArten_output', array_values($DokArten));
@@ -1369,7 +1369,7 @@ if ($profile['editor'] != 1)
 					
 			if (isset ($docinput['Kundenwahl']) && isset ($docinput[Kunde]) && $docinput['Kunde'] != '') 
 			{
-				// die Kunden aufz�hlen und eine Auswahl möglich machen
+				// die Kunden aufzählen und eine Auswahl möglich machen
 					// Anzeigen der gefundenen Kunden
 					$query = sql_query('SELECT * FROM ' . TABLE_ADRESSEN . ' WHERE Name LIKE "%' .
 					$docinput['Kunde'] . '%" ORDER BY Name');

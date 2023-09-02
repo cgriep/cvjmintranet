@@ -57,7 +57,7 @@ if($profile['editor']!='1') {
                   date("d.m.Y H:i",strtotime($document['Beginn'])).
                 " bis ".$Tage[date("w",strtotime($document['Ende']))].", ".
                 date("d.m.Y H:i",strtotime($document['Ende']))."</p>";
-  echo '<p>Das Mindestalter für die Teilnahme betr�gt '.
+  echo '<p>Das Mindestalter für die Teilnahme beträgt '.
                   $document["Mindestalter"]." Jahre.</p>";
   echo $design['table_begin'].'<tr bgcolor="'.$design['table_header'].
                   '"><th></th><th align="center">Spieler</th><th align="center">NSC</th></tr>';
@@ -135,7 +135,7 @@ if($profile['editor']!='1') {
   echo ($document['NSC']-$NSCBezahlt);  
   if ( $document['NSC']-$NSCBezahlt <= 0 ) echo '</b></font>';
   echo "</td></tr>\n"; 
-  echo '<tr><td>vorl�ufige Anmeldungen ohne Zahlungseingang</td><td align="center">';
+  echo '<tr><td>vorläufige Anmeldungen ohne Zahlungseingang</td><td align="center">';
   echo ($SCBelegt-$SCBezahlt);
   echo '</td><td align="center">';
   echo ($NSCBelegt-$NSCBezahlt);

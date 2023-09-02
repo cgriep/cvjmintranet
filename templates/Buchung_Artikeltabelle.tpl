@@ -31,11 +31,11 @@ function showPerson(dieid,derArtikel,dasDatum,an)
     datum=dasDatum;
     artikel=derArtikel;
     //element = document.getElementById('Person'+id);
-    //element.innerHTML = 'zust‰ndig: <input type="text" id="Personname'+id+'"/>';
+    //element.innerHTML = 'zust√§ndig: <input type="text" id="Personname'+id+'"/>';
     //element.innerHTML = element.innerHTML+'<button onClick="personEintragen('+id+','+artikel+',\''+datum+'\')">eintragen</button>';
     document.getElementById('PersonLink'+id).onclick = function(){showPerson(dieid,derArtikel,dasDatum,false);return false;};
     document.getElementById('PersonLink'+id).title = "Personenanzeige ausblenden";
-    // Personenwahlfenster ˆffnen
+    // Personenwahlfenster √∂ffnen
     {/literal}
     xajax_zeigePersonenwahlDialog({$smarty.request.Buchung_Nr},artikel,datum);
     {literal} 
@@ -45,7 +45,7 @@ function showPerson(dieid,derArtikel,dasDatum,an)
     xajax_schliessePersonenwahlDialog();
     //document.getElementById('Person'+id).innerHTML = "";
     document.getElementById('PersonLink'+id).onclick = function() {showPerson(dieid,derArtikel,dasDatum,true);return false;};
-    document.getElementById('PersonLink'+id).title = "zust‰ndige Person festlegen";
+    document.getElementById('PersonLink'+id).title = "zust√§ndige Person festlegen";
     id=-1;
     datum=-1;
     artikel=-1;
@@ -98,10 +98,10 @@ function showPerson(dieid,derArtikel,dasDatum,an)
   </td>
   <td>
     <a href="{$Buchungsuebersichturl}&Tag={$eintrag.Datum}&docinput[Art]={$eintrag.F_Art_id}&docinput[Page]={$eintrag.Master}" 
-      title="zur Belegungs¸bersicht">{$eintrag.Datum|date_format:"%a"} {$eintrag.DatumAnzeige}</a>
+      title="zur Belegungs√ºbersicht">{$eintrag.Datum|date_format:"%a"} {$eintrag.DatumAnzeige}</a>
       <br />
-	<span id="Person{$nr}" class="mini">{if $eintrag.Zustaendig !=''}Zust‰ndig: {$eintrag.Zustaendig}{else}
-	  {if $eintrag.F_Art_id==CVJMART_PROGRAMM}<span class="Fehler">Zust‰ndiger fehlt!</span>{/if}
+	<span id="Person{$nr}" class="mini">{if $eintrag.Zustaendig !=''}Zust√§ndig: {$eintrag.Zustaendig}{else}
+	  {if $eintrag.F_Art_id==CVJMART_PROGRAMM}<span class="Fehler">Zust√§ndiger fehlt!</span>{/if}
 	  {/if}</span>
   </td>
   <td class="zentriert">
@@ -116,11 +116,11 @@ function showPerson(dieid,derArtikel,dasDatum,an)
     {if $eintrag.Unberechnet}<span style="font-size:4pt;font-family:Verdana;color:red;">Unberechnet!</span>{/if}  
   {/if}
   {if $Aenderbar}
-    <a href="#" title="zust‰ndige Person festlegen" onClick="showPerson({$nr},{$eintrag.F_Artikel_Nr},'{$eintrag.DatumVonBis}',true); return false;" id="PersonLink{$nr}">
+    <a href="#" title="zust√§ndige Person festlegen" onClick="showPerson({$nr},{$eintrag.F_Artikel_Nr},'{$eintrag.DatumVonBis}',true); return false;" id="PersonLink{$nr}">
       <img src="/img/person.gif" border="0"/></a>
     {eval var=$nr+1 assign="nr"}
     <a href="?id={$id}&DelEintrag={$eintrag.F_Artikel_Nr},{$eintrag.DatumVonBis}&Buchung_Nr={$smarty.request.Buchung_Nr}{if isset($smarty.request.Alle) && $smarty.request.Alle == 1}&Alle=1{/if}#Einzelheiten"
-    onClick="javascript:return window.confirm('Eintrag {$eintrag.Bezeichnung} {$eintrag.DatumAnzeige} wirklich lˆschen?');">
+    onClick="javascript:return window.confirm('Eintrag {$eintrag.Bezeichnung} {$eintrag.DatumAnzeige} wirklich l√∂schen?');">
     <img src="/img/small_edit/delete.gif" border="0"/></a>
   {/if}
   </td>

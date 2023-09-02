@@ -29,7 +29,7 @@ if ( $profile["editor"] != 1 )
     $Preislisten[$preisliste["Preisliste_id"]] = $preisliste['Bezeichnung'].' ('.
       date('d.m.Y', $preisliste['GueltigAb']).')';
   }
-  $Smarty->assign_by_ref('Preislisten', $Preislisten);
+  $Smarty->assignbyref('Preislisten', $Preislisten);
   sql_free_result($preislisten);
   if ( isset($docinput["Preisliste"]) && is_numeric($docinput["Preisliste"]) )
   {
@@ -55,7 +55,7 @@ if ( $profile["editor"] != 1 )
     {
       $Artikel[] = new Artikel($artikel['id']);
     }
-    $Smarty->assign_by_ref('Artikel', $Artikel);
+    $Smarty->assignbyref('Artikel', $Artikel);
     sql_free_result($query);
     $Buchungsvorlagen = glob(CVJM_VORLAGEN_DIR."/ArtikelPreislisten/*".CVJM_ENDUNG);
     $anz = 0;

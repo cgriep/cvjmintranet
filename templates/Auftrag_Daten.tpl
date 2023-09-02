@@ -11,18 +11,18 @@
 <h2>{$Auftrag->Titel}</h2>
 Auftrag erstellt von {$Auftrag->getAutor()} am {$Auftrag->Datum|date_format:"%d.%m.%Y %H:%M"}
 {if ( $Auftrag->wurdeGeaendert() )}
-, zuletzt geändert am {$Auftrag->changed|date_format:"%d.%m.%Y %H:%M"}
+, zuletzt geÃ¤ndert am {$Auftrag->changed|date_format:"%d.%m.%Y %H:%M"}
 {/if}
 <br />
 <label>Verantwortlich</label> 
 <select name="Betroffen[]" multiple="multiple" size="10">
 {html_options options=$Auftrag->getListOfGroupsAndUsers() selected=$Auftrag->getBetroffene()}
-</select> Um mehrere Einträge zu markieren bitte Strg gedrückt halten.<br />
+</select> Um mehrere EintrÃ¤ge zu markieren bitte Strg gedrÃ¼ckt halten.<br />
 
 <label>Titel</label><br /><input type="Text" name="Titel" value="{$Auftrag->Titel}" size="50" maxlength="50" /><br />
 <label>Beschreibung</label><br /><textarea name="Beschreibung" cols="60" rows="5">{$Auftrag->Beschreibung}</textarea><br />
 
-<label>Priorität</label> 
+<label>PrioritÃ¤t</label> 
 <select name="Prioritaet">
 {html_options options=$Auftrag->getPrioritaeten() selected=$Auftrag->Prioritaet} 
 </select>
@@ -43,14 +43,14 @@ Auftrag erstellt von {$Auftrag->getAutor()} am {$Auftrag->Datum|date_format:"%d.
 	<input type="hidden" name="MyWork" value="1" />
 {/if}
 <span name="Ortname" id="Ortsauswahltext">{$Auftrag->getOrt(true)}</span>
-&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl('Ortsauswahl')">Ort auswählen</a> ]<br />
+&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl('Ortsauswahl')">Ort auswÃ¤hlen</a> ]<br />
 {if ( ! isset($smarty.request.newauf))}
 	<label>Bemerkungen</label><br />
 	<textarea name="Bemerkung" cols="60" rows="5">{$Auftrag->Bemerkung}</textarea><br />
 {/if}
 <input type="Submit" name="saveauf" value="Speichern" />
 {if ( !$Auftrag->isNeu() && $Auftrag->Autor == SESSION_DBID )}
-	&nbsp;&nbsp;&nbsp;&nbsp;[ <a title="Löschen" href="?id={$id}&Delete={$Auftrag->Event_id}">Löschen</a> ]
+	&nbsp;&nbsp;&nbsp;&nbsp;[ <a title="LÃ¶schen" href="?id={$id}&Delete={$Auftrag->Event_id}">LÃ¶schen</a> ]
 {/if}
 &nbsp;&nbsp;&nbsp;&nbsp;[ <a title="Auftragsliste anzeigen" href="?id={$id}">Auftragsliste anzeigen</a> ]
 </form>

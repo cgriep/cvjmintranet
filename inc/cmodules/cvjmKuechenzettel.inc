@@ -243,10 +243,10 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
     $Smarty = new Smarty();
     $Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
     $Smarty->assign('id', $id);
-    $Smarty->assign_by_ref('Artikel', $Artikel);
+    $Smarty->assignbyref('Artikel', $Artikel);
     $Smarty->assign('Datum', $Datum);
-    $Smarty->assign_by_ref('Buchungen', $Buchungen);
-    $Smarty->assign_by_ref('Essen', $Essen);
+    $Smarty->assignbyref('Buchungen', $Buchungen);
+    $Smarty->assignbyref('Essen', $Essen);
     setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");
     $Smarty->display('Kuechenuebersicht.tpl');
   }

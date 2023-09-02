@@ -62,9 +62,9 @@ class Adresse extends DBEntity
 	}
 	/**
 	 * Setzt die angegebenen Kategorien für die Adresse.
-	 * Sollte add false sein, so werden alle vorhandenen vorher gelöscht, ansonsten die Kategorie hinzugef�gt.
+	 * Sollte add false sein, so werden alle vorhandenen vorher gelöscht, ansonsten die Kategorie hinzugefügt.
 	 * @param array Kategorien die Kategorie_id der gewünschten Kategorien
-	 * @param boolean add false, wenn alle Kategorien im Array sind (vorhandene Kategorien werden gelöscht), true sonst (Kategorien werden hinzugef�gt)
+	 * @param boolean add false, wenn alle Kategorien im Array sind (vorhandene Kategorien werden gelöscht), true sonst (Kategorien werden hinzugefügt)
 	 */
 	function setAdressKategorien($Kategorien, $add = false)
 	{
@@ -143,7 +143,7 @@ class Adresse extends DBEntity
 	/**
 	 * Hole die Kategorien dieser Adresse. Ist alle wahr, so werden alle vorhandenen
 	 * Kategorien mit der Anzahl und einem Kennzeichen ob eingeteilt oder nicht Zurückgegeben
-	 * Im letzten Fall sind zus�tzlich die Felder Da und Anz vorhanden.
+	 * Im letzten Fall sind zusätzlich die Felder Da und Anz vorhanden.
 	 * @param boolean alle true, wenn alle Kategorien geholt werden soll, false wenn nur die vorhandenen Zurückgegeben werden sollen
 	 * @return array ein Feld der Kategorien dieser Adresse
 	 */
@@ -183,7 +183,7 @@ class Adresse extends DBEntity
 	 */
 	function save()
 	{
-		// Stammdaten speichern oder hinzuf�gen
+		// Stammdaten speichern oder hinzufügen
 		
 		if (trim($this->Ort) == '' && is_numeric($this->PLZ))
 		{
@@ -365,9 +365,9 @@ class Adresse extends DBEntity
 		return $ergebnis;
 	}
 	/**
-	 * zeigt an ob eine Adresse zur angegeben Kategorie geh�rt
+	 * zeigt an ob eine Adresse zur angegeben Kategorie gehört
 	 * @param int $Kategorie_id
-	 * @return boolean true, wenn die Adresse zur Kategorie geh�rt, false sonst 
+	 * @return boolean true, wenn die Adresse zur Kategorie gehört, false sonst 
 	 */
 	function hasKategorie($Kategorie_id)
 	{
@@ -462,7 +462,7 @@ class Adresse extends DBEntity
 		return $this->Institutionenfeld;
 	}
 	/**
-	 * ergibt die Bemerkungen, die zu der Adresse geh�ren
+	 * ergibt die Bemerkungen, die zu der Adresse gehören
 	 * @return array ein Feld mit den Bemerkungen
 	 */
 	function getBemerkungen()
@@ -615,7 +615,7 @@ class Adresse extends DBEntity
 	/**
 	 * setzt oder entfernt eine Institution zu einer Adresse
 	 * @param int $institution_id die ID der Institution
-	 * @param boolean $ein true, wenn die Institution hinzugef�gt werden soll, false sonst
+	 * @param boolean $ein true, wenn die Institution hinzugefügt werden soll, false sonst
 	 */
 	function setInstitution($institution_id, $ein = true)
 	{
@@ -643,7 +643,7 @@ class Adresse extends DBEntity
 	/**
 	 * setzt oder entfernt den Ansprechpartner zu einer Adresse
 	 * @param int $ansprechpartner_id die ID des Ansprechpartners
-	 * @param boolean $ein true, wenn der Ansprechpartner hinzugef�gt werden soll, false sonst
+	 * @param boolean $ein true, wenn der Ansprechpartner hinzugefügt werden soll, false sonst
 	 */
 	function setAnsprechpartner($ansprechpartner_id, $ein = true)
 	{
@@ -685,7 +685,7 @@ class Adresse extends DBEntity
 	}
 	/**
 	 * gibt Strasse, PLZ, Ort und Telefon Übersichtlich Zurück.
-	 * @param boolean $html true, wenn HTML-Zeilenumbr�che verwendet werden sollen, false sonst
+	 * @param boolean $html true, wenn HTML-Zeilenumbrüche verwendet werden sollen, false sonst
 	 * @return String die Felder in drei Zeilen
 	 */
 	function Uebersicht($html = false)
@@ -868,7 +868,7 @@ class Adresse extends DBEntity
 		}
 	}
 	/**
-	 * liefert die Adresse zur Kundennummer. Existiert keine, wird ein Fehler ausgel�st.
+	 * liefert die Adresse zur Kundennummer. Existiert keine, wird ein Fehler ausgelöst.
 	 * @throws Exception Kundennummer nicht gefunden 
 	 * @param int $Kundennummer die gesuchte Kundennummer
 	 * @return Adresse die Adresse

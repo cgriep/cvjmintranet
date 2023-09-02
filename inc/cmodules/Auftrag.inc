@@ -58,9 +58,9 @@ if ( isset($profile[CVJM_VERWALTUNGSGRUPPE]))
 if ( is_numeric($_REQUEST['Delete']) )
 {
   $qu = sql_query('SELECT Autor FROM '.TABLE_AUFTRAG.' WHERE id = '.$_REQUEST['Delete'].' AND Autor = '.$Benutzer);
-  if ( sql_num_rows($qu) == 1 ) { // Nur löschen, wenn der Auftrag einem geh�rt
+  if ( sql_num_rows($qu) == 1 ) { // Nur löschen, wenn der Auftrag einem gehört
     $sql = 'DELETE FROM '.TABLE_AUFTRAG.' WHERE id = '.$_REQUEST['Delete'];
-    if ( ! sql_query($sql) ) echo "<strong>&gt;&gt; L�schfehler: ". sql_error().'</strong><br /><br />';
+    if ( ! sql_query($sql) ) echo "<strong>&gt;&gt; Löschfehler: ". sql_error().'</strong><br /><br />';
     else
       echo '<strong>&gt;&gt;&gt; '.LANG_AUFTRAG.' '.$_REQUEST['Delete'].' '.LANG_DELETED.'.</strong><br /><br />';
   }
@@ -410,7 +410,7 @@ if ( is_numeric($_REQUEST["EditAuftrag"]) || isset($_REQUEST["newauf"]))
   if ( isset($_REQUEST["MyWork"]) )
     echo '<input type="hidden" name="MyWork" value="1" />';
   echo '<span name="Ortname" id="Ortsauswahltext">'.OrtsName($Ort,true).'</span>';
-  echo '&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl(\'Ortsauswahl\')">Ort ausw�hlen</a> ]<br />';
+  echo '&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl(\'Ortsauswahl\')">Ort auswählen</a> ]<br />';
 /*
   echo '<select name="Ort">';
   echo '<option value="-1">'.LANG_OHNEORT.'</option>';

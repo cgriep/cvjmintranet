@@ -46,7 +46,7 @@ if (!session_is_registered('Charakter_id'))
 	require 'Smarty/libs/Smarty.class.php';
 	$smarty = new Smarty;
 	$smarty->assign('Character', $char->alsFeld(true));
-	$smarty->assign('PageTitle', 'Aktivierung der übernatürlichen Vorteile');
+	$smarty->assign('PageTitle', 'Aktivierung der ï¿½bernatï¿½rlichen Vorteile');
 	$smarty->assign('mitAjax', true);
 	// Zugriffe auf die Datenbank
 
@@ -74,7 +74,7 @@ if (!session_is_registered('Charakter_id'))
 			}
 		}
 	}
-	$smarty->assign_by_ref('Charakter', $char);
+	$smarty->assignbyref('Charakter', $char);
 	$smarty->assign('fertigkeit_values', $fertigkeit_values);
 	$smarty->assign('fertigkeit_output', $fertigkeit_output);
 	$smarty->assign('fertigkeit_selected', '');

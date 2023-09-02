@@ -4,7 +4,7 @@
 <select name="docinput[Preisliste]">
 {html_options options=$Preislisten selected=$Preisliste_id}
 </select> 
-<input type="Submit" value="Auswählen" />
+<input type="Submit" value="AuswÃ¤hlen" />
 {if Count($Artikel)>0}
 <form action="?id={$id}" method="post">
 <table class="drucklinien">
@@ -38,7 +38,7 @@
 </tr>
 {/foreach}
 </table>
-<input type="submit" value="Auswählen" class="noprint"/>
+<input type="submit" value="AuswÃ¤hlen" class="noprint"/>
 <div class="noprint">
 <strong>Vorlagen: </strong>
 {foreach from=$Vorlagen item=filename}

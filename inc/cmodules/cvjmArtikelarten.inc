@@ -3,7 +3,7 @@
 /*
   cvjmArtikelarten.inc
   AWF-Name: cvjmartikelarten
-  Speichert und �ndert die Artikelarten.
+  Speichert und ändert die Artikelarten.
 
 */
 
@@ -17,7 +17,7 @@ if ( $profile["editor"] != 1 )
   }
   if ( isset($docinput["Art"]) && is_array($docinput["Art"]) )
   {
-     // Datens�tze speichern
+     // Datensätze speichern
      foreach ( $docinput["Art"] as $key => $value )
      {
        if ( is_numeric($docinput["Typ"][$key]) && is_numeric($key) )

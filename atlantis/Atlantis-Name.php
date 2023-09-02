@@ -49,7 +49,7 @@ if (!session_is_registered('Charakter_id'))
 		session_unregister('Charakter_id');
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']).'/Atlantis-Auswahl.php');
 	}
-	// Bearbeitungsmodus für SL
+	// Bearbeitungsmodus fÃ¼r SL
 	if ( isset($_REQUEST['Godmode']))
 	{
 		session_unregister('Charakter_id');
@@ -99,7 +99,7 @@ if (isset ($_REQUEST['Name']))
 
 	$smarty->assign('PageTitle', 'Charakterdaten');
 	$smarty->assign('mitAjax', true);
-	$smarty->assign_by_ref('Charakter', $Charakter);
+	$smarty->assignbyref('Charakter', $Charakter);
 	$smarty->assign('Character', $Charakter->alsFeld(true));
 	$smarty->assign('Bild', '');
 	if ($Charakter->Bild != '')

@@ -3,7 +3,7 @@
 <script language="javascript">
 function loesche(datei, id)
 {
-  if ( window.confirm('Korrespondenz '+datei+' wirklich lˆschen?'))
+  if ( window.confirm('Korrespondenz '+datei+' wirklich l√∂schen?'))
 {/literal}
     xajax_loescheKorrespondenz({$id}, {$Adresse->Adressen_id}, datei, id);
 {literal}
@@ -63,7 +63,7 @@ function sendeMail()
   var senden = false;
   if ( dateien.length == 0 )
   { 
-    if ( window.confirm('Es wurden keine Korrespondenzen ausgew‰hlt. Wollen Sie trotzdem eine Mail schicken?'))
+    if ( window.confirm('Es wurden keine Korrespondenzen ausgew√§hlt. Wollen Sie trotzdem eine Mail schicken?'))
 	    senden = true;
   }
   else
@@ -102,7 +102,7 @@ function sendeMail()
 <tr class="{cycle values="helleZeile,dunkleZeile"}" {if $datei.Art!=''}style="display:none;"{/if}>
   <td {if $datei.Art != ''}title="{$datei.Art}"{/if}>
     {if Speichern}<input type="checkbox" name="docinput[KorrespondenzMail]" 
-    value="{$datei.Name|escape}" title="Anklicken zum Ausw‰hlen"/>{/if}
+    value="{$datei.Name|escape}" title="Anklicken zum Ausw√§hlen"/>{/if}
     {$datei.Zeit|date_format:"%d.%m.%Y %H:%M"}
     {if $datei.Art != ''} Standardvorlage{/if}
   </td>
@@ -132,7 +132,7 @@ function sendeMail()
   {if $Speichern}
   <tr id="mailzeile" style="display:none">
   <td>
-    Empf‰nger-E-Mail <select id="mail">
+    Empf√§nger-E-Mail <select id="mail">
     <option selected="selected">{$Adresse->Email}</option>
     {foreach from=$Adresse->getInstitutionen() item=Inst}
       {if $Inst->Email != ''} 

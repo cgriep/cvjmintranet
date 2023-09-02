@@ -18,7 +18,7 @@ session_start();
  echo '<option value="T_Rassen">Rassen</option>';
  echo '<option value="T_Spezialisierungsklassen">Spezialisierungsklassen</option>';
  echo '</select>';
- echo '<input type="submit" value="W�hlen" />';
+ echo '<input type="submit" value="Wählen" />';
  echo '</form>';
  if ( isset($_REQUEST['Tabelle']))
  {
@@ -43,7 +43,7 @@ session_start();
     	echo '</option>'."\n";
     }
     echo '</select>';
-    echo '<input type="submit" value="W�hlen" />';
+    echo '<input type="submit" value="Wählen" />';
     echo '</form>';
     if ( session_is_registered('Eintrag'))
     {

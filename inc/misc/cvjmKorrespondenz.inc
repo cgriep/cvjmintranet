@@ -191,13 +191,13 @@ function holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params 
 	$Smarty = new Smarty;
 	$Smarty->template_dir = TEMPLATEPATH; // '/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
 	$Smarty->assign('Korrespondenzurl', get_url(get_cmodule_id('cvjmkorrespondenzverwaltung')));
-	$Smarty->assign_by_ref('Dateien', $Liste);
+	$Smarty->assignbyref('Dateien', $Liste);
 	$Smarty->assign('id', $id);
 	$Smarty->assign('Speichern', $Speichern);
 	$Smarty->assign('params', implode('&', $params));
 	//require_once(INC_PATH.'cvjm/Adresse.class.php');
 	$Adresse = new Adresse ($korrespondenz['Adressen_id']);
-	$Smarty->assign_by_ref('Adresse', $Adresse);
+	$Smarty->assignbyref('Adresse', $Adresse);
 	return $Smarty->fetch('Korrespondenz.tpl');
 }
 ?>

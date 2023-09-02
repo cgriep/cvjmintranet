@@ -44,7 +44,7 @@ if ( $profile['editor'] != 1 ) {
                 }
                 sql_free_result($qres2);
                 echo '</select>';
-                echo '<input type="Submit" name="UAdd" value="Hinzuf�gen">';
+                echo '<input type="Submit" name="UAdd" value="Hinzufügen">';
                 echo '</tr>';
                 echo '</form>';
   }

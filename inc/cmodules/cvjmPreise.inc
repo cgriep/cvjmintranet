@@ -90,7 +90,7 @@ if ( $profile['editor'] != 1 )
   } // while
   sql_free_result($preislisten);
   echo '</select> ';
-  echo '<input type="Submit" value="Ausw�hlen"></form>';
+  echo '<input type="Submit" value="Auswählen"></form>';
   $preislisten = sql_query('SELECT * FROM '.TABLE_PREISLISTEN.' WHERE Inaktiv '.
     ' ORDER BY GueltigAb DESC, Bezeichnung');
   echo '<form action="'.get_url($id).'" method="post">';
@@ -120,7 +120,7 @@ if ( $profile['editor'] != 1 )
   } // while
   sql_free_result($preislisten);
   echo '</select> ';
-  echo '<input type="Submit" value="Ausw�hlen"></form>';
+  echo '<input type="Submit" value="Auswählen"></form>';
   echo '[ <a href="'.get_url($id,array('docinput[Preisliste]'=>-1,'Edit'=>-1)).
       '">Neue (leere) Preisliste</a> ]';
   if ( isset($docinput['Preisliste']) && is_numeric($docinput['Preisliste']) )
@@ -226,7 +226,7 @@ if ( $profile['editor'] != 1 )
       echo 'Preislisten-Bezeichnung <input type="Text" name="docinput[Bezeichnung]" value="';
       echo $Preislistenname;
       echo '" size="30" maxlength="30" /><br />';
-      echo 'G�ltig ab <input type="Text" name="docinput[GueltigAb]" value="';
+      echo 'Gültig ab <input type="Text" name="docinput[GueltigAb]" value="';
       echo date("d.m.Y",$GueltigAb).'" name="Gueltig" size="10" maxlength="10"';
       KalenderEvents("Preisliste", "Gueltig");
       echo '>&nbsp;&nbsp;&nbsp;Standard-Preisliste ';
@@ -258,7 +258,7 @@ if ( $profile['editor'] != 1 )
     else
     {
       echo "<h2>$Preislistenname</h2>";
-      echo 'G�ltig ab: '.date('d.m.Y',$GueltigAb);
+      echo 'Gültig ab: '.date('d.m.Y',$GueltigAb);
       if ( $Inaktiv ) echo " (diese Preisliste ist inaktiv)";
       if ( $Mitarbeiterliste ) echo " (diese Preisliste ist eine Mitarbeiterpreisliste)";
       if ( $Std ) echo '&nbsp;&nbsp;<span class="Achtung">Standard-Preisliste</span>';
@@ -428,7 +428,7 @@ if ( $profile['editor'] != 1 )
       echo '<input type="hidden" name="docinput[Preisliste]" value="'.$docinput["Preisliste"].
         '" />';
       echo '<input type="Text" name="docinput[Prozent]" size="5" maxlength="5" /> % ';
-      echo '<input type="Submit" value="durchf�hren" />';
+      echo '<input type="Submit" value="durchführen" />';
       echo '</td></tr>';
       echo '</form>';
       } // wenn editieren
@@ -445,7 +445,7 @@ if ( $profile['editor'] != 1 )
     else
       echo ' Preisliste wird in '.sql_num_rows($query).' Buchungen benutzt';
     sql_free_result($query);
-  } // Wenn Preisliste gew�hlt
+  } // Wenn Preisliste gewählt
 } // wenn nicht Editor
 
 ?>

@@ -254,13 +254,13 @@ if ($profile['editor'] != '1')
 		/* Beginn Template */
 		$Smarty->assign('Speichern', $profile[$document['SpeicherRecht']] == '1');
 		$Smarty->assign('Buchungurl', get_url(get_cmodule_id("cvjmbuchung")));
-		$Smarty->assign_by_ref('Adresse', $Adresse);
+		$Smarty->assignbyref('Adresse', $Adresse);
 		if (!$Adresse->isNeu())
 		{
 			include (INC_PATH . "misc/cvjmKorrespondenz.inc");
 			ob_start();
 			$Vorlagen = ZeigeVorlagen($Adresse->Adressen_id, 'Adressen');
-			$Smarty->assign_by_ref('Vorlagenliste',holeVorlagen('Adressen'));
+			$Smarty->assignbyref('Vorlagenliste',holeVorlagen('Adressen'));
 			$Smarty->assign('Vorlagen', ob_get_contents());
 			ob_end_clean();
 
@@ -348,7 +348,7 @@ if ($profile['editor'] != '1')
 	{
 		// Liste der Adressen aufbauen
 		$Smarty->assign('title', transform($document['title'], $document['datatype']['title']));
-		$Smarty->assign_by_ref('document', $document);
+		$Smarty->assignbyref('document', $document);
 		$Smarty->assign('Speichern', $profile[$document['SpeicherRecht']] == '1');
 
 		if ($document['Personal'] == 1 && !isset ($_REQUEST['Bearbeiten']))
@@ -384,7 +384,7 @@ if ($profile['editor'] != '1')
 				}
 			}
 			sql_free_result($query);
-			$Smarty->assign_by_ref('Kategorien', $Kategorien);
+			$Smarty->assignbyref('Kategorien', $Kategorien);
 		}
 		$params = array ();
 		if (isset ($docinput['Zugehoerig']) && is_numeric($docinput['Zugehoerig']))
@@ -548,7 +548,7 @@ if ($profile['editor'] != '1')
 			$Liste['Color'] = $Color;
 			$Anzeigeliste[] = $Liste;
 		}
-		$Smarty->assign_by_ref('Listen', $Anzeigeliste);
+		$Smarty->assignbyref('Listen', $Anzeigeliste);
 		if (isset ($_REQUEST['Sort']) && trim($_REQUEST['Sort']) != '')
 		{
 			$Sort = sql_real_escape_string($_REQUEST['Sort']);
@@ -636,18 +636,18 @@ if ($profile['editor'] != '1')
 				echo sql_error();
 			}
 		}
-		$Smarty->assign_by_ref('Felder', $DBFelder);
+		$Smarty->assignbyref('Felder', $DBFelder);
 		while ($adresse = sql_fetch_array($query))
 		{
 			$Adressen[] = new Adresse($adresse['Adressen_id']);
 		} // while
 		sql_free_result($query);
-		$Smarty->assign_by_ref('Adressen', $Adressen);
+		$Smarty->assignbyref('Adressen', $Adressen);
 		$Smarty->assign('Seite', $Seite);
 		$Smarty->assign('AnzahlProSeite', $AnzahlProSeite);
 		$Smarty->assign('params', feldToParams($params));
 		$Smarty->assign('Sort', $Sort);
-		$Smarty->assign_by_ref('docinput', $docinput);
+		$Smarty->assignbyref('docinput', $docinput);
 		$p = $params;
 		unset ($p['docinput[Edit]']);
 		$Smarty->assign('paramsOhneEdit', feldToParams($p));

@@ -31,7 +31,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 	global $document;
 	global $Wochentage;
 	global $profile;
-	$Smarty->assign_by_ref('Artikelarten', Artikel::getArtikelArten());
+	$Smarty->assignbyref('Artikelarten', Artikel::getArtikelArten());
 	$Smarty->assign('Edit', isset($_REQUEST['Edit']));
 	$Smarty->assign('Aenderbar', !$abgerechnet && $profile[$document['SpeicherRecht']] == '1');
 	$Smarty->assign('Buchungsuebersichturl', get_url(get_cmodule_id('cvjmbuchungsuebersicht'), array (
@@ -141,7 +141,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 			}
 		} // foreach
 	} // foreach
-	$Smarty->assign_by_ref('Artikel', $Artikel);
+	$Smarty->assignbyref('Artikel', $Artikel);
 	return $Smarty->fetch('Buchung_Artikeltabelle.tpl');
 }
 
@@ -250,7 +250,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 		}
 		if (isset ($_REQUEST['Menge']) )
 		{
-			// Eintragsmenge erh�hen
+			// Eintragsmenge erhöhen
 			$Richtung = $_REQUEST['Richtung'];
 			$Datum = $_REQUEST['Datum'];
 			$Artikelnr = $_REQUEST['Menge'];
@@ -368,7 +368,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 					echo 'Fehler '.$sql.': '. sql_error();
 				}
 			}
-			$Buchung->logAction('Gebuchte Artikel ver�ndert');
+			$Buchung->logAction('Gebuchte Artikel verändert');
 		}
 	} // alte Buchung und Speicherrecht
 	$check1 = '';
@@ -382,7 +382,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 	$Smarty->assign('check1', $check1);
 	$Smarty->assign('check2', $check2);
 	// Buchungs-Objekt
-	$Smarty->assign_by_ref('Buchung', $Buchung);
+	$Smarty->assignbyref('Buchung', $Buchung);
 	$Smarty->assign('Adressebearbeiten', get_url(get_cmodule_id('cvjmadressen')));
 	$Smarty->assign('KundeAendern', isset ($_REQUEST['KuNrA']));
 
@@ -421,7 +421,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 		{
 			$Rechnungen[] = $rechnung;
 		}
-		$Smarty->assign_by_ref('Rechnungen', $Rechnungen);
+		$Smarty->assignbyref('Rechnungen', $Rechnungen);
 		sql_free_result($query);
 	}
 	include (INC_PATH . 'misc/cvjmKorrespondenz.inc');
@@ -436,7 +436,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 
 	setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
 	$Smarty->assign('spalten', 8);
-	$Smarty->assign_by_ref('docinput', $docinput);
+	$Smarty->assignbyref('docinput', $docinput);
 	// Einzelheiten
 	if (! $Buchung->isNeu())
 	{
@@ -513,7 +513,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 		}
 		else
 		{
-			// den letzten Eintrag einf�gen
+			// den letzten Eintrag einfügen
 			$AlleEintraege[$Meineintrag["F_Art_id"]][] = $Meineintrag;
 			$Smarty->assign('eintraege', SortierteZusammenfassungAnzeigen($AlleEintraege, $Buchung->isFertig() ));
 		}

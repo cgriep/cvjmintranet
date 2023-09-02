@@ -27,7 +27,7 @@ if(!function_exists('display_items')) {
 		foreach ($related as $docid => $doc) {
 			if(isset($parents[$docid])) {
 				echo $pre.'<a href="'.get_url($docid).'" class="selectedNav">'.$doc['title']."</a><br />\n";
-				display_items($docid, $level + 1);
+				display_items($parents, $level + 1, $docid);
 				}
 			else {
 				echo $pre.'<a href="'.get_url($docid).'" class="normalNav">'.$doc['title']."</a><br />\n";

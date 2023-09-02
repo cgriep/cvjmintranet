@@ -70,7 +70,7 @@ $this->F_Adressen_id = -1;
 		}
 	} // Buchung erstellen
 	/**
-	 * �ndert den Kunden auf die angegebene Adresse. Der Datensatz wird nicht gespeichert!
+	 * Ändert den Kunden auf die angegebene Adresse. Der Datensatz wird nicht gespeichert!
 	 * @param int $Adressen_id die ID der Kundenadresse
 	 */
 	function KundeAendern($Adressen_id)
@@ -331,7 +331,7 @@ $this->F_Adressen_id = -1;
 			{
 				// Speiseraum setzen.
 				$sql .= ',F_Speiseraum_id=' . $this->F_Speiseraum_id;
-				// Wichtig: Buchung vollf�hren!
+				// Wichtig: Buchung vollführen!
 				// 1. Alten Speiseraum entfernen
 				sql_query("DELETE FROM " . TABLE_BUCHUNGSEINTRAEGE . " WHERE F_Buchung_Nr=" .
 				$this->Buchung_Nr . " AND F_Artikel_Nr=" . $this->OriginalSpeiseraum_id);
@@ -414,7 +414,7 @@ $this->F_Adressen_id = -1;
 			}
 			$this->Buchung_Nr = sql_insert_id();
 		}
-		// Originalinformation sichern für sp�tere Anpassungen
+		// Originalinformation sichern für spätere Anpassungen
 		$this->OriginalPersonenanzahl = $this->personenAnzahl();
 		$this->OriginalSpeiseraum_id = $this->F_Speiseraum_id;
 		$this->OriginalBuchung_Nr = $this->Buchung_Nr;
@@ -558,7 +558,7 @@ $this->F_Adressen_id = -1;
 	 * liefert ein Feld der möglichen Speiseräume inkl. der Option "keiner". Das Feld ist mit der Artikel_id
 	 * des Saals indiziert. Soweit der Saal durch eine andere Buchung belegt ist, wird deren Nummer hinter dem
 	 * Namen des Saals angezeigt.
-	 * @return array indiziertes Feld mit den Namen der Speises�le.
+	 * @return array indiziertes Feld mit den Namen der Speisesäle.
 	 */
 	function getSpeiseraumListe()
 	{

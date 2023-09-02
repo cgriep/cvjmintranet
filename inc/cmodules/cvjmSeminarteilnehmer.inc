@@ -90,7 +90,7 @@ if ( $profile['editor'] != 1 )
   $Smarty->assign('Buchung', $Buchung);
   $Smarty->assign('check', $check);
   $Smarty->assign('id', $id);
-  $Smarty->assign_by_ref('seminar', $seminar);
+  $Smarty->assignbyref('seminar', $seminar);
   $Preise = array();
   $query = sql_query("SELECT * FROM ".TABLE_SEMINARPREISE." WHERE F_Buchung_Nr=".
     $Buchung->Buchung_Nr." ORDER BY Gebuehrbezeichnung");  
@@ -104,10 +104,10 @@ if ( $profile['editor'] != 1 )
   $Vorlagen = ZeigeVorlagen($Buchung->Buchung_Nr, 'Seminar');
   $Smarty->assign('Vorlagen', ob_get_contents());
   ob_end_clean();
-  //$Smarty->assign_by_ref('buchung', $buchung);
+  //$Smarty->assignbyref('buchung', $buchung);
   $Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));      
   $Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));
-  // Teilnehmer hinzuf�gen
+  // Teilnehmer hinzufügen
   $geaendert = false;
   if ( isset($docinput['Teilnehmer']) && is_array($docinput['Teilnehmer']))
   {
@@ -186,7 +186,7 @@ if ( $profile['editor'] != 1 )
   }
   if ( ! $Buchung->isFertig())
   {    
-    $Smarty->assign_by_ref('docinput', $docinput);
+    $Smarty->assignbyref('docinput', $docinput);
     $Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));    
     $Adressen = array();
     if ( isset($docinput["Search"]) && trim($docinput["Search"]) != "" )
@@ -206,7 +206,7 @@ if ( $profile['editor'] != 1 )
       }
       sql_free_result($query);
     }
-    $Smarty->assign_by_ref('Adressen', $Adressen);
+    $Smarty->assignbyref('Adressen', $Adressen);
     $Smarty->assign('sem', urlencode('id='.$id.'&Buchung_Nr='.$Buchung->Buchung_Nr));
   } // wenn Buchung nicht fertig
   setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
@@ -270,7 +270,7 @@ if ( $profile['editor'] != 1 )
      $Teilnehmer[] = $teilnehmer;     
   }
   
-  $Smarty->assign_by_ref('SeminarTeilnehmer', $Teilnehmer);
+  $Smarty->assignbyref('SeminarTeilnehmer', $Teilnehmer);
   $Smarty->assign('Teilnehmeranzahl', Count($Teilnehmer));
   $Smarty->display('Seminardaten_Liste.tpl');
   // Errechnete Altersgruppen in die Buchung schreiben

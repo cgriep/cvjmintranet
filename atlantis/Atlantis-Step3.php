@@ -9,7 +9,7 @@ if (!session_is_registered('Charakter_id'))
 }
 elseif (!session_is_registered('AnzeigeFertigkeit'))
 {
-	// Fehler - zurück zum Charakter
+	// Fehler - zurÃ¼ck zum Charakter
 	header('Location: http://' . $_SERVER['HTTP_HOST'] .dirname($_SERVER['PHP_SELF']). '/Atlantis-Step3a.php');
 } else
 {
@@ -68,7 +68,7 @@ elseif (!session_is_registered('AnzeigeFertigkeit'))
 	}
 	
 	$smarty->assign('Spezialisierung', $Spezialisierungsname);
-	$smarty->assign_by_ref('Charakter', $char);
+	$smarty->assignbyref('Charakter', $char);
 	$smarty->assign('fertigkeit_values', $fertigkeit_values);
 	$smarty->assign('fertigkeit_output', $fertigkeit_output);
 	$smarty->assign('fertigkeit_selected', '');

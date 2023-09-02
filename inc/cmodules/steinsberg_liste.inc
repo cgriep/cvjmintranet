@@ -402,7 +402,7 @@ else
               echo "Mail an ".$mail->to." gesendet.<br />";
           }
           else
-            echo "Mail w�rde an ".$mail->to." gesendet.<br />";
+            echo "Mail würde an ".$mail->to." gesendet.<br />";
         }
         else
           echo '&gt;&gt; Fehler: Konnte %% nicht umsetzen: "'.$body.'".<br />';

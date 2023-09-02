@@ -1,9 +1,9 @@
-<h2>Werteerfassung für {$Groesse.Bezeichnung}</h2>
+<h2>Werteerfassung fÃ¼r {$Groesse.Bezeichnung}</h2>
 <table>
 <form action="?id={$id}&Wert=-1&Groesse={$Groesse.Groesse_id}" method="post" name="WertForm">
 <tr class="ueberschrift">
   <td>Datum</td>
-  <td>Zähler</td>
+  <td>ZÃ¤hler</td>
   <td>Bemerkung</td>
   <td>Verbrauch</td>
   <td>Kosten</td>
@@ -21,7 +21,7 @@
     <input type="Text" name="docinput[Bemerkung]" />
   </td>
   <td>
-    Füllung <input type="Checkbox" name="docinput[Fuell]" value="v" title="bei Füllung anklicken"/>
+    FÃ¼llung <input type="Checkbox" name="docinput[Fuell]" value="v" title="bei FÃ¼llung anklicken"/>
   </td>
   <td>
     <input type="Submit" name="" value="Speichern"/>

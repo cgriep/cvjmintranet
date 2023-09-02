@@ -191,12 +191,12 @@ function ArtikelAnzeigen($art, $Tag)
     $Tag = strtotime('+1 day',$Ende);
     flush();
     $monat++;
-  } // Monatsz�hlung
+  } // Monatszählung
   $content = ob_get_contents();
   // Content speichern
   if ( ! $handle = fopen ("/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/files/belegung.html", "w") ) 
   {
-  	echo 'Fehler beim �ffnen der Datei!';
+  	echo 'Fehler beim öffnen der Datei!';
   }
   else
   {

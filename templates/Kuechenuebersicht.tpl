@@ -1,3 +1,4 @@
+{popup_init src="/javascript/overlib.js"}
 <form action="?id={$id}" method="post" name="Wahl" class="noprint">
 <label for="Datum">Verpflegung ab Datum</label>
 <input type="Text" name="docinput[Datum]" value="{$Datum|date_format:"%d.%m.%Y"}" size="10" maxlength="10" 

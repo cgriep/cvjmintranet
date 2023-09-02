@@ -25,7 +25,7 @@ if ( $profile["editor"] != "1" )
       $zeile = implode("','",addslashes(str_replace('"','',explode(";",$zeile))));
       $sql2 = $sql.$zeile."')";
       if ( ! sql_query($sql2) ) echo "Fehler beim Importieren ($sql2):".sql_error()."<br />";
-      else echo "Hinzugef�gt Nr. ".sql_insert_id().'<br />';
+      else echo "Hinzugefügt Nr. ".sql_insert_id().'<br />';
     }
     fclose($handle);
     echo '<hr />';

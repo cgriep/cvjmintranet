@@ -26,7 +26,7 @@ sql_free_result($query);
 
 $smarty = new Smarty;
 $smarty->assign('Charaktere',$Charaktere);
-$smarty->assign('PageTitle', 'Charakter ausw�hlen');
+$smarty->assign('PageTitle', 'Charakter auswählen');
 $smarty->assign('mitAjax', true);
 $smarty->display('Atlantis-Auswahl.tpl');
 

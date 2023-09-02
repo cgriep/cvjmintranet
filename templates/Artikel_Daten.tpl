@@ -20,7 +20,7 @@
     <select name="docinput[F_Art_id]">
     {html_options values=$Artikelarten_values selected=$Artikel->F_Art_id output=$Artikelarten_output}    
     </select>
-    <small>(Ast bei Änderung mitnehmen <input type="Checkbox" name="docinput[AstKopieren]" value="v">)</small>
+    <small>(Ast bei Ã„nderung mitnehmen <input type="Checkbox" name="docinput[AstKopieren]" value="v">)</small>
   </td>
 </tr>
 <tr>
@@ -29,10 +29,10 @@
   size="40" maxlength="60" /> 
   (<span title="Buchungen, denen dieser Artikel zugeordnet ist">B:{$Artikel->getBuchungsAnzahl()}</span>, 
   <span title="Anzahl Artikel denen dieser Artikel zugeordnet ist">V:{$Artikel->getOberArtikelAnzahl()}</span>,
-		letzte Änderung: {$Artikel->ArtikelStand|date_format:"%d.%m.%Y %H:%M"})</td>
+		letzte Ã„nderung: {$Artikel->ArtikelStand|date_format:"%d.%m.%Y %H:%M"})</td>
 </tr>
 <tr>
-  <td>Vollständiger Pfad</td><td class="helleZeile">
+  <td>VollstÃ¤ndiger Pfad</td><td class="helleZeile">
     {$Artikel->getArtikelPfadString(100)}
   </td>
 </tr>
@@ -46,7 +46,7 @@
   <td><label for="Position">Position</label></td>
   <td>
     <input type="Text" id="Position" name="docinput[Position]" value="{$Artikel->Position}" size="5" maxlength="5" /> 
-    <label for="Einruecken">Einrücken</label> 
+    <label for="Einruecken">EinrÃ¼cken</label> 
     <input type="Text" id="Einruecken" name="docinput[Einruecken]" value="{$Artikel->Einruecken}" size="5" maxlength="5" />
   </td>
 </tr>
@@ -78,7 +78,7 @@
   </td>
 </tr>
 <tr>
-  <td><label for="Rabattfaehig">Rabattfähiger Artikel</label></td>
+  <td><label for="Rabattfaehig">RabattfÃ¤higer Artikel</label></td>
   <td><input type="Checkbox" id="Rabattfaehig" name="docinput[Rabattfaehig]" value="1" 
     {if $Artikel->Rabattfaehig} checked="checked"{/if} />
   </td>
@@ -87,7 +87,7 @@
   <td colspan="2">
     {foreach from=$Dateiliste item=file}
       <a href="redirect.php?url={$file.URL}" title="{$file.Groesse} KB">{$file.Name}</a> 
-      [ <a href="?id={$id}&docinput[Artikel_Nr]={$Artikel->Artikel_id}&DelDatei={$file.Name}">Löschen</a>]<br />
+      [ <a href="?id={$id}&docinput[Artikel_Nr]={$Artikel->Artikel_id}&DelDatei={$file.Name}">LÃ¶schen</a>]<br />
     {/foreach}
   </td>
 </tr>
@@ -135,10 +135,10 @@
   </td>
 </tr>
 <tr>
-  <td>Schlafplätze</td>
+  <td>SchlafplÃ¤tze</td>
   <td>
     <input type="Text" name="docinput[Schlafplatz]" value="{$Artikel->Schlafplatz}" size="5" maxlength="5"/>
-    <span class="small">(-1 für keine, 0 für beliebig)</span>
+    <span class="small">(-1 fÃ¼r keine, 0 fÃ¼r beliebig)</span>
   </td>
 </tr>
 <tr>
@@ -146,25 +146,25 @@
   <td>
     <input type="checkbox" name="docinput[PersonJN]" {if $Artikel->PersonJN}checked="checked"{/if} 
     size="5" maxlength="5" value="1"
-    title="Ankreuzen, wenn diesem Artikel beim Buchen eine ausführende Person zugeordnet werden muss" />
+    title="Ankreuzen, wenn diesem Artikel beim Buchen eine ausfÃ¼hrende Person zugeordnet werden muss" />
   </td>
 </tr>
 <tr>
   <td>bei Buchung: terminierte Aktion</td>
   <td>
     <input type="Text" name="docinput[Aktion]" value="{$Artikel->Aktion|escape}" size="40" maxlength="60"
-    title="Aktion, die beim Buchen dieses Artikels ausgeführt werden muss" />
+    title="Aktion, die beim Buchen dieses Artikels ausgefÃ¼hrt werden muss" />
   </td>
 </tr>
 <tr>
-  <td>Prüfung</td>
+  <td>PrÃ¼fung</td>
   <td>
     <select name="docinput[F_PruefungArt]">
     {html_options options=$Pruefungsarten selected=$Artikel->F_PruefungArt}
     </select>
     <input type="Text" name="docinput[LetztePruefung]" value="{$Artikel->LetztePruefung|date_format:"%d.%m.%Y"}" 
     size="10" maxlength="10"
-    title="Datum der letzten Prüfung dieses Artikels" 
+    title="Datum der letzten PrÃ¼fung dieses Artikels" 
     onClick="popUpCalendar(this,Artikel['docinput[LetztePruefung]'],'dd.mm.yyyy')"
     onBlur="autoCorrectDate('Artikel','docinput[LetztePruefung]',false);"
     />
@@ -199,7 +199,7 @@
 </tr>
 <tr>
   <th>Preisliste</th>
-  <th>Gültig ab</th>
+  <th>GÃ¼ltig ab</th>
   <th>Netto-Preis</th>
   <th>Brutto</th>
   <th>Netto-Preis/Stunde</th>

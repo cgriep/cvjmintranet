@@ -21,7 +21,7 @@
 * @param integer $Status 1-4, 4=erledigt
 * @param integer $Autor ID des Autors, Std=Session_DBID 
 */
-function insertAuftrag($Titel, $Beschreibung, $Prioritaet = 2, $Betroffen, $BearbeitenBis, $Ort = -1,
+function insertAuftrag($Titel, $Beschreibung, $Prioritaet, $Betroffen, $BearbeitenBis, $Ort = -1,
                        $Status = 1, $Autor = SESSION_DBID)
 {
   global $Prioritaeten;

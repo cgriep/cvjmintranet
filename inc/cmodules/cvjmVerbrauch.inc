@@ -157,7 +157,7 @@ if ($profile['editor'] != 1)
 			sql_free_result($q);
 		}
 		sql_free_result($query);
-		$Smarty->assign_by_ref('groessen', $dieGroessen);
+		$Smarty->assignbyref('groessen', $dieGroessen);
 		$Smarty->assign('id', $id);
 		setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");
 		$Smarty->display('Verbrauch_Eingabe.tpl');
@@ -267,10 +267,10 @@ if ($profile['editor'] != 1)
 		}
 		sql_free_result($query);
 		$Smarty->assign('Ueberschrift', $_REQUEST['Gesamt']);
-		$Smarty->assign_by_ref('Verbrauch', $Verbrauch);
-		$Smarty->assign_by_ref('Jahre', $Jahre);
-		$Smarty->assign_by_ref('JahresWert', $JahresWert);
-		$Smarty->assign_by_ref('MonatVerbrauch', $JahresWert);
+		$Smarty->assignbyref('Verbrauch', $Verbrauch);
+		$Smarty->assignbyref('Jahre', $Jahre);
+		$Smarty->assignbyref('JahresWert', $JahresWert);
+		$Smarty->assignbyref('MonatVerbrauch', $JahresWert);
 		$Smarty->display('Verbrauch_jahr.tpl');
 	}
 	if (isset ($_REQUEST['Groesse']) && is_numeric($_REQUEST['Groesse']))
@@ -314,7 +314,7 @@ if ($profile['editor'] != 1)
 				$MonatVerbrauch[date('Y', $zaehldatum)][date('n', $zaehldatum)]['Kosten'] += $wert['Verbrauchskosten'];
 				$MonatVerbrauch[date('Y', $zaehldatum)][date('n', $zaehldatum)]['Verbrauch'] += $wert['Verbrauch'];
 			}
-			$Smarty->assign_by_ref('MonatVerbrauch', $MonatVerbrauch);
+			$Smarty->assignbyref('MonatVerbrauch', $MonatVerbrauch);
 			sql_free_result($query);
 			$Smarty->display('Verbrauch_groesse.tpl');
 		}
@@ -384,7 +384,7 @@ if ($profile['editor'] != 1)
 		} else
 		{
 			// Werte eingeben
-			$Smarty->assign_by_ref('Groesse', $Groesse);
+			$Smarty->assignbyref('Groesse', $Groesse);
 			$query = sql_query("SELECT * FROM " . TABLE_VERBRAUCH . " WHERE F_Groesse_id=" .
 			$Groesse["Groesse_id"] . " ORDER BY Datum DESC");
 			$Werte = array();
@@ -392,7 +392,7 @@ if ($profile['editor'] != 1)
 			{
 				$Werte[] = $wert;				
 			}
-			$Smarty->assign_by_ref('Werte', $Werte);			
+			$Smarty->assignbyref('Werte', $Werte);			
 			sql_free_result($query);
 			if ( $_REQUEST['Wert'] < 0)
 			{

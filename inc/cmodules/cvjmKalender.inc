@@ -157,7 +157,7 @@ href="<?=get_url($id)?>&Anzeige=<?=$Anzeige?>">heute</a>
 <?php
   $Param .= $Anzeige;
 ?>
-<strong>Ausgew�hlte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
+<strong>Ausgewählte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
 alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persönliche Termine</a>
 (Mailbenachrichtigung <a href="<?=get_url($id, array('Config'=>1))?>">konfigurieren</a>)</p>
 
@@ -428,7 +428,7 @@ href="<?=get_url($id)?>&Anzeige=<?=$Anzeige?>">heute</a>
 <?php
   $Param .= $Anzeige;
 ?>
-<strong>Ausgew�hlte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
+<strong>Ausgewählte Termine anzeigen:</strong> <a href="<?=get_url($id,$Param)?>&Betroffen=<?=SESSION_DBID?>">
 alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">persönliche Termine</a>
 (Mailbenachrichtigung <a href="<?=get_url($id, array('Config'=>1))?>">konfigurieren</a>)</p>
 <p><form action="<?=get_url($id)?>" method="post" name="Springen2">zu Datum

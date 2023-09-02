@@ -47,7 +47,7 @@ if ( $profile["editor"] != 1 )
       {
         if ( $schlafplaetze > 0 )
         {
-          // H�tten-Übernachtung
+          // Hütten-Übernachtung
           $bereich = getOrtsname(holeArtikelMasterParent($eintrag["F_Art_id"],
             $eintrag["Position"],$eintrag["Einruecken"]));
           $eintrag["Datum"] = strtotime(date("Y-m-d", $eintrag["Datum"]));

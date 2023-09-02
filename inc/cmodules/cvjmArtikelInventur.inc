@@ -26,12 +26,12 @@ if ( $profile['editor']!= 1 )
 	// Alle Artikel auflisten
 	//$Smarty->assign()
 	// Alle Orte auflisten
-	$Smarty->assign_by_ref('Orte',Artikel::getOrte());
+	$Smarty->assignbyref('Orte',Artikel::getOrte());
 	if ( isset($docinput['Ort']) && $docinput['Ort'] != '')
 	{
 		// Ort heraussuchen
 		$Artikel = new Artikel($docinput['Ort']);
-		$Smarty->assign_by_ref('Ort', $Artikel);
+		$Smarty->assignbyref('Ort', $Artikel);
 		$Liste = array();
 		$query = sql_query('SELECT * FROM '.'cvjm_Artikelorte'.' WHERE F_Ort_id='.$Artikel->Artikel_id);
 		while ( $menge = sql_fetch_array($query))
@@ -43,7 +43,7 @@ if ( $profile['editor']!= 1 )
 			
 		}
 		sql_free_result($query);		
-		$Smarty->assign_by_ref('Artikelliste', $Liste);
+		$Smarty->assignbyref('Artikelliste', $Liste);
 	}	
 	$Smarty->display('Artikel_Inventur.tpl');
 } // wenn nicht Editor

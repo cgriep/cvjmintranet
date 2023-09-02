@@ -816,7 +816,7 @@ class Buchung extends DBEntity
 		}
 	}
 	/**
-	 * Entfernt eine Abrechnung der Buchung endg�ltig
+	 * Entfernt eine Abrechnung der Buchung endgültig
 	 * @param abrechnung_id die ID der zu löschenden Abrechnung
 	 */
 	function loescheAbrechnung($abrechnung_id)
@@ -1171,7 +1171,7 @@ class Buchung extends DBEntity
 	/**
 	 * ergibt die Bereiche (Artikel oberster Ebene) einer Art der Buchung als Zeichenkette
 	 * (Kommasepariert)
-	 * @param int $Art die ID der Art, deren direkte Unterebene aufgef�hrt werden soll
+	 * @param int $Art die ID der Art, deren direkte Unterebene aufgeführt werden soll
 	 * @return String kommaseparierte Liste der Unterartikel der angegebenen Art
 	 */
 	function bereicheAlsListe($Art)
@@ -1332,7 +1332,7 @@ class Buchung extends DBEntity
 						if ( $row[0] == 1 )
 						{
 							$meineMenge = 1;
-							// Derartige Pauschalen sollen am n�chsten Tag gebucht werden, wenn nicht
+							// Derartige Pauschalen sollen am nächsten Tag gebucht werden, wenn nicht
 							// anders angegeben (weil sonst im "0"-Bereich der frei-Pauschalen)
 							if ( $art["Beginn"] == 0 )
 							{

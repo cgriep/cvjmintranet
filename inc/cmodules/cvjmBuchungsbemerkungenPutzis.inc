@@ -42,7 +42,7 @@ if ( $profile["editor"] != 1 )
           }
           else
           {
-            // Neue Bemerkung anf�gen
+            // Neue Bemerkung anfügen
             if ( !sql_query("INSERT INTO ".TABLE_BUCHUNGSBEMERKUNGEN." (F_Buchung_Nr,Bemerkung,Hinweis,Logtext) VALUES (".
               $key.",'".CVJMPUTZMITTEILUNG."','".
                 addslashes($value)."','".date("d.m.Y H:i")." erstellt ".get_user_nickname()."')"))

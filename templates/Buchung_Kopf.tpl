@@ -14,7 +14,7 @@
     {if ( $Buchung->Abfahrtszeit != 0)}
       {$Buchung->Abfahrtszeit|date_format:"%H:%M"}
     {/if}
-    ({$Buchung->berechneUebernachtungen()} Übernachtungen) mit 
+    ({$Buchung->berechneUebernachtungen()} Ãœbernachtungen) mit 
     {$Buchung->personenAnzahl()} Personen ({$Buchung->getAltersgruppe()})
     {eval var=$Buchung->BetreueranzahlM+$Buchung->BetreueranzahlW assign="anz"}
     {if ( $anz != 0 )}davon {$anz} Betreuer{/if}

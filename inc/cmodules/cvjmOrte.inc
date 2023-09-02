@@ -259,7 +259,7 @@ function DeleteAll($id = -1)
   }
 }
 
-// Hinzuf�gen
+// Hinzufügen
 if ( isset($_REQUEST["OrtName"]) && is_numeric($_REQUEST["Ort"]) && is_numeric($DieArt) ) {
   if ( $_REQUEST["OrtName"] != "" ) {
     if ( ! sql_query("INSERT INTO ".TABLE_ARTIKEL." (Bezeichnung, parent, F_Art_id, Anzeigen) VALUES ('".
@@ -292,7 +292,7 @@ if ( is_numeric($_REQUEST["DelV"])  ) {
       echo sql_error();
     $_REQUEST["Ort"] = $parent;
 }
-// löschen, vollst�ndig
+// löschen, vollständig
 if ( is_numeric($_REQUEST["DelX"])  ) {
   DeleteAll($_REQUEST["DelX"]);
 }
@@ -331,7 +331,7 @@ if($profile['editor']!='1') {
     echo '<input type="hidden" name="Ort" value="-1" />';
   echo '<input type="hidden" name="Art" value="'.$DieArt.'" />';
   echo '<input type="text" name="OrtName" />';
-  echo '<input type="submit" value="Unterkategorie hinzuf�gen" /></form>';
+  echo '<input type="submit" value="Unterkategorie hinzufügen" /></form>';
   if ( is_numeric($_REQUEST["Ort"]) ) {
     echo '<a id="Edit" name="Edit"></a><form action="'.get_url($id).'" method="post">';
     echo '<input type="hidden" name="Ort" value="'.$_REQUEST["Ort"].'" />';
@@ -378,7 +378,7 @@ if($profile['editor']!='1') {
       echo '>'.$row["Bezeichnung"].'</option>';
     }
     echo "</select>";
-    echo '<input type="submit" value="'.$Artikelarten[$DieArt].' ausw�hlen" />';
+    echo '<input type="submit" value="'.$Artikelarten[$DieArt].' auswählen" />';
     echo '</form>';
   }
   sql_free_result($qu);

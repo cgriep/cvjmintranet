@@ -439,7 +439,7 @@ function zeigeKategorien($Adressen_id, $edit = false)
 	$Smarty->template_dir = TEMPLATEPATH;
 	$Adresse = new Adresse($Adressen_id);
 	$edit = convertJavaScriptBool($edit);
-	$Smarty->assign_by_ref('Adresse', $Adresse);
+	$Smarty->assignbyref('Adresse', $Adresse);
 	if ( $edit )
 	{
 		$content = $Smarty->fetch('Adressen_Kategorien_Edit.tpl');
@@ -673,7 +673,7 @@ function sucheArtikel($suche, $Buchung_Nr, $Spalten, $id, $Rechnung_id=-1)
 	$Smarty->template_dir = TEMPLATEPATH;
 	$Smarty->assign('spalten', $Spalten);
 	$Smarty->assign('id', $id);
-	$Smarty->assign_by_ref('Buchung', $Buchung);
+	$Smarty->assignbyref('Buchung', $Buchung);
 	$docinput = array();
 	$docinput['ArtikelSearch']=utf8_decode($suche);
 	if ( $Rechnung_id >0)
@@ -705,7 +705,7 @@ function moveArtikel($id, $Artikel_id, $Richtung)
 		$Smarty = new Smarty();
 		$Smarty->template_dir = TEMPLATEPATH;
 		$Smarty->assign('id', $id);
-		$Smarty->assign_by_ref('Artikel', $Artikel);
+		$Smarty->assignbyref('Artikel', $Artikel);
 		$content = $Smarty->fetch('Artikel_Baumliste.tpl');
 		$objResponse->addAssign('Artikelbaumliste', 'innerHTML', utf8_encode($content));
 	}
@@ -731,7 +731,7 @@ function aendereArtikelAnzahl($id, $Artikel_id, $Anzahl)
 		$Artikel = new Artikel($Artikel_id);
 		$Smarty = new Smarty();
 		$Smarty->template_dir = TEMPLATEPATH;
-		$Smarty->assign_by_ref('Artikel', $Artikel);
+		$Smarty->assignbyref('Artikel', $Artikel);
 		$Smarty->assign('id', $id);
 		$content = $Smarty->fetch('Artikel_Baumliste.tpl');
 		$objResponse->addAssign('Artikelbaumliste', 'innerHTML', utf8_encode($content));
@@ -806,14 +806,14 @@ function zeigePersonenwahlDialog($Buchung_Nr, $Artikel_Nr, $Datum)
 	}
 	sql_free_result($query);
 	asort($users);
-	$Smarty->assign_by_ref('users', $users);
+	$Smarty->assignbyref('users', $users);
 	init_groups();
-	$Smarty->assign_by_ref('groups', $groups);
+	$Smarty->assignbyref('groups', $groups);
 	$Smarty->assign('title', 'Zuständiger für '.$Artikel->Bezeichnung.' am '.date('d.m.Y',$Datum));
 	$Smarty->assign('extern', $extern);
 	$Smarty->assign('markiertU', $markiertU);
 	$Smarty->assign('markiertG', $markiertG);
-	$Smarty->assign_by_ref('Artikel', $Artikel);
+	$Smarty->assignbyref('Artikel', $Artikel);
 	$dialog = $Smarty->fetch('Personenauswahlliste.tpl');
 	$objResponse->addPrepend('Personenwahldialog','innerHTML',utf8_encode($dialog));
 	$objResponse->addAssign('Artikeltabelle','style.opacity','0.6');

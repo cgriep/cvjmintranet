@@ -396,7 +396,7 @@ if ( $daten["V$ref"] != "NSC" ) {
   if ( sql_num_rows($query) > 0 )
   {
     echo '<select name="docinput[charakter]">';
-    echo '<option value="">-keiner gew�hlt-</option>';
+    echo '<option value="">-keiner gewählt-</option>';
     $charakter['name'] = array();
     $charakter['id'] = array();
     while ( $erg = sql_fetch_row($query) )

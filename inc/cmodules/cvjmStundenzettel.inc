@@ -36,10 +36,10 @@ if ( $profile['editor'] != 1 )
   $Benutzer = SESSION_DBID;
   $Arbeitsarten = array(
   'ALG' => 'Allgemein',
-  'AUS' => 'Au�enbereich',
+  'AUS' => 'Außenbereich',
   'KIO'	=> 'Kiosk',
-  'KUE'	=> 'K�che',
-  'PAE' => 'P�dagogik',
+  'KUE'	=> 'Küche',
+  'PAE' => 'Pädagogik',
   'PUT' => 'Putzen',
   'TIE' => 'Tiere',
   'VER' => 'Verwaltung',
@@ -147,7 +147,7 @@ if ( $profile['editor'] != 1 )
     $Smarty = new Smarty();
     $Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
     $Smarty->assign('id', $id);
-    $Smarty->assign_by_ref('docinput', $docinput);
+    $Smarty->assignbyref('docinput', $docinput);
     if ( isset($docinput['Del']) && is_numeric($docinput['Del']))
     {
     	$query = sql_query("DELETE FROM ".TABLE_STUNDENZETTEL." WHERE id=".$docinput['Del']);
@@ -165,9 +165,9 @@ if ( $profile['editor'] != 1 )
         $eintrag["Datum"] = time();
         $eintrag["Bis"] = time();
     }
-    $Smarty->assign_by_ref('eintrag', $eintrag);
+    $Smarty->assignbyref('eintrag', $eintrag);
     $Smarty->assign('Benutzer', $Benutzer);
-    $Smarty->assign_by_ref('Arbeitsarten', $Arbeitsarten);
+    $Smarty->assignbyref('Arbeitsarten', $Arbeitsarten);
     $Smarty->display('Stundenzettel_Eingabe.tpl');
     
     if ( ! isset($docinput["Datum"]) || ! is_numeric($docinput["Datum"]) )
@@ -204,7 +204,7 @@ if ( $profile['editor'] != 1 )
       }
       $eintraege[] = $row;
     }
-    $Smarty->assign_by_ref('Eintraege', $eintraege);
+    $Smarty->assignbyref('Eintraege', $eintraege);
     $Smarty->assign('Stunden', sprintf("%.02f",$Stunden));
     $Smarty->assign('SoStunden', sprintf("%.02f",$SoStunden));
     $Smarty->assign('FeierStunden', sprintf("%.02f",$FeierStunden));
@@ -263,7 +263,7 @@ if ( $profile['editor'] != 1 )
       echo '<input type="Submit" value="anzeigen">';
       echo '[ <a href="'.get_url($id,"Monatsabschluss=$Benutzer&docinput[Datum]=".
         date("d.m.Y",$docinput["Datum"])).
-        '">Monat für Mitarbeiter abschlie�en/freigeben</a>]';
+        '">Monat für Mitarbeiter abschließen/freigeben</a>]';
        echo '</form>';
     }
   } // SESSION ist ok

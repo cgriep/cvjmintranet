@@ -68,7 +68,7 @@ if ( $profile['editor'] != 1 )
        }
        if ( ! sql_query($sql))
        {
-       	  // Update ausf�hren
+       	  // Update ausführen
        	  $msql = 'UPDATE '.TABLE_ARTIKEL.' SET WHERE id=';
        	  
        }
@@ -76,19 +76,19 @@ if ( $profile['editor'] != 1 )
        if ( !sql_query('INSERT INTO '.TABLE_PREISE.' (F_Preisliste_id,Artikel_Nr,' .
        		'Preis) VALUES ('.$Preislisteid.','.$Artikelnr.','.$Preis.')'))
        {
-       	  //Update ausf�hren
+       	  //Update ausführen
        	  sql_query('UPDATE '.TABLE_PREISE.' SET Preis='.$Preis.' WHERE Artikel_Nr='.
        	    $Artikelnr.' AND F_Preisliste_id='.$Preislisteid);
        }
      }
    }
-   echo $anz." Datens�tze importiert.";
+   echo $anz." Datensätze importiert.";
    sql_query("UPDATE T_Stand SET Stand = ".time().", Bearbeiter='".$_SERVER["REMOTE_USER"]."'");
    echo "</td></tr>";
    fclose($dat);
    @unlink($_FILES['Datei']['tmp_name']);
   }
   
-  echo '<input type="Submit" value="Ausw�hlen"></form>';  
+  echo '<input type="Submit" value="Ausw�ählen"></form>';  
 }
 ?>

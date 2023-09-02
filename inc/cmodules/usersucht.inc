@@ -149,7 +149,7 @@ $output = substr($output, strpos("<br />", $output)+6);
  //else
 // {
   //echo '<big><font color="red">Fehler beim ändern des Kennwortes:<br /></font>';
-  //echo "Das eMailkennwort konnte nicht geändert werden. Bitte verwenden Sie mindestens ein Zeichen, dass kein Buchstabe ist. Ihr Kennwort zum Login in dieses System wurde ge&auml;ndert, w&auml;hrend Ihr eMailkennwort noch das alte ist. &Auml;ndern Sie das Kennwort erneut, um beide Kennw�rter auf den gleichen Stand zu bringen.<br />";
+  //echo "Das eMailkennwort konnte nicht geändert werden. Bitte verwenden Sie mindestens ein Zeichen, dass kein Buchstabe ist. Ihr Kennwort zum Login in dieses System wurde ge&auml;ndert, w&auml;hrend Ihr eMailkennwort noch das alte ist. &Auml;ndern Sie das Kennwort erneut, um beide Kennwörter auf den gleichen Stand zu bringen.<br />";
   //}
   }
           }

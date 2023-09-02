@@ -180,10 +180,10 @@ if ( $profile['editor'] != 1 )
 	$Smarty = new Smarty;
 	$Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
 	$Smarty->assign('id', $id);
-    $Smarty->assign_by_ref('Bemerkungen', $Bemerkungen);    	
+    $Smarty->assignbyref('Bemerkungen', $Bemerkungen);    	
 	
     $Buchung = new Buchung($docinput['Buchung_Nr']);
-	$Smarty->assign_by_ref('Buchung',$Buchung);
+	$Smarty->assignbyref('Buchung',$Buchung);
 	$Smarty->assign('Adressenurl',get_url(get_cmodule_id('cvjmadressen')));
 	$Smarty->assign('Auftragurl',get_url(get_cmodule_id('auftrag')));
 	$Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));
@@ -194,7 +194,7 @@ if ( $profile['editor'] != 1 )
   {
     // Übersicht über die aktuellen Belegungen
     echo $design["table_begin"];
-    echo '<tr class="ueberschrift"><th></th><th>Ankunft</th><th>H�user-<br />abnahme<br />Abfahrt</th><th>Abrechnung</th>'.
+    echo '<tr class="ueberschrift"><th></th><th>Ankunft</th><th>Häuser-<br />abnahme<br />Abfahrt</th><th>Abrechnung</th>'.
       '<th>Smileycard</th><th>Name</th><th>Belegung/<br />Personen</th></tr>';
       /* Alt:
     $query = sql_query("SELECT * FROM ".TABLE_BUCHUNGEN." INNER JOIN ".TABLE_ADRESSEN.
