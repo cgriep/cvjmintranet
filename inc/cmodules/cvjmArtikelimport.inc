@@ -89,6 +89,6 @@ if ( $profile['editor'] != 1 )
    @unlink($_FILES['Datei']['tmp_name']);
   }
   
-  echo '<input type="Submit" value="Ausw�ählen"></form>';  
+  echo '<input type="Submit" value="Auswählen"></form>';  
 }
 ?>

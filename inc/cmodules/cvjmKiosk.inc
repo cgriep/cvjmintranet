@@ -102,7 +102,7 @@ if ($profile['editor'] != '1')
 			$query = sql_query('SELECT * FROM cvjm_Kiosk WHERE Datum BETWEEN "'.date('Y-m-d',$Datum).'" AND "'.date('Y-m-d',$Datum2).'" ORDER BY Datum DESC');
 			while ($row = sql_fetch_array($query))
 			{
-				// Ausschlie�en der Geldbuchungen
+				// Ausschließen der Geldbuchungen
 				if ($row['F_Artikel_id'] != 0)
 				{
 					$Umsatz += $row['Menge']*$row['Preis'];

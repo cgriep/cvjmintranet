@@ -37,7 +37,7 @@ if ( $profile['editor']!= 1 )
 		while ( $menge = sql_fetch_array($query))
 		{
 			$a = new Artikel($menge['F_Artikel_id']);
-			// Sonderfall: Menge hinzuf�gen
+			// Sonderfall: Menge hinzufügen
 			$a->Menge = $menge['Menge'];
 			$Liste[] = $a;
 			

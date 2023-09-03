@@ -1,7 +1,7 @@
 
 <!-- 
 Template Verbrauch_jahr 
-Statistik über alle Jahre und Verbrauchsstellen für Verbrauch oder Kosten 
+Statistik Ã¼ber alle Jahre und Verbrauchsstellen fÃ¼r Verbrauch oder Kosten 
 -->
 
 <h2>Verbrauchsstatistik</h2>

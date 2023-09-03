@@ -7,7 +7,7 @@
  * Ermöglicht die Ersetzung einer vorhandenen Korrespondenz durch eine neue Datei
  *
  *  Parameter:
- *  docinput[Datei]: vollst�ndiger Pfad zur Datei
+ *  docinput[Datei]: vollständiger Pfad zur Datei
  *  docinput[Herkunft]: id und Parameter der Seite, auf die Zurückverwiesen wird
  *  docinput[Adressen_id]: id der Adresse, deren Dateien bearbeitet werden
  */

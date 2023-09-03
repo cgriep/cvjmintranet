@@ -46,7 +46,7 @@ if (!session_is_registered('Charakter_id'))
 	require 'Smarty/libs/Smarty.class.php';
 	$smarty = new Smarty;
 	$smarty->assign('Character', $char->alsFeld(true));
-	$smarty->assign('PageTitle', 'Aktivierung der �bernat�rlichen Vorteile');
+	$smarty->assign('PageTitle', 'Aktivierung der übernatürlichen Vorteile');
 	$smarty->assign('mitAjax', true);
 	// Zugriffe auf die Datenbank
 

@@ -10,7 +10,7 @@
   *   entsprechend dem Datenbanknamen
 */
 
-set_magic_quotes_runtime(0);
+//set_magic_quotes_runtime(0);
 
 DEFINE ('OHNE_BERECHNUNG', 'o.B.');
 
@@ -93,7 +93,7 @@ function sortiereDatenNachDatum($daten)
     		// aktuelle Überschrift einfügen
     		foreach($felder as $f => $feld)
     		{ 
-				$daten[$zeichen.$feld][] = $tdaten[$zeichen.$feld][$key];
+				  $daten[$zeichen.$feld][] = $tdaten[$zeichen.$feld][$key];
     		}
     		$tempdaten = array();
     		$keypositionen = array();   	  
@@ -115,25 +115,7 @@ function sortiereDatenNachDatum($daten)
 					$daten[$zeichen.$feld][] = $tdaten[$zeichen.$feld][$pos];
 				}
     	}
-    }
-    // Sortieren und zurückschreiben
-    foreach ( $arten as $k => $art )
-    {
-       
-      //echo $art.'<br>';
-      /*
-      foreach ($tempdaten[$art] as $key => $value )
-      {
-        $pos = next($keypositionen[$art]);
-        foreach ($felder as $f => $feld )
-        {
-          $daten[$zeichen.$feld][$pos] = $value[$zeichen.$feld];
-        }
-        
-        //echo date('d.m.Y H:i',$daten[$zeichen.$feld][$pos]['SORT'.$zeichen.'DATUM']).'<br />';
-      }
-      */
-    }
+    }    
   }
   return $daten;
 }
@@ -1162,7 +1144,7 @@ function DatenZusammenfassen($daten)
     $daten['ZMWSTSUMME'][] = $daten['MWSTSUMME'];
     $daten['ZRABATT'][] = $daten['RABATT'];
     $daten['ZART'][] = $daten['ART'];
-    $daten['ZARTIKELNR'][] = $daten['ARTIKELNR'];
+    $daten['ZARTIKELNR'][] = $daten['F_ARTIKEL_NR'];    // ARTIKELNR
     $daten['ZDATUM'][] = $daten['DATUM'];
     $daten['ZPREIS'][] = $daten['PREIS'];
     $daten['ZMWST'][] = $daten['MWST'];
@@ -1364,14 +1346,16 @@ switch ($Datenbank )
   break;
 } // switch
 
-define('POO_TMP_PATH', "Vorlagen/".$_REQUEST["db"]."/");
+if ( $Datenbank == 'Rechnung' ) $Datenbank = 'Fakturierung/'.$DokArten[$daten['RECHNUNG']];
+
+define('POO_TMP_PATH', "Vorlagen/".$Datenbank."/");
 define('PCLZIP_INCLUDE_PATH','inc/misc/pclzip/');
 define('ZIPLIB_INCLUDE_PATH','inc/misc/');
 require('inc/misc/phpOpenOffice.php');
 $doc = new phpOpenOffice();
-if ( $Datenbank == 'Rechnung' ) $Datenbank = 'Fakturierung/'.$DokArten[$daten['RECHNUNG']];
 $doc->loadDocument("Vorlagen/$Datenbank/$Vorlage");
 $doc->insertStyles();
+
 $doc->parse($daten, $attribute);
 if ( $Datenbank != 'ArtikelPreislisten' && is_numeric($Adressenid) )
 {

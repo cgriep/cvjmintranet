@@ -11,8 +11,8 @@
 * Tag - erster Tag der Anzeige
 * Tage - Anzahl der anzuzeigenden Tage
 * docinput[Page] - id der Kategorie, die angezeigt werden soll
-* docinput[Alle] - 1 wenn alle Orte (unabh�ngig von "Anzeigen" angezeigt werden sollen
-* docinput[Art] - Art der Artikel, die ausgew�hlt werden soll, wenn keine Angabe = Ort
+* docinput[Alle] - 1 wenn alle Orte (unabhängig von "Anzeigen" angezeigt werden sollen
+* docinput[Art] - Art der Artikel, die ausgewählt werden soll, wenn keine Angabe = Ort
 *
  */
 require_once(INC_PATH.'cvjm/Artikel.class.php');
@@ -399,7 +399,7 @@ if ($profile['editor'] != 1)
 		$Kategorien = array ();
 		while ($kategorie = sql_fetch_array($query))
 		{
-			// wenn kein Reiter gew�hlt ist den ersten anzeigen in dem eine Buchung ist
+			// wenn kein Reiter gewählt ist den ersten anzeigen in dem eine Buchung ist
 			if (!isset ($docinput["Page"]) && Count($BelegteBereiche) > 0)
 			{
 				if (in_array($kategorie["Bezeichnung"], $BelegteBereiche))

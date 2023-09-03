@@ -308,11 +308,11 @@ else {
                   echo '[ <a href="'.get_url($id,'addtopic=1').'">'.LANG_FORUM_ADDNEW.'</a> ] ';
                   if ( SESSION_STATUS == "ok" )
                     if ( $profile["MailForum_$id"] == "1" ) {
-                      echo ' Die Beitr�ge werden per Mail zugesandt. [ <a href="?id='.$id;
+                      echo ' Die Beiträge werden per Mail zugesandt. [ <a href="?id='.$id;
                       echo '&SendMail=0">abschalten</a> ]';
                     }
                     else
-                      echo ' [ <a href="?id='.$id.'&SendMail=1">neue Beitr�ge als Mail zusenden</a> ]';
+                      echo ' [ <a href="?id='.$id.'&SendMail=1">neue Beiträge als Mail zusenden</a> ]';
                 }
                 else {
                          echo LANG_FORUM_HAVETOBELOGGEDIN;

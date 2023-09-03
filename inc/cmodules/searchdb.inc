@@ -67,7 +67,7 @@ if ( isset($document["DBNamen"]) )
   $document["DBNamen"] = explode("\n",$document["DBNamen"]);
   echo "Fundstellen in";
   echo "<ul>";
-  while ( list($key, $value) = each($document["DBNamen"]) )
+  foreach ( $document["DBNamen"] as $key => $value) 
   {
     if ( $value != "" )
     {
@@ -163,7 +163,7 @@ else {
 	}
  // Datenbanken durchsuchen
  reset($document["DBNamen"]);
- while ( list($key, $value) = each($document["DBNamen"]) )
+ foreach ( $docment["DBNamen"] as $key => $value) 
  {
    echo '<hr />';
    list($Beschreibung,$seitenid, $param, $Datenbankname, $Felder) = explode(":",$value);
@@ -190,14 +190,14 @@ else {
    {
      $SearchString = "";
      $fel = explode("|", $FeldArray);
-     while ( list($kkey, $vvalue) = each($fel) )
+     foreach ( $fel as $kkey => $vvalue) 
      {
        if ( $SearchString == "" )
          $SearchString = "(";
        else
          $SearchString .= " OR (";
        $fel2 = explode(" ", $search);
-       while ( list($kkkey, $vvvalue) = each($fel2) )
+       foreach ( $fel2 as $kkkey => $vvvalue) 
          $SearchString .= $vvalue." REGEXP '".$vvvalue."' AND ";
        $SearchString .= "1)";
      }
@@ -218,7 +218,7 @@ else {
    while ( $found = sql_fetch_array($query) )
    {
      reset($FeldArray);
-     while ( list($kkey, $vvalue) = each($FeldArray) )
+     foreach ( $FeldArray as $kkey => $vvalue) 
      {
        if ( $kkey == 0 )
          echo '<a href="'.get_url($seitenid,$param."=".$found[$vvalue]).'">';

@@ -1,5 +1,5 @@
 
-<!--  Skripte für Popup-Kalender -->
+<!--  Skripte fÃ¼r Popup-Kalender -->
 <style type="text/css">
   @import url(css/popcalendar.css);
 </style>
@@ -17,7 +17,7 @@
 <tr class="ueberschrift">
   <th colspan="4" class="zentriert">
   Kontaktinformationen 
-  {if $Adresse->Geloescht}(diese Adresse ist gelöscht){/if}
+  {if $Adresse->Geloescht}(diese Adresse ist gelÃ¶scht){/if}
   {if $Adresse->Adressen_id<0}(neue Adresse){/if}
   </th>
 </tr>
@@ -44,7 +44,7 @@
     {/if}
     {if $Adresse->Adressen_id >0}
       &nbsp;&nbsp;<a href="?id={$id}&Bearbeiten={$Adresse->Adressen_id}&Plain=1#Copy">
-      Daten für Copy&Paste anzeigen</a>
+      Daten fÃ¼r Copy&Paste anzeigen</a>
     {/if}
   </td>
 </tr>
@@ -261,8 +261,8 @@
     [ <a href="?id={$id}&Kopie={$Adresse->Adressen_id}&Kat=U" 
       title="Neuen Datensatz als Ansprechpartnerkopie hiervon erstellen">Kopie &darr;</a> ] 
     {if $Adresse->Kunden_Nr <= 0 && ! $Adresse->isNeu()}
-       [&nbsp;<a href="?id={$id}&Delete={$Adresse->Adressen_id}" title="Datensatz komplett löschen" 
-        onClick="javascript:return window.confirm('Adresse wirklich löschen?');">Löschen</a>&nbsp;] 
+       [&nbsp;<a href="?id={$id}&Delete={$Adresse->Adressen_id}" title="Datensatz komplett lÃ¶schen" 
+        onClick="javascript:return window.confirm('Adresse wirklich lÃ¶schen?');">LÃ¶schen</a>&nbsp;] 
     {/if}
     [&nbsp;<a href="?id={$id}&docinput[Edit]=3&docinput[Institution]={$Adresse->Adressen_id}" 
       title="Ansprechpartner festlegen">Ansprechpartner</a>&nbsp;] 
@@ -282,7 +282,7 @@
 <tr>
   <td class="zentriert" colspan="4"><input type="Submit" name="Save" value="Kontaktdaten Speichern" />
   {if $Adresse->Adresen_id> 0}
-    &nbsp;&nbsp;<a href="?id={$id}&Bearbeiten={$Adresse->Adressen_id}&Plain=1#Copy">Daten für Copy&Paste anzeigen</a>
+    &nbsp;&nbsp;<a href="?id={$id}&Bearbeiten={$Adresse->Adressen_id}&Plain=1#Copy">Daten fÃ¼r Copy&Paste anzeigen</a>
   {/if}
   </td>
 </tr>
@@ -290,7 +290,7 @@
 {if isset($smarty.session.Sem)}
 <tr>
   <td class="zentriert" colspan="4">
-    <a href="javascript:opener.location.search ='?{$smarty.session.Sem}';this.close();">Zurück zum Seminar</a>
+    <a href="javascript:opener.location.search ='?{$smarty.session.Sem}';this.close();">ZurÃ¼ck zum Seminar</a>
   </td>
 </tr>
 {/if}
@@ -317,14 +317,14 @@
   <td>{$adr->Vorlagen}</td>
   <td>
     <a href="?id={$id}&docinput[Institution]={$Adresse->Adressen_id}&docinput[AdressenNr][]={$adr->Adressen_id}&docinput[Edit]=3">
-      <img src="/img/small_edit/delete.gif" title="Löschen" alt="Kreuz"/>    
+      <img src="/img/small_edit/delete.gif" title="LÃ¶schen" alt="Kreuz"/>    
 	</a>
   </td>
 </tr>
 {/foreach}
 </table>
   {/if}
-  {if Count($Adresse->getInstitutionen()) > 0}
+  {if $Adresse->getInstitutionenAnzahl() > 0}
 <table class="volleTabelle">        
 <tr class="ueberschrift">
   <th colspan="6">
@@ -343,7 +343,7 @@
   <td>{$adr->listeVorlagen($Adresse->Adressen_id,$Vorlagenliste)}</td>
   <td>
     <a href="?id={$id}&docinput[Zugehoerig]={$Adresse->Adressen_id}&docinput[AdressenNr][]={$adr->Adressen_id}&docinput[Edit]=2">
-      <img src="/img/small_edit/delete.gif" title="Löschen" alt="Kreuz"/>
+      <img src="/img/small_edit/delete.gif" title="LÃ¶schen" alt="Kreuz"/>
     </a>
   </td>
 </tr>
@@ -389,7 +389,7 @@ type="Text" id="Wiedervorlage" name="docinput[Wiedervorlage]"
   <input type="file" name="Anhang" />
 {else}
   <a target="_blank" href="{$Bemerkung.Anhanglink}">{$Bemerkung.Anhang}</a>
-  &nbsp;&nbsp;&nbsp;[ <a href="?id={$id}&Bearbeiten={$Adresse->Adressen_id}&AddBem={$Bemerkung.Bemerkung_id}&DelAnhang=1#AddBem">Löschen</a> ]
+  &nbsp;&nbsp;&nbsp;[ <a href="?id={$id}&Bearbeiten={$Adresse->Adressen_id}&AddBem={$Bemerkung.Bemerkung_id}&DelAnhang=1#AddBem">LÃ¶schen</a> ]
 {/if}
 <div class="zentriert"><input type="Submit" name="BemSave" value="Bemerkung speichern"/></div>
 </form>
@@ -410,7 +410,7 @@ type="Text" id="Wiedervorlage" name="docinput[Wiedervorlage]"
 {/if}<br />
 {/foreach}
 <div class="zentriert">
-  <a href="?id={$id}&Bearbeiten={$Adresse->Adressen_id}&AddBem=-1#AddBem">Bemerkung hinzufügen</a>
+  <a href="?id={$id}&Bearbeiten={$Adresse->Adressen_id}&AddBem=-1#AddBem">Bemerkung hinzufÃ¼gen</a>
 </div>
 {if Count($Adresse->getBuchungen())>0}
 <table class="volleTabelle">
@@ -427,7 +427,7 @@ type="Text" id="Wiedervorlage" name="docinput[Wiedervorlage]"
       {$Buchung->Buchung_Nr} - {$Buchung->Von|date_format:"%A %d.%m.%Y"} bis
       {$Buchung->Bis|date_format:"%A %d.%m.%Y"} mit {$Buchung->personenAnzahl()} Personen 
       ({$Buchung->getAltersgruppe()} / {$Buchung->Buchungsstatus()})</a>
-    &nbsp;&nbsp;[ <a href="{$Buchungsuebersichturl}&Buchung_Nr={$Buchung->Buchung_Nr}">Belegungsübersicht</a> ] 
+    &nbsp;&nbsp;[ <a href="{$Buchungsuebersichturl}&Buchung_Nr={$Buchung->Buchung_Nr}">BelegungsÃ¼bersicht</a> ] 
       [ <a href="{$Buchungsbemerkungenurl}&docinput[Buchung_Nr]={$Buchung->Buchung_Nr}">Bemerkungen</a> ]
   </td>
 </tr>

@@ -1,6 +1,6 @@
 <h1>{$title}</h1>
 
-<p>1. Zahl: Anzahl Übernachtungen (Anzahl Buchungen/ davon Anzahl Selbstversorgerübernachtungen</p>
+<p>1. Zahl: Anzahl Ãœbernachtungen (Anzahl Buchungen/ davon Anzahl SelbstversorgerÃ¼bernachtungen</p>
 
 <table class="volleTabelle">
 {foreach from=$Werte key=Bereich item=Datum}

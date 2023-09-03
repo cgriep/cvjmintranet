@@ -756,7 +756,7 @@ class Adresse extends DBEntity
 		" SET Anhang = NULL,Bemerkung=CONCAT(Bemerkung,'Anhang gelöscht " . date("d.m.Y H:i") . " " .
 			get_user_nickname() . "') WHERE Bemerkung_id=" . $id);
 	}
-	function holeHistory($url)
+	function holeHistory()
 	{
 		$text = $this->History;
 		return $text;

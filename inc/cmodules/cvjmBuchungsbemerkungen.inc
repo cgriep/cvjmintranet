@@ -50,7 +50,7 @@ if ( $profile['editor'] != 1 )
   {
     if ( trim($docinput['NewBem']) != '' )
     {
-      // Neue Bemerkung anf�gen
+      // Neue Bemerkung anfügen
       if ( sql_query('INSERT INTO '.TABLE_BUCHUNGSBEMERKUNGEN.
         ' (F_Buchung_Nr,Bemerkung, Logtext) VALUES ('.
         $docinput['Buchung_Nr'].",'".
@@ -106,7 +106,7 @@ if ( $profile['editor'] != 1 )
       {
         if ( stripslashes($buchung["Hinweis"]) != $docinput["H".$buchung["Bemerkung_id"]] )
         {
-          // Text wurde ver�ndert
+          // Text wurde verändert
           sql_query("UPDATE ".TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis = '".trim(addslashes(
             $docinput["H".$buchung["Bemerkung_id"]]))."', Logtext=CONCAT('".date("d.m.Y H:i")." geändert ".
             get_user_nickname()."\n',Logtext) WHERE Bemerkung_id = ".$buchung["Bemerkung_id"]);

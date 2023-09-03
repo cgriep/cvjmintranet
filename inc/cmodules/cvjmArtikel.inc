@@ -229,7 +229,7 @@ function zeigeArtikelTabelle($tabelle, $ueberschrift)
 	}
 	else
 	{
-		echo '<tr><td colspan="3" class="zentriert">Zu diesem Artikel geh�ren keine weiteren Artikel</td></tr>';
+		echo '<tr><td colspan="3" class="zentriert">Zu diesem Artikel gehören keine weiteren Artikel</td></tr>';
 	}
 	if ( $docinput["Edit$tabelle"] != 2 )
 	echo '<tr><td colspan="3" class="zentriert">[ <a href="'.get_url($id,
@@ -372,7 +372,7 @@ if ( $profile['editor']!= 1 )
 			zeigeArtikelTabelle(TABLE_ARTIKELGRUPPEN, 'Artikel, die mitgebucht und berechnet werden');
 
 			// zugehörige Artikel
-			zeigeArtikelTabelle(TABLE_ARTIKELBEZIEHUNGEN, 'Zugeh�rige Artikel (werden nicht berechnet)');
+			zeigeArtikelTabelle(TABLE_ARTIKELBEZIEHUNGEN, 'Zugehörige Artikel (werden nicht berechnet)');
 
 			$Smarty->assign('Tabellen', ob_get_contents());
 

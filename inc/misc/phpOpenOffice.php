@@ -85,7 +85,7 @@ class phpOpenOffice
 {
 	var $tmpDirName = "";
 	var $parserFiles = "";
-	var $parsedDocuments = "";
+	var $parsedDocuments = array();
 	var $mimetypeFile = "";
 	var $mimetype = "";
 	var $zipFile = "";
@@ -119,8 +119,8 @@ class phpOpenOffice
 
          // setzt die Styles für Fett- und Kursivdruck ein
          // muss nach loaddocument aufgerufen werden
-         function insertStyles()
-         {
+    function insertStyles()
+    {
            $erfolg = true;
            if($this->tmpDirName == "")
            {
@@ -132,9 +132,9 @@ class phpOpenOffice
 	    $this->handleError("Directory not found: ".$this->tmpDirName, E_USER_ERROR);
 	  }
 	  // Open files and start parsing
-	  $parsedDocuments = array();
-           $file = "content.xml";
-           $fp = fopen($this->parserFiles[$file], "r");
+	  //  $this->parsedDocuments = array();
+      $file = "content.xml";
+      $fp = fopen($this->parserFiles[$file], "r");	  
 	  $this->parsedDocuments[$file] = fread($fp, filesize($this->parserFiles[$file]));
 	  fclose($fp);
            // Style einfügen
@@ -338,7 +338,7 @@ class phpOpenOffice
 		$xml = str_replace("'", "&apos;", $xml);
 		$xml = str_replace("\"", "&quot;", $xml);
 
-		$xml = utf8_encode($xml);
+		//$xml = utf8_encode($xml);  03.09. entfernt
 		return $xml;
 	}
 

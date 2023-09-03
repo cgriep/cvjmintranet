@@ -21,7 +21,7 @@ Template Programmuebersicht
 
 <table class="volleTabelle cellpadding="1px" cellspacing="0px">
 <tr class="ueberschrift">
-  <th>Modul</th><th>Datum</th><th>Personen</th><th>Zust‰ndig</th><th>Buchung</th>
+  <th>Modul</th><th>Datum</th><th>Personen</th><th>Zust√§ndig</th><th>Buchung</th>
 </tr>
 {if isset($smarty.request.Buchung_Nr) && is_numeric($smarty.request.Buchung_Nr)}
 	<h2>Angezeigt wird nur Buchung {$smarty.request.Buchung_Nr}</h2>

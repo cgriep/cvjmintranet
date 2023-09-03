@@ -1153,7 +1153,7 @@ class Buchung extends DBEntity
 			'F_Art_id=' . CVJMART_VERPFLEGUNG . ' ORDER BY Datum DESC, Position DESC LIMIT 1');
 			if (!$this->letzteMahlzeitFeld = sql_fetch_array($query))
 			{
-				$$this->letzteMahlzeitFeld = array();
+				$this->letzteMahlzeitFeld = array(); // war: $$
 			}
 			sql_free_result($query);
 
@@ -1504,7 +1504,7 @@ class Buchung extends DBEntity
 		if ( ! isset($this->Institutionen))
 		{
 			$this->Institutionen = array();
-			if (Count($this->Adresse->getInstitutionen())!=0)
+			if ($this->Adresse->getInstitutionenAnzahl()!=0)
 			{
 				$this->Institutionen[-1] = '-keine-';
 			}

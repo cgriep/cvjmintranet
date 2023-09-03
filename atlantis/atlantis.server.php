@@ -126,10 +126,10 @@ function zeigeKlasse($klassen_id)
 		$ergebnis = '<h1>'.$beschreibung['Klasse'].'</h1>';
 		if ( $beschreibung['Beschreibung'] != '')		
 		  $ergebnis = $beschreibung['Beschreibung'];
-		$ergebnis .= '<p>Zum Adepten ben�tigt man in dieser Klasse '.$beschreibung['Adeptenpunkte'].' Punkte';
+		$ergebnis .= '<p>Zum Adepten benätigt man in dieser Klasse '.$beschreibung['Adeptenpunkte'].' Punkte';
 		if ( $beschreibung['Spruchlistenanzahl']>0)
 		{
-			$ergebnis .= ', man hat insgesamt '.$beschreibung['Spruchlistenanzahl'].' Spruchlisten zur Verf�gung';
+			$ergebnis .= ', man hat insgesamt '.$beschreibung['Spruchlistenanzahl'].' Spruchlisten zur Verfügung';
 		}
 		$ergebnis .= '.</p>';
 		if ( $beschreibung['Bild'] != '')		
@@ -150,7 +150,7 @@ function zeigeKlasse($klassen_id)
 function zeigeDaten($id= NULL)
 {
 	include_once('character.class.php');
-	$ergebnis = '(kein Charakter ausgew�hlt)';
+	$ergebnis = '(kein Charakter ausgewählt)';
 	if (is_numeric($id))
 	{
 		$Charakter = new Charakter();

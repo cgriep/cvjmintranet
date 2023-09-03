@@ -520,13 +520,13 @@ if ($profile['SteinsbergSL'] == '1' )
 		}
 		else
 		{
-			echo 'Es gibt keine Fertigkeiten die der Charakter erwerben k�nnte.';
+			echo 'Es gibt keine Fertigkeiten die der Charakter erwerben könnte.';
 		}
 		sql_free_result($query);
 		echo '</td>';
 		echo '</tr>';
 		echo '<tr><td colspan="2" id="Fertigkeitsbeschreibung"></td><td id="Fertigkeitsgunststufe"></td></tr>';
-		echo '<tr><td colspan="5" align="center"><input type="submit" value="Hinzuf�gen" /></td></tr>';
+		echo '<tr><td colspan="5" align="center"><input type="submit" value="Hinzufügen" /></td></tr>';
 	}
 	?>
 <tr>

@@ -13,7 +13,7 @@
 {if ( ! isset($docinput.Zeit) )}
 Neue Arbeitszeit
 {else}
-Arbeitszeit ver‰ndern
+Arbeitszeit ver√§ndern
 {/if}
 </th></tr>
 <tr>
@@ -46,8 +46,8 @@ Arbeitszeit ver‰ndern
 </tr>
 <tr>
   <td colspan="4" align="center"><input type="Submit" value="{if ( isset($docinput.Zeit) )}
-ƒnderungen speichern" />&nbsp;&nbsp;[ <a href="?id={$id}">Neue Arbeitszeit</a> ]{else}
-Arbeitszeit hinzuf¸gen" />{/if}
+√Ñnderungen speichern" />&nbsp;&nbsp;[ <a href="?id={$id}">Neue Arbeitszeit</a> ]{else}
+Arbeitszeit hinzuf√ºgen" />{/if}
   </td>
 </tr>
 <input type="hidden" name="docinput[Benutzer]" value="{$Benutzer}" />

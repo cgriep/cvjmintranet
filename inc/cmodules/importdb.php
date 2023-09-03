@@ -18,7 +18,7 @@
       sql_free_result($query);
       $sql2 .= $row["Adressen_id"].",40)";
       if ( ! sql_query($sql2) ) echo $sql2." ".sql_error();
-      else echo "Hinzugef�gt<br />";
+      else echo "Hinzugefügt<br />";
       echo $sql2."<br />";
     }
     fclose($handle);
@@ -62,7 +62,7 @@
       $sql2 = substr($sql2, 0, strlen($sql2)-1);
       $sql2.= ")";
       if ( ! sql_query($sql2) ) echo sql_error();
-      else echo "Hinzugef�gt<br />";
+      else echo "Hinzugefügt<br />";
       echo $sql2."<br />";
     }
     fclose($handle);
@@ -96,7 +96,7 @@
       $sql2 = substr($sql2, 0, strlen($sql2)-1);
       $sql2.= ")";
       if ( ! sql_query($sql2) ) echo sql_error();
-      else echo "Hinzugef�gt<br />";
+      else echo "Hinzugefügt<br />";
       echo $sql2."<br />";
     }
     fclose($handle);

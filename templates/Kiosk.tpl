@@ -131,11 +131,11 @@ onBlur="autoCorrectDate('Umsatz','docinput[UmsatzBis]' , false )"
 
 <form action="?id={$id}" method="post" name="Arten" class="noprint">
 Geldbuchung von Summe <input type="text" name="docinput[Geld]" />
-<input type="submit" value="hinzufügen" />
+<input type="submit" value="hinzufÃ¼gen" />
 </form>
 
 {if Count($Mitarbeiter)== 0}
-Es gibt momentan keine Einträge auf Mitarbeiterlisten.
+Es gibt momentan keine EintrÃ¤ge auf Mitarbeiterlisten.
 {else}
 <div class="noprint">
 Mitarbeiter haben {$Mitarbeiterbetrag} Euro auf ihren Listen.<br />
@@ -147,7 +147,7 @@ Mitarbeiterliste von
 </form>
 </div>
 {if isset($Mitarbeiterliste)}
-<h2>Einkäufe von {$docinput.Mitarbeiter}</h2>
+<h2>EinkÃ¤ufe von {$docinput.Mitarbeiter}</h2>
 <table width="100%" border="1" style="border-collapse:collapse;" class="drucklinien">
 <tr>
   <th>Bezeichung</th>

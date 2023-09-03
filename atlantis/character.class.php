@@ -4,18 +4,18 @@
 /**
  * Klasse Charakter
  * Kapselt die Eigenschaften eines Spielcharakters mit seinen Fertigkeiten
- * Enthält zus�tzlich diverse Implemtierungen der Atlantis-Regeln
+ * Enthält zusätzlich diverse Implemtierungen der Atlantis-Regeln
  * 2006 Christoph Griep
  * 
  */
 class Charakter
 {
 	/** 
-	 * Magiepunkte pro Zauber h�ngen vom Rang ab: 
+	 * Magiepunkte pro Zauber hängen vom Rang ab: 
 	 * Wanderer: 3 Punkte
 	 * Adept: 5
 	 * Meister: 10
-	 * Gro�meister: 20
+	 * Großmeister: 20
 	 */
 	var $Magiepunkte = array (
 		1 => 3,

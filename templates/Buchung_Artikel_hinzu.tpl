@@ -1,4 +1,4 @@
-{*  Template Buchung Artikel hinzufügen *}
+{*  Template Buchung Artikel hinzufÃ¼gen *}
 <script language="javascript">
 function showPersonen(feld, Anzahl)
 {literal}
@@ -13,12 +13,12 @@ function showPersonen(feld, Anzahl)
 {/literal}
 </script>
 <div class="ueberschriftzeile noprint">
-    Artikel hinzufügen<a name="Artikel" id="Artikel"></a>
+    Artikel hinzufÃ¼gen<a name="Artikel" id="Artikel"></a>
 </div>
 <div class="noprint zentriert">
 <div class="Fehler">{$Fehlerliste}</div>
 <form action="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}#Artikel" method="post">
-    <label for="ArtikelBezeichnung">Artikel zum Hinzufügen wählen</label> 
+    <label for="ArtikelBezeichnung">Artikel zum HinzufÃ¼gen wÃ¤hlen</label> 
     <input type="Text" id="ArtikelBezeichnung" name="docinput[ArtikelSearch]" 
       value="{$docinput.ArtikelSearch|escape}" 
       size="20" maxlength="30" />
@@ -97,7 +97,7 @@ function showPersonen(feld, Anzahl)
   <td colspan="{$spalten}" class="zentriert">- keine passenden Artikel gefunden -
 {else}
   <td colspan="{$spalten}" class="zentriert">
-    <input type="Submit" value="Hinzufügen" />
+    <input type="Submit" value="HinzufÃ¼gen" />
 {/if}
   </td>
 </tr>

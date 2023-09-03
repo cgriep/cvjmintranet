@@ -70,7 +70,7 @@ if ( isset($_SESSION['Anmelderecht']) && is_numeric($_REQUEST['Ver']) )
 	}
 }		
 
-// Auflistung aller H�user
+// Auflistung aller Häuser
 // wenn angemeldeter = Verantwortlicher dann Anzeige der Anmeldungen pro Veranstaltung
 // und Button für Annahme / Ablehnung
 
@@ -189,7 +189,7 @@ while ( $row = sql_fetch_array($query) )
 		echo '</table>';
 		if ( $Adel + $NichtAdel > 0)
 		{
-			echo $Adel.' Adlige, '.$NichtAdel.' b�rgerliche - Adelsprozentsatz '.number_format($Adel/($Adel+$NichtAdel)*100,2).'%';
+			echo $Adel.' Adlige, '.$NichtAdel.' bürgerliche - Adelsprozentsatz '.number_format($Adel/($Adel+$NichtAdel)*100,2).'%';
 		}
 		}
 		echo '</td>';
@@ -255,7 +255,7 @@ while ( $row = sql_fetch_array($query) )
 					{
 						echo '<a href="'.get_url($id).'&Akzeptieren='.$char[0].'&Ver='.$Veranstaltungen[$vnr]['id'].'">Akzeptieren</a> / ';
 						echo '<a href="'.get_url($id).'&Ablehnen='.$char[0].'&Ver='.$Veranstaltungen[$vnr]['id'];
-						echo '" onClick="javascript:return confirm(\'Soll diese Anmeldung tats�chlich unwiderruflich abgelehnt werden?\');">Ablehnen</a>';
+						echo '" onClick="javascript:return confirm(\'Soll diese Anmeldung tatsächlich unwiderruflich abgelehnt werden?\');">Ablehnen</a>';
 					}
 					else
 					{

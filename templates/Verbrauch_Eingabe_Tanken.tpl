@@ -1,4 +1,4 @@
-<h2>Tankerfassung für {$Groesse.Bezeichnung}</h2>
+<h2>Tankerfassung fÃ¼r {$Groesse.Bezeichnung}</h2>
 <form action="?id={$id}&docinput[Groesse]={$Groesse.Groesse_id}" method="post" name="WertForm">
 <label>Datum</label>
 <input type="Text" name="docinput[Datum]" value="{$smarty.now|date_format:"%d.%m.%Y"}" 
