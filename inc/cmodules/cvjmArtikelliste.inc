@@ -10,7 +10,7 @@ include(INC_PATH.'Smarty/Smarty.class.php');
 if ( $profile["editor"] != 1 )
 {
   $Smarty = new Smarty();
-  $Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
+  $Smarty->template_dir = TEMPLATEPATH; 
   $Smarty->assign('title', transform($document['title'],$document['datatype']['title']));
   $Smarty->assign('id', $id);
   
@@ -31,6 +31,7 @@ if ( $profile["editor"] != 1 )
   }
   $Smarty->assignbyref('Preislisten', $Preislisten);
   sql_free_result($preislisten);
+  $Artikel = array();    
   if ( isset($docinput["Preisliste"]) && is_numeric($docinput["Preisliste"]) )
   {
   	if ( isset($docinput['Art']))
@@ -49,13 +50,11 @@ if ( $profile["editor"] != 1 )
       " ON id=Artikel_Nr) INNER JOIN ".TABLE_ARTIKELARTEN." ON F_Art_id=Art_id ".
       " WHERE F_Preisliste_id=".$docinput["Preisliste"].$Where.
       " ORDER BY Art, Bezeichnung";
-   if (!$query = sql_query($sql)) echo sql_error();
-    $Artikel = array();
+    if (!$query = sql_query($sql)) echo sql_error();
     while ( $artikel = sql_fetch_array($query) )
     {
       $Artikel[] = new Artikel($artikel['id']);
     }
-    $Smarty->assignbyref('Artikel', $Artikel);
     sql_free_result($query);
     $Buchungsvorlagen = glob(CVJM_VORLAGEN_DIR."/ArtikelPreislisten/*".CVJM_ENDUNG);
     $anz = 0;
@@ -67,6 +66,7 @@ if ( $profile["editor"] != 1 )
     $Smarty->assign('Vorlagen', $Vorlagen);
 	
   }
+  $Smarty->assignbyref('Artikel', $Artikel);    
   $Smarty->display('Artikel_Preisliste.tpl');
 }
 ?>

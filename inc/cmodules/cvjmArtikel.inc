@@ -336,13 +336,15 @@ if ( $profile['editor']!= 1 )
 		include(INC_PATH.'misc/cvjmDateien.inc');
 		Dateiloeschen($subject, 'DelDatei');
 		Dateihochladen($subject, 'Werbematerial');
-		$handle=opendir($subject);
-		while (false != ($file = readdir($handle))) {
-			if(filetype($subject.$file) == 'file') {
-				$datei['Groesse'] = floor(filesize($subject.$file) / 1024);
-				$datei['URL'] = str_replace(' ', '%20',$subject.$file);
-				$datei['Name'] = $file;
-				$filelist[] = $datei;
+		if ( $handle=opendir($subject) )
+		{
+			while (false !== ($file = readdir($handle))) {
+				if(filetype($subject.$file) == 'file') {
+					$datei['Groesse'] = floor(filesize($subject.$file) / 1024);
+					$datei['URL'] = str_replace(' ', '%20',$subject.$file);
+					$datei['Name'] = $file;
+					$filelist[] = $datei;
+				}
 			}
 		}
 		$Smarty->assign('Dateiliste', $filelist);

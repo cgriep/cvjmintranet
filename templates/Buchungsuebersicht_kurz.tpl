@@ -83,7 +83,7 @@
        {popup text=$buchungtext|nl2br|escape caption=$titel}
        >X</a>      
     {/foreach}
-    {if count($eintraege) == 0}
+    {if count($Buchungen) == 0}
       &nbsp;
     {/if}
   </td>

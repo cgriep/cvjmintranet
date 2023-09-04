@@ -126,7 +126,6 @@ if(DBMS == 'mysql') {
     $lookfor.'%" OR value LIKE "%'.$lookforHTML.'%")';
 }
 else { $where = "value LIKE '%".$lookfor."%'"; }
-
 $search_results = search_nodes ($where);
 
 if($search_results) {
@@ -162,8 +161,8 @@ else {
 	printf('<p>'.LANG_NOT_FOUND.' ('.$way.')</p>','<b>'.$search.'</b>');
 	}
  // Datenbanken durchsuchen
- reset($document["DBNamen"]);
- foreach ( $docment["DBNamen"] as $key => $value) 
+// reset($document["DBNamen"]);
+ foreach ( $document["DBNamen"] as $key => $value) 
  {
    echo '<hr />';
    list($Beschreibung,$seitenid, $param, $Datenbankname, $Felder) = explode(":",$value);
@@ -211,7 +210,7 @@ else {
      $sql = "SELECT $FeldString FROM $Datenbankname WHERE ($SearchString) AND $suchen";
    }
    else
-     $sql = "SELECT $FeldString FROM $Datenbankname WHERE $SearchString";
+     $sql = "SELECT $FeldString FROM $Datenbankname WHERE $SearchString";     
    if ( ! $query = sql_query($sql) )
      echo sql_error();
    $Felder = explode("|", $Felder);
