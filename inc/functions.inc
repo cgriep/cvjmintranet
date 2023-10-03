@@ -1568,7 +1568,7 @@ function get_online_users ($time = 10) {
         $avg_activity = ($avg_views / $avg_reg_time);
 
         $qres = sql_query("SELECT id, email, views, registered, last_login FROM ".TABLE_USERS." WHERE last_login >= ".date('YmdHis', $time)." AND online = 1 ORDER BY last_login DESC");
-
+        $users = array();
         while($row = sql_fetch_row($qres)) {
 
                 $users[$row[0]]['email']         = stripslashes($row[1]);
@@ -1658,7 +1658,7 @@ function get_users ($userlist, $time = 10) {
                 $users[$row[0]]['email']         = stripslashes($row[1]);
                 $users[$row[0]]['views']         = $row[2];
                 $users[$row[0]]['registered']         = $row[3];
-                $users[$row[0]]['online']         = ($row[4] >= date(YmdHis, $time));
+                $users[$row[0]]['online']         = ($row[4] >= date('YmdHis', $time));
                 $users[$row[0]]['activity']         = round((($row[2] / (time() - $row[3])) / (($row[2] / (time() - $row[3])) + $avg_activity)) * 100);
 
                 $qres2 = sql_query("SELECT name, value FROM ".TABLE_USERDATA." WHERE user_id = $row[0] AND
@@ -1733,7 +1733,7 @@ function is_online ($user_id, $time = 10) {
 
         $row = sql_fetch_row($qres);
         sql_free_result($qres);
-        return ($row[0] >= date(YmdHis, $time));
+        return ($row[0] >= date('YmdHis', $time));
         }
 
 function user_since ($user_id) {
@@ -1800,14 +1800,25 @@ function get_url ($id, $params = '', $add_base_url = false) {
                   if ( is_array($value) )
                          {
                            foreach ($value as $kkey => $vvalue) 
-                           {
-                             $param_str .= $pre.urlencode($key)."[".urlencode($kkey).
-                               "]=".urlencode($vvalue);
+                           {                             
                              $pre = "&";
+                             if ( is_array($vvalue))
+                             {
+                                foreach ($vvalue as $kkkey => $vvvalue)
+                                {
+                                        $param_str .= $pre.urlencode($key)."[".urlencode($kkey)."][".urlencode($kkkey)."]=".urlencode($vvvalue);
+                                }
+                             }
+                             else 
+                             {
+                               $param_str .= $pre.urlencode($key)."[".urlencode($kkey)."]=".urlencode($vvalue);
+                             }                             
                            }
                          }
                          else
-                        $param_str .= $pre.urlencode($key).'='.urlencode($value);
+                        {
+                                $param_str .= $pre.urlencode($key).'='.urlencode($value);
+                        }
                         $pre = '&';
                         }
                 unset($params);

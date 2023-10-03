@@ -173,9 +173,9 @@ alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">pe
     $Was = "Selbst";
     $Sichern = true;
   }
-  if ( isset($_REQUEST["Gruppe"] ) ) {
+  if ( isset($docinput["Gruppe"] ) ) {
     $Wer = array();
-    foreach ($_REQUEST["Gruppe"] as $key => $value )
+    foreach ($docinput["Gruppe"] as $key => $value )
       if ( is_numeric($value) )
         $Wer[] = $value;
     $Wer = implode(",",$Wer);
@@ -441,13 +441,17 @@ alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">pe
   foreach ($groups as $gid => $g) {
     if ( InGruppe($gid)) //||uskommentiert 1.5.2011- $profile[$document["Terminrecht"]] == "1" )
     {
-      echo '<input type="Checkbox" name="Gruppe[]" value="'.$gid.'" ';
-      if ( in_array($gid, explode(",", $_REQUEST["Gruppe"]) )) echo 'checked="checked"';
-      echo ' /> '.$g."&nbsp;&nbsp;";
+      echo '<input type="Checkbox" name="docinput[Gruppe][]" value="'.$gid.'" ';
+      if ( is_array($docinput['Gruppe']) && in_array($gid, $docinput['Gruppe']) )
+      {
+        echo 'checked="checked"';
+      }
+      // outdate 02.10.23 - explode(",", $_REQUEST["docinput[Gruppe]"]) )) echo 'checked="checked"';
+      echo ' /> '.$g."&nbsp;&nbsp;";      
     }
   }
 ?>
-<input type="Submit" value="anzeigen" name="Gruppe[]"></form>
+<input type="Submit" value="anzeigen" name="docinput[Gruppe][]"></form>
 <?php
 if ( $profile["SeeAll"] == "1" ) {
 ?>

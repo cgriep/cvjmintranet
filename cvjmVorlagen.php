@@ -55,8 +55,8 @@ function AddPreis($preis1, $preis2, $mitOb = true)
 {
   if ($preis1 == OHNE_BERECHNUNG ) $preis1 = 0;
   if ($preis2 == OHNE_BERECHNUNG ) $preis2 = 0;
-  $preis1 = str_replace(',','.',$preis1);
-  $preis2 = str_replace(',','.',$preis2);
+  $preis1 = floatval(str_replace(',','.',$preis1));
+  $preis2 = floatval(str_replace(',','.',$preis2));
   return Preis($preis1+$preis2, $mitOb);
 }
 

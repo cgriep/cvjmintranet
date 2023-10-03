@@ -22,7 +22,7 @@ if ( $profile["editor"] != 1 )
 	$Where = "WHERE Wiedervorlage > 0";
 	$sql = "SELECT Bemerkung, Bemerkung_id, Wiedervorlage, Datum, Name, ".
 	"Zusatz, PLZ, Ort, Von, Bis, Bemerkungen, Adressen_id, Buchung_Nr, BStatus, ".
-	"Personenanzahl, Altersgruppe FROM (".
+	"Altersgruppe FROM (".
 	TABLE_ADRESSENBEMERKUNGEN.
 	" INNER JOIN ".TABLE_ADRESSEN." ON Adressen_id = F_Adressen_id) LEFT JOIN ".
 	TABLE_BUCHUNGEN." ON F_Buchung_Nr = Buchung_Nr $Where ORDER BY Wiedervorlage";

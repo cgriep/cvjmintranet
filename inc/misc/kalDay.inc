@@ -86,7 +86,7 @@ echo " ".$Tag.". $mn";?></div>
   {
     $fTermine = array();
   }
-  foreach ( $fTermine as $key => $value) )
+  foreach ( $fTermine as $key => $value) 
   {
     if (($value['TurnusEnde'] == 0 ||
         $value['TurnusEnde'] >= mktime(0,0,0,$Monat, $Tag,$Jahr)) &&

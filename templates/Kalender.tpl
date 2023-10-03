@@ -157,13 +157,13 @@ alle Termine</a>, <a href="<?=get_url($id,$Param)?>&Selbst=<?=SESSION_DBID?>">pe
   foreach ($groups as $gid => $g)  {
     if ( InGruppe($gid) || $profile[$document["Terminrecht"]] == "1" )
     {
-      echo '<input type="Checkbox" name="Gruppe[]" value="'.$gid.'" ';
-      if ( in_array($gid, explode(",", $_REQUEST["Gruppe"]) )) echo 'checked="checked"';
+      echo '<input type="Checkbox" name="docinput[Gruppe][]" value="'.$gid.'" ';
+      if ( in_array($gid, explode(",", $_REQUEST["docinput[Gruppe]"]) )) echo 'checked="checked"';
       echo ' /> '.$g."&nbsp;&nbsp;";
     }
   }
 ?>
-<input type="Submit" value="anzeigen" name="Gruppe[]"></form>
+<input type="Submit" value="anzeigen" name="docinput[Gruppe][]"></form>
 <?php
 if ( $profile["SeeAll"] == "1" ) {
 ?>

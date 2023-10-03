@@ -16,9 +16,9 @@ if ($profile["editor"] != 1)
 	require_once(INC_PATH.'Smarty/Smarty.class.php');
 	require_once(INC_PATH.'cvjm/Event.class.php');
 	require_once(INC_PATH.'cvjm/Buchung.class.php');
-	require_once(INC_PATH.'cvjm/Artikel.class.php');
-  	$Smarty->template_dir = TEMPLATEPATH; 
+	require_once(INC_PATH.'cvjm/Artikel.class.php');  	
   	$Smarty = new Smarty();
+	$Smarty->template_dir = TEMPLATEPATH; 
   	$Anzahl = 0;
 	$Smarty->assign('title',transform($document['title'], $document['datatype']['title']));
 	if (isset ($_REQUEST["Datum"]))

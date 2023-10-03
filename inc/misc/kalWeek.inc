@@ -40,7 +40,7 @@
 	$fTermine = search_nodes($search,1000);
 	else
 	$fTermine = search_children ($search,1000);
-	foreach ( $fTermine as $key => $value)  )
+	foreach ( $fTermine as $key => $value)  
 	{
 		if ( $value['Enddatum'] > $Ende )
 		$Termine[$key] = $value;
@@ -52,7 +52,7 @@
 	$fTermine = search_nodes($search,1000);
 	else
 	$fTermine = search_children ($search,1000);
-	foreach ($fTermine as $key => $value) )
+	foreach ($fTermine as $key => $value) 
 	{
 		if ( $value['Datum'] < $Anfang )
 		$Termine[$key] = $value;
@@ -182,7 +182,7 @@
 		if ($dayprint>6) $dayprint=$dayprint-7;
 		echo ' <td width="'.(100/($AnzTage+1)).'%"';
 		//$anz = (-$sd)+$I;
-		$datum = strtotime('+'.$I.' days', $Anfang);//mktime(0,1,0,$Monat,$Tag,$Jahr));
+		$datum = strtotime('+'.$I.' days', $Anfang);
 		$Wochenende = date('w', $datum);
 		if ( $Wochenende == 0 || $Wochenende == 6)
 		echo ' bgcolor="#'.$document['WEBackgroundcolor'].'"';
