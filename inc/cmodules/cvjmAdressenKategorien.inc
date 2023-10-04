@@ -23,7 +23,7 @@ if ( $profile['editor'] != 1 )
 		$Smarty = new Smarty();
 		$Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
 		$Smarty->assign('title', transform($document['title'], $document['datatype']['title']));
-		$Smarty->assignbyref('Adresse', $Adresse);
+		$Smarty->assign('Adresse', $Adresse);
 
 		if ( ! $query = sql_query('SELECT Kategorie_id, Kategorie, Count(F_Kategorie_id) AS Anz, '.
 		'Sum(F_Adressen_id='.$Adresse->Adresse['Adressen_id'].') AS Da FROM '.
@@ -58,7 +58,7 @@ if ( $profile['editor'] != 1 )
 			}
 		}
 		sql_free_result($query);
-		$Smarty->assignbyref('Kategorien', $Kategorien);
+		$Smarty->assign('Kategorien', $Kategorien);
 		$Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));
 		$Smarty->display('Adresskategorien.tpl');
 	}

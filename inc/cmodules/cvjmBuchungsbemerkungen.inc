@@ -180,10 +180,10 @@ if ( $profile['editor'] != 1 )
 	$Smarty = new Smarty;
 	$Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
 	$Smarty->assign('id', $id);
-    $Smarty->assignbyref('Bemerkungen', $Bemerkungen);    	
+    $Smarty->assign('Bemerkungen', $Bemerkungen);    	
 	
     $Buchung = new Buchung($docinput['Buchung_Nr']);
-	$Smarty->assignbyref('Buchung',$Buchung);
+	$Smarty->assign('Buchung',$Buchung);
 	$Smarty->assign('Adressenurl',get_url(get_cmodule_id('cvjmadressen')));
 	$Smarty->assign('Auftragurl',get_url(get_cmodule_id('auftrag')));
 	$Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));

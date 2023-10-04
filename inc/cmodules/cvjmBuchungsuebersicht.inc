@@ -367,7 +367,7 @@ if ($profile['editor'] != 1)
 			$Smarty->assign('Personalplanungurl', get_url(get_cmodule_id('cvjmpersonalplanung'), 'docinput[Buchung_Nr]='.$Buchung->Buchung_Nr));
 		}
 		$Links['Verleih'] = "docinput[Art]=" . CVJMART_VERLEIH . $dat;		
-		$Smarty->assignbyref('Links', $Links);
+		$Smarty->assign('Links', $Links);
 		$Smarty->assign('dat', $dat);
 		$Smarty->assign('Programmpaket', $docinput['Art'] == CVJMART_PROGRAMMPAKET);
 		$Smarty->assign('mitZeit', $docinput["Art"] == CVJMART_VERLEIH || 
@@ -428,7 +428,7 @@ if ($profile['editor'] != 1)
 			$Kategorien[] = $kategorie;
 		}
 		$Smarty->assign('Artikelurl', get_url(get_cmodule_id('cvjmartikel')));
-		$Smarty->assignbyref('Kategorien', $Kategorien);
+		$Smarty->assign('Kategorien', $Kategorien);
 		$Smarty->assign('default_background', $design["default_background"]);
 		// Template
 		$_SESSION['Buchung'] = $_REQUEST['Buchung_Nr'];
@@ -442,7 +442,7 @@ if ($profile['editor'] != 1)
 		{
 			$Tage[] = strtotime('+'.$i.' day', $Tag);
 		}
-		$Smarty->assignbyref('Tage', $Tage);
+		$Smarty->assign('Tage', $Tage);
 
 		$docinput['Artikelnummern'] = '';
 		for ($i = 0; $i < $_SESSION['ANZAHLTAGE']; $i++)
@@ -451,7 +451,7 @@ if ($profile['editor'] != 1)
 		}
 		$Artikel = array();
 		ArtikelAnzeigen($docinput["Art"], $Tag, $docinput["Page"]);
-		$Smarty->assignbyref('Artikel', $Artikel);
+		$Smarty->assign('Artikel', $Artikel);
 		if ($docinput['Art'] == CVJMART_ORT && isset ($_REQUEST['Buchung_Nr']) && $_REQUEST['Buchung_Nr'] > 0)
 		{
 			$Smarty->assign('Schlafplaetze', $Schlafplaetze);
@@ -462,7 +462,7 @@ if ($profile['editor'] != 1)
 			$docinput["Artikelnummern"] = substr($docinput["Artikelnummern"], 0, strlen($docinput["Artikelnummern"]) - 1);
 		}
 			
-		$Smarty->assignbyref('docinput', $docinput);
+		$Smarty->assign('docinput', $docinput);
 		$Smarty->assign('id', $id);
 		$Smarty->assign('params', 'Buchung_Nr='.$Buchung->Buchung_Nr);
 		$Smarty->assign('Tag', $Tag);
@@ -471,7 +471,7 @@ if ($profile['editor'] != 1)
 		$Smarty->assign('AnzeigeEnde', strtotime('+'.$_SESSION['ANZAHLTAGE'].' days',$Tag));
 		$Smarty->assign('menge',  $Menge);
 		$buchung['Fertig'] = $Buchung->isFertig();
-		$Smarty->assignbyref('buchung', $buchung);
+		$Smarty->assign('buchung', $buchung);
 		$Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));
 		setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");
 		$Smarty->display('Buchungsuebersicht.tpl');

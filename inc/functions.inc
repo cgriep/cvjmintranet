@@ -185,7 +185,7 @@ function get_user_email ($user_id = -1) {
 
 function get_user_id ($email) {
         // returns the user_id corresponding to the given email address
-        if(defined(SESSION_EMAIL) && SESSION_EMAIL == $email) return SESSION_DBID;
+        if(defined('SESSION_EMAIL') && SESSION_EMAIL == $email) return SESSION_DBID;
         $user_id = sql_query ("SELECT id FROM ".TABLE_USERS." WHERE email='".addslashes($email)."'");
                 if(sql_num_rows($user_id) > 0) {
                         $prow = sql_fetch_row($user_id);

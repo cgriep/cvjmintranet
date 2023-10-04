@@ -1359,8 +1359,8 @@ if ($profile['editor'] != 1)
 				}
 			}			    			
 			$Smarty->assign('id', $id);
-			$Smarty->assignbyref('docinput', $docinput);
-			$Smarty->assignbyref('rechnung', $rechnung);						
+			$Smarty->assign('docinput', $docinput);
+			$Smarty->assign('rechnung', $rechnung);						
 			asort($DokArten);
 			$Smarty->assign('DokArten_values', array_keys($DokArten));
 			$Smarty->assign('DokArten_output', array_values($DokArten));

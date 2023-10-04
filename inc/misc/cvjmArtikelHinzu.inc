@@ -15,8 +15,8 @@ function anzeigeArtikelHinzufuegen($buchung, $spalten = 9)
 	$Smarty->template_dir = TEMPLATEPATH; // '/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
 	$Smarty->assign('id', $id);
 	$Smarty->assign('spalten', $spalten);
-	$Smarty->assignbyref('docinput', $docinput);
-	$Smarty->assignbyref('Buchung', $buchung);
+	$Smarty->assign('docinput', $docinput);
+	$Smarty->assign('Buchung', $buchung);
 	$Smarty->display('Buchung_Artikel_hinzu.tpl');
 }
 

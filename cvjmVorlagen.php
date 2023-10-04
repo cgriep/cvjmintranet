@@ -1373,7 +1373,7 @@ if ( $Datenbank != 'ArtikelPreislisten' && is_numeric($Adressenid) )
 	{
 		$Nummer = '&'.$Nummer;
 	}
-	header('Location: https://' . $_SERVER['HTTP_HOST']. '/oopdf.php?Datei='.$Pfadname.$Dateiname);//.$Nummer);
+	header('Location: '.(stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://').$_SERVER['HTTP_HOST']. '/oopdf.php?Datei='.$Pfadname.$Dateiname);//.$Nummer);
   }
   else
   {

@@ -137,7 +137,7 @@ if ($profile['editor'] != 1)
 		}
 		sql_free_result($qu);		
 	}
-	$Smarty->assignbyref('Anzeige', $Artikel);
+	$Smarty->assign('Anzeige', $Artikel);
 	$Smarty->display('Buchungsuebersicht_kurz.tpl');
 } // wenn nicht Editor
 ?>

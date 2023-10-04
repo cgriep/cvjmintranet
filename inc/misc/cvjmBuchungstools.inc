@@ -230,7 +230,7 @@ function ZeigeBuchungskopf($buchung)
   $Smarty = new Smarty();
 	$Smarty->template_dir = TEMPLATEPATH; // '/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';	
   $Buchung = new Buchung($buchung['Buchung_Nr']);
-  $Smarty->assignbyref('Buchung',$Buchung);
+  $Smarty->assign('Buchung',$Buchung);
   $Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));
   $Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));
   setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");

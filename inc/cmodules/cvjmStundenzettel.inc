@@ -147,7 +147,7 @@ if ( $profile['editor'] != 1 )
     $Smarty = new Smarty();
     $Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
     $Smarty->assign('id', $id);
-    $Smarty->assignbyref('docinput', $docinput);
+    $Smarty->assign('docinput', $docinput);
     if ( isset($docinput['Del']) && is_numeric($docinput['Del']))
     {
     	$query = sql_query("DELETE FROM ".TABLE_STUNDENZETTEL." WHERE id=".$docinput['Del']);
@@ -165,9 +165,9 @@ if ( $profile['editor'] != 1 )
         $eintrag["Datum"] = time();
         $eintrag["Bis"] = time();
     }
-    $Smarty->assignbyref('eintrag', $eintrag);
+    $Smarty->assign('eintrag', $eintrag);
     $Smarty->assign('Benutzer', $Benutzer);
-    $Smarty->assignbyref('Arbeitsarten', $Arbeitsarten);
+    $Smarty->assign('Arbeitsarten', $Arbeitsarten);
     $Smarty->display('Stundenzettel_Eingabe.tpl');
     
     if ( ! isset($docinput["Datum"]) || ! is_numeric($docinput["Datum"]) )
@@ -204,7 +204,7 @@ if ( $profile['editor'] != 1 )
       }
       $eintraege[] = $row;
     }
-    $Smarty->assignbyref('Eintraege', $eintraege);
+    $Smarty->assign('Eintraege', $eintraege);
     $Smarty->assign('Stunden', sprintf("%.02f",$Stunden));
     $Smarty->assign('SoStunden', sprintf("%.02f",$SoStunden));
     $Smarty->assign('FeierStunden', sprintf("%.02f",$FeierStunden));

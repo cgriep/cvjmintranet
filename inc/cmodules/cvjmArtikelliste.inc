@@ -29,7 +29,7 @@ if ( $profile["editor"] != 1 )
     $Preislisten[$preisliste["Preisliste_id"]] = $preisliste['Bezeichnung'].' ('.
       date('d.m.Y', $preisliste['GueltigAb']).')';
   }
-  $Smarty->assignbyref('Preislisten', $Preislisten);
+  $Smarty->assign('Preislisten', $Preislisten);
   sql_free_result($preislisten);
   $Artikel = array();    
   if ( isset($docinput["Preisliste"]) && is_numeric($docinput["Preisliste"]) )
@@ -66,7 +66,7 @@ if ( $profile["editor"] != 1 )
     $Smarty->assign('Vorlagen', $Vorlagen);
 	
   }
-  $Smarty->assignbyref('Artikel', $Artikel);    
+  $Smarty->assign('Artikel', $Artikel);    
   $Smarty->display('Artikel_Preisliste.tpl');
 }
 ?>

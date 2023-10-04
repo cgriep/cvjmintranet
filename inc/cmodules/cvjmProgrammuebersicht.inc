@@ -72,7 +72,7 @@ if ($profile["editor"] != 1)
 		$zeilen[] = $row;
 	}
 	sql_free_result($query);
-	$Smarty->assignbyref('zeilen', $zeilen);
+	$Smarty->assign('zeilen', $zeilen);
 	$Smarty->display('Programmuebersicht.tpl');
 
 } // wenn nicht Editor

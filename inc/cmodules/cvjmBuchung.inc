@@ -31,7 +31,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 	global $document;
 	global $Wochentage;
 	global $profile;
-	$Smarty->assignbyref('Artikelarten', Artikel::getArtikelArten());
+	$Smarty->assign('Artikelarten', Artikel::getArtikelArten());
 	$Smarty->assign('Edit', isset($_REQUEST['Edit']));
 	$Smarty->assign('Aenderbar', !$abgerechnet && $profile[$document['SpeicherRecht']] == '1');
 	$Smarty->assign('Buchungsuebersichturl', get_url(get_cmodule_id('cvjmbuchungsuebersicht'), array (
@@ -141,7 +141,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 			}
 		} // foreach
 	} // foreach
-	$Smarty->assignbyref('Artikel', $Artikel);
+	$Smarty->assign('Artikel', $Artikel);
 	return $Smarty->fetch('Buchung_Artikeltabelle.tpl');
 }
 
@@ -382,7 +382,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 	$Smarty->assign('check1', $check1);
 	$Smarty->assign('check2', $check2);
 	// Buchungs-Objekt
-	$Smarty->assignbyref('Buchung', $Buchung);
+	$Smarty->assign('Buchung', $Buchung);
 	$Smarty->assign('Adressebearbeiten', get_url(get_cmodule_id('cvjmadressen')));
 	$Smarty->assign('KundeAendern', isset ($_REQUEST['KuNrA']));
 
@@ -421,7 +421,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 		{
 			$Rechnungen[] = $rechnung;
 		}
-		$Smarty->assignbyref('Rechnungen', $Rechnungen);
+		$Smarty->assign('Rechnungen', $Rechnungen);
 		sql_free_result($query);
 	}
 	include (INC_PATH . 'misc/cvjmKorrespondenz.inc');
@@ -436,7 +436,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 
 	setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
 	$Smarty->assign('spalten', 8);
-	$Smarty->assignbyref('docinput', $docinput);
+	$Smarty->assign('docinput', $docinput);
 	// Einzelheiten
 	if (! $Buchung->isNeu())
 	{

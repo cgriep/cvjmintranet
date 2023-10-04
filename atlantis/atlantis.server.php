@@ -102,7 +102,7 @@ function zeigeSpruchliste($id)
   	  sql_free_result($query);
 	  $smarty = new Smarty;		
 	  $smarty->assign('Spezialisierung', $name);
-	  $smarty->assignbyref('Sprueche', $sprueche);
+	  $smarty->assign('Sprueche', $sprueche);
 	  $s = $smarty->fetch('spruchliste.tpl');
 	}
 	$s = utf8_encode($s);
@@ -170,7 +170,7 @@ function zeigeDaten($id= NULL)
 	if ( isset($Charakter))
 	{
 	  $smarty = new Smarty;		
-	  $smarty->assignbyref('Character', $Charakter->alsFeld(true));
+	  $smarty->assign('Character', $Charakter->alsFeld(true));
 	  $ergebnis = $smarty->fetch('character.tpl');		
 	}
 	$objResponse = new xajaxResponse();

@@ -30,7 +30,7 @@ if ( isset($Datei) && $Datei != '' )
 
 			if ( file_exists(VERZEICHNIS.DOCS.$Datei.'.pdf'))
 			{
-				$loc = 'https://' . $_SERVER['HTTP_HOST'].'/'.$Datei.'.pdf';
+				$loc = (stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'].'/'.$Datei.'.pdf';
 				header("HTTP/1.1 301 Moved Permanently");
 				header( 'Location: '. $loc ) ;
 				echo 'PDF-Dokument: '.$loc;

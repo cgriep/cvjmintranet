@@ -13,7 +13,7 @@ if ($profile['editor'] != '1')
 	$Smarty->assign('title', transform($document['title'],$document['datatype']['title']));
 	if (!isset($_REQUEST['Barcodes']))
 	{
-		$Smarty->assignbyref('docinput', $docinput);
+		$Smarty->assign('docinput', $docinput);
 		// Geldbuchung
 		if ( isset($docinput['Geld']))
 		{
@@ -58,7 +58,7 @@ if ($profile['editor'] != '1')
 				$Arten[] = $row;
 			}
 			sql_free_result($query);
-			$Smarty->assignbyref('Arten', $Arten);
+			$Smarty->assign('Arten', $Arten);
 		}
 		if ( isset($docinput['AnzeigeVon']))
 		{
@@ -72,7 +72,7 @@ if ($profile['editor'] != '1')
 				$Buchungen[] = $row;
 			}
 			sql_free_result($query);
-			$Smarty->assignbyref('Buchungen', $Buchungen);
+			$Smarty->assign('Buchungen', $Buchungen);
 		}
 		if ( isset($docinput['ZusammenfassungVon']))
 		{
@@ -90,7 +90,7 @@ if ($profile['editor'] != '1')
 				$Zusammenfassung[$row['Bezeichnung']] += $row['Menge'];
 			}
 			sql_free_result($query);
-			$Smarty->assignbyref('Zusammenfassung', $Zusammenfassung);
+			$Smarty->assign('Zusammenfassung', $Zusammenfassung);
 		}
 		if ( isset($docinput['UmsatzVon']))
 		{
@@ -183,7 +183,7 @@ if ($profile['editor'] != '1')
 			$Artikel[] = new Artikel($row[0]);
 		}
 		sql_free_result($query);
-		$Smarty->assignbyref('Artikelliste', $Artikel);
+		$Smarty->assign('Artikelliste', $Artikel);
 		$Smarty->display('Artikel_Barcodeliste.tpl');
 	}
 } // if not Editor

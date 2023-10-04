@@ -99,7 +99,7 @@ if (isset ($_REQUEST['Name']))
 
 	$smarty->assign('PageTitle', 'Charakterdaten');
 	$smarty->assign('mitAjax', true);
-	$smarty->assignbyref('Charakter', $Charakter);
+	$smarty->assign('Charakter', $Charakter);
 	$smarty->assign('Character', $Charakter->alsFeld(true));
 	$smarty->assign('Bild', '');
 	if ($Charakter->Bild != '')

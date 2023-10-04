@@ -74,7 +74,7 @@ if (!session_is_registered('Charakter_id'))
 			}
 		}
 	}
-	$smarty->assignbyref('Charakter', $char);
+	$smarty->assign('Charakter', $char);
 	$smarty->assign('fertigkeit_values', $fertigkeit_values);
 	$smarty->assign('fertigkeit_output', $fertigkeit_output);
 	$smarty->assign('fertigkeit_selected', '');

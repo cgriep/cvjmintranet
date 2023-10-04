@@ -119,7 +119,7 @@ isset($_REQUEST['newauf'])))
 		$Ort = -1;
 	}
 
-	$Smarty->assignbyref('Profil', $profile);
+	$Smarty->assign('Profil', $profile);
 	if ( ! isset($profile['AlleAuftraege']) )
 	{
 		$Smarty->assign('Alle', '1');
@@ -143,8 +143,8 @@ isset($_REQUEST['newauf'])))
 		$_REQUEST['Sort'] = 'Prioritaet,Datum DESC';
 	}
 	$Auftraege = Auftrag::searchAuftraege($Benutzer, $Alle, $Ort, $_REQUEST['Sort']);
-	$Smarty->assignbyref('Auftraege', $Auftraege);
-	$Smarty->assignbyref('Statusse', Event::$Statusse);
+	$Smarty->assign('Auftraege', $Auftraege);
+	$Smarty->assign('Statusse', Event::$Statusse);
 	if ( isset($profile[CVJM_VERWALTUNGSGRUPPE]) )
 	{
 		// Berechtigter Nutzer: Anzeige der User
@@ -157,7 +157,7 @@ isset($_REQUEST['newauf'])))
 		sql_free_result($query);
 		$u = $user;
 		asort($u);
-		$Smarty->assignbyref('User', $u);
+		$Smarty->assign('User', $u);
 	}
 	$Smarty->display('Auftragsliste.tpl');
 }
@@ -175,7 +175,7 @@ if ( is_numeric($_REQUEST['EditAuftrag']) || isset($_REQUEST['newauf']))
 	}
 	OrtsAuswahlScriptEinfuegen();
 	
-	$Smarty->assignbyref('Auftrag', $Auftrag);
+	$Smarty->assign('Auftrag', $Auftrag);
 	$Smarty->display('Auftrag_Daten.tpl');
 }
 

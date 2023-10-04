@@ -76,6 +76,7 @@ if ( $profile["editor"] != 1 )
             //echo date("d.m.Y",$datum)."/";
             $uebernachtungen[$bereich] = array();
             $uebernachtungen[$bereich]["Anzahl"] = 0;
+            $uebernachtungen[$bereich]["Buchungen"] = array();
           }
           if ( $schlafplaetze > 0 )
           {

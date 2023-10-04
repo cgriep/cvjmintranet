@@ -302,7 +302,7 @@ if ( $profile['editor']!= 1 )
 	$Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
 	$Smarty->assign('title', transform($document['title'], $document['datatype']['title']));
 	$Smarty->assign('id', $id);
-	$Smarty->assignbyref('docinput', $docinput);
+	$Smarty->assign('docinput', $docinput);
 	if ( isset($docinput['Artikel_Nr']) && is_numeric($docinput['Artikel_Nr']))
 	{
 		$Artikel = new Artikel($docinput['Artikel_Nr']);
@@ -328,7 +328,7 @@ if ( $profile['editor']!= 1 )
 			// Artikel im Baum bewegen
 			$Artikel->bewegen($docinput['Richtung']);
 		}
-		$Smarty->assignbyref('Artikel', $Artikel);
+		$Smarty->assign('Artikel', $Artikel);
 		$Smarty->assign('Artikelarten_values', array_keys($Artikelarten));
 		$Smarty->assign('Artikelarten_output', array_values($Artikelarten));
 
@@ -359,13 +359,13 @@ if ( $profile['editor']!= 1 )
 			$Lieferanten[$lieferant['Adressen_id']] = $lieferant['Name'];
 			if ( $Artikel->F_Lieferant_id == $lieferant['Adressen_id'] )
 			{
-				$Smarty->assignbyref('Lieferant', new Adresse($lieferant['Adressen_id']));
+				$Smarty->assign('Lieferant', new Adresse($lieferant['Adressen_id']));
 				$Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));
 			}
 		}
 		sql_free_result($query);
-		$Smarty->assignbyref('Lieferanten_values', array_keys($Lieferanten));
-		$Smarty->assignbyref('Lieferanten_output', array_values($Lieferanten));
+		$Smarty->assign('Lieferanten_values', array_keys($Lieferanten));
+		$Smarty->assign('Lieferanten_output', array_values($Lieferanten));
 		$artikel['Artikelart'] = $Artikelarten[$artikel['F_Art_id']];
 		// Artikelgruppen verwalten
 		if ( ! $Artikel->isNeu())
@@ -442,8 +442,8 @@ if ( $profile['editor']!= 1 )
 		$_SESSION['ArtikelAnzahl'] = $Anz;
 		//$Smarty->assign('Anz', $Anz);
 		$Smarty->assign('params', feldToParams($params));
-		$Smarty->assignbyref('Artikelliste', $Artikel->baueArtikelBaumAuf($Anz));
-		$Smarty->assignbyref('Pruefungsarten', $Artikel->Pruefungsarten());
+		$Smarty->assign('Artikelliste', $Artikel->baueArtikelBaumAuf($Anz));
+		$Smarty->assign('Pruefungsarten', $Artikel->Pruefungsarten());
 		
 		$Smarty->display('Artikel_Daten.tpl');
 	}
@@ -490,7 +490,7 @@ if ( $profile['editor']!= 1 )
 		{
 			$docinput['Page'] = 0;
 		}
-		$Smarty->assignbyref('docinput', $docinput);
+		$Smarty->assign('docinput', $docinput);
 		// Reiter aufbauen
 
 		$Anzeigeliste = array();
@@ -512,7 +512,7 @@ if ( $profile['editor']!= 1 )
 			$Liste['Color'] = $Color;
 			$Anzeigeliste[] = $Liste;
 		}
-		$Smarty->assignbyref('Listen', $Anzeigeliste);
+		$Smarty->assign('Listen', $Anzeigeliste);
 
 		if ( isset($_REQUEST['Search']) )
 		{
@@ -594,7 +594,7 @@ if ( $profile['editor']!= 1 )
 			$Artikelliste[] = new Artikel($artikel[0]);
 		} // while
 		sql_free_result($query);
-		$Smarty->assignbyref('Artikelliste',$Artikelliste);
+		$Smarty->assign('Artikelliste',$Artikelliste);
 		$Smarty->display('Artikel_Tabelle.tpl');
 	}
 } // wenn nicht Editor

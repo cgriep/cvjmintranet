@@ -6,7 +6,7 @@ $xajax = new xajax('cvjm_server.php');
 $xajax->registerFunction('erhoeheRechnungsMenge');
 $xajax->registerFunction('senkeRechnungsMenge');
 
-// Buchungsübersicht 
+// BuchungsÃ¼bersicht 
 $xajax->registerFunction('fuegeArtikelHinzu');
 $xajax->registerFunction('entferneArtikel');
 $xajax->registerFunction('gesamterBereich');

@@ -90,7 +90,7 @@ if ( $profile['editor'] != 1 )
   $Smarty->assign('Buchung', $Buchung);
   $Smarty->assign('check', $check);
   $Smarty->assign('id', $id);
-  $Smarty->assignbyref('seminar', $seminar);
+  $Smarty->assign('seminar', $seminar);
   $Preise = array();
   $query = sql_query("SELECT * FROM ".TABLE_SEMINARPREISE." WHERE F_Buchung_Nr=".
     $Buchung->Buchung_Nr." ORDER BY Gebuehrbezeichnung");  
@@ -104,7 +104,7 @@ if ( $profile['editor'] != 1 )
   $Vorlagen = ZeigeVorlagen($Buchung->Buchung_Nr, 'Seminar');
   $Smarty->assign('Vorlagen', ob_get_contents());
   ob_end_clean();
-  //$Smarty->assignbyref('buchung', $buchung);
+  //$Smarty->assign('buchung', $buchung);
   $Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));      
   $Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));
   // Teilnehmer hinzufügen
@@ -186,7 +186,7 @@ if ( $profile['editor'] != 1 )
   }
   if ( ! $Buchung->isFertig())
   {    
-    $Smarty->assignbyref('docinput', $docinput);
+    $Smarty->assign('docinput', $docinput);
     $Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));    
     $Adressen = array();
     if ( isset($docinput["Search"]) && trim($docinput["Search"]) != "" )
@@ -206,7 +206,7 @@ if ( $profile['editor'] != 1 )
       }
       sql_free_result($query);
     }
-    $Smarty->assignbyref('Adressen', $Adressen);
+    $Smarty->assign('Adressen', $Adressen);
     $Smarty->assign('sem', urlencode('id='.$id.'&Buchung_Nr='.$Buchung->Buchung_Nr));
   } // wenn Buchung nicht fertig
   setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
@@ -270,7 +270,7 @@ if ( $profile['editor'] != 1 )
      $Teilnehmer[] = $teilnehmer;     
   }
   
-  $Smarty->assignbyref('SeminarTeilnehmer', $Teilnehmer);
+  $Smarty->assign('SeminarTeilnehmer', $Teilnehmer);
   $Smarty->assign('Teilnehmeranzahl', Count($Teilnehmer));
   $Smarty->display('Seminardaten_Liste.tpl');
   // Errechnete Altersgruppen in die Buchung schreiben
