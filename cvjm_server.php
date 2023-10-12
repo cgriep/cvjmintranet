@@ -544,9 +544,9 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 	{
 		if ( $Adresse->Email != '' || $mailadresse != '')
 		{
-			require('php/Mail.php');
-			require_once('php/Mail/mime.php');
-			require_once('php/MIME/Type.php');
+			require('Mail.php');
+			require_once('Mail/mime.php');
+			require_once('MIME/Type.php');
 			try{
 				$mime = new Mail_mime("\n");
 				$mime->setTXTBody($Text);
@@ -577,7 +577,7 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 				'Subject'=>$Betreff);
 				$hdrs = $mime->headers($hdrs);
 
-				$mail =& Mail::factory('mail','-f buchhaltung@cvjmferiendorf.de');
+				$mail =& Mail::factory('mail','-f buchhaltung@cvjm-feriendorf.de');
 				if ( $mailadresse == '' ) 
 					$mailadresse = $Adresse->Email;
 				if ( $mail->send($mailadresse, $hdrs, $body) === true )

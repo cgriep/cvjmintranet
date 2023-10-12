@@ -344,8 +344,8 @@ class Buchung extends DBEntity
 				{
 					throw new Exception('Fehler bei Personenänderung '.$sql.': ' . sql_error());
 				}
-				$this->logAction('Personenanzahl geändert von '.$this-OriginalPersonenanzahl.' auf '.$this->personenAnzahl());
-			}
+				$this->logAction('Personenanzahl geändert von '.$this->OriginalPersonenanzahl.' auf '.$this->personenAnzahl());
+			} 
 			// Update
 			$sql = 'UPDATE ' . TABLE_BUCHUNGEN . ' SET ';
 			$sql .= 'Internes="' . sql_real_escape_string($this->Internes);

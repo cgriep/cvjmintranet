@@ -104,7 +104,8 @@ function ZeigeBuchung($diebuchung, $datum, & $aktiv, & $Wann)
   return $Zeile;
 }
 
-function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
+// dieArt  = CVJMART_ORT
+function ArtikelAnzeigen($DieArt, $Tag, $parent = -1)
 {
   global $Schlafplaetze;
   global $docinput;

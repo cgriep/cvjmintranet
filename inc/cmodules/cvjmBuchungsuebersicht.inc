@@ -11,13 +11,14 @@
 * Tag - erster Tag der Anzeige
 * Tage - Anzahl der anzuzeigenden Tage
 * docinput[Page] - id der Kategorie, die angezeigt werden soll
-* docinput[Alle] - 1 wenn alle Orte (unabhängig von "Anzeigen" angezeigt werden sollen
+* docinput[Alle] - 1 wenn alle Orte (unabhängig von "Anzeigen") angezeigt werden sollen
 * docinput[Art] - Art der Artikel, die ausgewählt werden soll, wenn keine Angabe = Ort
 *
  */
 require_once(INC_PATH.'cvjm/Artikel.class.php');
 require_once(INC_PATH.'cvjm/Buchung.class.php');
-function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
+// dieArt Standard CVJMART_ORT
+function ArtikelAnzeigen($DieArt, $Tag, $parent = -1)
 {
 	global $Artikel;
 	global $Schlafplaetze;

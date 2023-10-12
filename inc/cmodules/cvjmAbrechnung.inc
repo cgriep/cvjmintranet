@@ -1106,7 +1106,7 @@ if ($profile['editor'] != 1)
 				$query = sql_query('SELECT * FROM ' . TABLE_BUCHUNGSBEMERKUNGEN .
 				' WHERE F_Buchung_Nr = ' . $docinput['Buchung_Nr'] . ' ORDER BY Bemerkung_id DESC');
 				echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchungsbemerkungen'), 'docinput[Buchung_Nr]=' .
-				$docinput['Buchung_Nr']) . '">Bemerkungen hinzufägen</a> ]';
+				$docinput['Buchung_Nr']) . '">Bemerkungen hinzufügen</a> ]';
 				echo '</div>';
 				if (sql_num_rows($query) > 0)
 				{
