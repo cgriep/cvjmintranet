@@ -25,6 +25,7 @@ include (INC_PATH . 'cvjm/Buchung.class.php');
 require_once(INC_PATH . 'cvjm/Artikel.class.php');
 require_once(INC_PATH . 'cvjm/Event.class.php');
 unset($_SESSION['LetzteRechnung']);
+unset($_SESSION['Tag']); // Vermeidet falsche Anzeigen in der Buchungsübersicht
 function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 {
 	global $Smarty;

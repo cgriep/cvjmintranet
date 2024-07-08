@@ -80,7 +80,7 @@ function replace_pattern ($text, $array, $override = false, $mode = 'fast') {
                                         }
                                 }
                         // replace!
-                        $text = ereg_replace($key, $value, $text);
+                        $text = preg_replace($key, $value, $text);
                         }
                 }
         return $text;
@@ -1915,7 +1915,7 @@ function subst_document_refs ($htmlcode) {
         $res = $htmlcodelist[0];
         for($i = 1; $i < count($htmlcodelist); $i = $i + 2) {
                 $id = $htmlcodelist[$i];
-                if(ereg("^[[:digit:]]+$", $id)) {
+                if(preg_match("^[[:digit:]]+$", $id)) {
                         $ref_id                = $id;
                         $ref_name        = get_document_title($id);
                         }

@@ -80,7 +80,7 @@ if($profile['editor'] == 1) {
                 }
         if($docinput['deleteall'] == "1") {
                 $result = get_children(0, $childcount['forum_posting'], $doctypes['forum_posting'], 0, 'DESC');
-                while(list($key, $value) = each($result)) { destroy_node($key);        }
+                foreach ( $result as $key=>$value ) { destroy_node($key);        }
                 $childcount['forum_posting'] = 0;
                 add_nodedata ($id, 'childcount', 0, $flavour);
                 }
@@ -105,7 +105,7 @@ if($profile['editor'] == 1) {
                 <td width="10%" nowrap>Posted at</td>
                 <td width="1%" nowrap>Edit</td></tr><?php
                 }
-        while(list($key, $value) = each($result)) {
+        foreach ( $result as $key => $value ) {
                 echo '<tr bgcolor="';
                 $colorswitch = getswitchcolor();
                 ?>"><td nowrap><b><a href="<?=get_url($key)?>"><?=transform(substr($value['title'],0,30), 'clean')?><?php
@@ -141,7 +141,7 @@ else {
         if($_REQUEST['sendcomplete'] == '1' && SESSION_STATUS == 'ok') { sendcomplete(SESSION_DBID, $id); ?><b>&gt;&gt;</b> <font color="#00aa00"><?=LANG_FORUM_SENT?></font><?php }
         if(isset($docinput['saveanswer']) && ((isemail($docinput['email']) && $docinput['nick'] != '' && $parentdata['onlyforusers'] == '0') || SESSION_STATUS == 'ok') && $docinput['body'] != '' && $docinput['title'] != '') {
                 $result=get_children(0,$childcount['forum_mailto'],$doctypes['forum_mailto']);
-                while(list($key, $value) = each($result)) {
+                foreach ( $result as $key => $value) {
                         if(SESSION_STATUS == 'ok') {
                                 $docinput['nick'] = get_user_nickname(SESSION_DBID);
                                 $docinput['email'] = get_user_email(SESSION_DBID);
@@ -247,7 +247,7 @@ else {
                         if($ismoverview['type_id'] == $doctypes['forum_overview']) {
                                 ?><form action="<?=$_SERVER['PHP_SELF']?>" method="post"><?=LANG_FORUM_JUMPTO?> <select size="1" name="id"><?php
                                 $jumpforums = get_children(0, count_children($doctypes['forum_forum'],$flavour,$parentnode['parent_id']), $doctypes['forum_forum'], false,'DESC', false, $parentnode['parent_id']);
-                                while(list($key, $value) = each($jumpforums)) {
+                                foreach ( $jumpforums as $key => $value) {
                                         echo '<option value="'.$key.'" ';
                                         if($key == $document['parent_id']) { echo 'SELECTED'; }
                                         echo '>'.transform($value['title'], 'clean').'</option>';
@@ -317,7 +317,7 @@ else {
                         echo '<hr />';
                         }
                 $result = get_sorted_children ($_REQUEST['first_item'] ,$parentdata['ppp'], 'timestamp',$doctypes['forum_posting'],-1,$sortorder);
-                while(list($key, $value) = each($result)) {
+                foreach ( $result as $key => $value) {
                         ?><tr bgcolor = "<?=$design['table_row_dark']?>"><td width="79%"><b><?=transform(substr($value['title'],0,60), 'clean')?><?php
                         if(strlen($value['title'])>60){echo '...';}
                         ?></b><?php

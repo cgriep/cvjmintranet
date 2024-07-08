@@ -16,6 +16,11 @@ foreach ( $_REQUEST  as $key => $val)
 {
         $$key = $val;
 }
+/*
+while(list($key, $val) = each ($_REQUEST)) {
+	$$key = $val;
+	}
+*/
 $inc_value = 50;
 
 $_BASEPATH = dirname(dirname($_SERVER['SCRIPT_FILENAME']));
@@ -24,7 +29,7 @@ $_BASEPATH = dirname(dirname($_SERVER['SCRIPT_FILENAME']));
 include($_BASEPATH.'/inc/database.inc');
 include($_BASEPATH.'/inc/db_tables.inc');
 include($_BASEPATH.'/inc/functions.inc');
-
+echo TABLE_SETUP;
 init_groups();
 
                 // Read all contstants from database
@@ -123,7 +128,7 @@ Liquid Bytes AWF User Management
 <center>
 <table width="90%" cellpadding="0" cellspacing="0" border="0">
 <tr><td align="left">
-<center><h2><?phpecho SITE_TITLE; ?> User Management</h2></center>
+<center><h2><?php if (defined('SITE_TITLE')) { echo SITE_TITLE;} ?> User Management</h2></center>
 <?php
 if($action=='delete' && isset($id) && $id < 2) {
 	echo '<center><span style="color:#ff0000"><b>This user can\'t be removed.</b></span></center>';
@@ -174,8 +179,9 @@ elseif($action=='edit' && isset($id)) {
 		<input type="hidden" name="order_by" value="<?=$order_by?>">
 		<b>Group memberships</b><br />
 		<select name="group" size="5">
-		<?php foreach ( $groups as $key => $value) { ?>
-		<option value="<?=$key?>"><?=$value?><?phpif($profile['group_'.$key] == 1) echo ' [Member]'; ?></option>
+		<?php foreach ( $groups as $key=>$value) { ?>
+		<option value="<?=$key?>"><?=$value?>
+       <?php if($profile['group_'.$key] == 1){ echo ' [Member]';} ?></option>
 		<?php } ?>
 		</select><br />
 		<input type="submit" value="Add / Remove">
@@ -188,7 +194,7 @@ elseif($action=='edit' && isset($id)) {
 		echo '<tr><td width="100" bgcolor="#dddddd">Key</td>
 			<td width="300" bgcolor="#dddddd" align="right">Value</td>
 			<td width="50" bgcolor="#dddddd">Edit</td></tr>';
-		foreach ($profile as $key => $value) {
+		while(list($key, $value) = each($profile)) {
 			echo '<tr><td width="100" bgcolor="#eeeeee">'.$key.'</td>
 				<td width="300" bgcolor="#eeeeee" align="right">'.$value.'</td>
 				<td width="50" bgcolor="#eeeeee">

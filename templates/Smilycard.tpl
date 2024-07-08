@@ -120,11 +120,11 @@ Wie beurteilen Sie
 </tr>
 </table>
 
-Worauf Sie uns noch aufmerksam machen m�chten<br />
+Worauf Sie uns noch aufmerksam machen möchten<br />
 <textarea name="Smilycard[Aufmerksamkeit]" cols="50" rows="5">{$smilycard.Aufmerksamkeit}
 </textarea>
 
-<h2>Programm und Freizeitaktivit�ten</h2>
+<h2>Programm und Freizeitaktivitäten</h2>
 Welches Programm haben Sie in Anspruch genommen?<br />
 {html_checkboxes name="Smilycard[Programm]" options=$Programm selected=$smilycard.Programm separator="<br />"}
 <br />
@@ -157,7 +157,7 @@ Wie beurteilen Sie
 </tr>
 </table>
 
-W�nsche und Anregungen dazu:<br />
+Wünsche und Anregungen dazu:<br />
 <textarea name="Smilycard[ProgrammWuensche]" cols="50" rows="5">{$smilycard.ProgrammWuensche}
 </textarea><br />
 
@@ -165,12 +165,12 @@ Programmhighlights<br />
 <textarea name="Smilycard[ProgrammHighlights]" cols="50" rows="5">{$smilycard.ProgrammHighlights}
 </textarea><br />
 
-Allgemeine Anregungen und Programmw�nsche<br />
+Allgemeine Anregungen und Programmwünsche<br />
 <textarea name="Smilycard[ProgrammAnregungen]" cols="50" rows="5">{$smilycard.ProgrammAnregungen}
 </textarea>
 <br />
 <input type="submit" value="Speichern"/>
 </form>
-<a href="?id=1093&Buchung_Nr={$Buchung->Buchung_Nr}">Zur�ck zur Buchung</a>
+<a href="?id=1093&Buchung_Nr={$Buchung->Buchung_Nr}">Zurück zur Buchung</a>
 <br />
 {$smilycard.Historie|nl2br}

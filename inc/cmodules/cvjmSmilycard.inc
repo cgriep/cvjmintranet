@@ -22,7 +22,7 @@ if ( is_numeric($_REQUEST['Buchung_Nr']))
 	$Smarty->assign('Unterbringung', array('JB'=>'Jugendbereich', 'FB'=>'Familienbereich', 'ZB'=>'Zeltplatz'));
 	$Smarty->assign('Programm', array(
 		'N'=>'Naturforscher', 
-		'H'=>'Häuptling Bunte Feder', 
+		'H'=>'HÃ¤uptling Bunte Feder', 
 		'E'=>'Das Spectaculum',
 		'A'=>'Andere <input type="text" name="Smilycard[ProgrammAndere]" value="'.$smilycard['ProgrammAndere'].'" />'));
 	$Smarty->assign('Herkunft', array(
