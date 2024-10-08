@@ -30,8 +30,6 @@ if(sql_affected_rows() < 1) {
 	}
 header("Location: ".$_GET['url']); // Redirect browser to $url
 
-sql_close();
-
 exit();
 
 ?>

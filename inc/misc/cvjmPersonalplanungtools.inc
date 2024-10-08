@@ -305,7 +305,7 @@ function speicherePersonalplanung($docinput)
       else
         $Nachricht .= "-nicht festgelegt-";
     }
-    if ( zeit2 != 0 )
+    if ( $zeit2 != 0 )
     {
       $Nachricht .= "\nAbnahme am ".date("d.m.Y H:i",$zeit2)." : ";
       if ( is_numeric($docinput["Abnahmename"]))

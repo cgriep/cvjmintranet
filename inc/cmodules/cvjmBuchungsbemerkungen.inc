@@ -152,7 +152,7 @@ if ( $profile['editor'] != 1 )
       echo $design["table_begin"];
       echo '<form action="'.get_url($id).'" method="post">';
       echo '<input type="hidden" name="docinput[Erledigt]['.$Was;
-      echo ']" value="'.$docinput[Erledigt][$Was].'" />';
+      echo ']" value="'.$docinput['Erledigt'][$Was].'" />';
       // Schlüsselliste
       ZeigeSchluesselliste($Buchung);
       // Personalplanung
