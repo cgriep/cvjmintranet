@@ -27,7 +27,7 @@ echo '
 
 require_once(INC_PATH.'Smarty/Smarty.class.php');
 $Smarty = new Smarty;
-$Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
+$Smarty->template_dir = TEMPLATEPATH; 
 
 // Namen für Prioritäten und Status
 $Prioritaeten[1]['name'] = LANG_SOFORT;
@@ -191,7 +191,7 @@ echo '</div>';
        ';border: thin solid;border-bottom-width: '.
        '2pt; border-left-width: 1pt;' .
        'border-right-width: 1pt; border-top-width: 1pt; padding: 2pt">';
-  echo '<th><a title="'.LANG_BEZEICHNUNGSORTIEREN.'" href="'.get_url($id,'Sort=Titel'.$BenutzerURL).
+  echo '<th><a title="Sortieren" href="'.get_url($id,'Sort=Titel'.$BenutzerURL).
         '">'.LANG_BEZEICHNUNG.
        '</a></th><th><font size="-1"><a href="'.get_url($id,'Sort=Prioritaet'.$BenutzerURL).'">';
   echo LANG_PRIORITAET.'</a>/<br/><a href="'.get_url($id,'Sort=Status'.$BenutzerURL).'">'.
@@ -212,7 +212,7 @@ echo '</div>';
     {
     	$p = $profile;
     }
-    while ( list($key, $value) = each($p) )
+    foreach ( $p as $key => $value) 
       if ( substr($key, 0, 6) == "group_" ) $Where .= "OR Betroffene LIKE '%,g".substr($key, 6).",%' ";
     $Where .= ")";
   }
@@ -253,7 +253,7 @@ echo '</div>';
       //if ( isset($_REQUEST["MyWork"]) ) {
         $wer = explode(",",$row["Betroffene"]);
         echo "<br />";
-        while ( list($key, $value) = each($wer) )
+        foreach ( $wer as $key => $value) 
           if ( substr($value, 0, 1) == "g" )
             echo $groups[substr($value,1)]."<br />";
           elseif ( is_numeric($value) > 0 )
@@ -379,7 +379,7 @@ if ( is_numeric($_REQUEST["EditAuftrag"]) || isset($_REQUEST["newauf"]))
   echo '<strong>'.LANG_BESCHREIBUNG.'</strong><br /><textarea name="Beschreibung" cols="60" rows="5">'.$Beschreibung.'</textarea><br />';
   echo '<strong>'.LANG_PRIORITAET.'</strong> ';
   echo '<select name="Prioritaet">';
-  while ( list($key, $value) = each($Prioritaeten) )
+  foreach ($Prioritaeten as $key => $value) 
   {
     echo '<option value="'.$key.'"';
     if ( $Prioritaet == $key )

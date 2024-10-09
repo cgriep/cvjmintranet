@@ -75,12 +75,12 @@ function sql_real_escape_string($string) {
         return $GLOBALS["dbconnection"]->real_escape_string($string);
 }
 
+function sql_error() {
+        return $GLOBALS["dbconnection"]->sql_error;
+}
 // MySQL Database settings
 $db_host        = "localhost";
-$db_name        = "Verwaltung";
-$db_username    = "xxx";
-$db_password    = "xxx";
-$db_table_prefix= "awf_";
+
  
 if(function_exists("mysqli_connect")) {
         $dbconnection = mysqli_connect($db_host,$db_username,$db_password, $db_name);
