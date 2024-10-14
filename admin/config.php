@@ -10,7 +10,7 @@
 
 error_reporting(1); // Disable Warnings
 
-foreach ($_REQUEST as $key => $val= {
+foreach ($_REQUEST as $key => $val) {
         $$key = $val;
         }
 

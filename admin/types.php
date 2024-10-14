@@ -10,7 +10,7 @@
 
 error_reporting(1); // Disable Warnings
 
-foreach ($_REQUEST as $key => $val= {
+foreach ($_REQUEST as $key => $val) {
         $$key = $val;
         }
 
@@ -217,7 +217,7 @@ if(sql_num_rows($qres) > 0) {
                 <b>Options</b></td>
         </tr>
         <?php
-	while(list($key, $value) = each($doctype)) {
+	foreach($doctype as $key => $value) {
 		?>
 		<tr>
 		<td bgcolor="#eeffee" align="center"><?php echo $key; ?></td>

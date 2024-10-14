@@ -194,7 +194,7 @@ elseif($action=='edit' && isset($id)) {
 		echo '<tr><td width="100" bgcolor="#dddddd">Key</td>
 			<td width="300" bgcolor="#dddddd" align="right">Value</td>
 			<td width="50" bgcolor="#dddddd">Edit</td></tr>';
-		while(list($key, $value) = each($profile)) {
+			foreach($profiles as $key=>$value )  {
 			echo '<tr><td width="100" bgcolor="#eeeeee">'.$key.'</td>
 				<td width="300" bgcolor="#eeeeee" align="right">'.$value.'</td>
 				<td width="50" bgcolor="#eeeeee">
