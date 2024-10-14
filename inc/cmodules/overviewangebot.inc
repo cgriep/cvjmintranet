@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -12,7 +12,7 @@ if ($profile['editor'] != "1" ) {
   load_lang('Angebot');
   if(SESSION_STATUS == 'ok' && $profile['angebotsheaderposter'] == '1' && $_POST['saveangebot'] == '1') {
     if($docinput['body'] == '' || $docinput['title'] == '') {
-      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?
+      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?php
     }
     else {
       $nodeid = create_node($id, $doctypes['angebot_doc'], count_children($doctypes['angebot_doc']), 1,0, "", $document['key_id']);
@@ -41,7 +41,7 @@ if ($profile['editor'] != "1" ) {
         <input type="radio" value="1" name="docinput[show_files]" /> Enable&nbsp;&nbsp;
         <input type="radio" value="0" name="docinput[show_files]" CHECKED /> Disable
         <br /><br /><?=LANG_DIRECTORY?><br /><input type="text" name="docinput[directory]"  size="<?=$design['input_size']?>" maxlength="60" value="" />
-        <br /><br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?
+        <br /><br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?php
   }
 }
 $children =  get_children (0, 100, -1, false, 'DESC', false);
@@ -58,10 +58,10 @@ elseif($profile['editor']=='1') {
 Redirection (optional)<br />
 <select name="docdata[redirect]">
 <option value="">Disabled</option>
-        <?
+        <?php
         if(isset($children)) {
         reset($children);
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
                 $value['title'] = htmlspecialchars(strip_tags($value['title']));
                 if(strlen($value['title']) > 30) { $value['title'] = substr($value['title'], 0, 27).'...'; }
                 if($document['redirect'] == get_url($docid)) { $sel = ' selected'; } else { $sel = ''; }
@@ -73,7 +73,7 @@ Redirection (optional)<br />
         <input type="hidden" name="docdataflavour[redirect]" value="0" />
 <br />
 <br />
-<?
+<?php
 create_editor_input('Image', 'image', 'image_input');
 echo '<br /><br />';
 create_editor_input('Body', 'body', 'area_input');
@@ -81,7 +81,7 @@ create_editor_input('Body', 'body', 'area_input');
 
 if(isset($children)) {
   reset($children);
-  while (list ($docid, $value) = each ($children)) {
+  foreach ($children as $docid => $value) {
     if ( $value['title'] != '') {
       include(INC_PATH.'misc/angebotkategorie.inc');
     }

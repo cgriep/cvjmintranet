@@ -2,13 +2,13 @@
 /**
  * Modul Buchung
  * Parameter:
- * - Buchung_Nr (-1 für neue Buchung)
+ * - Buchung_Nr (-1 fÃ¼r neue Buchung)
  * - Adressen_id
  * - Save - Sichern der Daten (per docinput)
  *
  * AWF-Name: cvjmbuchung
  *
- * Vorlagen-Dateien müssen im Verzeichnis Vorlagen/Buchungen liegen
+ * Vorlagen-Dateien mÃ¼ssen im Verzeichnis Vorlagen/Buchungen liegen
  *
  * 07.02.07 - Beginn der Umstellung auf Smarty-Templates
  *
@@ -25,13 +25,14 @@ include (INC_PATH . 'cvjm/Buchung.class.php');
 require_once(INC_PATH . 'cvjm/Artikel.class.php');
 require_once(INC_PATH . 'cvjm/Event.class.php');
 unset($_SESSION['LetzteRechnung']);
+unset($_SESSION['Tag']); // Vermeidet falsche Anzeigen in der BuchungsÃ¼bersicht
 function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 {
 	global $Smarty;
 	global $document;
 	global $Wochentage;
 	global $profile;
-	$Smarty->assign_by_ref('Artikelarten', Artikel::getArtikelArten());
+	$Smarty->assign('Artikelarten', Artikel::getArtikelArten());
 	$Smarty->assign('Edit', isset($_REQUEST['Edit']));
 	$Smarty->assign('Aenderbar', !$abgerechnet && $profile[$document['SpeicherRecht']] == '1');
 	$Smarty->assign('Buchungsuebersichturl', get_url(get_cmodule_id('cvjmbuchungsuebersicht'), array (
@@ -85,7 +86,7 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 				// Menge an einem Tag
 				$eintrag['wieviel'] = $wieviel;
 				$eintrag['Zuf'] = rand(0,100);
-				// Falls die Bezeichnung geändert wurde
+				// Falls die Bezeichnung geÃ¤ndert wurde
 				if ( $eintrag['F_Bezeichnung'] != $eintrag['Bezeichnung'] && $eintrag['F_Bezeichnung'] != '')
 				{
 				$eintrag['Bezeichnung'] = stripslashes($eintrag['F_Bezeichnung']);
@@ -116,8 +117,8 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 				$sql = 'SELECT DISTINCT PersonenArt, Person FROM '.TABLE_BUCHUNGPERSONEN.' WHERE F_Buchung_Nr='.$eintrag['F_Buchung_Nr'].
 				' AND F_Artikel_Nr='.$eintrag['F_Artikel_Nr'].' AND Datum BETWEEN '.$eintrag['Datum'].' AND '.
 				$eintrag['LetztesDatum'];
-				if (! $query = mysql_query($sql)) echo mysql_error();
-				while ( $zustaendig = mysql_fetch_array($query))
+				if (! $query = sql_query($sql)) echo sql_error();
+				while ( $zustaendig = sql_fetch_array($query))
 				{
 					$eintrag['Zustaendig'].= $zustaendig['PersonenArt'].' '.$zustaendig['Person'].' ';
 				}
@@ -141,14 +142,14 @@ function SortierteZusammenfassungAnzeigen($eintraege, $abgerechnet)
 			}
 		} // foreach
 	} // foreach
-	$Smarty->assign_by_ref('Artikel', $Artikel);
+	$Smarty->assign('Artikel', $Artikel);
 	return $Smarty->fetch('Buchung_Artikeltabelle.tpl');
 }
 
 if (isset ($docinput['DelBuchung']) && is_numeric($docinput['DelBuchung']) &&
 $profile[$document['SpeicherRecht']] == '1')
 {
-	// Einträge in die internen Bemerkungen speichern
+	// EintrÃ¤ge in die internen Bemerkungen speichern
 	$Buchung = new Buchung($docinput['DelBuchung']);
 	$Buchung->stornieren(!isset($docinput['Storno']));
 	$docinput['Buchung_Nr'] = $Buchung->Buchung_Nr;
@@ -230,7 +231,7 @@ if (isset ($_REQUEST['Save']) && $profile[$document['SpeicherRecht']] == '1')
 }
 if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 {
-	// Statusänderungen
+	// StatusÃ¤nderungen
 	$Buchung = new Buchung($_REQUEST['Buchung_Nr'], $_REQUEST['Adressen_id']);
 	if ($profile[$document['SpeicherRecht']] == '1' && ! $Buchung->isNeu())
 	{
@@ -250,7 +251,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 		}
 		if (isset ($_REQUEST['Menge']) )
 		{
-			// Eintragsmenge erhöhen
+			// Eintragsmenge erhÃ¶hen
 			$Richtung = $_REQUEST['Richtung'];
 			$Datum = $_REQUEST['Datum'];
 			$Artikelnr = $_REQUEST['Menge'];
@@ -266,7 +267,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 				}
 			}
 		}
-		// Abrechnung löschen
+		// Abrechnung lÃ¶schen
 		if (isset ($docinput['DelAbrechnung']) && is_numeric($docinput['DelAbrechnung']))
 		{
 			$Buchung->loescheAbrechnung($docinput['DelAbrechnung']);
@@ -289,11 +290,11 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 			}
 			else
 			{
-				echo '<div class="SchwererFehler">Keine gültigen Daten für die Verschiebung angegeben!</div>';
+				echo '<div class="SchwererFehler">Keine gÃ¼ltigen Daten fÃ¼r die Verschiebung angegeben!</div>';
 			}
 		}
 
-		// Selbstverpflegung berücksichtigen
+		// Selbstverpflegung berÃ¼cksichtigen
 		if (isset ($docinput['Selbstverpflegung']) )
 		{
 			if ($docinput['Selbstverpflegung'] == 'J')
@@ -301,7 +302,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 				$tage = $Buchung->berechneUebernachtungen();
 				for ($i = 0; $i <= $tage; $i++)
 				{
-					// Doppelte Einträge werden von der Datenbank abgewiesen
+					// Doppelte EintrÃ¤ge werden von der Datenbank abgewiesen
 					sql_query('INSERT INTO ' . TABLE_BUCHUNGSEINTRAEGE .
 					' (F_Buchung_Nr, F_Artikel_Nr, Menge, Datum) VALUES (' .
 					$Buchung->Buchung_Nr . ',' . CVJM_SELBSTVERPFLEGUNG . ',1,' .
@@ -310,19 +311,19 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 			}
 			elseif ($docinput['Selbstverpflegung'] == 'N')
 			{
-				// Alle Einträge von Selbstverpflegung löschen
+				// Alle EintrÃ¤ge von Selbstverpflegung lÃ¶schen
 				if (!sql_query('DELETE FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' .
 				$Buchung->Buchung_Nr . ' AND F_Artikel_Nr=' . CVJM_SELBSTVERPFLEGUNG))
 				{
-					echo mysql_error();
+					echo sql_error();
 				}
 			}
-		} // Selbstverpflegung setzen / löschen
+		} // Selbstverpflegung setzen / lÃ¶schen
 
 		// Selbstverpflegung feststellen
 		if (isset ($_REQUEST['SaveEdit']) )
 		{
-			// Einträge speichern
+			// EintrÃ¤ge speichern
 			foreach ($docinput['Bezeichnung'] as $key => $value)
 			{
 				list ($Artikelnr, $datum) = explode(',', $key);
@@ -336,7 +337,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 					$Datum = "BETWEEN $von AND $bis";
 				}
 				$sql = 'UPDATE ' . TABLE_BUCHUNGSEINTRAEGE . ' SET F_Bezeichnung="';
-				$sql .= mysql_real_escape_string($value) . '"';
+				$sql .= sql_real_escape_string($value) . '"';
 				if (isset ($docinput['Dauer'][$key]))
 				{
 					$docinput['Dauer'][$key] = str_replace(',', '.', $docinput['Dauer'][$key]);
@@ -365,10 +366,10 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 				$sql .= 'F_Buchung_Nr = ' . $Buchung->Buchung_Nr;
 				if (!sql_query($sql))
 				{
-					echo 'Fehler '.$sql.': '. mysql_error();
+					echo 'Fehler '.$sql.': '. sql_error();
 				}
 			}
-			$Buchung->logAction('Gebuchte Artikel verändert');
+			$Buchung->logAction('Gebuchte Artikel verÃ¤ndert');
 		}
 	} // alte Buchung und Speicherrecht
 	$check1 = '';
@@ -382,7 +383,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 	$Smarty->assign('check1', $check1);
 	$Smarty->assign('check2', $check2);
 	// Buchungs-Objekt
-	$Smarty->assign_by_ref('Buchung', $Buchung);
+	$Smarty->assign('Buchung', $Buchung);
 	$Smarty->assign('Adressebearbeiten', get_url(get_cmodule_id('cvjmadressen')));
 	$Smarty->assign('KundeAendern', isset ($_REQUEST['KuNrA']));
 
@@ -414,14 +415,14 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 		' WHERE F_Buchung_Nr = ' . $Buchung->Buchung_Nr . ' ORDER BY Rechnungsdatum, Rechnung_id';
 		if (!$query = sql_query($sql))
 		{
-			echo "Fehler: $sql /" . mysql_error();
+			echo "Fehler: $sql /" . sql_error();
 		}
 		$Rechnungen = array();
 		while ($rechnung = sql_fetch_array($query))
 		{
 			$Rechnungen[] = $rechnung;
 		}
-		$Smarty->assign_by_ref('Rechnungen', $Rechnungen);
+		$Smarty->assign('Rechnungen', $Rechnungen);
 		sql_free_result($query);
 	}
 	include (INC_PATH . 'misc/cvjmKorrespondenz.inc');
@@ -436,7 +437,7 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 
 	setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
 	$Smarty->assign('spalten', 8);
-	$Smarty->assign_by_ref('docinput', $docinput);
+	$Smarty->assign('docinput', $docinput);
 	// Einzelheiten
 	if (! $Buchung->isNeu())
 	{
@@ -509,11 +510,11 @@ if (isset ($_REQUEST['Buchung_Nr']) && is_numeric($_REQUEST['Buchung_Nr']))
 
 		if (sql_num_rows($query) == 0)
 		{
-			$Smarty->assign('eintraege', '<tr><td colspan="7" class="zentriert">keine Einträge vorhanden</td></tr>');
+			$Smarty->assign('eintraege', '<tr><td colspan="7" class="zentriert">keine EintrÃ¤ge vorhanden</td></tr>');
 		}
 		else
 		{
-			// den letzten Eintrag einfügen
+			// den letzten Eintrag einfÃ¼gen
 			$AlleEintraege[$Meineintrag["F_Art_id"]][] = $Meineintrag;
 			$Smarty->assign('eintraege', SortierteZusammenfassungAnzeigen($AlleEintraege, $Buchung->isFertig() ));
 		}
@@ -556,15 +557,15 @@ elseif ($profile["editor"] != 1)
 			$Where .= " OR Buchung_Nr=" . $_REQUEST["Search"];
 		} else
 		{
-			$Where = 'Internes REGEXP "' . mysql_real_escape_string($_REQUEST["Search"]) .
+			$Where = 'Internes REGEXP "' . sql_real_escape_string($_REQUEST["Search"]) .
 			'" OR Name REGEXP "' .
-			mysql_real_escape_string($_REQUEST['Search']) . '" OR Zusatz REGEXP "' .
-			mysql_real_escape_string($_REQUEST['Search']) . '" OR Ort REGEXP "' .
-			mysql_real_escape_string($_REQUEST['Search']) . '"';
-			$WhereSeminar = 'Name REGEXP "'. mysql_real_escape_string($_REQUEST['Search']) .
+			sql_real_escape_string($_REQUEST['Search']) . '" OR Zusatz REGEXP "' .
+			sql_real_escape_string($_REQUEST['Search']) . '" OR Ort REGEXP "' .
+			sql_real_escape_string($_REQUEST['Search']) . '"';
+			$WhereSeminar = 'Name REGEXP "'. sql_real_escape_string($_REQUEST['Search']) .
 			'" OR Zusatz REGEXP "' .
-			mysql_real_escape_string($_REQUEST['Search']) . '" OR Ort REGEXP "' .
-			mysql_real_escape_string($_REQUEST['Search']) . '"';
+			sql_real_escape_string($_REQUEST['Search']) . '" OR Ort REGEXP "' .
+			sql_real_escape_string($_REQUEST['Search']) . '"';
 		}
 	} else
 	{
@@ -577,6 +578,6 @@ elseif ($profile["editor"] != 1)
 
 if ($profile["editor"] == "1")
 {
-	create_editor_input("Recht für Veränderungen", "SpeicherRecht", "text_input");
+	create_editor_input("Recht fÃ¼r VerÃ¤nderungen", "SpeicherRecht", "text_input");
 }
 ?>

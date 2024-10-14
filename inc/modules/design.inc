@@ -21,7 +21,7 @@ closedir($handle);
 
 sort($designs);
 
-while(list($key, $value) = each($designs)) {
+foreach ($designs as $key => $value) {
 	if($value == $design['name']) {
 	        $class = 'selectedNav';
                 }

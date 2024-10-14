@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         The author is Christoph Griep (cgriep@fricom.com)
         Last update: 11.07.2003
@@ -17,7 +17,7 @@ if ( $profile['editor'] != "1" ) {
   if ( isset($_REQUEST[$document['IDFeld']]) && is_numeric($_REQUEST[$document['IDFeld']]))
   {
     // Hier die Feldnamen eintragen, Reihenfolge ist wichtig!
-    $sql = "select Rubrik, Seminarnr ,Name ,Ergänzung ,Zielgruppe, " .
+    $sql = "select Rubrik, Seminarnr ,Name ,ErgÃ¤nzung ,Zielgruppe, " .
     		"Ankunft, Abfahrt, Anfang, Ende, Werbetext, Bemerkungen, " .
     		"Lernziele, Leitung, Kooperation, Leistungen, NameKosten1 " .
     		",Kosten1,NameKosten2 ,Kosten2, NameKosten3 , Kosten3 , " .
@@ -27,11 +27,11 @@ if ( $profile['editor'] != "1" ) {
       $document['IDFeld'] . " = " . $_REQUEST[$document['IDFeld']];
     echo '<style type="text/css">@import url(seminar.css) screen;</style>';    
     if ( $query = sql_query($sql)) {
-      $data = mysql_fetch_array($query);
+      $data = sql_fetch_array($query);
   // *********************************
 // Tabelle damit Daten immer untereinander stehen
       echo '<h1>'.$data['Name'].'</h1>';
-      echo $data['Ergänzung'].'<br />';
+      echo $data['ErgÃ¤nzung'].'<br />';
       if ( $data['Zielgruppe']!= '') 
         echo 'Zielgruppe: '.$data['Zielgruppe'].'<br />';
       echo 'Zeitraum der Veranstaltung: '.date('d.m.Y',strtotime($data['Ankunft']));
@@ -77,7 +77,7 @@ if ( $profile['editor'] != "1" ) {
       echo '<dd>'.$data['MinAlter'].'</dd>';
       echo '</dl>';
 //Anmeldung
-      echo "Die Anmeldung erfolgt schriftlich über das Anmeldeformular. Anmeldeschluss ist der ";
+      echo "Die Anmeldung erfolgt schriftlich Ã¼ber das Anmeldeformular. Anmeldeschluss ist der ";
       echo date('d.m.Y',strtotime($data['Anmeldeschluss']));
       echo '<br/>';
 
@@ -85,7 +85,7 @@ if ( $profile['editor'] != "1" ) {
 // Ende der Tabelle
     }
     else
-      echo mysql_error();
+      echo sql_error();
     sql_free_result($query);
   }
   if(isset($parents)) {

@@ -45,7 +45,7 @@ function uebertrageDatum(wert)
   {/if}
   {if ! $Buchung->isNeu()}
     <input type="text" name="docinput[Neu_Buchung_Nr]" value="{$Buchung->Buchung_Nr}" {$check1} />
-    <span class="KleineSchrift">erstellt am {$Buchung->getFeld('ErstelltAm')}, zuletzt geändert {$Buchung->BuchungStand|date_format:"%d.%m.%Y %H:%M"}</span>
+    <span class="KleineSchrift">erstellt am {$Buchung->getFeld('ErstelltAm')}, zuletzt geÃ¤ndert {$Buchung->BuchungStand|date_format:"%d.%m.%Y %H:%M"}</span>
   {/if}
   </th>
 </tr>
@@ -55,7 +55,7 @@ function uebertrageDatum(wert)
     <div style="float:right" id="KundeAendern">    
       {if ! $Buchung->isNeu() && ! $KundeAendern}
       [ <a href="#" onClick="xajax_showKundenAuswahl(); return false;">
-      Kunde ändern</a> ]{/if}
+      Kunde Ã¤ndern</a> ]{/if}
     </div>
     {assign value=$Buchung->Adresse->Uebersicht(true) var=adresse}
 	<a	href="{$Adressebearbeiten}&Bearbeiten={$Buchung->Adresse->Adressen_id}"
@@ -106,12 +106,12 @@ function uebertrageDatum(wert)
        size="4" maxlength="5" {$check1} /> {if
 		$Buchung->berechneUebernachtungen()< 0 ||
 		$Buchung->berechneUebernachtungen() > 13}<span class="SchwererFehler">{/if}
-		({$Buchung->berechneUebernachtungen()} Übernachtungen) {if
+		({$Buchung->berechneUebernachtungen()} Ãœbernachtungen) {if
 		$Buchung->berechneUebernachtungen() < 0 ||
 		$Buchung->berechneUebernachtungen()> 13}</span>{/if}
     {if $Speichern && $Buchung->Buchung_Nr > 0 && ! $Verschieben}
     <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&docinput[Verschieben]=1"
-    title="Buchungszeitraum verändern">Verschieben</a>
+    title="Buchungszeitraum verÃ¤ndern">Verschieben</a>
     {/if}
   </td>
 </tr>
@@ -215,7 +215,7 @@ function uebertrageDatum(wert)
     &nbsp;{$Buchung->getAlterswertName($nr)}<br />
   {/foreach}
   <strong>Gesamt: <span id="Personenanzahl">{$Buchung->personenAnzahl()}</span></strong> 
-  <span {if $Buchung->personenAnzahl() > $Buchung->BerechneAlleSchlafplaetze()} class="SchwererFehler"{/if} title="gebuchte Schlafplätze">
+  <span {if $Buchung->personenAnzahl() > $Buchung->BerechneAlleSchlafplaetze()} class="SchwererFehler"{/if} title="gebuchte SchlafplÃ¤tze">
   <small>
   {if $Buchung->BerechneAlleSchlafplaetze() < 0} keine! 
   {else}({$Buchung->BerechneAlleSchlafplaetze()} SP){/if}
@@ -246,7 +246,7 @@ function uebertrageDatum(wert)
     {if $Buchung->isSelbstverpflegung()}
       <span class="Selbstverpflegung">Selbstverpfleger!</span>&nbsp;
       <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&docinput[Selbstverpflegung]=N">
-      Selbstverpflegung löschen</a>
+      Selbstverpflegung lÃ¶schen</a>
     {else}
       {if ! $Buchung->verpflegungVorhanden() && ! $Buchung->isNeu()}
       <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&docinput[Selbstverpflegung]=J">
@@ -332,8 +332,8 @@ function uebertrageDatum(wert)
   {/if}
   {if ($Buchung->BStatus <= $smarty.const.BUCHUNG_VORRESERVIERUNG)}
 	[ <a href="?id={$id}&docinput[Storno]={$smarty.const.BUCHUNG_GELOESCHT}&docinput[DelBuchung]={$Buchung->Buchung_Nr}" 
-	onClick="javascript:return window.confirm('Diese Buchung Nr. {$Buchung->Buchung_Nr} unwiderruflich löschen und Belegung freigeben?');">
-	Buchung löschen</a> ] 
+	onClick="javascript:return window.confirm('Diese Buchung Nr. {$Buchung->Buchung_Nr} unwiderruflich lÃ¶schen und Belegung freigeben?');">
+	Buchung lÃ¶schen</a> ] 
   {else}
     {if ($Buchung->BStatus == $smarty.const.BUCHUNG_RESERVIERUNG)}
     [ <a href="{$Abrechnungurl}&docinput[Buchung_Nr]={$Buchung->Buchung_Nr}&docinput[Storno]={$smarty.const.BUCHUNG_STORNIERT}"
@@ -344,8 +344,8 @@ function uebertrageDatum(wert)
   {if (Count($Buchung->getBuchungseintraege()) > 0)}
 	 {if (!$Buchung->isFertig())}
 		<span class="Achtung">[ <a href="?id={$id}&docinput[DelBuchung]={$Buchung->Buchung_Nr}" 
-		onClick="javascript:return window.confirm('Alle Buchungseinträge von dieser Buchung löschen?');">
-		alle Einträge ausbuchen</a> ]</span>
+		onClick="javascript:return window.confirm('Alle BuchungseintrÃ¤ge von dieser Buchung lÃ¶schen?');">
+		alle EintrÃ¤ge ausbuchen</a> ]</span>
 	 {/if}
 	 [ <a href="{$Abrechnungurl}&docinput[Buchung_Nr]={$Buchung->Buchung_Nr}">Neue Abrechnung</a> ]
   {/if}
@@ -365,7 +365,7 @@ function uebertrageDatum(wert)
 [ <a href="{$Auftragurl}&newauf=1&docinput[VTitel]=Buchung {$Buchung->Buchung_Nr}">
   Auftrag zu dieser Buchung</a> ] 
 [ <a href="{$Buchungsbemerkungenurl}&docinput[Buchung_Nr]={$Buchung->Buchung_Nr}">
-Bemerkungen hinzufügen</a> ] 
+Bemerkungen hinzufÃ¼gen</a> ] 
 {/if} {* nicht neu *}
 &nbsp;[ <a href="?id={$id}">Buchungsliste anzeigen</a> ] 
 </div>
@@ -388,11 +388,11 @@ Bemerkungen hinzufügen</a> ]
   <td colspan="7" class="zentriert">
 	{if (!isset ($smarty.request.Alle))}
 		[ <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&Edit=1&Alle=1#Einzelheiten">
-		Einträge einzeln bearbeiten</a> ]&nbsp;&nbsp;
+		EintrÃ¤ge einzeln bearbeiten</a> ]&nbsp;&nbsp;
 	{/if}
 	{if (isset ($smarty.request.Alle) || !isset ($smarty.request.Edit))}
 		[ <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&Edit=1#Einzelheiten">
-		Einträge bearbeiten</a> ]
+		EintrÃ¤ge bearbeiten</a> ]
 	{/if}
 	{if (isset ($smarty.request.Edit))}
 		&nbsp;&nbsp; [ <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}#Einzelheiten">
@@ -417,14 +417,14 @@ Bemerkungen hinzufügen</a> ]
 {$eintraege}
 <tr>
   <td colspan="3"></td>
-  <td colspan="3"><strong><em>Gesamtsumme</em></strong> ({$Eintragsanzahl} Einträge)</td>
+  <td colspan="3"><strong><em>Gesamtsumme</em></strong> ({$Eintragsanzahl} EintrÃ¤ge)</td>
 	<td class="zentriert">
 	{if ($Buchung->BerechneAlleSchlafplaetze()>= 0)}{$Buchung->BerechneAlleSchlafplaetze()}{else}keine!{/if}
 	</td></tr>
 {if (isset ($smarty.request.Edit) && $Speichern)}
 <tr>
   <td colspan="7" class="zentriert">
-    <input type="Submit" name="SaveEdit" value="Einträge speichern" />
+    <input type="Submit" name="SaveEdit" value="EintrÃ¤ge speichern" />
   </td>
 </tr>
 </form>
@@ -435,10 +435,10 @@ Bemerkungen hinzufügen</a> ]
   <td colspan="7" class="zentriert">
   {if (!isset ($smarty.request.Alle))}
 	[ <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&Edit=1&Alle=1#Einzelheiten">
-	Einträge einzeln bearbeiten</a> ]&nbsp;&nbsp;
+	EintrÃ¤ge einzeln bearbeiten</a> ]&nbsp;&nbsp;
   {/if}
 	{if (isset ($smarty.request.Alle) || !isset ($smarty.request.Edit))}
-	[ <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&Edit=1#Einzelheiten">Einträge bearbeiten</a> ]
+	[ <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}&Edit=1#Einzelheiten">EintrÃ¤ge bearbeiten</a> ]
 	{/if}
 	{if (isset ($smarty.request.Edit))}
 	&nbsp;&nbsp; [ <a href="?id={$id}&Buchung_Nr={$Buchung->Buchung_Nr}#Einzelheiten">Bearbeitung abbrechen</a> ]
@@ -466,7 +466,7 @@ Bemerkungen hinzufügen</a> ]
 
 <div class="zentriert">
 {if (! $Buchung->isNeu() )}
-	[ <a href="{$Buchungsbemerkungenurl}&docinput[Buchung_Nr]={$Buchung->Buchung_Nr}">Bemerkungen hinzufügen</a> ]
+	[ <a href="{$Buchungsbemerkungenurl}&docinput[Buchung_Nr]={$Buchung->Buchung_Nr}">Bemerkungen hinzufÃ¼gen</a> ]
 {/if}
 	 [ <a href="?id={$id}">Buchungsliste anzeigen</a> ]
 </div>

@@ -47,7 +47,7 @@
   echo ' BGCOLOR="#'.$dtc.'"';
   else
   echo ' BGCOLOR="'.$design["table_header"].'"'; ?>>
-<?
+<?php
   $daycount = (intval((date ("U", mktime(20,0,0,$Monat,1,$Jahr))/86400)))-$document['Erstertag']; // FIRST OF MONTH DAY NUMBER
   $daycount=$daycount+$document['Erstertag']; // ADJUST FOR DAY START VARIABLE
 
@@ -74,7 +74,7 @@
     $fTermine = search_nodes($search,1000);
   else
     $fTermine = search_children ($search,1000);
-  while ( list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value)
   {
     if ( $value['Enddatum'] > mktime(23,59,59,$Monat,$TagAnzahl,$Jahr) )
       $Termine[$key] = $value;
@@ -199,19 +199,19 @@
 ?>
 </tr>
 
-<?
+<?php
     for ($i = 1; $i<7; $i++) {
       if ($Tag>=$TagAnzahl) break;
 ?>
 <tr <?echo$al?> height="<?=($th/5)?>" CLASS="dates">
-<?
+<?php
       for ($prow = 1; $prow<8; $prow++) {
            reset($Termine);
            $Marked = false;
            $Wochenende = date('w', mktime(23,59,59,$Monat,$Tag,$Jahr));
            $TerminString = '';
            $Farbstring = '';
-           while ( list($key, $value) = each($Termine) )
+           foreach ( $fTermine as $key => $value)
              if ((date('Y-m-d',$value['Datum']) <= date('Y-m-d',mktime(23,59,59,$Monat,$Tag,$Jahr))
             && date('Y-m-d',$value['Enddatum']) >= date('Y-m-d',mktime(0,0,0,$Monat,$Tag,$Jahr)))
             ) {
@@ -264,7 +264,7 @@
           $daycount++;$Tag++;
         }
         else { ?>
-<td<?   if ($Tag>0 && $Tag<$TagAnzahl) {
+<td<?php   if ($Tag>0 && $Tag<$TagAnzahl) {
            echo ' bgcolor="#';
            if ( ! $Marked )
              if ( $Wochenende == 0 || $Wochenende == 6)
@@ -291,11 +291,11 @@
         else
           echo '>';
         $Tag++;?></td>
-<?    }
+<?php    }
     }
      ?>
 </tr>
-<?
+<?php
   }
   $Tag = $orgTag;
 ?>
@@ -306,7 +306,7 @@
 <tr><th colspan="2">&nbsp;</th></tr>
 <?php
 reset ($Termine);
-while ( list($key, $value) = each($Termine) ) {
+foreach ($fTermine as $key => $value) {
   echo '<tr';
   if (InGruppe($value['Gruppe']))
       echo ' bgcolor="#'.$document['Gruppencolor'].'"';

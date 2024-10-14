@@ -19,18 +19,18 @@
     <input type="Text" name="docinput[EStunde]" value="<?=date("H",$document["Enddatum"])?>" size="2" maxlength="2" />
     <input type="Text" name="docinput[EMinute]" value="<?=date("i",$document["Enddatum"])?>" size="2" maxlength="2" />
     Turnus <select name="docinput[Turnus]" size="1">
-    <option value="" <? if ($document["Turnus"] == "" ) echo ' selected="selected"'; ?>
+    <option value="" <?php if ($document["Turnus"] == "" ) echo ' selected="selected"'; ?>
     >-einmalig-</option>
-    <option value="d" <? if ($document["Turnus"] == "d" ) echo ' selected="selected"'; ?>
-    >täglich</option>
-    <option value="w" <? if ($document["Turnus"] == "w" ) echo ' selected="selected"'; ?>
-    >wöchentlich</option>
-    <option value="v" <? if ($document["Turnus"] == "v" ) echo ' selected="selected"'; ?>
-    >14tägig</option>
-    <option value="m" <? if ($document["Turnus"] == "m" ) echo ' selected="selected"'; ?>
+    <option value="d" <?php if ($document["Turnus"] == "d" ) echo ' selected="selected"'; ?>
+    >tÃ¤glich</option>
+    <option value="w" <?php if ($document["Turnus"] == "w" ) echo ' selected="selected"'; ?>
+    >wÃ¶chentlich</option>
+    <option value="v" <?php if ($document["Turnus"] == "v" ) echo ' selected="selected"'; ?>
+    >14tÃ¤gig</option>
+    <option value="m" <?php if ($document["Turnus"] == "m" ) echo ' selected="selected"'; ?>
     >monatlich</option>
-    <option value="j" <? if ($document["Turnus"] == "j" ) echo ' selected="selected"'; ?>
-    >jährlich</option>
+    <option value="j" <?php if ($document["Turnus"] == "j" ) echo ' selected="selected"'; ?>
+    >jÃ¤hrlich</option>
     </select>&nbsp;&nbsp;Ende
     <input type="Text" name="docinput[TurnusDatum]" value="<?php
       if ( $document["TurnusEnde"] != 0 ) echo date("d.m.Y",$document["TurnusEnde"]);?>"
@@ -43,7 +43,7 @@
     $User = search_users();
     asort($User);
     reset($User);
-    while ( list($key, $value) = each($User) )
+    foreach ( $User as $key => $value) 
     {
       echo '<option value="'.$key.'"';
       if ( in_array($key, explode(",",$document["Person"])) )
@@ -52,7 +52,7 @@
     }
     ?>
     </select>&nbsp;&nbsp;kein Einzelbetroffener <input type="Checkbox" name="DelBet" value="v"
-    <? if ($document["Person"] == "" && ! isset($_REQUEST["Termin"]) ) echo ' checked="checked"'; ?>
+    <?php if ($document["Person"] == "" && ! isset($_REQUEST["Termin"]) ) echo ' checked="checked"'; ?>
     >
     </td></tr>
     <tr><td>Gruppe<br /><small>Strg halten, um mehrere zu markieren</small></td><td>
@@ -70,7 +70,7 @@
            $document['Terminrecht'] = $doc['Terminrecht'];
       }
       foreach ($groups as $key => $gruppe) {
-        // Nur Gruppenmitglieder können die Gruppe einladen!
+        // Nur Gruppenmitglieder kÃ¶nnen die Gruppe einladen!
         if ( InGruppe($key) || $profile[$document["Terminrecht"]] == "1" )
         {
           echo '<option value="' . $key . '"';
@@ -82,14 +82,14 @@
       }
     ?>
     </select>&nbsp;&nbsp;keine Gruppe <input type="Checkbox" name="DelGrp" value="v"
-    <? if ($document["Gruppe"] == "" && ! isset($_REQUEST["Termin"])) echo ' checked="checked"'; ?>
+    <?php if ($document["Gruppe"] == "" && ! isset($_REQUEST["Termin"])) echo ' checked="checked"'; ?>
     ></td></tr>
     <tr><td>Ort</td><td>
     <?php
      if ( function_exists("OrtsName") ) {
        echo '<input type="hidden" name="docinput[Ort]" value="'.$Ort.'" id="Ortsauswahl" />';
        echo '<span name="Ortname" id="Ortsauswahltext">'.OrtsName($Ort,true).'</span>';
-       echo '&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl(\'Ortsauswahl\')">Ort auswählen</a> ]';
+       echo '&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl(\'Ortsauswahl\')">Ort auswÃ¤hlen</a> ]';
       }else
       echo '<input type="Text" name="docinput[Ort]" size="'.$design['input_size'].
         '" value="'.$document["Ort"].'">';
@@ -104,7 +104,7 @@
     }
     ?>
     </td></tr>
-    <tr><td>Betroffene dürfen Termin ändern</td><td>
+    <tr><td>Betroffene dÃ¼rfen Termin Ã¤ndern</td><td>
     <input type="radio" value="1" name="docinput[Aendern]"
 <?php if ( $document["Aendern"] == 1 ) echo ' checked="checked"';
 ?> /> <?=LANG_YES?>&nbsp;&nbsp;

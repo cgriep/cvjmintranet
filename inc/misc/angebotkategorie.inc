@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -27,8 +27,7 @@ if($value['image'] != '' || $value['summary'] != '') {
   global $docid;
   $mchildren =  get_children (0, 100, -1, false, 'DESC', false, $docid);
   if(isset($mchildren)) {
-    reset($mchildren);
-    while (list ($docid, $value) = each ($mchildren)) {
+    foreach ( $mchildren as $docid => $value)  {
       if ($value['expiration_date'] == 0 || $value['expiration_date'] > time())
         include(INC_PATH.'misc/angebot.inc');
     }

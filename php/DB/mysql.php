@@ -798,8 +798,8 @@ class DB_mysql extends DB_common
      */
     function escapeSimple($str)
     {
-        if (function_exists('mysql_real_escape_string')) {
-            return @mysql_real_escape_string($str, $this->connection);
+        if (function_exists('sql_real_escape_string')) {
+            return @sql_real_escape_string($str, $this->connection);
         } else {
             return @mysql_escape_string($str);
         }

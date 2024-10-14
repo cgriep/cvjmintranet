@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -9,7 +9,7 @@
 */
 
 if($value['title'] != '' || $profile['editor'] == 1) {
-	if($value[title] == '') { $value[title] = 'Not yet translated.'; }
+	if($value['title'] == '') { $value['title'] = 'Not yet translated.'; }
 	echo '<p class="justify"><span class="newsDate">'.transform($value['timestamp'], 'date')."</span><br>";
         echo '<b><a href="'.get_url($docid,'first_item='.$first_item).'">'.transform($value['title'],'clean').'</a></b>';
 	$value['body'] = transform($value['body'], 'clean');
@@ -21,7 +21,7 @@ if($value['title'] != '' || $profile['editor'] == 1) {
         echo('<br>'.transform($value['body'], $value['datatype']['body']).'
         	<a href="'.get_url($docid,'first_item='.$first_item).'">'.LANG_MORE.'</a>');
         if(COUNT_VIEWS == 1) {
-        	echo('<br>( '.$value['views'].' '.LANG_VIEWS.' | '.count_children($doctypes[comment], $flavour,
+        	echo('<br>( '.$value['views'].' '.LANG_VIEWS.' | '.count_children($doctypes['comment'], $flavour,
                 	$docid).' '.LANG_COMMENTS.' )</p>');
         	}
         else {

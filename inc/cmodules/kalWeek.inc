@@ -10,7 +10,7 @@
 
 <tr ALIGN="center" HEIGHT="<?echo$fsd+$cs+$cp?>" CLASS="daynames"<?if($dtc) {
   echo ' BGCOLOR="#'.$dtc.'"';}?>>
-<?
+<?php
   // Wochenanfang feststellen
   $sd = date ("w", mktime(0,1,0,$Monat,$Tag-$document['Erstertag'],$Jahr));
   $sd = ($AnzTage-1) / 2;
@@ -35,7 +35,7 @@
     $fTermine = search_nodes($search);
   else
     $fTermine = search_children ($search);
-  while ( list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value)
   {
     if ( $value["Enddatum"] > $Ende )
       $Termine[$key] = $value;
@@ -47,7 +47,7 @@
     $fTermine = search_nodes($search);
   else
     $fTermine = search_children ($search);
-  while ( list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value)
   {
     if ( $value["Datum"] < $Anfang )
       $Termine[$key] = $value;
@@ -59,7 +59,7 @@
     $fTermine = search_nodes($search);
   else
     $fTermine = search_children ($search);
-  while ( list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value)
   {
     switch ($value["Turnus"]) {
       case "d":
@@ -209,10 +209,9 @@
         echo '<a href="?id='.$id.'&Zeit='.$wann;
         echo '&Termin=1"><img src="img/newtermin.gif" border="0"></a><br /> ';
       }
-      reset($Termine);
       $Anz = 0;
       $nextzeit = strtotime("+$diff minutes", $wann);
-      while ( list($key, $value) = each($Termine) ) {
+      foreach ( $fTermine as $key => $value) {
         if ( ($value['Datum'] >= $wann && $value['Datum'] < $nextzeit) ||
           ( $value['Datum'] <= $wann && $value['Enddatum'] >= $wann )
         ) {
@@ -233,7 +232,7 @@
             echo 'bis '.date("d.m.Y H:i",$value["Enddatum"]);
           if ( strtotime("+$nextd days", mktime(0,0,0,$Monat,$Tag,$Jahr)) < $value["Enddatum"] )
           {
-            echo " (ganztägig!)";
+            echo " (ganztÃ¤gig!)";
             $Termine[$key]["Ok".$I] = strtotime("+$nextd days", mktime(0,0,0,$Monat,$Tag,$Jahr));
           }
           echo '">'.transform($value['title'],'clean')."</a>";

@@ -20,7 +20,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
     echo 'Zur&uuml;ck zur <a href="?id='.get_cmodule_id('steinsberg_liste').'&Veranstaltung='.$_REQUEST['Ref'].'">Liste</a>';
 // Abspeichern der Daten
   if(isset($_REQUEST['savechar']) ) {
-        while (list($key, $value) = each($docinput) )
+        foreach ( $docinput as $key => $value)
         {
           add_nodedata($id, $key, transform(trim($value),'text'), $flavour);
         }
@@ -48,7 +48,7 @@ if(SESSION_STATUS == 'ok' && ! $profile['editor'] == "1" &&
 zu deinem Charakter. Am Ende gibt es zus&auml;tzlich die M&ouml;glichkeit, Hintergrundgeschichten und andere
 Informationen in Dateiform hochzuladen. <br />
 <br />
-<?
+<?php
   if ( isset($_REQUEST['Ref']))
     echo 'Zur&uuml;ck zur <a href="?id='.$_REQUEST['Ref'].
       $Verweis.'">Anmeldung</a>';
@@ -61,7 +61,7 @@ Informationen in Dateiform hochzuladen. <br />
 </td></tr>
 <tr><td>
 <input type="hidden" name="id" value="<?=$id?>" />
-<? if ( isset($_REQUEST['Ref'])) ?>
+<?php if ( isset($_REQUEST['Ref'])) ?>
 <input type="hidden" name="Ref" value="<?=$_REQUEST['Ref']?>" />
 Charaktername<br />
 <input type="text" name="docinput[title]" size="40" value="<?=stripslashes($document['title'])?>" /><br />
@@ -86,13 +86,13 @@ Kurzbeschreibung des Charakters (nicht mehr als 5 Zeilen)<br />
   ?>
 <br />
 <br />
-Ich gehe in Dungeons <input type="radio" name="docinput[Dungeon]" value="ja"<? if( $document['Dungeon'] == 'ja') echo ' checked'; ?> /> ja
+Ich gehe in Dungeons <input type="radio" name="docinput[Dungeon]" value="ja"<?php if( $document['Dungeon'] == 'ja') echo ' checked'; ?> /> ja
 &nbsp&nbsp;
-<input type="radio" name="docinput[Dungeon]" value="nein"<? if( $document['Dungeon'] == 'nein') echo ' checked'; ?> /> nein
+<input type="radio" name="docinput[Dungeon]" value="nein"<?php if( $document['Dungeon'] == 'nein') echo ' checked'; ?> /> nein
 <br /><br />
-Ich will Tr&auml;umen <input type="radio" name="docinput[TraumOk]" value="ja"<? if( $document['TraumOk'] == 'ja') echo ' checked'; ?> /> ja
+Ich will Tr&auml;umen <input type="radio" name="docinput[TraumOk]" value="ja"<?php if( $document['TraumOk'] == 'ja') echo ' checked'; ?> /> ja
 &nbsp&nbsp;
-<input type="radio" name="docinput[TraumOk]" value="nein"<? if( $document['TraumOk'] == 'nein') echo ' checked'; ?> /> nein<br />
+<input type="radio" name="docinput[TraumOk]" value="nein"<?php if( $document['TraumOk'] == 'nein') echo ' checked'; ?> /> nein<br />
 <br />&nbsp;
 </td></tr>
 <tr bgcolor="<?=$design['table_row_dark']?>"><th>Fragen zum Charakter</td></tr>
@@ -150,7 +150,7 @@ was macht er damit?<br />
 <input type="submit" name="savechar" value="Update" />
 </form>
 </p>
-<?
+<?php
   if ( isset($_REQUEST['Ref']))
     echo 'Zur&uuml;ck zur <a href="?id='.$_REQUEST['Ref'].
       $Verweis.'">Anmeldung</a>';

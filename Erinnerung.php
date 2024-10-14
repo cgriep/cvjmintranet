@@ -13,8 +13,8 @@ include('inc/caching.inc');
 require('inc/database.inc');
 require('inc/db_tables.inc');
 
-$query = mysql_query('SELECT * FROM cvjm_Erinnerung');
-while ( $termin = mysql_fetch_array($query))
+$query = sql_query('SELECT * FROM cvjm_Erinnerung');
+while ( $termin = sql_fetch_array($query))
 {
   $derTermin = get_nodedata ($termin['Termin_id'], 1);
   if ( isset($derTermin['Datum']) && is_numeric($derTermin['Datum']))
@@ -43,10 +43,10 @@ while ( $termin = mysql_fetch_array($query))
   		  'am '.date('d.m.Y',$datum).' ist Termin "'.
   		  transform($derTermin['title'],'clean').'".'."\n".
   		  transform($derTermin['body'],'clean')."\nTermin-ID: ".$termin['Termin_id']);  		  
-  		mysql_query('DELETE FROM cvjm_Erinnerung WHERE Erinnerung_id='.$termin['Erinnerung_id']); 
+  		sql_query('DELETE FROM cvjm_Erinnerung WHERE Erinnerung_id='.$termin['Erinnerung_id']); 
   	}  	
   }  
 }
-mysql_free_result($query);
+sql_free_result($query);
 
 ?>

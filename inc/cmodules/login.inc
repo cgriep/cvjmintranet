@@ -16,7 +16,7 @@ if(SESSION_STATUS == 'ok' && isset($docinput['user_id'])) {
                         document.location = '2.html';
                         // -->
                         </script>
-	<?
+	<?php
 	*/
 	}
 
@@ -35,7 +35,7 @@ $subject = $_REQUEST['subject'];
 <table border="0" cellpadding="0" cellspacing="0" width="324">
 <tr>
 <td background="img/login_top.gif" height="59" style="font-face: Tahoma, Helevetica, Arial; font-size: 12 px; font-weight: bold; text-align: center" valign="center" align="center">
-<? 
+<?php 
 if(SESSION_STATUS != 'ok') { 
 	echo 'Bitte anmelden...'; 
 	} 
@@ -48,11 +48,11 @@ else {
 <tr>
 <td background="img/login_middle.gif" style="font-face: Tahoma, Helevetica, Arial; font-size: 12 px; font-weight: normal; text-align: left">
 <table border="0" cellpadding="0" background="img/pixel.gif" cellspacing="10" width="324"><tr><td width="100%">
-<?
+<?php
 if($recover == 'true' && isset($docinput['user_id'])) {
-	$qresult = mysql_query ("SELECT password FROM ".TABLE_USERS." WHERE email='".$docinput['user_id']."'");
+	$qresult = sql_query ("SELECT password FROM ".TABLE_USERS." WHERE email='".$docinput['user_id']."'");
 	if ($qresult) {
-		$row = mysql_fetch_row($qresult);
+		$row = sql_fetch_row($qresult);
 		$message = "$row[0]";
 		mail($docinput['user_id'], '['.SITE_TITLE.'] Login', $message,
         	"From: ".WEBMASTER_MAIL."\nReply-To: ".WEBMASTER_MAIL);
@@ -79,7 +79,7 @@ elseif(SESSION_STATUS != 'ok') {
                         alert('Bad password.');
                         // -->
                         </script>
-		<?
+		<?php
 	
         }
         if(SESSION_STATUS != 'passwd' && $docinput['passwd2'] != '') {
@@ -89,7 +89,7 @@ elseif(SESSION_STATUS != 'ok') {
                         alert('Invalid user name.');
                         // -->
                         </script>
-		<?
+		<?php
 
         }
         ?>
@@ -131,7 +131,7 @@ else { ?>
 </form>
 </center>
 </p>
-<? 
+<?php 
 
 } 
 

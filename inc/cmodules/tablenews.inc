@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -9,7 +9,7 @@
 */
 if(SESSION_STATUS == 'ok' && $profile['newsposter'] == '1' && $_POST['savenews'] == '1') {
         if($docinput['body'] == '' || $docinput['title'] == '') {
-                ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?
+                ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?php
                 }
         else {
                 $nodeid = create_node($id, $doctypes['newsitem'], count_children($doctypes['newsitem']), 1,0, "", $document['key_id']);
@@ -41,7 +41,7 @@ if($_REQUEST['postnews'] == '1' && SESSION_STATUS == 'ok' && $profile['newsposte
         <br /><br /><?=LANG_DIRECTORY?><br /><input type="text" name="docinput[directory]"  size="<?=$design['input_size']?>" maxlength="60" value="" />
         <br /><br /><?=LANG_ICON?><br />
         <select name="docinput[icon]"><option value="">No Icon</option>
-        <?
+        <?php
         $handle=opendir($image_path.'news/');
         while (false!==($file = readdir($handle))) {
         if ($file != "." && $file != "..") {
@@ -49,12 +49,12 @@ if($_REQUEST['postnews'] == '1' && SESSION_STATUS == 'ok' && $profile['newsposte
                 }
         }
         natcasesort($icons);
-        while(list($key, $file) = each($icons)) {
+        foreach ( $icons as $key => $file) {
                 echo '<option value="'.$file.'">'.substr($file, 0, -4).'</option>';
                 }?>
         </select>
 
-        <br /><br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?
+        <br /><br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?php
         }
 else {
 $pchildren = get_children (0, 100, $doctypes['paragraph']);
@@ -71,7 +71,7 @@ if($profile['editor']!='1') {
 
 if(isset($pchildren)) {
         reset($pchildren);
-        while (list ($docid, $value) = each ($pchildren)) {
+        foreach ($pchildren as $docid => $value ) {
                 if($value['title'] != '' || $value['body']) {
                         include(INC_PATH.'misc/paragraph.inc');
                         }
@@ -80,7 +80,7 @@ if(isset($pchildren)) {
 
 if(isset($children)) {
         reset($children);
-        while (list ($docid, $value) = each ($children)) {
+        foreach ($children as $docid => $value) {
           if ( $document['Kasten'] == 1 )
             include(INC_PATH.'misc/tablenewsitem.inc');
           else
@@ -108,7 +108,7 @@ if(isset($children)) {
 elseif($profile['editor']=='1') {
   if(isset($pchildren)) {
     reset($pchildren);
-    while (list ($docid, $value) = each ($pchildren)) {
+    foreach ($pchildren as $docid => $value ) {
       if($value['title'] != '') {
         include(INC_PATH.'misc/paragraph.inc');
       }
@@ -117,7 +117,7 @@ elseif($profile['editor']=='1') {
   if(isset($children)) {
     reset($children);
     $counter = 0;
-    while (list ($docid, $value) = each ($children)) {
+    foreach ($children as $docid => $value) {
       include(INC_PATH.'misc/newsitem.inc');
     }
     if($total_count > $inc_value) {

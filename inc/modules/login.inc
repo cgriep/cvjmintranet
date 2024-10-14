@@ -17,9 +17,9 @@ $first_item = $_REQUEST['first_item'];
 $subject = $_REQUEST['subject'];
 
 if($recover == 'true' && isset($docinput['user_id'])) {
-	$qresult = mysql_query ("SELECT password FROM ".TABLE_USERS." WHERE email='".$docinput['user_id']."'");
+	$qresult = mysqli_query ($GLOBALS['dbconnection'], "SELECT password FROM ".TABLE_USERS." WHERE email='".$docinput['user_id']."'");
 	if ($qresult) {
-		$row = mysql_fetch_row($qresult);
+		$row = sql_fetch_row($qresult);
 		$message = "$row[0]";
 		mail($docinput['user_id'], '['.SITE_TITLE.'] Login', $message,
         	"From: ".WEBMASTER_MAIL."\nReply-To: ".WEBMASTER_MAIL);

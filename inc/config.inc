@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -8,8 +8,8 @@
         Last update: 21.08.2003
 */
 
-error_reporting(1); // Disable Warnings
-set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+//error_reporting(1); // Disable Warnings
+//250823 - deprecated set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 
 define('AWF_VERSION', '110');
 

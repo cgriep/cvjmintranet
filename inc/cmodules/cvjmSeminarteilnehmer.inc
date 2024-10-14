@@ -24,11 +24,11 @@ if ( $profile['editor'] != 1 )
     if ( ! is_numeric($docinput['MaxTeilnehmer'])) $docinput['MaxTeilnehmer'] = 0;
     $docinput['Anmeldeschluss'] = convertDatumToTimestamp($docinput['Anmeldeschluss']);
     $sql = 'UPDATE '.TABLE_SEMINARE." SET Bezeichnung='".
-      mysql_real_escape_string($docinput['Bezeichnung']).
-      "',Beschreibung='".mysql_real_escape_string($docinput['Beschreibung']).
+      sql_real_escape_string($docinput['Bezeichnung']).
+      "',Beschreibung='".sql_real_escape_string($docinput['Beschreibung']).
       "',MinTeilnehmer=".$docinput['MinTeilnehmer'].
       ",MaxTeilnehmer=".$docinput['MaxTeilnehmer'].
-      ",Leitung='".mysql_real_escape_string($docinput['Leitung']).
+      ",Leitung='".sql_real_escape_string($docinput['Leitung']).
       "',Anmeldeschluss=".$docinput['Anmeldeschluss'].
       " WHERE F_Buchung_Nr=".$_REQUEST['Buchung_Nr'];
     if ( ! sql_query($sql) || sql_affected_rows() == 0 )
@@ -36,11 +36,11 @@ if ( $profile['editor'] != 1 )
       // Neuer Datensatz!
       sql_query('INSERT INTO '.TABLE_SEMINARE.' (F_Buchung_Nr,Bezeichnung,Beschreibung,'.
         'MinTeilnehmer,MaxTeilnehmer,Leitung,Anmeldeschluss) VALUES ('.
-        $_REQUEST['Buchung_Nr'].",'".mysql_real_escape_string($docinput['Bezeichnung'])
+        $_REQUEST['Buchung_Nr'].",'".sql_real_escape_string($docinput['Bezeichnung'])
         ."','".
-        mysql_real_escape_string($docinput['Beschreibung'])."',".
+        sql_real_escape_string($docinput['Beschreibung'])."',".
         $docinput['MinTeilnehmer'].','.
-        $docinput['MaxTeilnehmer'].",'".mysql_real_escape_string($docinput['Leitung'])."',".
+        $docinput['MaxTeilnehmer'].",'".sql_real_escape_string($docinput['Leitung'])."',".
         $docinput['Anmeldeschluss'].')');
     }
     // Preise bearbeiten
@@ -52,20 +52,20 @@ if ( $profile['editor'] != 1 )
       	if (! sql_query('UPDATE '.TABLE_SEMINARPREISE.' SET Gebuehr='.$value.
       
           ' WHERE F_Buchung_Nr='.$_REQUEST['Buchung_Nr']." AND Gebuehrbezeichnung='".
-          mysql_real_escape_string($key)."'"))
-          echo mysql_error();
+          sql_real_escape_string($key)."'"))
+          echo sql_error();
       }
       else
         sql_query('DELETE FROM '.TABLE_SEMINARPREISE.' WHERE F_Buchung_Nr='.
           $_REQUEST['Buchung_Nr']." AND Gebuehrbezeichnung='".
-          mysql_real_escape_string($key)."'");
+          sql_real_escape_string($key)."'");
     }
     $docinput['NeuPreis'] = str_replace(',','.',$docinput['NeuPreis']);
     if ( trim($docinput['NeuBez']) != '' && is_numeric($docinput['NeuPreis']) )
     {
       sql_query('INSERT INTO '.TABLE_SEMINARPREISE.
         ' (F_Buchung_Nr,Gebuehr,Gebuehrbezeichnung) VALUES ('.$_REQUEST['Buchung_Nr'].','.
-        $docinput['NeuPreis'].",'".mysql_real_escape_string($docinput['NeuBez'])."')");
+        $docinput['NeuPreis'].",'".sql_real_escape_string($docinput['NeuBez'])."')");
     }
   }
   
@@ -90,7 +90,7 @@ if ( $profile['editor'] != 1 )
   $Smarty->assign('Buchung', $Buchung);
   $Smarty->assign('check', $check);
   $Smarty->assign('id', $id);
-  $Smarty->assign_by_ref('seminar', $seminar);
+  $Smarty->assign('seminar', $seminar);
   $Preise = array();
   $query = sql_query("SELECT * FROM ".TABLE_SEMINARPREISE." WHERE F_Buchung_Nr=".
     $Buchung->Buchung_Nr." ORDER BY Gebuehrbezeichnung");  
@@ -104,10 +104,10 @@ if ( $profile['editor'] != 1 )
   $Vorlagen = ZeigeVorlagen($Buchung->Buchung_Nr, 'Seminar');
   $Smarty->assign('Vorlagen', ob_get_contents());
   ob_end_clean();
-  //$Smarty->assign_by_ref('buchung', $buchung);
+  //$Smarty->assign('buchung', $buchung);
   $Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));      
   $Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));
-  // Teilnehmer hinzufügen
+  // Teilnehmer hinzufÃ¼gen
   $geaendert = false;
   if ( isset($docinput['Teilnehmer']) && is_array($docinput['Teilnehmer']))
   {
@@ -134,10 +134,10 @@ if ( $profile['editor'] != 1 )
         sql_free_result($query);
       }
       else
-        die('Ungültige Adressen-id!');
+        die('ungÃ¼ltige Adressen-id!');
     }
   }
-  // Teilnehmerdaten ändern
+  // Teilnehmerdaten Ã¤ndern
   if ( isset($docinput['SeminarPreis']) && is_array($docinput['SeminarPreis']) )
   {
     foreach($docinput['SeminarPreis'] as $Adressen_id => $Preis )
@@ -163,15 +163,15 @@ if ( $profile['editor'] != 1 )
           ',SeminarAnzahlung='.$docinput['Seminaranzahlung'][$Adressen_id].
           ',SeminarGruppe='.$SeminarGruppe.
           ",SeminarVegetarier=$Vegetarier,SeminarSchweinelos=$Schweinelos," .
-          "SeminarBemerkung='".mysql_real_escape_string(
+          "SeminarBemerkung='".sql_real_escape_string(
             $docinput['SeminarBemerkung'][$Adressen_id]).
-          "',SeminarAnzahlungsBemerkung='".mysql_real_escape_string(
+          "',SeminarAnzahlungsBemerkung='".sql_real_escape_string(
           $docinput['SeminarAnzahlungsBemerkung'][$Adressen_id])."' WHERE F_Adressen_id=".$Adressen_id.
-          ' AND F_Buchung_Nr='.$Buchung->Buchung_Nr)) echo '<div class="Fehler">'.mysql_error().'</div>';
+          ' AND F_Buchung_Nr='.$Buchung->Buchung_Nr)) echo '<div class="Fehler">'.sql_error().'</div>';
       }
     }
   }
-  // Teilnehmer löschen
+  // Teilnehmer lÃ¶schen
   if ( isset($docinput['DelTeili']) && is_array($docinput['DelTeili']) )
   {
      foreach($docinput['DelTeili'] as $key => $Adressen_id )
@@ -186,13 +186,13 @@ if ( $profile['editor'] != 1 )
   }
   if ( ! $Buchung->isFertig())
   {    
-    $Smarty->assign_by_ref('docinput', $docinput);
+    $Smarty->assign('docinput', $docinput);
     $Smarty->assign('Adressenurl', get_url(get_cmodule_id('cvjmadressen')));    
     $Adressen = array();
     if ( isset($docinput["Search"]) && trim($docinput["Search"]) != "" )
     {
       // Teilnehmer suchen
-      $Search = mysql_real_escape_string($docinput["Search"]);
+      $Search = sql_real_escape_string($docinput["Search"]);
       $sql = "SELECT Adressen_id FROM ".TABLE_ADRESSEN." WHERE NOT Geloescht AND ".
           "(Name REGEXP '$Search' OR Vorname REGEXP '$Search' OR Strasse ".
           "REGEXP '$Search' OR Ort REGEXP '$Search' ".
@@ -200,13 +200,13 @@ if ( $profile['editor'] != 1 )
           "Kunden_Nr REGEXP '$Search' OR PLZ REGEXP '$Search') ".
           "ORDER BY Name,Vorname";
       $query = sql_query($sql);
-      while ( $adresse = mysql_fetch_array($query))
+      while ( $adresse = sql_fetch_array($query))
       {
       	$Adressen[] = new Adresse($adresse['Adressen_id']);
       }
       sql_free_result($query);
     }
-    $Smarty->assign_by_ref('Adressen', $Adressen);
+    $Smarty->assign('Adressen', $Adressen);
     $Smarty->assign('sem', urlencode('id='.$id.'&Buchung_Nr='.$Buchung->Buchung_Nr));
   } // wenn Buchung nicht fertig
   setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
@@ -222,7 +222,7 @@ if ( $profile['editor'] != 1 )
   if ( ! $query = sql_query('SELECT * FROM ('.TABLE_SEMINARTEILNEHMER.' INNER JOIN '.TABLE_ADRESSEN.
     ' ON F_Adressen_id=Adressen_id) INNER JOIN '.TABLE_ANREDEN.
     ' ON '.TABLE_ADRESSEN.'.F_Anrede_id=Anrede_id WHERE F_Buchung_Nr='.
-    $Buchung->Buchung_Nr.' ORDER BY Name, Vorname')) echo mysql_error();
+    $Buchung->Buchung_Nr.' ORDER BY Name, Vorname')) echo sql_error();
   $Anzahlen =array();
   for ( $i= 1; $i< 7; $i++)
   {
@@ -233,8 +233,8 @@ if ( $profile['editor'] != 1 )
   $Schweinelos = 0;
   while ( $teilnehmer = sql_fetch_array($query) )
   {
-     // Ausgabe der Teilnehmer und Möglichkeit, diesen einen Brief zu schreiben.
-     // Eingabefeld für Anzahlung, -bemerkung
+     // Ausgabe der Teilnehmer und mÃ¶glichkeit, diesen einen Brief zu schreiben.
+     // Eingabefeld fÃ¼r Anzahlung, -bemerkung
      if ( $teilnehmer['SeminarGruppe'] == 0 ) $teilnehmer['SeminarGruppe'] = '';      
      
      if ( $teilnehmer['Geburtsdatum'] != 0 )
@@ -270,7 +270,7 @@ if ( $profile['editor'] != 1 )
      $Teilnehmer[] = $teilnehmer;     
   }
   
-  $Smarty->assign_by_ref('SeminarTeilnehmer', $Teilnehmer);
+  $Smarty->assign('SeminarTeilnehmer', $Teilnehmer);
   $Smarty->assign('Teilnehmeranzahl', Count($Teilnehmer));
   $Smarty->display('Seminardaten_Liste.tpl');
   // Errechnete Altersgruppen in die Buchung schreiben
@@ -286,10 +286,10 @@ if ( $profile['editor'] != 1 )
       $Gesamt += $Anzahlen[$i][0]+$Anzahlen[$i][1];
     }
     $sql .= "Logtext=CONCAT('".date("d.m.Y H:i").
-       " Teilnehmerzahl/Vegetarier/Schweinelos per Seminar auf $Gesamt/$Vegetarier/$Schweinelos geändert ".
+       " Teilnehmerzahl/Vegetarier/Schweinelos per Seminar auf $Gesamt/$Vegetarier/$Schweinelos geÃ¤ndert ".
       get_user_nickname()."\n',Logtext) ";
     if ( ! sql_query("UPDATE ".TABLE_BUCHUNGEN." SET ".$sql." WHERE Buchung_Nr=".$Buchung->Buchung_Nr))
-      echo mysql_error();
+      echo sql_error();
   }
   sql_free_result($query);
   

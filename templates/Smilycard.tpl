@@ -4,7 +4,7 @@
 </style>
 <script type="text/javascript" language="JavaScript" src="javascript/common.js"></script>
 <script type="text/javascript" language="JavaScript" src="javascript/popcalendar.js"></script>
-<a href="?id=1093&Buchung_Nr={$Buchung->Buchung_Nr}">Zurück zur Buchung</a>
+<a href="?id=1093&Buchung_Nr={$Buchung->Buchung_Nr}">ZurÃ¼ck zur Buchung</a>
 
 <h2>Buchung {$Buchung->Buchung_Nr} und Unterbringung</h2>
 Name der Gruppe: 
@@ -82,14 +82,14 @@ Wie beurteilen Sie
 	</td>
 </tr>
 <tr>
-	<td>Sanitäre Anlagen</td>
+	<td>SanitÃ¤re Anlagen</td>
 	<td>
 		{html_radios values=$Werte selected=$smilycard.BeurteilungSanitaer name="Smilycard[BeurteilungSanitaer]"} 
 	
 	</td>
 </tr>
 <tr>
-	<td>Gästebetreuung</td>
+	<td>GÃ¤stebetreuung</td>
 	<td>
 		{html_radios values=$Werte selected=$smilycard.BeurteilungBetreuung name="Smilycard[BeurteilungBetreuung]"} 
 	</td>
@@ -120,11 +120,11 @@ Wie beurteilen Sie
 </tr>
 </table>
 
-Worauf Sie uns noch aufmerksam machen möchten<br />
+Worauf Sie uns noch aufmerksam machen mÃ¶chten<br />
 <textarea name="Smilycard[Aufmerksamkeit]" cols="50" rows="5">{$smilycard.Aufmerksamkeit}
 </textarea>
 
-<h2>Programm und Freizeitaktivitäten</h2>
+<h2>Programm und FreizeitaktivitÃ¤ten</h2>
 Welches Programm haben Sie in Anspruch genommen?<br />
 {html_checkboxes name="Smilycard[Programm]" options=$Programm selected=$smilycard.Programm separator="<br />"}
 <br />
@@ -157,7 +157,7 @@ Wie beurteilen Sie
 </tr>
 </table>
 
-Wünsche und Anregungen dazu:<br />
+WÃ¼nsche und Anregungen dazu:<br />
 <textarea name="Smilycard[ProgrammWuensche]" cols="50" rows="5">{$smilycard.ProgrammWuensche}
 </textarea><br />
 
@@ -165,12 +165,12 @@ Programmhighlights<br />
 <textarea name="Smilycard[ProgrammHighlights]" cols="50" rows="5">{$smilycard.ProgrammHighlights}
 </textarea><br />
 
-Allgemeine Anregungen und Programmwünsche<br />
+Allgemeine Anregungen und ProgrammwÃ¼nsche<br />
 <textarea name="Smilycard[ProgrammAnregungen]" cols="50" rows="5">{$smilycard.ProgrammAnregungen}
 </textarea>
 <br />
 <input type="submit" value="Speichern"/>
 </form>
-<a href="?id=1093&Buchung_Nr={$Buchung->Buchung_Nr}">Zurück zur Buchung</a>
+<a href="?id=1093&Buchung_Nr={$Buchung->Buchung_Nr}">ZurÃ¼ck zur Buchung</a>
 <br />
 {$smilycard.Historie|nl2br}

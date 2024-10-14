@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -11,5 +11,5 @@
 ?>
 
 <?=$title?><br />
-<input type="radio" value="1" name="docdata[<?=$value?>]"<? if($document[$value] == '1') echo ' CHECKED'; ?> /> <?=LANG_YES?>&nbsp;&nbsp;
-<input type="radio" value="0" name="docdata[<?=$value?>]"<? if($document[$value] == '0') echo ' CHECKED'; ?> /> <?=LANG_NO?>
+<input type="radio" value="1" name="docdata[<?=$value?>]"<?php if($document[$value] == '1') echo ' CHECKED'; ?> /> <?=LANG_YES?>&nbsp;&nbsp;
+<input type="radio" value="0" name="docdata[<?=$value?>]"<?php if($document[$value] == '0') echo ' CHECKED'; ?> /> <?=LANG_NO?>

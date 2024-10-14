@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -10,7 +10,7 @@
 
 error_reporting(1); // Disable Warnings
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ($_REQUEST as $key => $val) {
         $$key = $val;
         }
 
@@ -48,7 +48,7 @@ if($save=='config') {
         $fd = fopen ($filename, "w");
 	if($cache_time == 0) {
         $contents = fwrite ($fd,
-'<?
+'<?php
 /*
         Copyright (C) 2000-2002 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -64,7 +64,7 @@ if($save=='config') {
 		}
 	else {
         $contents = fwrite ($fd,
-'<?
+'<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -119,24 +119,24 @@ if(sql_num_rows($qresult) > 0) {
 <title>
 Liquid Bytes AWF Config
 </title>
-<?
+<?php
         include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> Config</h2></center>
+<center><h2><?php echo SITE_TITLE; ?> Config</h2></center>
 <br>
 <form action="config.php" method="post">
 Default document id<br>
-<input type="text" name="default_document" value="<? echo DEFAULT_DOCUMENT; ?>" size=20>
+<input type="text" name="default_document" value="<?php echo DEFAULT_DOCUMENT; ?>" size=20>
 <br><br>
 Default flavour id<br>
-<input type="text" name="default_flavour" value="<? echo DEFAULT_FLAVOUR; ?>" size=20>
+<input type="text" name="default_flavour" value="<?php echo DEFAULT_FLAVOUR; ?>" size=20>
 <br><br>
 Default language<br>
 <select name="default_lang" size="1">
-        <?
+        <?php
         $handle=opendir($_BASEPATH.'/inc/lang');
         while (false!==($file = readdir($handle))) {
                 if ($file != "." && $file != "..") {
@@ -150,7 +150,7 @@ Default language<br>
 <br><br>
 Default design<br>
 <select name="default_design" size="1">
-        <?
+        <?php
         $handle=opendir($_BASEPATH.'/inc/design');
         while (false!==($file = readdir($handle))) {
                 if ($file != "." && $file != ".." && '.inc' == substr($file, -4)) {
@@ -163,47 +163,47 @@ Default design<br>
 	?>
 </select><br /><br />
 Cache time (in seconds)<br>
-<input type="text" name="cache_time" value="<? echo CACHE_TIME; ?>" size=20>
+<input type="text" name="cache_time" value="<?php echo CACHE_TIME; ?>" size=20>
 <br><br>
-<input type="checkbox" value="1" name="show_warnings"<? if(SHOW_WARNINGS == 1) echo ' CHECKED'; ?>>
+<input type="checkbox" value="1" name="show_warnings"<?php if(SHOW_WARNINGS == 1) echo ' CHECKED'; ?>>
  Show all PHP warnings<br>
 Note: For public web sites, this is NOT a recommended option. For development, it is.
 <br><br>
-<input type="checkbox" value="1" name="disable_url_to_link"<? if(DISABLE_URL_TO_LINK == 1) echo ' CHECKED'; ?>>
+<input type="checkbox" value="1" name="disable_url_to_link"<?php if(DISABLE_URL_TO_LINK == 1) echo ' CHECKED'; ?>>
  Disable URL recognition<br>
 Note: Just do this, if you have problems. Normal URLs and email addresses can be recognised.
 <br><br>
-<input type="checkbox" value="1" name="disable_wildcards"<? if(DISABLE_WILDCARDS == 1) echo ' CHECKED'; ?>>
+<input type="checkbox" value="1" name="disable_wildcards"<?php if(DISABLE_WILDCARDS == 1) echo ' CHECKED'; ?>>
  Disable wildcard replacement<br>
 Note: Just do this, if you have problems or you need more performance.
 <br><br>
-<input type="checkbox" value="1" name="disable_email_check"<? if(DISABLE_EMAIL_CHECK == 1) echo ' CHECKED'; ?>>
+<input type="checkbox" value="1" name="disable_email_check"<?php if(DISABLE_EMAIL_CHECK == 1) echo ' CHECKED'; ?>>
  Disable email address validation<br>
 Note: This makes sense if you're using AWF for your intranet only.
 <br><br>
-<input type="checkbox" value="1" name="count_views"<? if(COUNT_VIEWS == 1) echo ' CHECKED'; ?>>
+<input type="checkbox" value="1" name="count_views"<?php if(COUNT_VIEWS == 1) echo ' CHECKED'; ?>>
  Count page views and set timestamps<br>
 Note: This will cost some performance, because MySQL locks the table while writing.
 <br><br>
-<input type="checkbox" value="1" name="force_ssl"<? if(FORCE_SSL == 1) echo ' CHECKED'; ?>>
+<input type="checkbox" value="1" name="force_ssl"<?php if(FORCE_SSL == 1) echo ' CHECKED'; ?>>
  Force SSL (no login w/o SSL)
 <br><br>
-<input type="checkbox" value="1" name="unique_nicknames"<? if(UNIQUE_NICKNAMES == 1) echo ' CHECKED'; ?>>
+<input type="checkbox" value="1" name="unique_nicknames"<?php if(UNIQUE_NICKNAMES == 1) echo ' CHECKED'; ?>>
  Unique nicknames
 <br><br>
 What to do, if document access is denied?<br>
-<input type="radio" value="1" name="denied_action"<? if(DENIED_ACTION==1) echo ' CHECKED'; ?>> Load document with ID <input type="text" size="5" name="denied_document" value="<? if(defined('DENIED_DOCUMENT')) { echo DENIED_DOCUMENT; } ?>"><br>
-<input type="radio" value="2" name="denied_action"<? if(DENIED_ACTION==2) echo ' CHECKED'; ?>> Ignore<br>
-<input type="radio" value="3" name="denied_action"<? if(DENIED_ACTION==3) echo ' CHECKED'; ?>> Ignore, but set flag (DOCUMENT_ACCESS = 0)<br>
-<input type="radio" value="4" name="denied_action"<? if(DENIED_ACTION==4) echo ' CHECKED'; ?>> Call exit()<br>
-<input type="radio" value="5" name="denied_action"<? if(DENIED_ACTION==5) echo ' CHECKED'; ?>> Print out 'Access denied.' and then call exit()<br>
+<input type="radio" value="1" name="denied_action"<?php if(DENIED_ACTION==1) echo ' CHECKED'; ?>> Load document with ID <input type="text" size="5" name="denied_document" value="<?php if(defined('DENIED_DOCUMENT')) { echo DENIED_DOCUMENT; } ?>"><br>
+<input type="radio" value="2" name="denied_action"<?php if(DENIED_ACTION==2) echo ' CHECKED'; ?>> Ignore<br>
+<input type="radio" value="3" name="denied_action"<?php if(DENIED_ACTION==3) echo ' CHECKED'; ?>> Ignore, but set flag (DOCUMENT_ACCESS = 0)<br>
+<input type="radio" value="4" name="denied_action"<?php if(DENIED_ACTION==4) echo ' CHECKED'; ?>> Call exit()<br>
+<input type="radio" value="5" name="denied_action"<?php if(DENIED_ACTION==5) echo ' CHECKED'; ?>> Print out 'Access denied.' and then call exit()<br>
 <br><br>
 <input type="hidden" name="save" value="config">
 <input type="submit" value="Save">
 </form>
 </td></tr>
 </table>
-<?
+<?php
 	include('footer.inc');
 ?>
 </center>

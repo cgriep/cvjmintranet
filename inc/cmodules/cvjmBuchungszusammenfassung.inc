@@ -1,7 +1,7 @@
 <?php
 /*
 
-Modul Buchungsübersicht
+Modul BuchungsÃœbersicht
 
 AWF-Name: cvjmbuchungszusammenfassung
 
@@ -43,7 +43,7 @@ function ArtikelAnzeigen($art, $Tag)
   $ids = array();
   while ( $row = sql_fetch_array($qu) )
   {
-  	// Nur Schlaforte berücksichtigen
+  	// Nur Schlaforte berÃ¼cksichtigen
 	$a = new Artikel($row['id']); 
   	if ( $a->BerechneSchlafplaetze() > -1)
   	{
@@ -51,7 +51,7 @@ function ArtikelAnzeigen($art, $Tag)
   	  $Gesamtanzahl++;
   	}
   } 
-  mysql_free_result($qu);
+  sql_free_result($qu);
   for ( $i = $Tag; $i < strtotime('+1 month', $Tag); $i=strtotime('+1 day',$i))
   {
     $Orte[$i] = 0;
@@ -62,13 +62,13 @@ function ArtikelAnzeigen($art, $Tag)
          BUCHUNG_VORRESERVIERUNG.','.BUCHUNG_RESERVIERUNG.','.BUCHUNG_INTERN.') '.
         " AND Datum=$i AND Bis>".strtotime('+23 hour',$i); // TODO         
     
-    if (!$buchungen = sql_query($sql)) echo mysql_error();
+    if (!$buchungen = sql_query($sql)) echo sql_error();
     while ( $buchung = sql_fetch_row($buchungen))
     {      
         $Orte[$i] = $buchung[0]/$Gesamtanzahl;
         //print date('d.m.Y',$i).' '.$buchung[0].' von '.$Gesamtanzahl.'<br >';
     }
-    mysql_free_result($buchungen);
+    sql_free_result($buchungen);
   } 
   // Seminare suchen
   for ( $i = $Tag; $i < strtotime('+1 month', $Tag); $i=strtotime('+1 day',$i))
@@ -80,18 +80,18 @@ function ArtikelAnzeigen($art, $Tag)
         'WHERE F_Artikel_Nr IN ('.implode(',',$ids).') AND Seminar AND BStatus IN (0,'.BUCHUNG_FERTIG.','.
          BUCHUNG_VORRESERVIERUNG.','.BUCHUNG_RESERVIERUNG.','.BUCHUNG_INTERN.') '.
         ' AND Datum='.$i.' AND Bis>'.strtotime('+23 hour',$i);
-    if (!$buchungen = sql_query($sql)) echo mysql_error();
+    if (!$buchungen = sql_query($sql)) echo sql_error();
     if ( $buchung = sql_fetch_row($buchungen))
     {     
     	if ( $Orte[$i] == 0 )
     	{	
     		if ( ! is_null($buchung[1])) 
-    		  $Orte[$i] = -mysql_num_rows($buchungen)/$buchung[0];
+    		  $Orte[$i] = -sql_num_rows($buchungen)/$buchung[0];
         	else
           	  $Orte[$i] = -1;
     	}
     }
-    mysql_free_result($buchungen);
+    sql_free_result($buchungen);
   }   
   return $Orte;  
 }
@@ -144,9 +144,9 @@ function ArtikelAnzeigen($art, $Tag)
     echo "</tr>\n";
     foreach ( array(3, 8 ,9)  as $kategorie ) // JB, FB, Zeltplatz
     {
-      $query = mysql_query('SELECT * FROM '.TABLE_ARTIKEL.' WHERE id='.$kategorie);
-  	  $artikel = mysql_fetch_array($query);
-  	  mysql_free_result($query);
+      $query = sql_query('SELECT * FROM '.TABLE_ARTIKEL.' WHERE id='.$kategorie);
+  	  $artikel = sql_fetch_array($query);
+  	  sql_free_result($query);
       echo '<tr><td>'.$artikel['Bezeichnung'].'</td>';
       $Orte = ArtikelAnzeigen($artikel, $Tag);
       for ( $i = $Tag; $i <= $Ende; $i = strtotime('+1 day',$i) )
@@ -191,12 +191,12 @@ function ArtikelAnzeigen($art, $Tag)
     $Tag = strtotime('+1 day',$Ende);
     flush();
     $monat++;
-  } // Monatszählung
+  } // MonatszÃ¤hlung
   $content = ob_get_contents();
   // Content speichern
   if ( ! $handle = fopen ("/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/files/belegung.html", "w") ) 
   {
-  	echo 'Fehler beim Öffnen der Datei!';
+  	echo 'Fehler beim Ã¶ffnen der Datei!';
   }
   else
   {

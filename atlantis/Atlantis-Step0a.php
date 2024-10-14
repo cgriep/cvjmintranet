@@ -5,7 +5,7 @@ include ('character.class.php');
 
 if (!session_is_registered('Charakter')) // Name 
 {
-	// Zurück zur Namenseingabe
+	// ZurÃ¼ck zur Namenseingabe
 	header('Location: http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/Atlantis-Step0.php');
 } else
 {
@@ -21,18 +21,18 @@ if (!session_is_registered('Charakter')) // Name
 		$smarty = new Smarty;
 
 		// Zugriffe auf die Datenbank
-		if ($query = mysql_query('SELECT * FROM T_Rassen ORDER BY Rasse')) // Abfrage senden
+		if ($query = sql_query('SELECT * FROM T_Rassen ORDER BY Rasse')) // Abfrage senden
 		{
 			$rassen_values = array ();
 			$rassen_output = array ();
 			$rassen_selected = '';
-			while ($row = mysql_fetch_array($query)) // Zeile holen
+			while ($row = sql_fetch_array($query)) // Zeile holen
 			{
 				$rassen_output[] = $row['Rasse'];
 				$rassen_values[] = $row['Rasse_id'];
 			}
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		$smarty->assign('Character', $Charakter->alsFeld(false));
 		$smarty->assign('PageTitle', 'Rassenauswahl');
 		$smarty->assign('mitAjax', true);

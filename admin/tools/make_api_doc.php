@@ -1,5 +1,5 @@
 #!/usr/bin/php -q
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/

@@ -93,7 +93,7 @@ function smarty_function_popup($params, &$smarty)
     }
 
     if (empty($text) && !isset($inarray) && empty($function)) {
-        $smarty->trigger_error("overlib: attribute 'text' or 'inarray' or 'function' required");
+        trigger_error("overlib: attribute 'text' or 'inarray' or 'function' required");
         return false;
     }
 

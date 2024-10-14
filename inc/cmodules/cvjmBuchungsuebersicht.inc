@@ -2,22 +2,23 @@
 
 /**
  *
- * Modul Buchungsübersicht
+ * Modul BuchungsÃœbersicht
 *
 * AWF-Name: cvjmbuchungsuebersicht
 *
 * Parameter:
-* Buchung_Nr - Nummer der anzuzeigenden Buchung; -1 für allgemeine Übersicht
+* Buchung_Nr - Nummer der anzuzeigenden Buchung; -1 fÃ¼r allgemeine Ãœbersicht
 * Tag - erster Tag der Anzeige
 * Tage - Anzahl der anzuzeigenden Tage
 * docinput[Page] - id der Kategorie, die angezeigt werden soll
-* docinput[Alle] - 1 wenn alle Orte (unabhängig von "Anzeigen" angezeigt werden sollen
-* docinput[Art] - Art der Artikel, die ausgewählt werden soll, wenn keine Angabe = Ort
+* docinput[Alle] - 1 wenn alle Orte (unabhÃ¤ngig von "Anzeigen") angezeigt werden sollen
+* docinput[Art] - Art der Artikel, die ausgewÃ¤hlt werden soll, wenn keine Angabe = Ort
 *
  */
 require_once(INC_PATH.'cvjm/Artikel.class.php');
 require_once(INC_PATH.'cvjm/Buchung.class.php');
-function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
+// dieArt Standard CVJMART_ORT
+function ArtikelAnzeigen($DieArt, $Tag, $parent = -1)
 {
 	global $Artikel;
 	global $Schlafplaetze;
@@ -37,7 +38,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
 	$query = sql_query("SELECT * FROM " . TABLE_ARTIKEL . " WHERE id=" . $parent);
 	if (!$row = sql_fetch_array($query))
 	{
-	echo "Fehler p=$parent: " . mysql_error();
+	echo "Fehler p=$parent: " . sql_error();
 	}
 	sql_free_result($query);
 	$parentPos = $row["Position"];
@@ -78,7 +79,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
 			$row['tage'][strtotime('+'.$i.'days',$Tag)]['Buchungen'] = array ();
 			$row['tage'][strtotime('+'.$i.'days',$Tag)]['Aktiv'] = array ();
 		}
-		while ($diebuchung = mysql_fetch_array($buchungen))
+		while ($diebuchung = sql_fetch_array($buchungen))
 		{
 			// Sommerzeit!
 			$tag = floor(($diebuchung['Datum'] - $Tag) / 86400);
@@ -181,13 +182,13 @@ if ($profile['editor'] != 1)
 		if (!$query = sql_query('SELECT * FROM ' . TABLE_BUCHUNGEN . ' WHERE Buchung_Nr=' .
 		$_REQUEST['Buchung_Nr']))
 		{
-			echo '<div class="SchwererFehler">Fehler Buchung: ' . mysql_error() . "</div>";
+			echo '<div class="SchwererFehler">Fehler Buchung: ' . sql_error() . "</div>";
 		}
 		$buchung = sql_fetch_array($query);
 		sql_free_result($query);
 
 		TagDefinition($buchung);
-		// vorhandene Buchungen im Bereich löschen
+		// vorhandene Buchungen im Bereich lÃ¶schen
 		foreach (explode(",", $docinput["Artikelnummern"]) as $key => $value)
 		{
 			entbucheArtikel($_REQUEST['Buchung_Nr'], $value, $_REQUEST["Tag"] . "-" .
@@ -236,11 +237,11 @@ if ($profile['editor'] != 1)
 									if (!$anzquery = sql_query("SELECT Menge FROM " . TABLE_BUCHUNGSEINTRAEGE .
 									" WHERE F_Artikel_Nr=$oberartikel AND F_Buchung_Nr=" . $buchung["Buchung_Nr"]))
 									{
-										echo mysql_error();
+										echo sql_error();
 									}
 									if (!$anz = sql_fetch_row($anzquery))
 									{
-										echo mysql_error();
+										echo sql_error();
 									}
 									sql_free_result($anzquery);
 									if ($anz[0] != 0)
@@ -282,10 +283,10 @@ if ($profile['editor'] != 1)
 		} // wenn nicht Gesamt
 		$Artikelarten = holeArtikelarten();
 		if (!sql_query('UPDATE ' . TABLE_BUCHUNGEN . " SET Logtext=CONCAT('" . date("d.m.Y H:i") .
-		" " . $Artikelarten[$docinput["Art"]] . " geändert " . get_user_nickname() . "\n',Logtext) " .
+		" " . $Artikelarten[$docinput["Art"]] . " geÃ¤ndert " . get_user_nickname() . "\n',Logtext) " .
 		" WHERE Buchung_Nr=" . $_REQUEST["Buchung_Nr"]))
 		{
-		echo mysql_error();
+		echo sql_error();
 		}
 	}
 	require_once(INC_PATH.'Smarty/Smarty.class.php');
@@ -330,7 +331,7 @@ if ($profile['editor'] != 1)
 			if (!$query = sql_query("SELECT * FROM " . TABLE_BUCHUNGEN . " INNER JOIN " . TABLE_ADRESSEN .
 			" ON Adressen_id = F_Adressen_id WHERE Buchung_Nr = " . $_REQUEST["Buchung_Nr"]))
 			{
-				echo mysql_error();
+				echo sql_error();
 			}
 			$buchung = sql_fetch_array($query);
 			sql_free_result($query);
@@ -367,7 +368,7 @@ if ($profile['editor'] != 1)
 			$Smarty->assign('Personalplanungurl', get_url(get_cmodule_id('cvjmpersonalplanung'), 'docinput[Buchung_Nr]='.$Buchung->Buchung_Nr));
 		}
 		$Links['Verleih'] = "docinput[Art]=" . CVJMART_VERLEIH . $dat;		
-		$Smarty->assign_by_ref('Links', $Links);
+		$Smarty->assign('Links', $Links);
 		$Smarty->assign('dat', $dat);
 		$Smarty->assign('Programmpaket', $docinput['Art'] == CVJMART_PROGRAMMPAKET);
 		$Smarty->assign('mitZeit', $docinput["Art"] == CVJMART_VERLEIH || 
@@ -385,7 +386,7 @@ if ($profile['editor'] != 1)
 		if (!$query = sql_query("SELECT * FROM " . TABLE_ARTIKEL . " WHERE Einruecken=0 AND F_Art_id=" .
 		$docinput["Art"] . " $Alle ORDER BY Position"))
 		{
-			echo "Fehler Kategorie: " . mysql_error();
+			echo "Fehler Kategorie: " . sql_error();
 		}
 		$s = ZeigeBereiche($docinput["Art"], $Buchung->Buchung_Nr);
 		if ($s != "")
@@ -399,7 +400,7 @@ if ($profile['editor'] != 1)
 		$Kategorien = array ();
 		while ($kategorie = sql_fetch_array($query))
 		{
-			// wenn kein Reiter gewählt ist den ersten anzeigen in dem eine Buchung ist
+			// wenn kein Reiter gewÃ¤hlt ist den ersten anzeigen in dem eine Buchung ist
 			if (!isset ($docinput["Page"]) && Count($BelegteBereiche) > 0)
 			{
 				if (in_array($kategorie["Bezeichnung"], $BelegteBereiche))
@@ -428,7 +429,7 @@ if ($profile['editor'] != 1)
 			$Kategorien[] = $kategorie;
 		}
 		$Smarty->assign('Artikelurl', get_url(get_cmodule_id('cvjmartikel')));
-		$Smarty->assign_by_ref('Kategorien', $Kategorien);
+		$Smarty->assign('Kategorien', $Kategorien);
 		$Smarty->assign('default_background', $design["default_background"]);
 		// Template
 		$_SESSION['Buchung'] = $_REQUEST['Buchung_Nr'];
@@ -442,7 +443,7 @@ if ($profile['editor'] != 1)
 		{
 			$Tage[] = strtotime('+'.$i.' day', $Tag);
 		}
-		$Smarty->assign_by_ref('Tage', $Tage);
+		$Smarty->assign('Tage', $Tage);
 
 		$docinput['Artikelnummern'] = '';
 		for ($i = 0; $i < $_SESSION['ANZAHLTAGE']; $i++)
@@ -451,7 +452,7 @@ if ($profile['editor'] != 1)
 		}
 		$Artikel = array();
 		ArtikelAnzeigen($docinput["Art"], $Tag, $docinput["Page"]);
-		$Smarty->assign_by_ref('Artikel', $Artikel);
+		$Smarty->assign('Artikel', $Artikel);
 		if ($docinput['Art'] == CVJMART_ORT && isset ($_REQUEST['Buchung_Nr']) && $_REQUEST['Buchung_Nr'] > 0)
 		{
 			$Smarty->assign('Schlafplaetze', $Schlafplaetze);
@@ -462,7 +463,7 @@ if ($profile['editor'] != 1)
 			$docinput["Artikelnummern"] = substr($docinput["Artikelnummern"], 0, strlen($docinput["Artikelnummern"]) - 1);
 		}
 			
-		$Smarty->assign_by_ref('docinput', $docinput);
+		$Smarty->assign('docinput', $docinput);
 		$Smarty->assign('id', $id);
 		$Smarty->assign('params', 'Buchung_Nr='.$Buchung->Buchung_Nr);
 		$Smarty->assign('Tag', $Tag);
@@ -471,7 +472,7 @@ if ($profile['editor'] != 1)
 		$Smarty->assign('AnzeigeEnde', strtotime('+'.$_SESSION['ANZAHLTAGE'].' days',$Tag));
 		$Smarty->assign('menge',  $Menge);
 		$buchung['Fertig'] = $Buchung->isFertig();
-		$Smarty->assign_by_ref('buchung', $buchung);
+		$Smarty->assign('buchung', $buchung);
 		$Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));
 		setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");
 		$Smarty->display('Buchungsuebersicht.tpl');

@@ -39,7 +39,6 @@ if ( $profile["Editor"] != "1" )
   }
   else
     $komplex = "";
-  reset($Artikelarten);
   echo '[ <a href="'.get_url($id).'">Alle Artikel</a> ] ';
   foreach ($Artikelarten as $key => $value )
   {
@@ -64,7 +63,7 @@ if ( $profile["Editor"] != "1" )
     $Where = "";
   $sql = "SELECT * FROM ".TABLE_ARTIKEL." INNER JOIN ".TABLE_ARTIKELARTEN.
     " ON F_Art_id=Art_id $Where ORDER BY Art, Position";
-  if (!$query = sql_query($sql)) echo mysql_error();
+  if (!$query = sql_query($sql)) echo sql_error();
   $Art = "";
   echo '<table width="100%">';
   while ($artikel = sql_fetch_array($query) )

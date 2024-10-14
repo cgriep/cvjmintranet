@@ -93,4 +93,4 @@
 {/if}
 </div>
 </form>
-<div class="zentriert">[ <a href="{$Buchungurl}&Buchung_Nr={$Buchung->Buchung_Nr}">Zurück zur Buchung</a> ]</div>
+<div class="zentriert">[ <a href="{$Buchungurl}&Buchung_Nr={$Buchung->Buchung_Nr}">ZurÃ¼ck zur Buchung</a> ]</div>

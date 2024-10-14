@@ -8,7 +8,7 @@
         Last update: 21.08.2003
 */
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ( $_REQUEST as $key => $val)  {
         $$key = $val;
         }
 
@@ -68,14 +68,14 @@ if(isset($id) && isset($name) && $name != '') {
 <title>
 Liquid Bytes AWF Group Management
 </title>
-<?
+<?php
 	include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> Group Management</h2></center>
-<?
+<center><h2><?php echo SITE_TITLE; ?> Group Management</h2></center>
+<?php
 if(isset($action) && $action=='delete' && isset($id)) {
 	echo '<center><h3>Delete: Are you sure?</h3>';
 	echo '<h3><a href="'.$_SERVER['PHP_SELF'].'">No</a>&nbsp;
@@ -89,7 +89,7 @@ elseif(isset($action) && $action == 'newgroup') { ?>
 	<input type="text" name="name"><input type="submit" value="Save"><input type="submit" name="back" value="Back">
 	<table width="100%" cellpadding="0" cellspacing="0" border="0">
 	</form>
-	<?
+	<?php
 	}
 elseif(!isset($id)) {
 ?>
@@ -100,13 +100,13 @@ elseif(!isset($id)) {
 <td bgcolor="#ddddff" align="right" width="10%"><b>Members</b></td>
 <td bgcolor="#dddddd" align="center" width="10%"><b>Options</b></td>
 
-<?
+<?php
 $qres = sql_query ("SELECT id, group_name FROM ".TABLE_GROUPS);
 while($row = sql_fetch_row($qres)) { ?>
 	<tr>
 	<td bgcolor="#eeffee" align="center"><?=$row[0]?></td>
 	<td bgcolor="#ffeeee" align="left"><?=$row[1]?></td>
-	<td bgcolor="#eeeeff" align="right"><? 
+	<td bgcolor="#eeeeff" align="right"><?php 
 		$qres2 = sql_query ("SELECT count(*) FROM ".TABLE_USERDATA." WHERE name = 'group_".$row[0]."' AND value = '1'");
 		$row2 = sql_fetch_row($qres2);
 		echo $row2[0];
@@ -115,13 +115,13 @@ while($row = sql_fetch_row($qres)) { ?>
 	<a href="groups.php?action=delete&id=<?=$row[0]?>"><img src="img/delete.gif" border="0" alt="Delete"></a>&nbsp;
 	<a href="groups.php?id=<?=$row[0]?>"><img src="img/edit.gif" border="0" alt="Edit"></a></td>
 	</tr>
-	<? 
+	<?php 
 	}
 
 ?>
 </table>
 <p align="center"><a href="groups.php?action=newgroup">Add new group</a></p>
-<? } else { 
+<?php } else { 
 $qres = sql_query ("SELECT group_name FROM ".TABLE_GROUPS." WHERE id = $id");
 $row = sql_fetch_row($qres);
 ?>
@@ -134,14 +134,14 @@ Name<br />
 </form>
 <p><br /><br />
 <b>Profile</b>
-<?
+<?php
  		$profile = get_group_profile($id, false);
                 if(isset($profile)) {
                 echo '<table width="450" border="0" cellpadding="2" cellspacing="1">';
                 echo '<tr><td width="100" bgcolor="#dddddd">Key</td>
                         <td width="300" bgcolor="#dddddd" align="right">Value</td>
                         <td width="50" bgcolor="#dddddd">Edit</td></tr>';
-                while(list($key, $value) = each($profile)) {
+                foreach ($profile as $key => $value) {
                         echo '<tr><td width="100" bgcolor="#eeeeee">'.$key.'</td>
                                 <td width="300" bgcolor="#eeeeee" align="right">'.$value.'</td>
                                 <td width="50" bgcolor="#eeeeee">
@@ -154,10 +154,10 @@ Name<br />
                         <input type="hidden" name="id" value="'.$id.'">
                         <br>Value<br><input type=text name="savevalue" size="70"><br><br>';
                 echo '<input type="submit" value="Add"></form>'; ?>		
-<? } ?>
+<?php } ?>
 </td></tr>
 </table>
-<?
+<?php
         include('footer.inc');
 ?>
 </center>

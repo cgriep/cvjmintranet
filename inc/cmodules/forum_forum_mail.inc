@@ -23,13 +23,13 @@ $childcount = count_children($doctypes['forum_posting'], $flavour);
                 txtarea.focus();
         }
 }
---></script><?
+--></script><?php
 
 $filename = INC_PATH.DATA_PATH.'forum_buttonlist.conf';
 $lines = file($filename);
-while (list ($line_num, $line) = each ($lines)) {
-        $buffer = split("\t", $line);
-        $buffer2 = split(';', $buffer[1]);
+foreach ($lines as $line_num => $line) {
+        $buffer =  explode("\t", $line);
+        $buffer2 =  explode(';', $buffer[1]);
          $buttonarray[$buffer[0]]['quote'] = '<img src = "'.$image_rpath.'buttons/forum/'.trim($buffer2[0]).'" />';
         $buttonarray[$buffer[0]]['reply'] = '<img src = "'.$image_rpath.'buttons/forum/'.trim($buffer2[1]).'" />';
         }
@@ -58,16 +58,16 @@ include(INC_PATH.'misc/forum_functions.inc');
 
 if($profile['editor'] == 1) {
         create_editor_input('Description (optional)','descr', 'text_input');
-        ?><br /><br />Buttons<br /><select size="1" name="docdata[button]"><option value="Text" <?
+        ?><br /><br />Buttons<br /><select size="1" name="docdata[button]"><option value="Text" <?php
         if ($document['button'] == 'Text') { echo 'SELECTED'; }
-        ?>>Text</option><?
+        ?>>Text</option><?php
         while(list($key, $value) = each($buttonarray)) {
                 echo '<option value="'.$key.'" ';
                 if ($document['button'] == $key) { echo 'SELECTED'; }
                 echo '>'.$key.'</option>';
                 }
         ?></select>
-        <input type="hidden" name="docdataflavour[button]" value="0"><?
+        <input type="hidden" name="docdataflavour[button]" value="0"><?php
         echo ' Example: ';
         if($document['button'] == 'Text') { echo '[ Quote ] [ Reply ]'; }
         else {
@@ -79,13 +79,13 @@ if($profile['editor'] == 1) {
         <br /><br />Max postings (forum)<br /><input type="text" name="docdata[maxposts2]" size="3" maxlength="3" value="<?=$document['maxposts2']?>"><br /><br />
         Replies per page (posting)<br /><input type="text" name="docdata[ppp]" size="2" maxlength="2" value="<?=$document['ppp']?>">
         <br /><br />Max replies (posting)<br /><input type="text" name="docdata[maxposts]" size="3" maxlength="3" value="<?=$document['maxposts']?>">
-        <br /><br /><?
+        <br /><br /><?php
         create_editor_input('Only registered users are able to add a posting or reply to a posting.','onlyforusers','onoff_input');
-        ?><br /><br /><?
+        ?><br /><br /><?php
         create_editor_input('Mark postings created in the last 24 hours.','marknew', 'onoff_input');
-        ?><br /><br /><?
+        ?><br /><br /><?php
         create_editor_input('Sort replies descending.','descorder', 'onoff_input');
-        ?><br /><br /><?
+        ?><br /><br /><?php
         create_editor_input('Show hosts from which on the replies where posted.','showhost', 'onoff_input');
         ?><input type="hidden" name="docdataflavour[ppp]" value="0">
         <input type="hidden" name="docdataflavour[ppp2]" value="0">
@@ -96,7 +96,7 @@ if($profile['editor'] == 1) {
         <input type="hidden" name="docdataflavour[descorder]" value="0">
         <input type="hidden" name="docdataflavour[showhost]" value="0">
 
-        <?
+        <?php
         if(isset($docinput['deleteposting'])) {
                 foreach($docinput['deleteposting'] as $delkey) { destroy_node($delkey); }
                 $childcount = $childcount-sizeof($docinput['deleteposting']);
@@ -117,7 +117,7 @@ if($profile['editor'] == 1) {
                   <td width="79%">Subject</td>
                   <td width="10%" nowrap>Author</td>
                   <td width="10%" nowrap>Last Change</td>
-                  <td width="1%" nowrap>Edit</td></tr><?
+                  <td width="1%" nowrap>Edit</td></tr><?php
                 }
         $colorswitch = '0';
         while(list($key, $value) = each($result)) {
@@ -193,13 +193,13 @@ else {
                 <input type="hidden" name="id" value="'.$id.'">
                 <input type="hidden" name="docinput[savetopic]" value="1">';
                 if(SESSION_STATUS != 'ok') {
-                        ?><br /><?=LANG_NICKNAME?><br /><input type="text" name="docinput[nick]" value="<?=$docinput['nick']?>" size="<?=$design['input_size']?>" maxlength="15"><?
+                        ?><br /><?=LANG_NICKNAME?><br /><input type="text" name="docinput[nick]" value="<?=$docinput['nick']?>" size="<?=$design['input_size']?>" maxlength="15"><?php
                         }
                 if(SESSION_STATUS != 'ok') {
-                        ?><br /><?=LANG_EMAIL_ADDRESS?><br /><input type="text" name="docinput[email]" value="<?=$docinput['email']?>" size="<?=$design['input_size']?>" maxlength="60"><?
+                        ?><br /><?=LANG_EMAIL_ADDRESS?><br /><input type="text" name="docinput[email]" value="<?=$docinput['email']?>" size="<?=$design['input_size']?>" maxlength="60"><?php
                         }
                 ?><br /><?=LANG_FORUM_SUBJECT?><br /><input type="text" name="docinput[title]" value="<?=$docinput['title']?>" size="<?=$design['input_size']?>" maxlength="60">
-                <br /><?=LANG_FORUM_MESSAGE?><br /><textarea id="newstext" name="docinput[body]" cols="<?=$design['input_size']?>" rows="<?=$design['input_rows']?>"><?=$docinput['body']?></textarea><?
+                <br /><?=LANG_FORUM_MESSAGE?><br /><textarea id="newstext" name="docinput[body]" cols="<?=$design['input_size']?>" rows="<?=$design['input_rows']?>"><?=$docinput['body']?></textarea><?php
                 if(SESSION_STATUS == 'ok') {
                         echo '<br /><input type="checkbox" name="docinput[sendreplys]" value="1"';
                         if($docinput['sendreplys'] == '1') {
@@ -209,10 +209,10 @@ else {
                         }
 
                 ?><br /><br /><input type="submit" value="<?=LANG_FORUM_ADDPOSTING?>"></form>
-                <?
+                <?php
                 $filename = INC_PATH.DATA_PATH.'smilies.conf';
                 $lines = file($filename);
-                while (list ($line_num, $line) = each ($lines)) {
+                foreach ($lines as $line_num => $line) {
                   $buffer = explode(chr(124), $line);
                   if (trim($buffer[1]) != "" )
                     $replacearray[$buffer[0]] = '<img src = "'.$image_rpath.'smilies/'.
@@ -236,8 +236,8 @@ else {
                 if($ismoverview['type_id'] == $doctypes['forum_overview']) {
                         echo '<table width="100%" cellpadding="'.$design['table_cellpadding'].'" cellspacing="'.$design['table_cellspacing'].'" border="'.$design['table_border'].'">';
                         ?><tr><td align="left" valign="middle">
-                        <? echo '<h1>'.transform($document['title'], 'clean').'</h1>'; ?>
-                        </td><td align="right"><?
+                        <?php echo '<h1>'.transform($document['title'], 'clean').'</h1>'; ?>
+                        </td><td align="right"><?php
                          echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post">'.LANG_FORUM_JUMPTO.' <select size="1" name="id">';
                         $jumpforums = get_children(0, count_children($doctypes['forum_forum'],$flavour,$document['parent_id']), $doctypes['forum_forum'], false,'DESC', false, $document['parent_id']);
                         while(list($key, $value) = each($jumpforums)) {
@@ -247,15 +247,15 @@ else {
                                         }
                                 echo '>'.transform($value['title'], 'clean').'</option>';
                                 }
-                        ?></select><input type="submit" value="<?=LANG_FORUM_GO?>" /></form><?
-                        ?></td></tr></table><?
+                        ?></select><input type="submit" value="<?=LANG_FORUM_GO?>" /></form><?php
+                        ?></td></tr></table><?php
                         }
                 echo $design['table_begin'];
                 ?><tr bgcolor="<?=$design['table_header']?>">
                 <td width="79%"><?=LANG_FORUM_SUBJECT?></td>
                 <td width="10%" nowrap><?=LANG_FORUM_AUTHOR?></td>
                 <td width="10%" nowrap><?=LANG_FORUM_REPLIES?></td>
-                <td width="1%" nowrap><?=LANG_FORUM_LATEST?></td></tr><?
+                <td width="1%" nowrap><?=LANG_FORUM_LATEST?></td></tr><?php
                 $result = get_sorted_children ($_REQUEST['first_item'] , $document['ppp2'], 'timestamp', $doctypes['forum_posting']);
                 $colorswitch = '0';
                 while(list($key, $value) = each($result)) {
@@ -279,7 +279,7 @@ else {
                                 }
                         echo $value['childcount'];
                         ?></span></td>
-                        <td width="1%" nowrap align=right><?=transform($value['timestamp'], 'datetime')?></td></tr><?
+                        <td width="1%" nowrap align=right><?=transform($value['timestamp'], 'datetime')?></td></tr><?php
                         }
                 echo $design['table_end'];
                 if($childcount > $document['ppp2']) {
@@ -308,11 +308,11 @@ else {
                   echo '[ <a href="'.get_url($id,'addtopic=1').'">'.LANG_FORUM_ADDNEW.'</a> ] ';
                   if ( SESSION_STATUS == "ok" )
                     if ( $profile["MailForum_$id"] == "1" ) {
-                      echo ' Die Beitr‰ge werden per Mail zugesandt. [ <a href="?id='.$id;
+                      echo ' Die Beitr√§ge werden per Mail zugesandt. [ <a href="?id='.$id;
                       echo '&SendMail=0">abschalten</a> ]';
                     }
                     else
-                      echo ' [ <a href="?id='.$id.'&SendMail=1">neue Beitr‰ge als Mail zusenden</a> ]';
+                      echo ' [ <a href="?id='.$id.'&SendMail=1">neue Beitr√§ge als Mail zusenden</a> ]';
                 }
                 else {
                          echo LANG_FORUM_HAVETOBELOGGEDIN;

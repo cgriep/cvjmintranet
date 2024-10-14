@@ -78,7 +78,7 @@ if($profile['editor']!='1') {
     ?><form action="<?=get_url($id)?>" method="post" enctype="multipart/form-data">
         <b><?=LANG_PICTURE_FILE?></b><br /><input name="userfile" type="file"><br />
         <b><?=LANG_THUMB_FILE?></b><br /><input name="thumbfile" type="file">
-        <br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?
+        <br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?php
   }
   else if(isset($_REQUEST['Del']) && SESSION_STATUS == 'ok' &&
     $profile[$document['pictureposter']] == '1') {
@@ -114,14 +114,14 @@ if($profile['editor']!='1') {
   }
 
   {
-        ?><center><table width="100%" border="0" cellpadding="1" cellspacing="1"><?
-        if(isset($document['title']) && $document['title'] != "") { ?><tr><td><h3><?=transform($document['title'], 'clean')?></h3></td></tr><? }
-        if(isset($document['body']) && $document['body'] != "") { ?><tr><td><?=transform($document['body'], $document['datatype']['body'])?></td></tr><? }
-        ?></table></center><?
+        ?><center><table width="100%" border="0" cellpadding="1" cellspacing="1"><?php
+        if(isset($document['title']) && $document['title'] != "") { ?><tr><td><h3><?=transform($document['title'], 'clean')?></h3></td></tr><?php }
+        if(isset($document['body']) && $document['body'] != "") { ?><tr><td><?=transform($document['body'], $document['datatype']['body'])?></td></tr><?php }
+        ?></table></center><?php
         $handle = opendir(BASE_PATH.$basedir."/thumbs/");
         while ($file = readdir($handle)) { $existingth[] = $file; }
         closedir($handle);
-        ?><p align="left"><table><?
+        ?><p align="left"><table><?php
         $handle = opendir(BASE_PATH.$basedir);
         $nr = 0;
         while ($file = readdir ($handle))  {
@@ -132,10 +132,10 @@ if($profile['editor']!='1') {
                   eregi(".gif",substr($file,strlen($file)-4)) ||
                   eregi(".png",substr($file,strlen($file)-4)))) {
                         ?><td><a href="<?=$basedir.'/'.$file?>" target="_blank">
-                        <img alt="<?
+                        <img alt="<?php
                         echo substr($file,0,-4). " - ";
                         echo round(@filesize("$basedir/$file")/1000). "kB";
-                        ?>" src="<?=$basedir?>/thumbs/<?=$file?>" border=0></a><?
+                        ?>" src="<?=$basedir?>/thumbs/<?=$file?>" border=0></a><?php
                         if ( $profile[$document["pictureposter"]] == "1" ) {
                           echo "<br />";
                           echo '<a href="?id='.$id.'&Del='.$nr.'">L&ouml;schen</a>';
@@ -149,10 +149,10 @@ if($profile['editor']!='1') {
                     eregi(".gif",substr($file,strlen($file)-4)) ||
                     eregi(".png",substr($file,strlen($file)-4))) {
                         ?><td><a href="<?=$basedir.'/'.$file?>" target="_blank">
-                        <img width="150" height="100" alt="<?
+                        <img width="150" height="100" alt="<?php
                         echo substr($file,0,-4). " - ";
                         echo round(@filesize("$basedir/$file")/1000). "kB";
-                        ?>" src="<?=$basedir?>/<?=$file?>" border="0" /></a><?
+                        ?>" src="<?=$basedir?>/<?=$file?>" border="0" /></a><?php
                         if ( $profile[$document["pictureposter"]] == "1" ) {
                           echo "<br />";
                           echo '<a href="?id='.$id.'&Del='.$nr.'">L&ouml;schen</a>';
@@ -164,13 +164,13 @@ if($profile['editor']!='1') {
         }
         closedir($handle);
         if ( ($nr % 4) != 0 ) echo "</tr>";
-        ?></table></p><?
+        ?></table></p><?php
   }
 }
 else {
         create_editor_input ('Description (optional)', 'body', 'area_input');
         ?><br /><br />
-        <?
+        <?php
         /*
         $handle = opendir(BASE_PATH."/".$basedir);
         while ($dir = readdir ($handle)) {
@@ -200,7 +200,7 @@ else {
         }
   $isgallery = get_node($document['parent_id'], $flavour);
   if(($isgallery['type_id'] == $doctypes['thumbnail_gallery']) && $isgallery != '') {
-    ?><br><br>[ <a href="<?=$PHP_SELF?>?id=<?=$document['parent_id']?>"><?=LANG_BACKTOGALLERY?></a> ]<?
+    ?><br><br>[ <a href="<?=$PHP_SELF?>?id=<?=$document['parent_id']?>"><?=LANG_BACKTOGALLERY?></a> ]<?php
   }
   if($profile['editor'] != '1' && SESSION_STATUS == 'ok' && $profile[$document['pictureposter']] == '1') {
         echo ' [ <a href="'.get_url($id,'add=1').'">'.LANG_ADD_THUMB.'</a> ]  ';

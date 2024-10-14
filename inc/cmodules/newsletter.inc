@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -75,7 +75,7 @@ if($profile['editor']!='1') {
   echo "An folgende Gruppen senden<br />";
   echo '<select name="Gruppen[]" size="5" multiple="multiple">';
   reset($profile);
-  while(list($key, $value) = each($groups)) {
+  foreach ( $groups as $key => $value) {
     if($profile['group_'.$key] == 1 || $profile["SendToAll"] == 1 ) {
       echo '<option value="'.$key.'">'.$value.'</option>';
     }

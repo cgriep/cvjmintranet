@@ -51,7 +51,7 @@
 <div class="ueberschriftzeile">Preise</div>
 <table>
 <tr>
-  <td>Bezeichnung</td><td>Preis</td><td>Löschen</td>
+  <td>Bezeichnung</td><td>Preis</td><td>LÃ¶schen</td>
 </tr>
 {foreach from=$Preise item=preis}
 <tr class="{cycle values="helleZeile,dunkleZeile"}">
@@ -87,10 +87,10 @@
 </form>
 {$Vorlagen}
 <div class="zentriert">
-  [ <a href="{$Buchungurl}&Buchung_Nr={$Buchung->Buchung_Nr}">Zurück zur Buchung</a> ]
+  [ <a href="{$Buchungurl}&Buchung_Nr={$Buchung->Buchung_Nr}">ZurÃ¼ck zur Buchung</a> ]
 </div>
 {if !$Buchung->isFertig()}  
-<a id="Hinzu" name="Hinzu"></a><div class="ueberschriftzeile">Teilnehmer hinzufügen</div>
+<a id="Hinzu" name="Hinzu"></a><div class="ueberschriftzeile">Teilnehmer hinzufÃ¼gen</div>
 <form action="?id={$id}#Hinzu" method="post" >
 Name/Ort/KuNr des Teilnehmers <input type="Text" name="docinput[Search]" 
 value="{$docinput.Search|escape}" size="25" maxlength="25" /> 
@@ -119,11 +119,11 @@ value="{$docinput.Search|escape}" size="25" maxlength="25" />
 {/foreach}
 <tr>
   <td></td>
-  <td colspan="5"><a href="{$Adressenurl}&Bearbeiten=-1&Sem={$sem}&docinput[Search]={$docinput.Search}" target="_blank">Neue Adresse hinzufügen</a>
+  <td colspan="5"><a href="{$Adressenurl}&Bearbeiten=-1&Sem={$sem}&docinput[Search]={$docinput.Search}" target="_blank">Neue Adresse hinzufÃ¼gen</a>
   </td>
 </tr>
 </table>
-<div class="ganzeZeile zentriert"><input type="Submit" value="Hinzufügen" /></div>
+<div class="ganzeZeile zentriert"><input type="Submit" value="HinzufÃ¼gen" /></div>
 {else}
 {if isset($docinput.Search)}
 <div class="ganzeZeile zentriert Fehler">Keinen passenden Adressdatensatz gefunden!</div>

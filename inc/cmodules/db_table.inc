@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         The author is Christoph Griep (cgriep@fricom.com)
         Last update: 03.07.2003
@@ -92,11 +92,11 @@ if ( $profile['editor']=='1' )
   echo '<br /><br />';
   create_editor_input('Link-Feld','LinkFeld','text_input');
   echo '<br /><br />';
-  create_editor_input('Link-URL (ID wird angehängt)','LinkURL','text_input');
+  create_editor_input('Link-URL (ID wird angehngt)','LinkURL','text_input');
   echo '<br /><br />';
   create_editor_input('Berechtigung neuer Datensatz','NewDS','text_input');
   echo '<br /><br />';
-  create_editor_input('Anzahl Datensätze pro Seite','Anzahl','text_input');
+  create_editor_input('Anzahl DatensÃ¤tze pro Seite','Anzahl','text_input');
 }
 
 ?>

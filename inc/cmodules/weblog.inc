@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -33,20 +33,20 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "send_email") {
 	<?=LANG_MULTIPLE_RECIPIENTS?>
 	<br />
 	<br />
-	<? if(SESSION_STATUS != 'ok') { ?>
+	<?php if(SESSION_STATUS != 'ok') { ?>
 	<?=LANG_YOUR_EMAIL_ADDRESS?><br />
 	<input type="text" name="docinput[sender]" size="50"><br />
 	<br />
-	<? } 
+	<?php } 
 	else { ?>
 	<input type="hidden" name="docinput[sender]" value="<?=SESSION_EMAIL?>">	
-	<? } ?>
+	<?php } ?>
 	<?=LANG_MESSAGE?><br />
 	<input type="text" name="docinput[body]" size="50"><br />
 	<br />
 	<input type="submit" value="Send">
 	</form>
-	<?
+	<?php
 	}
 elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($docinput['email']) && strlen($docinput['email']) > 3 && isemail($docinput['sender'])) {
 	if(isset($children)) {
@@ -60,7 +60,7 @@ elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($d
 			$message_body = '';
 			}
 	
-		while (list ($docid, $value) = each ($children)) {
+		foreach ($children as $docid => $value) {
 			$message_body .= transform($value['title'],'clean')."\n".
 			transform(transform($value['body'], $value['datatype']['body']), 'html2txt')."\n\n";
 			}
@@ -71,7 +71,7 @@ elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($d
 		"From: ".email_to_string($docinput['sender']).' <'.$docinput['sender'].'>');
 	?>
 	<p><?=LANG_DOC_SENT_TO?> <b><?=$docinput['email']?></b></p>
-	<?
+	<?php
 	}
 	}
 
@@ -148,11 +148,11 @@ if(isset($children)) {
 ?>
 <p>
 <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
-<td nowrap="nowrap"><? create_editor_input('User comments at bottom','comments','onoff_input'); ?></td>
-<td nowrap="nowrap"><? create_editor_input('Show published files at bottom','show_files','onoff_input'); ?></td>
-<td nowrap="nowrap"><? create_editor_input('Send to a friend','allow_forward','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('User comments at bottom','comments','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('Show published files at bottom','show_files','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('Send to a friend','allow_forward','onoff_input'); ?></td>
 </tr></table>
-<?
+<?php
 echo '<br />';
 // Image Input
 create_editor_input('Image','image','image_input');

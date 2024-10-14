@@ -16,7 +16,7 @@ set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 
 define('AWF_VERSION', trim(join('', file($_BASEPATH.'/inc/VERSION'))));
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ($_REQUEST as $key => $val= {
         $$key = $val;
         }
 
@@ -38,23 +38,23 @@ include($_BASEPATH.'/inc/functions.inc');
 <meta name="description" content="">
 <meta name="sort_order" content="15">
 <title>
-Liquid Bytes AWF Setup - Step <? echo $step; ?>
+Liquid Bytes AWF Setup - Step <?php echo $step; ?>
 </title>
 <?php
         include('header.inc');
 
 if(!function_exists('version_compare')) { ?>
 <p style="text-align: center; font-weight: bold; font-size: 14px; color: #000000">AWF <?=AWF_VERSION?> requires at least PHP version 4.1.0</p>
-<? 
+<?php 
 } else { ?>
 <form action="setup.php" method="post">
-<input type="hidden" name="step" value="<? echo $step; ?>">
+<input type="hidden" name="step" value="<?php echo $step; ?>">
 <center>
 <br>
 <table width="700" cellpadding="5" cellspacing="1" border="0" bgcolor="#cccccc"><tr>
 <td height="350" valign="top" bgcolor="#eeeeee">
 <table width="100%" cellpadding="3" cellspacing="0 border="0" bgcolor="#cccccc"><tr>
-<td><span style="font-weight: bold; font-size: 14px; color: #000000">AWF <?=AWF_VERSION?> Setup - Step <? echo $step; 
+<td><span style="font-weight: bold; font-size: 14px; color: #000000">AWF <?=AWF_VERSION?> Setup - Step <?php echo $step; 
 ?></span></td>
 </tr>
 </table>
@@ -70,9 +70,9 @@ if($step == 1) {
 	if($mail_warning) { 
 		echo '<b><font color="#aa0000">Your email address is incorrect.</b></font><br /><br />'; }
 	?>
-	<input type="hidden" name="key" value="<? echo LICENCE_KEY; ?>">
+	<input type="hidden" name="key" value="<?php echo LICENCE_KEY; ?>">
 	Please enter your email address<br />
-	<input type="text" name="licence_mail" size="40" width="40" value="<? echo LICENCE_EMAIL; ?>" /><br /><br />
+	<input type="text" name="licence_mail" size="40" width="40" value="<?php echo LICENCE_EMAIL; ?>" /><br /><br />
 	We wanna know how many sites are running AWF. If this is a first time installation, please consider
 	using our registration function. Thanks!
 	<br><br>
@@ -105,30 +105,30 @@ elseif($step == 2) {
 		$key=md5($licence_mail.'AWF1');
 		$filename = $_BASEPATH.'/inc/licence.key';
 		$fd = fopen ($filename, "w");
-		$contents = fwrite ($fd, '<? define("LICENCE_KEY","'.$key.'"); define("LICENCE_EMAIL","'.$licence_mail.'"); ?>');
+		$contents = fwrite ($fd, '<?php define("LICENCE_KEY","'.$key.'"); define("LICENCE_EMAIL","'.$licence_mail.'"); ?>');
 		fclose ($fd);
 		}
 	?>
 	Please enter the 
 	<select size="1" name="dbms">
-		<option value="mysql"<? if(DBMS != 'postgresql') { echo ' SELECTED'; } ?>>MySQL</option>
+		<option value="mysql"<?php if(DBMS != 'postgresql') { echo ' SELECTED'; } ?>>MySQL</option>
 		<?php
 		if(function_exists("pg_connect")) { ?>
-		<option value=postgresql<? if(DBMS == 'postgresql') { echo ' SELECTED'; } ?>>PostgreSQL (experimental)</option>
+		<option value=postgresql<?php if(DBMS == 'postgresql') { echo ' SELECTED'; } ?>>PostgreSQL (experimental)</option>
 		<?php } ?>
 	</select> 
 	database access information:<br><br>
 	Host<br>
-	<input type="text" name="host" size="40" width="40" value="<? echo $db_host; ?>"><br><br>
+	<input type="text" name="host" size="40" width="40" value="<?php echo $db_host; ?>"><br><br>
 	Database<br>
-	<input type="text" name="database" size="40" width="40" value="<? echo $db_name; ?>"><br><br>
+	<input type="text" name="database" size="40" width="40" value="<?php echo $db_name; ?>"><br><br>
 	Username<br>
-	<input type="text" name="username" size="40" width="40" value="<? echo $db_username; ?>"><br><br>
+	<input type="text" name="username" size="40" width="40" value="<?php echo $db_username; ?>"><br><br>
 	Password<br>
-	<input type="text" name="password" size="40" width="40" value="<? echo $db_password; ?>"><br><br>
+	<input type="text" name="password" size="40" width="40" value="<?php echo $db_password; ?>"><br><br>
 	Table Prefix (optional)<br>
-	<input type="text" name="prefix" size="40" width="40" value="<? echo $db_table_prefix; ?>"><br><br>
-	<?
+	<input type="text" name="prefix" size="40" width="40" value="<?php echo $db_table_prefix; ?>"><br><br>
+	<?php
 	}
 elseif($step == 3) {
 	if($button_next) {
@@ -137,7 +137,7 @@ elseif($step == 3) {
 		$fd = fopen ($filename, "w");
 		if($dbms == 'mysql') {
 		$contents = fwrite ($fd, 
-'<?
+'<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -179,7 +179,7 @@ function sql_free_result ($qresult) {
         }
 
 function sql_insert_id ($qresult = -1) {
-	return mysql_insert_id();
+	return sql_insert_id();
 	}
 
 function sql_limit ($count, $offset = 0) {
@@ -201,7 +201,7 @@ if(function_exists("mysql_connect")) {
 ?>');
 } else {
 		$contents = fwrite ($fd, 
-'<?
+'<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -289,15 +289,15 @@ if(function_exists("pg_connect")) {
 	if(!defined('SITE_TITLE')) define('SITE_TITLE', $_SERVER['SERVER_NAME']);
 	?>
 	Title of Web site<br>
-	<input type="text" name="sitetitle" size="40" width="40" value="<? echo SITE_TITLE; ?>"><br><br>
+	<input type="text" name="sitetitle" size="40" width="40" value="<?php echo SITE_TITLE; ?>"><br><br>
 	Webmaster's email address<br>
-	<input type="text" name="webmastermail" size="40" width="40" value="<? echo WEBMASTER_MAIL; ?>"><br><br>
+	<input type="text" name="webmastermail" size="40" width="40" value="<?php echo WEBMASTER_MAIL; ?>"><br><br>
 	Path on server<br>
-	<input type="text" name="serverpath" size="40" width="40" value="<? echo
+	<input type="text" name="serverpath" size="40" width="40" value="<?php echo
 		strrev(strstr(substr(strstr(strrev($_SERVER['PATH_TRANSLATED']),'/'), 1),'/')); ?>"><br><br>
 	Default design<br>
 	<select name="default_design" size="1">
-	<?
+	<?php
 	$handle=opendir($_BASEPATH.'/inc/design');
 	while (false!==($file = readdir($handle))) {
     		if ($file != "." && $file != ".." && '.inc' == substr($file, -4)) {
@@ -316,7 +316,7 @@ if(function_exists("pg_connect")) {
 	?>
 	<input type="checkbox" name="update_db" value="1" /> Update existing database to <?=AWF_VERSION?> 
 	<input type="hidden" name="um_store_method" value="sql" />
-	<?
+	<?php
 	}
 elseif($step == 4) { 
 	include($_BASEPATH.'/inc/database.inc');
@@ -427,7 +427,7 @@ elseif($step == 4) {
 	'Liquid Bytes' is a registered trademark of Liquid Bytes&reg; Technologies, Germany<br /><br />
 	<b>Please consider making a donation to support the future development of this Free Software product:</b><br /><br />
 	<a target="_blank" href="https://www.paypal.com/xclick/business=michael%40liquidbytes.net&item_name=Adaptive+Website+Framework+%28AWF%29&no_note=1&tax=0&currency_code=EUR"><img src="img/donate.png" border="0" /></a> 
-	<?
+	<?php
 
 //	Not included anymore
 //	This product includes software developed by the	<a href="http://phorum.org/">Phorum Development Team</a>.
@@ -443,16 +443,16 @@ else {
 </blockquote>
 </td></tr><tr>
 <td align="right">
-<? if ($step > 1) { ?>
+<?php if ($step > 1) { ?>
 <input type="submit" name="button_back" value="<< Back">
-<? }
+<?php }
 
 if ($step < 4) { ?>
-<input type="submit" name="button_next" value="<? if($step == 3) { echo 'Finish >>'; } else { echo 'Next >>'; } ?>">
-<? } ?>
+<input type="submit" name="button_next" value="<?php if($step == 3) { echo 'Finish >>'; } else { echo 'Next >>'; } ?>">
+<?php } ?>
 </td></tr>
 </table>
-<?
+<?php
 }
         include('footer.inc');
 ?>

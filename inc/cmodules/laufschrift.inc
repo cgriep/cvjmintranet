@@ -17,7 +17,7 @@ else {
 <b><?=$document['Laufschrift']?></b>
 </marquee>
 
-<?
+<?php
 }
 
 ?>

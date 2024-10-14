@@ -15,21 +15,21 @@
   <a href="http://www.berlin.de">
     <img style="background:white" src="img/Berlinlogo.png" title="Logo der Stadt Berlin" alt="Berlinlogo" />
   </a>
-<? if($profile['editmode'] === 0) { ?>
+<?php if($profile['editmode'] === 0) { ?>
 <a href="<?=get_url($id, array('editmode' => 1))?>"><img style="background:gray"
 src="img/small_edit/editmode_on.gif" border="0" alt="Edit on" /></a>
-<? } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
+<?php } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
 <a href="<?=get_url($id, array('editmode' => 0))?>">
 <img src="img/small_edit/editmode_off.gif" border="0" alt="Edit off" /></a>
-<?
+<?php
 if($profile['simple_edit'] == 1) { ?>
 <a href="<?=get_url($id, array('simple_edit' => 0))?>">
 <img src="img/small_edit/advanced_edit.gif" border="0" alt="Advanced Edit" /></a>
-<? } else { ?>
+<?php } else { ?>
 <a href="<?=get_url($id, array('simple_edit' => 1))?>">
 <img src="img/small_edit/simple_edit.gif" border="0" alt="Edit" /></a>
-<? }
-} else { ?>&nbsp;<? } ?>
+<?php }
+} else { ?>&nbsp;<?php } ?>
 </div>
 <img class="linkeSeite" src="img/SuProLogo.png" title="Logo der Suchtprophylaxe" alt="SuProLogo"/>
 <div>

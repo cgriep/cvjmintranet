@@ -54,7 +54,7 @@ if ( $profile['editor'] != 1 )
        	  {
             if ( $value != ""  )
             {
-              $sql .= "'".mysql_real_escape_string(trim(str_replace('"','',$value)))."',";
+              $sql .= "'".sql_real_escape_string(trim(str_replace('"','',$value)))."',";
             }
             else
               $sql .= "'',";
@@ -66,29 +66,29 @@ if ( $profile['editor'] != 1 )
 			  $Preis = 0;
        	  }                        
        }
-       if ( ! mysql_query($sql))
+       if ( ! sql_query($sql))
        {
-       	  // Update ausführen
+       	  // Update ausfÃ¼hren
        	  $msql = 'UPDATE '.TABLE_ARTIKEL.' SET WHERE id=';
        	  
        }
-       // Preisliste ergänzen
-       if ( !mysql_query('INSERT INTO '.TABLE_PREISE.' (F_Preisliste_id,Artikel_Nr,' .
+       // Preisliste ergÃ¤nzen
+       if ( !sql_query('INSERT INTO '.TABLE_PREISE.' (F_Preisliste_id,Artikel_Nr,' .
        		'Preis) VALUES ('.$Preislisteid.','.$Artikelnr.','.$Preis.')'))
        {
-       	  //Update ausführen
-       	  mysql_query('UPDATE '.TABLE_PREISE.' SET Preis='.$Preis.' WHERE Artikel_Nr='.
+       	  //Update ausfÃ¼hren
+       	  sql_query('UPDATE '.TABLE_PREISE.' SET Preis='.$Preis.' WHERE Artikel_Nr='.
        	    $Artikelnr.' AND F_Preisliste_id='.$Preislisteid);
        }
      }
    }
-   echo $anz." Datensätze importiert.";
-   mysql_query("UPDATE T_Stand SET Stand = ".time().", Bearbeiter='".$_SERVER["REMOTE_USER"]."'");
+   echo $anz." DatensÃ¤tze importiert.";
+   sql_query("UPDATE T_Stand SET Stand = ".time().", Bearbeiter='".$_SERVER["REMOTE_USER"]."'");
    echo "</td></tr>";
    fclose($dat);
    @unlink($_FILES['Datei']['tmp_name']);
   }
   
-  echo '<input type="Submit" value="Auswählen"></form>';  
+  echo '<input type="Submit" value="AuswÃ¤hlen"></form>';  
 }
 ?>

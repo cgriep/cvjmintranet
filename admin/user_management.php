@@ -50,7 +50,7 @@ load_lang('admin');
 <title>
 Adaptive Website Framework :: User Management
 </title>
-<?
+<?php
 	include('header.inc');
 ?>
 <center>
@@ -68,7 +68,7 @@ function open_window(url) {
 <input type="hidden" name="page" value="<?=$page?>" />
 <input type="hidden" name="sort_order" value="<?=$sort_order?>" />
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 lftk_add_tab('users', LANG_ADMIN_USERS);
 lftk_add_tab('add_user', LANG_ADMIN_ADD_USER);
 lftk_add_tab('groups', LANG_ADMIN_GROUPS);
@@ -80,7 +80,7 @@ lftk_add_tab('export', LANG_ADMIN_EXPORT);
 </table>
 <table bgcolor="<?=$lftk_config['color_3']?>" width="100%" cellpadding="9" cellspacing="0" border="0">
 <tr><td>
-<?
+<?php
 
 /**********************************************************************************************************
 Users
@@ -244,7 +244,7 @@ awf_login_is_unique($docinput['email'])) {
 	<p align="right">
 	<input type="submit" value="<?=LANG_ADMIN_OK?>" />
 	</p>
-	<?
+	<?php
 	}
 	
 else {
@@ -252,7 +252,7 @@ else {
 ?>
 <?=LANG_ADMIN_USERNAME?>
 <br />
-<?
+<?php
 if(isset($docinput['username']) && $docinput['username'] == '') {
         lftk_display_error (LANG_ADMIN_USERNAME_REQUIRED);
 	}
@@ -265,7 +265,7 @@ elseif(isset($docinput['username']) && !awf_login_is_unique($docinput['username'
 <br />
 <?=LANG_ADMIN_EMAIL?>
 <br />
-<?
+<?php
 if(isset($docinput['email']) && $docinput['email'] == '') {
         lftk_display_error (LANG_ADMIN_EMAIL_REQUIRED);
 	}
@@ -278,7 +278,7 @@ elseif(isset($docinput['email']) && !awf_login_is_unique($docinput['email'])) {
 <br />
 <?=LANG_ADMIN_PASSWORD?>
 <br />
-<?
+<?php
 if(isset($docinput['password']) && strlen($docinput['password']) < 6) {
         lftk_display_warning (LANG_ADMIN_PASSWORD_SHORT);
         }
@@ -289,7 +289,7 @@ if(isset($docinput['password']) && strlen($docinput['password']) < 6) {
 <p align="right">
 <input type="submit" value="<?=LANG_ADMIN_ADD_USER?>" />
 </p>
-<?
+<?php
 }
 } 
 
@@ -403,14 +403,14 @@ if(isset($docinput) && $docinput['name'] != '' && $row_count == 0) {
 	<p align="right">
 	<input type="submit" value="<?=LANG_ADMIN_OK?>" />
 	</p>
-	<?
+	<?php
 	}
 	
 else {
 ?>
 <?=LANG_ADMIN_NAME?>
 <br />
-<?
+<?php
 if(isset($docinput['name']) && $docinput['name'] == '') {
         lftk_display_error (LANG_ADMIN_NAME_REQUIRED);
 	}
@@ -424,7 +424,7 @@ elseif(isset($docinput['name']) && $row_count > 0) {
 <p align="right">
 <input type="submit" value="<?=LANG_ADMIN_ADD_GROUP?>" />
 </p>
-<?
+<?php
 }
 }
 
@@ -447,7 +447,7 @@ function open_export_window(url) {
 open_export_window('export.php?type=<?=$docinput['export_type']?>&format=<?=$docinput['export_format']?>');
 // -->
 </script>
-<? } ?>
+<?php } ?>
 <?=LANG_ADMIN_EXPORT?>&nbsp;
 <select name="docinput[export_type]">
 <option value="all_users_realnames"><?=LANG_ADMIN_USERS_WITH_NAMES?></option>
@@ -466,7 +466,7 @@ open_export_window('export.php?type=<?=$docinput['export_type']?>&format=<?=$doc
 <p align="right">
 <input type="submit" value="<?=LANG_ADMIN_EXPORT?>" />
 </p>
-<?
+<?php
 }
 ?>
 </td></tr>
@@ -474,7 +474,7 @@ open_export_window('export.php?type=<?=$docinput['export_type']?>&format=<?=$doc
 </form>
 </td></tr>
 </table>
-<?
+<?php
         include('footer.inc');
 ?>
 </center>

@@ -14,7 +14,7 @@ function lb_export_get_header ($format, $cols) {
 			$result = "<html>\n<head>\n<title>Export</title>\n</head>\n<body bgcolor=\"#ffffff\">\n".
 					"<table border=\"0\" cellspacing=\"1\" cellpadding=\"2\" ".
 					"bgcolor=\"#000000\">\n<tr bgcolor=\"#dddddd\">\n";
-			while(list($key,$value) = each($cols)) {
+			foreach ( $cols as $key => $value) {
 				$result .= "<td><b>$value</b></td>\n";
 				}
 			$result .= "</tr>\n";
@@ -23,14 +23,14 @@ function lb_export_get_header ($format, $cols) {
 			$result = '<?xml version="1.0" encoding="UTF-8"?>'."\n<awf_export>\n";
 			return $result;
 		case 'text': 
-			while(list($key, $value) = each($cols)) {
+			foreach ( $cols as $key => $value) {
 				$row[$key] = strtr(str_pad($value, 8), "\n", " ");
 				}
 			$result = join(" | ", $row)."\n";
 			$result .= str_repeat('=', strlen($result) - 1)."\n";
 			return $result;
 		case 'csv': 
-			while(list($key, $value) = each($cols)) {
+			foreach ( $cols as $key => $value) {
 				$row[$key] = strtr(strtr($value, '"', "'"), "\n", " ");
 				}
 			return '"'.join('","', $row).'"'."\n";
@@ -54,12 +54,12 @@ function lb_export_get_row ($format, $row) {
 			$result .= "</row>\n";
 			return $result;
 		case 'text': 
-			while(list($key, $value) = each($row)) {
+			foreach ( $row as $key => $value )  {
 				$row[$key] = strtr(str_pad($value, 8), "\n", " ");
 				}
 			return join(" | ", $row)."\n";
 		case 'csv': 
-			while(list($key, $value) = each($row)) {
+			foreach ( $row as $key => $value )  {
 				$row[$key] = strtr(strtr($value, '"', "'"), "\n", " ");
 				}
 			return '"'.join('","', $row).'"'."\n";

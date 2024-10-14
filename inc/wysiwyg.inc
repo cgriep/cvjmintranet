@@ -8,11 +8,11 @@
         Last update: 24.08.2003
 */
 
-if(DISABLE_WYSIWYG == '0') {
+if(defined('DISABLE_WYSIWYG') && DISABLE_WYSIWYG == '0') {
 	include("spaw/spaw_control.class.php");
 
 	if(isset($_REQUEST['wysiwyg_docdata'])) {
-		while(list($key, $value) = each($_REQUEST['wysiwyg_docdata'])) {
+		foreach ( $_REQUEST['wysiwyg_docdata'] as $key => $value) {
 			$_REQUEST['docdata'][$value] = $_REQUEST['wysiwyg_'.$value];
 			}
 		}
@@ -32,7 +32,7 @@ if(DISABLE_WYSIWYG == '0') {
 		
 		$css_contents = file(BASE_PATH.'css/'.$design['css'].'.css');
 		// print_r($css_contents);
-		while(list($key, $value) = each($css_contents)) {
+		foreach ( $css_contents as $key => $value)  {
 			$value = trim($value);
 			if($value != '' && strpos($value,'.') === 0) {
 				$spaw_array['style'][substr($value, 1)] = ucwords(strtr(substr($value, 1), '_', ' '));
@@ -54,7 +54,7 @@ if(DISABLE_WYSIWYG == '0') {
 		$sw->show();
 		?>
 		<input type="hidden" name="wysiwyg_docdata[]" value="<?=$name?>" />
-		<?
+		<?php
 		}
 	}
 

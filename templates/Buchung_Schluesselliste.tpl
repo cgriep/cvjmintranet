@@ -1,8 +1,8 @@
-<!--  Template Buchung Schlüsselliste -->
+<!--  Template Buchung SchlÃ¼sselliste -->
 {popup_init src="/javascript/overlib.js"}
 
 <table>
-<tr class="ueberschrift"><th colspan="5">ausgegebene Schlüssel
+<tr class="ueberschrift"><th colspan="5">ausgegebene SchlÃ¼ssel
  {if $Buchung->schluesselAnzahl() > 0} (bisher {$Buchung->schluesselAnzahl()} ausgegeben){/if}
 <tr>
 {foreach item=
@@ -14,7 +14,7 @@
     if ( $schluessel = sql_fetch_array($query2) )
     {
       $tabelle[$zeile][$spalte] .= $schluessel["Anzahl"];
-      $tabelle[$zeile][$spalte] .= '" title="zuletzt geändert durch '.
+      $tabelle[$zeile][$spalte] .= '" title="zuletzt geÃ¤ndert durch '.
          get_user_nickname($schluessel["Ausgeber"])." am ".
          $schluessel["Ausgegeben"];
     }
@@ -46,7 +46,7 @@
   }
   echo '</table>';
   sql_free_result($query);
-  echo '<div class="ueberschriftzeile">Besondere Schlüssel</div>';
+  echo '<div class="ueberschriftzeile">Besondere SchlÃ¼ssel</div>';
   echo '<textarea name="docinput[Sonstige][Bemerkung]" cols="60" rows="5">';
   $query2 = sql_query("SELECT * FROM ".TABLE_BUCHUNGSBEMERKUNGEN.
      " WHERE F_Buchung_Nr=".$Buchung["Buchung_Nr"]." AND Bemerkung ='".

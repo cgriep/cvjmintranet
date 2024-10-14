@@ -54,7 +54,7 @@ define('START', getmicrotime ());
 	global $profile;
 	if(DISABLE_WILDCARDS == 1 || $profile['editor'] == 1) return $text;
 	reset($array);
-	while (list ($key, $value) = each ($array)) {
+	foreach ( $array as $key => $value)  {
 		$text = str_replace('%%'.$key.'%%', $value, $text);
 		}
 	return $text;
@@ -69,7 +69,7 @@ define('START', getmicrotime ());
 		$text = strtr($text, $array);
 		}
 	else {
-		while (list ($key, $value) = each ($array)) {
+		foreach ( $array as $key => $value) {
 			// variable?
 			if($value[0] == '$') {
 				if(strstr($value, ']')) {
@@ -194,7 +194,7 @@ define('START', getmicrotime ());
 	if($user_id == -1 || (defined(SESSION_DBID) &amp;&amp; $user_id == SESSION_DBID)) {
 		global $profile;
 		if(!isset($profile['nickname'])) $profile['nickname'] = LANG_STRANGER;
-		return htmlchars($profile[nickname]);
+		return htmlchars($profile['nickname']);
 		}
 	$nickname = sql_query (&quot;SELECT value FROM &quot;.TABLE_USERDATA.&quot; WHERE user_id=&quot;.$user_id.&quot; AND name='nickname'&quot;);
                 if(sql_num_rows($nickname) &gt; 0) {
@@ -444,7 +444,7 @@ define('START', getmicrotime ());
         	$row = sql_fetch_array($qresult);
         	sql_free_result($qresult);
 
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value ) {
 			$document[$key] = stripslashes($value);
 			}
 
@@ -527,8 +527,8 @@ define('START', getmicrotime ());
  
         	if(sql_num_rows($qresult) &gt; 0) {
                 	while($row = sql_fetch_array($qresult)) {
-
-				while(list($key, $value) = each($row)) {
+					
+					foreach ( $row as $key => $value )  {
 					$document[$key] = stripslashes($value);
 					}
 
@@ -603,7 +603,7 @@ define('START', getmicrotime ());
 		if(sql_num_rows($qresult) &gt; 0) {
 	        while($row = sql_fetch_array($qresult)) {
 			if($row['id'] != $id || $no_filter) {
-				while(list($key, $value) = each($row)) {
+				foreach ( $row as $key => $value )  {
 					$related[$key] = stripslashes($value);
 					}
 				}
@@ -620,7 +620,7 @@ define('START', getmicrotime ());
  
         	if(sql_num_rows($qresult) &gt; 0) {
                 	while($row = sql_fetch_array($qresult)) {
-				while(list($key, $value) = each($row)) {
+						foreach ( $row as $key => $value )  {
 					$doc[$key] = stripslashes($value);
 					}
 		                $related[$row['id']] = array_merge(get_nodedata($row['id'], $flavour), $doc);
@@ -649,7 +649,7 @@ define('START', getmicrotime ());
         (flavour_id=$flavour OR flavour_id=0) AND published=1 $enabled_filter ORDER BY sort_order DESC&quot;);
 	if(sql_num_rows($qresult) &gt; 0) {
         while($row = sql_fetch_array($qresult)) {
-		while(list($key, $value) = each($row)) {
+			foreach ( $row as $key => $value )  {
 			$published_children[$row['node_id']][$key] = stripslashes($value);
 			}
                 }
@@ -1037,7 +1037,7 @@ define('START', getmicrotime ());
 	$message_query = sql_query(&quot;SELECT id, user_id, subject, message, sender, sender_id, type, status, created, 
 		delivered, release_date, expiration_date FROM &quot;.TABLE_MESSAGES.&quot; $where ORDER BY created $sort_dir&quot;);
 	while($row = sql_fetch_array($message_query)) {
-		while(list($key, $value) = each($row)) {
+		foreach ( $row as $key => $value )  {
 			$messages[$row['id']][$key] = stripslashes($value);
 			}
 		if($mark) mark_message($row['id']);
@@ -1054,7 +1054,7 @@ define('START', getmicrotime ());
 	$message_query = sql_query(&quot;SELECT id, user_id, subject, message, sender, sender_id, type, status, created, 
 		delivered, release_date, expiration_date FROM &quot;.TABLE_MESSAGES.&quot; WHERE id = $message_id ORDER BY created&quot;);
 	$row = sql_fetch_array($message_query);
-	while(list($key, $value) = each($row)) {
+	foreach ( $row as $key => $value )  {
 		$message[$key] = stripslashes($value);
 		}
 	sql_free_result($message_query);
@@ -1271,8 +1271,8 @@ define('START', getmicrotime ());
 		}
         $lines = file($filename);
 	// parse file
-        while (list ($line_num, $line) = each ($lines)) {
-		$buffer = split(&quot;\t&quot;, $line);
+        foreach ($lines as $line_num => $line) {
+		$buffer =  explode(&quot;\t&quot;, $line);
 		if(!strstr('#', $buffer[0])) {
 			$text   = trim(strstr($line, &quot;\t&quot;));
 			if(!defined('LANG_'.strtoupper($buffer[0]))) define('LANG_'.strtoupper($buffer[0]), $text);
@@ -1317,8 +1317,8 @@ define('START', getmicrotime ());
 
 	if(file_exists('inc/data/html_replace.conf')) {
 	        $lines = file('inc/data/html_replace.conf');
-        	while (list ($line_num, $line) = each ($lines)) {
-                	$buffer = split('	', $line);
+        	foreach ($lines as $line_num => $line) {
+                	$buffer =  explode('	', $line);
 	                $wildcards[$buffer[0]] = trim($buffer[1]);
 	                }
         	}
@@ -1577,7 +1577,7 @@ define('START', getmicrotime ());
 	
 	$avg_activity = ($avg_views / $avg_reg_time);
 	
-	while(list($key, $value) = each($userlist)) {		
+	foreach ( $userlist as $key => $value )  {		
 		$qres = sql_query(&quot;SELECT id, email, views, registered, last_login FROM &quot;.TABLE_USERS.&quot; WHERE id = $key&quot;);
 	
 		$row = sql_fetch_row($qres);
@@ -1716,7 +1716,7 @@ define('START', getmicrotime ());
 	if(is_array($params)) {
 		$param_str = '';
 		$pre = '';
-		while(list($key, $value) = each($params)) {
+		foreach ( $params as $key => $value )  {
 			$param_str .= $pre.urlencode($key).'='.urlencode($value);
 			$pre = '&amp;';
 			}
@@ -1762,7 +1762,7 @@ define('START', getmicrotime ());
 	}
 
 <a name="mkdirs"></a>function <b>mkdirs</b> ($path, $create_mask) {
-	while(list($key, $value) = each($dirs)) {
+	foreach ( $dirs as $key => $value )  {
 		$tmp_path .= $value.'/';
 		if(!file_exists($tmp_path)) mkdir($tmp_path, $create_mask);
 		}
@@ -1996,7 +1996,7 @@ define('START', getmicrotime ());
 		}
 	
 	sql_query(&quot;DELETE FROM &quot;.TABLE_ITEMMAP.&quot; WHERE target='&quot;.addslashes($target).&quot;' AND target_id=$target_id AND (&quot;.$query.&quot;)&quot;);
-	while(list($key, $value) = each($select)) {
+	foreach ( $select as $key => $value )  {
 		if(is_numeric($value)) {
 			sql_query(&quot;INSERT INTO &quot;.TABLE_ITEMMAP.&quot; SET item_id=$value, target='&quot;.addslashes($target).&quot;', target_id=$target_id&quot;);
 			}

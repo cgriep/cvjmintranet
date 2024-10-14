@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Globals...
 global $HTTP_GET_VARS;
@@ -26,10 +26,10 @@ function topdf($filename, $options = "") {
 }
 
 $url = "";
-while ( list($key, $value) = each ($_REQUEST) )
+foreach ( $_REQUEST as $key => $value )  )
 {
   if ( is_array($value)) {
-    while (list($k, $v) = each($value))
+    foreach ( $value as $k => $v )     
       $url .= $key."[".$k."]=$v&";
   }
     else $url .= "$key=$value&";

@@ -1,4 +1,4 @@
-<?
+<?php
 // +----------------------------------------------------------------------+
 // | phpOpenOffice - Solution for modifying OpenOffice documents with PHP |
 // | v0.1b - 18/12/2003                                                   |
@@ -85,7 +85,7 @@ class phpOpenOffice
 {
 	var $tmpDirName = "";
 	var $parserFiles = "";
-	var $parsedDocuments = "";
+	var $parsedDocuments = array();
 	var $mimetypeFile = "";
 	var $mimetype = "";
 	var $zipFile = "";
@@ -117,10 +117,10 @@ class phpOpenOffice
 		$list = $archive->extract(PCLZIP_OPT_PATH, POO_TMP_PATH, PCLZIP_OPT_ADD_PATH, $this->tmpDirName);
 	}
 
-         // setzt die Styles für Fett- und Kursivdruck ein
+         // setzt die Styles fÃ¼r Fett- und Kursivdruck ein
          // muss nach loaddocument aufgerufen werden
-         function insertStyles()
-         {
+    function insertStyles()
+    {
            $erfolg = true;
            if($this->tmpDirName == "")
            {
@@ -132,12 +132,12 @@ class phpOpenOffice
 	    $this->handleError("Directory not found: ".$this->tmpDirName, E_USER_ERROR);
 	  }
 	  // Open files and start parsing
-	  $parsedDocuments = array();
-           $file = "content.xml";
-           $fp = fopen($this->parserFiles[$file], "r");
+	  //  $this->parsedDocuments = array();
+      $file = "content.xml";
+      $fp = fopen($this->parserFiles[$file], "r");	  
 	  $this->parsedDocuments[$file] = fread($fp, filesize($this->parserFiles[$file]));
 	  fclose($fp);
-           // Style einfügen
+           // Style einfÃ¼gen
            if ( ($pos = strpos($this->parsedDocuments[$file], OFFICEAUTOSTYLES)) !== false )
            {
               if ( substr($this->parsedDocuments[$file],$pos+strlen(OFFICEAUTOSTYLES),2) == "/>" )
@@ -267,7 +267,7 @@ class phpOpenOffice
                                    $Zelle);
                                }
                                $Zeilen[$Zeile][$vkey] = str_replace($Zelle, $Zellen, $Zeilen[$Zeile][$vkey]);
-                               // Spaltenzähler erneuern
+                               // SpaltenzÃ¤hler erneuern
                                if ( ! $Spalteneingefuegt )
                                {
                                  $Pos = strpos($this->parsedDocuments[$file], POO_VAR_PREFIX.$key.POO_VAR_SUFFIX);
@@ -338,7 +338,7 @@ class phpOpenOffice
 		$xml = str_replace("'", "&apos;", $xml);
 		$xml = str_replace("\"", "&quot;", $xml);
 
-		$xml = utf8_encode($xml);
+		//$xml = utf8_encode($xml);  03.09. entfernt
 		return $xml;
 	}
 

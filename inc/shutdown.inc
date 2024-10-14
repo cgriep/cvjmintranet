@@ -15,7 +15,7 @@ if(CACHING == 'on') {
 	ob_end_flush();
 	}
 
-while(list($key, $value) = each($cache_refresh)) {
+foreach ( $cache_refresh as $key => $value) {
  	if($value == true) clear_cache($key);
 	}
 

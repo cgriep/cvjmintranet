@@ -1,7 +1,7 @@
 <?php
-/** Artikel hinzuf¸gen
+/** Artikel hinzuf√ºgen
  * wird innerhalb einer n-spaltigen Tabelle verwendet.
- * dadurch wird die Ausrichtung an die vorher angezeigten Artikel gew‰hrleistet
+ * dadurch wird die Ausrichtung an die vorher angezeigten Artikel gew√§hrleistet
  * Die Suchanfrage steht in $docinput['ArtikelSearch']
  * @param Buchung $Buchung das Buchungsobjekt
  * @param int $spalten die Spaltenanzahl die angezeigt werden soll
@@ -15,17 +15,17 @@ function anzeigeArtikelHinzufuegen($buchung, $spalten = 9)
 	$Smarty->template_dir = TEMPLATEPATH; // '/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
 	$Smarty->assign('id', $id);
 	$Smarty->assign('spalten', $spalten);
-	$Smarty->assign_by_ref('docinput', $docinput);
-	$Smarty->assign_by_ref('Buchung', $buchung);
+	$Smarty->assign('docinput', $docinput);
+	$Smarty->assign('Buchung', $buchung);
 	$Smarty->display('Buchung_Artikel_hinzu.tpl');
 }
 
 /**
- *  tr‰gt Artikel in die Datenbank ein
+ *  tr√§gt Artikel in die Datenbank ein
  * @param docinput[ArtikelSearch] - muss gesetzt sein
- * @param docinput[Menge] - numerisch, enth‰lt die Menge
- *	@param docinput[Preis] - Preis ( nur Rechnungseintr‰ge)
- * @param docinput[Rabatt] - Rabatt (nur Rechnungseintr‰ge)
+ * @param docinput[Menge] - numerisch, enth√§lt die Menge
+ *	@param docinput[Preis] - Preis ( nur RechnungsEintr√§ge)
+ * @param docinput[Rabatt] - Rabatt (nur RechnungsEintr√§ge)
  * @param docinput[Rechnung_id] / REQUEST[Buchung_Nr] - die id
  * @return array die Liste mit den Fehlern beim Buchen
  */
@@ -37,7 +37,7 @@ function ArtikelHinzufuegen($tabelle)
 	{
 		// Buchungsnummer aus Rechnung holen
 		$q = sql_query('SELECT F_Buchung_Nr FROM '.TABLE_RECHNUNGEN.' WHERE Rechnung_id='.$docinput['Rechnung_id']);
-		if (! $b = sql_fetch_array($q) ) throw new Exception(mysql_error());
+		if (! $b = sql_fetch_array($q) ) throw new Exception(sql_error());
 		sql_free_result($q);
 		$B = new Buchung($b['F_Buchung_Nr']);
 	}
@@ -54,7 +54,7 @@ function ArtikelHinzufuegen($tabelle)
 			{
 				if ( $tabelle == TABLE_RECHNUNGSEINTRAEGE )
 				{					
-					// Neuen Eintrag hinzuf¸gen
+					// Neuen Eintrag hinzuf√ºgen
 					$sql = 'INSERT INTO '.TABLE_RECHNUNGSEINTRAEGE.
 					' (F_Rechnung_id,F_Preis,F_Bezeichnung,Einheit,Rabatt,MWSt,Art,'.
 					'Menge,Dauer,Datum,F_Artikel_Nr)'.
@@ -120,7 +120,7 @@ function ArtikelHinzufuegen($tabelle)
 					{
 						if ( ! sql_query($sql.$i.','.$key.')'))
 						{
-							echo "Fehler $sql: ".mysql_error();
+							echo "Fehler $sql: ".sql_error();
 						}
 					}
 				}
@@ -147,7 +147,7 @@ function ArtikelHinzufuegen($tabelle)
 				}
 			}
 		} // foreach
-	} // wenn zus‰tzliche Artikel angegeben
+	} // wenn zus√§tzliche Artikel angegeben
 	return $l;
 }
 

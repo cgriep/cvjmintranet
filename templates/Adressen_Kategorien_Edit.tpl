@@ -6,7 +6,7 @@
   <tr class="{cycle values="helleZeile,dunkleZeile"}">
   {eval var=$i assign="Tab"}
   {else}
-  {eval var="$i+ceil(Count($Adresse->getKategorien(true))/2)" assign="Tab"}
+  {eval var=$i+ceil(Count($Adresse->getKategorien(true))/2) assign="Tab"}
   {/if}
   <td>
     <input type="Checkbox" name="docinput[Kategorien][]" 

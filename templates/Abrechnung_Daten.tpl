@@ -52,7 +52,7 @@
   <td>Kundennummer</td>
   <td>
     {$rechnung.F_Kunden_Nr} 
-    [ <a href="?id={$id}&docinput[Rechnung_id]={$rechnung.Rechnung_id}&docinput[Kundenwahl]=1">Kunde ändern</a> ]
+    [ <a href="?id={$id}&docinput[Rechnung_id]={$rechnung.Rechnung_id}&docinput[Kundenwahl]=1">Kunde Ã¤ndern</a> ]
   </td>
   <td>E-Mail</td>
   <td>
@@ -135,8 +135,8 @@
   </td>
 </tr>
 <tr>
-  <td colspan="2">Hinweise für den Kunden</td>
-  <td>Rabatt für diese Buchung: {$rechnung.Buchungsrabatt}%</td>
+  <td colspan="2">Hinweise fÃ¼r den Kunden</td>
+  <td>Rabatt fÃ¼r diese Buchung: {$rechnung.Buchungsrabatt}%</td>
 </tr>
 <tr>
   <td colspan="4">
@@ -156,14 +156,14 @@
 	{if !isset($docinput.Kundenwahl)}
 		<input type="Submit" name="Save" value="Speichern" />
 	{/if}
-	&nbsp;&nbsp;&nbsp;[ <a href="{$Buchungurl}">ohne Speichern zurück zur Buchung</a> ]
+	&nbsp;&nbsp;&nbsp;[ <a href="{$Buchungurl}">ohne Speichern zurÃ¼ck zur Buchung</a> ]
 	&nbsp;&nbsp;&nbsp;[ <a href="{$Buchungurl}&docinput[DelAbrechnung]={$rechnung.Rechnung_id}" 
-	  onClick="javascript:return window.confirm('Berechnung wirklich löschen?');">
-	Berechnung löschen</a> ]
+	  onClick="javascript:return window.confirm('Berechnung wirklich lÃ¶schen?');">
+	Berechnung lÃ¶schen</a> ]
 	{if $rechnung.Rechnung == 1 && $rechnung.Storno != 1 && ! $Buchungfertig}
 	  &nbsp;&nbsp;&nbsp;[ 
 	  <a href="?id={$id}&docinput[Rechnung_id]={$rechnung.Rechnung_id}&docinput[Bereinigen]=1" 
-	  onClick="javascript:return window.confirm('Bereits berechnete Einträge wirklich entfernen?');">
+	  onClick="javascript:return window.confirm('Bereits berechnete EintrÃ¤ge wirklich entfernen?');">
 	Splitrechnung</a> ]
 	{/if}
   </td>

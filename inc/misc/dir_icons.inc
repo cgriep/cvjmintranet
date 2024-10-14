@@ -32,11 +32,11 @@ else {
 
 ?>
 
-<?
+<?php
 if (!strstr($subject, '.')) {
 // <table width="100%" cellpadding="1" cellspacing="0" border="0">
 ?>
-<?
+<?php
 
 $file_counter = 0;
 $total_size   = 0;
@@ -59,7 +59,7 @@ echo '<table width="100%" cellpadding="5" cellspacing="0" border="0"  align="cen
 $colorswitch = 0;
 
 
-while (list($nr,$file) = each($filelist)) {
+foreach ($filelist as $nr =>$file) {
     if ($file != "." && $file != ".." && strlen($file) > 0 && $file[0] != '.') { 
       $file_counter++;
 			

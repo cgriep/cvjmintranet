@@ -2,9 +2,9 @@
 function ist_Hausmitglied($user_id, $haus_id)
 {
 	$sql = 'SELECT Count(*) FROM T_Charaktere WHERE F_Spieler_id='.SESSION_DBID.' AND F_Haus_id='.$haus_id;
-	$query = mysql_query($sql);
-	$row = mysql_fetch_row($query);
-	mysql_free_result($query);
+	$query = sql_query($sql);
+	$row = sql_fetch_row($query);
+	sql_free_result($query);
 	return $row[0] > 0;
 }
 
@@ -22,15 +22,15 @@ function add_fertigkeit($char_id, $fertigkeit_id, $Anzahl='')
 		{
 		$insert = false;
 		$sql = 'SELECT Erfahrungspunkte FROM T_Eigenschaften WHERE Eigenschaft_id='.$fertigkeit_id;
-		$query = mysql_query($sql);
-		if ( $punkte = mysql_fetch_row($query))
+		$query = sql_query($sql);
+		if ( $punkte = sql_fetch_row($query))
 		{
 			$sql = 'UPDATE T_Charaktere SET EP=EP-'.$punkte[0].' WHERE Charakter_id='.$char_id;
-			mysql_query($sql);
-			// wenn zu wenig Punkte -> Haus pr¸fen
+			sql_query($sql);
+			// wenn zu wenig Punkte -> Haus pr√ºfen
 			$sql = 'SELECT F_Haus_id, EP, Hausep FROM T_Charaktere INNER JOIN T_Haeuser ON F_Haus_id=Haus_id WHERE Charakter_id='.$char_id;
-			$query = mysql_query($sql);
-			if ( $row = mysql_fetch_array($query) )
+			$query = sql_query($sql);
+			if ( $row = sql_fetch_array($query) )
 			{
 				if ( $row['EP'] < 0 )
 				{
@@ -38,9 +38,9 @@ function add_fertigkeit($char_id, $fertigkeit_id, $Anzahl='')
 					{
 						// aus den Hauspunkten abziehen
 						$sql = 'UPDATE T_Haeuser SET Hausep=Hausep-'.abs($row['EP']).' WHERE Haus_id='.$row['F_Haus_id'];
-						mysql_query($sql);
+						sql_query($sql);
 						$sql = 'UPDATE T_Charaktere SET EP=0 WHERE Charakter_id='.$char_id;
-						mysql_query($sql);
+						sql_query($sql);
 						$insert = true;
 					}
 				}
@@ -53,14 +53,14 @@ function add_fertigkeit($char_id, $fertigkeit_id, $Anzahl='')
 			{
 				$sql = 'INSERT INTO T_Charakter_Eigenschaften (F_Charakter_id,F_Eigenschaft_id, Erstellt) VALUES ('.
 				$char_id.','.$fertigkeit_id.',\''.date('Y-m-d H:i').'\')';
-				mysql_query($sql);
+				sql_query($sql);
 			}
 		}
 		else
 		{
 			echo 'Fehler: Eigenschaft '.$fertigkeit_id.' nicht gefunden!';
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		}
 	}
 }
@@ -78,18 +78,18 @@ function save_charakter($char_id, $charakter)
 	}
 	foreach ( $charakter as $eintrag => $wert)
 	{
-		$a[] = mysql_real_escape_string($eintrag).'=\''.mysql_real_escape_string($wert).'\'';
+		$a[] = sql_real_escape_string($eintrag).'=\''.sql_real_escape_string($wert).'\'';
 	}
 	$sql .= implode(',', $a);
 	if ( $add <> 0 )
 	{
-		// Punkte f¸r Contage bearbeiten
+		// Punkte f√ºr Contage bearbeiten
 		$sql .= ', Contage=Contage+'.$add.', EP=EP+'.$add;
 	}
 	$sql .= ' WHERE Charakter_id='.$char_id;
-	if (! mysql_query($sql))
+	if (! sql_query($sql))
 	{
-		throw new Exception('Charakter '.$char_id.' konnte nicht gespeichert werden: '.mysql_error());
+		throw new Exception('Charakter '.$char_id.' konnte nicht gespeichert werden: '.sql_error());
 	}
 }
 function get_charakter($char_id)
@@ -103,12 +103,12 @@ function get_charakter($char_id)
 				INNER JOIN T_Haeuser ON F_Haus_id=Haus_id
 				INNER JOIN T_Gunststufen ON F_Gunststufe_id=Gunststufe_id
 				WHERE Charakter_id='.$char_id;
-		$query= mysql_query($sql);
-		if ( ! $char = mysql_fetch_array($query))
+		$query= sql_query($sql);
+		if ( ! $char = sql_fetch_array($query))
 		{
 			$char = array('Name' => '-nicht angelegt-');
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		$prow = get_profile($char['F_Spieler_id'], false);
 		$SpielerName = $prow['Vorname']." ".$prow['Name'];
 		$char['Spielername'] = $SpielerName;
@@ -126,8 +126,8 @@ function bestimmeGunst($haus_id)
 	'INNER JOIN T_Positionen ON F_Position_id=Position_id '.
 	'INNER JOIN T_Gunststufen ON F_Gunststufe_id=Gunststufe_id '.
 	'WHERE F_Haus_id='.$haus_id;
-	$query = mysql_query($sql);
-	if ( $row = mysql_fetch_row($query))
+	$query = sql_query($sql);
+	if ( $row = sql_fetch_row($query))
 	{
 		$sum = $row[0];
 	}
@@ -135,7 +135,7 @@ function bestimmeGunst($haus_id)
 	{
 		$sum = 0;
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	return $sum;
 }
 
@@ -149,8 +149,8 @@ function bestimmeCharGunst($char_id)
 	'INNER JOIN T_Positionen ON F_Position_id=Position_id '.
 	'INNER JOIN T_Gunststufen ON F_Gunststufe_id=Gunststufe_id '.
 	'WHERE Charakter_id='.$char_id;
-	$query = mysql_query($sql);
-	if ( $row = mysql_fetch_row($query))
+	$query = sql_query($sql);
+	if ( $row = sql_fetch_row($query))
 	{
 		$sum = $row[0];
 	}
@@ -158,7 +158,7 @@ function bestimmeCharGunst($char_id)
 	{
 		$sum = 0;
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	return $sum;
 }
 
@@ -168,8 +168,8 @@ function bestimmeEP($char_id)
 	$sql = 'SELECT Sum(Erfahrungspunkte) FROM T_Charakter_Eigenschaften '.
 	'INNER JOIN T_Eigenschaften ON F_Eigenschaft_id=Eigenschaft_id '.
 	'WHERE F_Charakter_id='.$char_id;
-	if ( ! $query = mysql_query($sql) ) throw new Exception('Fehler: '.$sql.'/'.mysql_error());
-	if ( $row = mysql_fetch_row($query))
+	if ( ! $query = sql_query($sql) ) throw new Exception('Fehler: '.$sql.'/'.sql_error());
+	if ( $row = sql_fetch_row($query))
 	{
 		$sum = $row[0];
 		if ( ! is_numeric($sum)) $sum = 0;
@@ -178,16 +178,16 @@ function bestimmeEP($char_id)
 	{
 		$sum = 0;
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	return $sum;
 }
 
 function get_Haus($hausname)
 {
 	$haus = array();
-	$sql = 'SELECT Haus_id FROM T_Haeuser WHERE Hausname=\''.mysql_real_escape_string($hausname).'\'';
-	$query = mysql_query($sql);
-	if ( $haus = mysql_fetch_row($query))
+	$sql = 'SELECT Haus_id FROM T_Haeuser WHERE Hausname=\''.sql_real_escape_string($hausname).'\'';
+	$query = sql_query($sql);
+	if ( $haus = sql_fetch_row($query))
 	{
 	}
 	else
@@ -201,8 +201,8 @@ function get_Position($id)
 {
 	if ( ! is_numeric($id)) return '-Fehler-';
 	$sql = 'SELECT Position FROM T_Positionen WHERE Position_id='.$id;
-	$query = mysql_query($sql);
-	if ( $entry = mysql_fetch_row($query))
+	$query = sql_query($sql);
+	if ( $entry = sql_fetch_row($query))
 	{
 	}
 	else
@@ -215,8 +215,8 @@ function get_Gunststufe($id, $Klasse)
 {
 	if ( ! is_numeric($id)) return '-Fehler-';
 	$sql = 'SELECT '.$Klasse.' FROM T_Gunststufen WHERE Gunststufe_id='.$id;
-	$query = mysql_query($sql);
-	if ( $entry = mysql_fetch_row($query))
+	$query = sql_query($sql);
+	if ( $entry = sql_fetch_row($query))
 	{
 	}
 	else
@@ -230,8 +230,8 @@ function get_Rasse($id)
 {
 	if ( ! is_numeric($id)) return '-Fehler-';
 	$sql = 'SELECT Rasse FROM T_Rassen WHERE Rasse_id='.$id;
-	$query = mysql_query($sql);
-	if ( $entry = mysql_fetch_row($query))
+	$query = sql_query($sql);
+	if ( $entry = sql_fetch_row($query))
 	{
 	}
 	else
@@ -247,11 +247,11 @@ function create_Charakter($SpielerNr, $hausname)
 	$sql = 'INSERT INTO T_Charaktere (Name, Klasse, F_Gunststufe_id, F_Rasse_id, F_Position_id, Adlig, '.
 	'F_Spieler_id, F_Haus_id) VALUES (\'-nicht festgelegt-\',\'Krieger\',1,1,10,0,'.
 	$SpielerNr.','.get_Haus($hausname).')';
-	if ( ! mysql_query($sql) )
+	if ( ! sql_query($sql) )
 	{
-		echo mysql_error();
+		echo sql_error();
 	}
-	$charid = mysql_insert_id();
+	$charid = sql_insert_id();
 
 	return $charid;
 }

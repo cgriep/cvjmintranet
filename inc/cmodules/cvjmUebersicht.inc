@@ -16,7 +16,7 @@
 </style>
 <?php
 /*
-Modul ‹bersicht
+Modul √úbersicht
 
 AWF-Name: cvjmgesamtuebersicht
 
@@ -51,7 +51,7 @@ function ZeigeBuchung($diebuchung, $datum, & $aktiv, & $Wann)
     date("Y", $diebuchung["Datum"])) == mktime(0,0,0,date("m",$datum),date("d",$datum),
     date("Y",$datum)) )
   {
-    // Durchnummerierung der Buchung f¸r Farben
+    // Durchnummerierung der Buchung f√ºr Farben
     $Buchungszahl = $diebuchung["F_Buchung_Nr"];
     if ( ! isset($BuchungFarbe[$Buchungszahl]) && Count($BuchungFarbe) < Count($Belegungsfarbe))
     {
@@ -70,7 +70,7 @@ function ZeigeBuchung($diebuchung, $datum, & $aktiv, & $Wann)
           $w = $Wann;
           $aktiv = array();
           $Wann = array();
-          // Feld erzeugen, weil mehrere Eintr‰ge an einem Tag vorliegen
+          // Feld erzeugen, weil mehrere Eintr√§ge an einem Tag vorliegen
           $aktiv[$w] = $menge; // bisherigen Eintrag merken
           $Wann[$w] = $w;
         }
@@ -104,7 +104,8 @@ function ZeigeBuchung($diebuchung, $datum, & $aktiv, & $Wann)
   return $Zeile;
 }
 
-function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
+// dieArt  = CVJMART_ORT
+function ArtikelAnzeigen($DieArt, $Tag, $parent = -1)
 {
   global $Schlafplaetze;
   global $docinput;
@@ -119,7 +120,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
   $Wann = array();
   if ( ! is_numeric($parent) ) return 0;
   $query = sql_query("SELECT * FROM ".TABLE_ARTIKEL." WHERE id=".$parent);
-  if ( ! $row = sql_fetch_array($query) ) echo "Fehler p=$parent: ".mysql_error();
+  if ( ! $row = sql_fetch_array($query) ) echo "Fehler p=$parent: ".sql_error();
   sql_free_result($query);
   $parentPos = $row["Position"];
   $nextPos = findeArtikelPos($row, "r");
@@ -146,7 +147,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
       echo '"><td valign="top">';
       //for ( $i = 1; $i < $Ebene; $i++ )
       //  echo "&gt;";
-      // Parameter heiﬂt Ort!
+      // Parameter hei√üt Ort!
       echo '<span style="width:'.($row["Einruecken"]*10).'px;float:left;">&nbsp;</span>';
       echo '<a href="'.get_url(get_cmodule_id("cvjmartikel"),'docinput[Artikel_Nr]='.$row["id"]).'#Edit">';
       if ( $row["Einruecken"] > 0 && $Ebenen[$row["Einruecken"]-1] != "" )
@@ -163,7 +164,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
         $query = sql_query($sql);
         $anzahl = sql_fetch_row($query);
         sql_free_result($query);
-        echo '<input type="Checkbox" title="f¸r den gesamten Aufenthalt" value="v" name="';
+        echo '<input type="Checkbox" title="f√ºr den gesamten Aufenthalt" value="v" name="';
         if ( $anzahl[0] == ($buchung["Bis"] - $buchung["Von"])/86400+1)
           echo 'Reise" checked="checked" disabled="disabled';
         else
@@ -229,7 +230,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
           if ( $docinput["Art"] != CVJMART_VERLEIH &&
                $docinput["Art"] != CVJMART_PROGRAMM )
           {
-            // alles was nicht Zeitabh‰ngig ist
+            // alles was nicht Zeitabh√§ngig ist
             echo '<input type="Checkbox" name="Artikel['.$row["id"].']['.$datum.']" value="v" ';
             if ( $aktiv >= 0 )
             {
@@ -344,7 +345,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
   for ( $i= 0; $i < ANZAHLTAGE; $i++ )
    $Schlafplaetze[$i] = 0;
   if ( ! $query = sql_query("SELECT * FROM ".TABLE_ARTIKEL." WHERE Einruecken=0 AND F_Art_id=".
-    $docinput["Art"]." $Alle ORDER BY Position")) echo "Fehler Kategorie: ".mysql_error();
+    $docinput["Art"]." $Alle ORDER BY Position")) echo "Fehler Kategorie: ".sql_error();
   $s = ZeigeBereiche($docinput["Art"], $buchung["Buchung_Nr"]);
   if ( $s != "" )
     $BelegteBereiche = explode(",",$s);
@@ -352,7 +353,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
     $BelegteBereiche = array();
   while ( $kategorie = sql_fetch_array($query) )
   {
-    // wenn kein Reiter gew‰hlt ist den ersten anzeigen in dem eine Buchung ist
+    // wenn kein Reiter gew√§hlt ist den ersten anzeigen in dem eine Buchung ist
     if ( ! isset($docinput["Page"] ) && Count($BelegteBereiche) > 0)
     {
       if ( in_array($kategorie["Bezeichnung"], $BelegteBereiche) )
@@ -394,7 +395,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
     </th><td></td><td>';
   echo '<a href="';
   echo get_url($id,array_merge($params,array("Tag"=>strtotime("-5 day",$Tag)))).
-    '" title="5 Tage fr¸her">&lt;&lt;&lt;</a>';
+    '" title="5 Tage Fr√ºher">&lt;&lt;&lt;</a>';
   echo '</td><th colspan="'.(ANZAHLTAGE-2).'">';
   echo '<a href="';
   echo get_url($id,array_merge($params, array("Tage"=>ANZAHLTAGE-5))).
@@ -405,7 +406,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
     '">&rarr;</a>';
   echo '</th><td align="right">';
   echo '<a href="'.get_url($id,array_merge($params,array("Tag"=>strtotime("+5 day",$Tag)))).
-    '" title="5 Tage sp‰ter">&gt;&gt;&gt;</a>';
+    '" title="5 Tage sp√§ter">&gt;&gt;&gt;</a>';
   echo '</td></tr>';
   echo '<tr bgcolor="'.$design["table_header"].'"><td>';
   echo '[ <a href="';
@@ -433,7 +434,7 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
        $_REQUEST["Buchung_Nr"]>0)
   {
     echo '<tr bgcolor="'.$design["table_row_bright"].'"><td>';
-    echo '<em>Schlafpl‰tze</em></td><td></td>';
+    echo '<em>Schlafpl√§tze</em></td><td></td>';
     for ( $i = 0; $i < ANZAHLTAGE; $i++ )
       echo '<td>'.$Schlafplaetze[$i].'</td>';
     echo '</tr>';
@@ -448,10 +449,10 @@ function ArtikelAnzeigen($DieArt = CVJMART_ORT, $Tag, $parent = -1)
   echo '</td><td></td><td colspan="'.
     (ANZAHLTAGE/2).'" align="left"><a href="'.
     get_url($id,array_merge($params,array("Tag"=>strtotime("-5 day",$Tag)))).
-    '" title="5 Tage fr¸her">&lt;&lt;&lt;</a></td>';
+    '" title="5 Tage Fr√ºher">&lt;&lt;&lt;</a></td>';
   echo '<td align="right" colspan="'.(ANZAHLTAGE/2+(ANZAHLTAGE % 2)).'"><a href="'.
     get_url($id,array_merge($params,array("Tag"=>strtotime("+5 day",$Tag)))).
-    '" title="5 Tage sp‰ter">&gt;&gt;&gt;</a></td></tr>';
+    '" title="5 Tage sp√§ter">&gt;&gt;&gt;</a></td></tr>';
   echo $design["table_end"];
   if ( $buchung["Buchung_Nr"] >= 0 && $buchung["BStatus"] < BUCHUNG_FERTIG )
   {

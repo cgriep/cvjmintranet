@@ -1,10 +1,10 @@
 <?php
 /**
- * Webserver-Seite für die Funktionen des Kiosk
+ * Webserver-Seite fÃ¼r die Funktionen des Kiosk
  *
  */
 
-/* Datenbank- und AWF-Funktionalität einbinden */
+/* Datenbank- und AWF-FunktionalitÃ¤t einbinden */
 include ('inc/functions.inc');
 include ('inc/licence.key');
 include ('inc/sessions.inc');
@@ -75,18 +75,18 @@ switch ($_REQUEST['action'])
 
 function Kiosk_ErstelleEvent($beschreibung, $titel, $Benutzer)
 {
-	$query = mysql_query("SELECT id FROM awf_users WHERE email='".EVENTUSER."'");
+	$query = sql_query("SELECT id FROM awf_users WHERE email='".EVENTUSER."'");
 	$user = 0;
-	if ( $result = mysql_fetch_array($query) )
+	if ( $result = sql_fetch_array($query) )
 	{
 		$user = $result['id'];
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	if ($user != 0)
 	{
-		if (! $query = mysql_query( 'INSERT INTO '.TABLE_EVENTS.' (Titel,Beschreibung,Status,Prioritaet,Autor,Datum,Art,created,Referenz) '
+		if (! $query = sql_query( 'INSERT INTO '.TABLE_EVENTS.' (Titel,Beschreibung,Status,Prioritaet,Autor,Datum,Art,created,Referenz) '
 		. 'VALUES ('
-		. "'".mysql_real_escape_string($titel)."','".mysql_real_escape_string($beschreibung)."',"
+		. "'".sql_real_escape_string($titel)."','".sql_real_escape_string($beschreibung)."',"
 		. "1,3," // Offen, wichtig
 		. $Benutzer.","
 		. 'UNIX_TIMESTAMP(NOW()),' //Long.toString(new java.util.Date().getTime()/1000) +"," // Datum
@@ -95,13 +95,13 @@ function Kiosk_ErstelleEvent($beschreibung, $titel, $Benutzer)
 		.'NULL)'))
 		{
 			// Auftrag
-			echo "Fehler ".mysql_error();
+			echo "Fehler ".sql_error();
 		}
 		else
 		{
-			mysql_query("INSERT INTO ".TABLE_BETROFFENE.
+			sql_query("INSERT INTO ".TABLE_BETROFFENE.
 			" (F_Event_id,F_Betroffener_id,Bestaetigungsstatus) VALUES (".
-			mysql_insert_id().",".$user.",1)");
+			sql_insert_id().",".$user.",1)");
 			echo '<result>OK</result>';
 		}
 	}
@@ -123,101 +123,101 @@ function Kiosk_ArtikelHinzufuegen($Menge, $id, $user, $mitarbeiter = false)
 	{
 		$sql .= ' Standard';
 	}
-	if ( ! $query = mysql_query($sql))
+	if ( ! $query = sql_query($sql))
 	{
-		echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>Preisliste '.mysql_error().'</result>';
+		echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>Preisliste '.sql_error().'</result>';
 	}
 	else
 	{
 		$preisliste = -1;
-		if ($result = mysql_fetch_array($query)) {
+		if ($result = sql_fetch_array($query)) {
 			$preisliste = $result["Preisliste_id"];
 			//this.setTitle(this.getTitle() + " Preisliste "
 			//			+ ergebnis.getString("Bezeichnung"));
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		$sql = "SELECT Bezeichnung, Preis, MWST "
 		. "FROM cvjm_Artikel INNER JOIN cvjm_Preise ON Artikel_Nr=id "
 		. "INNER JOIN cvjm_MWST ON F_MWSt=MWST_id "
 		. " WHERE F_Preisliste_id=" . $preisliste
 		. ' AND Artikel_Nr='.$id;
-		if (! $query = mysql_query($sql))
+		if (! $query = sql_query($sql))
 		{
 			
-			echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>SQL: '.$sql.' / '.mysql_error().'</result>';
+			echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>SQL: '.$sql.' / '.sql_error().'</result>';
 		}
 		else
 		{
-			if ( $result = mysql_fetch_array($query))
+			if ( $result = sql_fetch_array($query))
 			{
 				if ( $mitarbeiter )
 				{
 					 $sql = "INSERT INTO cvjm_Kiosk_Mitarbeiter (Menge,Preis,F_Artikel_id,Bezeichnung,Benutzer) "
 				. "VALUES (". $Menge. ",". (round($result['Preis']*(100+$result['MWST']))/100). ","	. $id. ",'"
-				. $result['Bezeichnung']. "','" . mysql_real_escape_string($user) . "')";
+				. $result['Bezeichnung']. "','" . sql_real_escape_string($user) . "')";
 				}
 				else
 				{
 					 $sql = "INSERT INTO cvjm_Kiosk (Menge,Preis,F_Artikel_id,Bezeichnung,Benutzer) "
 				. "VALUES (". $Menge. ",". (round($result['Preis']*(100+$result['MWST']))/100). ","	. $id. ",'"
-				. $result['Bezeichnung']. "','" . mysql_real_escape_string($user) . "')";
+				. $result['Bezeichnung']. "','" . sql_real_escape_string($user) . "')";
 				
 				}
-				if ( mysql_query($sql) )
+				if ( sql_query($sql) )
 				{
 					echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>OK</result>';
 				}
 				else
 				{
-					echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>FEHLER - '.mysql_error(). ' / '.$sql.'</result>';
+					echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>FEHLER - '.sql_error(). ' / '.$sql.'</result>';
 				}
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 		}
 	}
 }
 
 function Kiosk_LiesBenutzer()
 {
-	if ( ! $query = mysql_query("SELECT id FROM awf_groups WHERE group_name='Kiosk'"))
+	if ( ! $query = sql_query("SELECT id FROM awf_groups WHERE group_name='Kiosk'"))
 	{
-		echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>FEHLER '.mysql_error().'</result>';
+		echo '<?xml version="1.0" encoding="ISO-8859-1"?><result>FEHLER '.sql_error().'</result>';
 	}
 	else
 	{
-		$result = mysql_fetch_array($query);
+		$result = sql_fetch_array($query);
 		$gruppe = $result["id"];
-		mysql_free_result($query);
-		if (! $query = mysql_query("SELECT user_id FROM awf_userdata WHERE name='group_" . $gruppe . "'"))
+		sql_free_result($query);
+		if (! $query = sql_query("SELECT user_id FROM awf_userdata WHERE name='group_" . $gruppe . "'"))
 		{
-			echo mysql_error();
+			echo sql_error();
 		}
 		else
 		{
 			$s = "-1";
-			while ( $result = mysql_fetch_array($query) ) {
+			while ( $result = sql_fetch_array($query) ) {
 				$s =$s . ",".$result["user_id"];
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 			$sql = "SELECT password, value, awf_users.id as userid "
 			. "FROM awf_users INNER JOIN awf_userdata ON awf_users.id=user_id"
 			. " WHERE valid AND name='nickname' AND user_id IN (".$s.")"
 			. " ORDER BY value";
-			if (! $query = mysql_query($sql))
+			if (! $query = sql_query($sql))
 			{
-				echo mysql_error();
+				echo sql_error();
 			}
 			else
 			{
 				$xml = '<?xml version="1.0" encoding="ISO-8859-1"?><users>';
-				while ( $result = mysql_fetch_array($query))
+				while ( $result = sql_fetch_array($query))
 				{
 					// XML erstellen
 					$xml .= '<user><benutzer>'.$result['value'].'</benutzer><password>'.
 					$result['password'].'</password><userid>'.$result['userid'].'</userid></user>';
 				}
 				$xml .= '</users>';
-				mysql_free_result($query);
+				sql_free_result($query);
 				echo $xml;
 			}
 		}
@@ -245,13 +245,13 @@ function Kiosk_LiesArtikelRekursiv($art, $artikel_id, $preisliste)
 			case 'normal':
 				$sql .= " WHERE F_Preisliste_id=" . $preisliste;
 		}
-		if (! $query = mysql_query($sql))
+		if (! $query = sql_query($sql))
 		{
-			echo 'SQL: '.$sql.' / '.mysql_error();
+			echo 'SQL: '.$sql.' / '.sql_error();
 		}
 		else
 		{
-			while ( $result = mysql_fetch_array($query))
+			while ( $result = sql_fetch_array($query))
 			{
 				// XML erstellen
 				if ( $art == 'unterartikel')
@@ -267,7 +267,7 @@ function Kiosk_LiesArtikelRekursiv($art, $artikel_id, $preisliste)
 				htmlspecialchars(str_replace('Kiosk','',$result['Bezeichnung'])).'</Bezeichnung><Barcode>'.$result['Barcode'].
 					'</Barcode><Preis>'.(round($result['Preis']*(100+$result['MWST']))/100).
 					'</Preis>';
-				// Unterartikel prüfen
+				// Unterartikel prÃ¼fen
 				$xml .= Kiosk_LiesArtikelRekursiv('unterartikel', $result['id'], $preisliste);
 				if ( $art == 'unterartikel')
 				{
@@ -278,7 +278,7 @@ function Kiosk_LiesArtikelRekursiv($art, $artikel_id, $preisliste)
 					$xml .= '</artikel>';
 				} 
 			}
-			mysql_free_result($query);
+			sql_free_result($query);
 	}
 	return $xml;
 }
@@ -294,19 +294,19 @@ function Kiosk_LiesArtikel($art, $artikel_id, $mitarbeiter)
 	{
 		$sql .=  ' WHERE Standard';
 	}
-	if ( ! $query = mysql_query($sql))
+	if ( ! $query = sql_query($sql))
 	{
-		echo mysql_error();
+		echo sql_error();
 	}
 	else
 	{
 		$preisliste = -1;
-		if ($result = mysql_fetch_array($query)) {
+		if ($result = sql_fetch_array($query)) {
 			$preisliste = $result["Preisliste_id"];
 			//this.setTitle(this.getTitle() + " Preisliste "
 			//			+ ergebnis.getString("Bezeichnung"));
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?><artikelliste>';
 		$xml .= Kiosk_LiesArtikelRekursiv($art, $artikel_id, $preisliste);
 		$xml .= '</artikelliste>';
@@ -318,15 +318,15 @@ function Kiosk_getKassenstand()
 {
 	$xml = '<?xml version="1.0" encoding="ISO-8859-1"?><historie>';
 	$xml .= '<kassenstand>';	
-	$query = mysql_query('SELECT Sum(Preis*Menge) AS Kassenstand FROM cvjm_Kiosk');
-	if ($result = mysql_fetch_array($query)) {
+	$query = sql_query('SELECT Sum(Preis*Menge) AS Kassenstand FROM cvjm_Kiosk');
+	if ($result = sql_fetch_array($query)) {
 		$xml .= (round($result['Kassenstand']*100)/100);
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	$xml .= '</kassenstand>';
 	$xml .= '<verkaeufe>';
-	$query = mysql_query('SELECT * FROM cvjm_Kiosk WHERE Datum >= CURDATE() ORDER BY Datum DESC');
-	while ($entry = mysql_fetch_array($query))
+	$query = sql_query('SELECT * FROM cvjm_Kiosk WHERE Datum >= CURDATE() ORDER BY Datum DESC');
+	while ($entry = sql_fetch_array($query))
 	{
 		$xml .='<eintrag>';
 		$xml .= '<Bezeichnung>'.htmlspecialchars($entry['Bezeichnung']).'</Bezeichnung>';
@@ -336,7 +336,7 @@ function Kiosk_getKassenstand()
 		$xml .= '<Preis>'.$entry['Preis'].'</Preis>';
 		$xml .='</eintrag>';
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	$xml .= '</verkaeufe>';
 	$xml .= '</historie>';
 	echo $xml;
@@ -346,16 +346,16 @@ function Kiosk_getMitarbeiterKassenstand($mitarbeiter)
 {
 	$xml = '<?xml version="1.0" encoding="ISO-8859-1"?><historie>';
 	$xml .= '<kassenstand>';	
-	$query = mysql_query('SELECT Sum(Preis*Menge) AS Kassenstand FROM cvjm_Kiosk_Mitarbeiter WHERE Benutzer="'.$mitarbeiter.'"');
-	if ($result = mysql_fetch_array($query)) {
+	$query = sql_query('SELECT Sum(Preis*Menge) AS Kassenstand FROM cvjm_Kiosk_Mitarbeiter WHERE Benutzer="'.$mitarbeiter.'"');
+	if ($result = sql_fetch_array($query)) {
 		$xml .= (round($result['Kassenstand']*100)/100);
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	$xml .= '</kassenstand>';
 	$xml .= '<verkaeufe>';
-	$query = mysql_query('SELECT * FROM cvjm_Kiosk_Mitarbeiter WHERE Benutzer="'.mysql_real_escape_string($mitarbeiter).
+	$query = sql_query('SELECT * FROM cvjm_Kiosk_Mitarbeiter WHERE Benutzer="'.sql_real_escape_string($mitarbeiter).
 	'" ORDER BY Datum DESC');
-	while ($entry = mysql_fetch_array($query))
+	while ($entry = sql_fetch_array($query))
 	{
 		$xml .='<eintrag>';
 		$xml .= '<Bezeichnung>'.htmlspecialchars($entry['Bezeichnung']).'</Bezeichnung>';
@@ -365,7 +365,7 @@ function Kiosk_getMitarbeiterKassenstand($mitarbeiter)
 		$xml .= '<Preis>'.$entry['Preis'].'</Preis>';
 		$xml .='</eintrag>';
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	$xml .= '</verkaeufe>';
 	$xml .= '</historie>';
 	echo $xml;
@@ -374,10 +374,10 @@ function Kiosk_getMitarbeiterKassenstand($mitarbeiter)
 
 function Kiosk_AendereKassenstand($preis, $bemerkung, $user, $Benutzer)
 {
-	if ( ! mysql_query('INSERT INTO cvjm_Kiosk (Menge,Preis,Bezeichnung,Benutzer, F_Artikel_id) VALUES (1,' . $preis
-	. ",'Geldbuchung:" . mysql_real_escape_string($bemerkung)	. "','" . mysql_real_escape_string($user) . "',-1)") )
+	if ( ! sql_query('INSERT INTO cvjm_Kiosk (Menge,Preis,Bezeichnung,Benutzer, F_Artikel_id) VALUES (1,' . $preis
+	. ",'Geldbuchung:" . sql_real_escape_string($bemerkung)	. "','" . sql_real_escape_string($user) . "',-1)") )
 	{
-		echo '<result>'.mysql_error().'</result>';	
+		echo '<result>'.sql_error().'</result>';	
 	}
 	else {
 		Kiosk_ErstelleEvent($bemerkung.' (Summe: '.$preis.')', 'Kiosk-Geldbuchung', $Benutzer);

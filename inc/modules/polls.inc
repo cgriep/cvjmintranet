@@ -45,7 +45,7 @@ if($polls_res) {
 	<?php
 	while($pollrow = sql_fetch_row($polls_res)) {
 		?>
-		<input type=radio name="docinput[poll_vote]" value="<? echo $pollrow[0]; ?>">&nbsp;<? echo $pollrow[1]; ?><br />
+		<input type=radio name="docinput[poll_vote]" value="<?php echo $pollrow[0]; ?>">&nbsp;<?php echo $pollrow[1]; ?><br />
 		<?php
 		}
 	?>
@@ -66,16 +66,16 @@ if($polls_res) {
 	<table border=0 width="100%" cellpadding="0" cellspacing="1">
 	<?		
 	$counter = 0;
-	while(list($poll_text, $poll_counter) = each($polls_counter)) {
+	foreach ($polls_counter as $poll_text => $poll_counter)  {
 		++$counter; ?>
 		<tr>
 		<td width="100%" valign="top" align="left" background="img/polls/<?=round(($poll_counter/$total_votes)*100)?>.gif"><span style="font-size: 10px; color: white"><?=$poll_text?></span></td>
 		<td align="right" width="0" valign="top"><span style="font-size: 10px; text-align: right" ><?=round(($poll_counter/$total_votes)*100)?>%</span></td>
-		</tr><?
+		</tr><?php
 		} 
 		?>
 	</table>
-		<?
+		<?php
 		}
 		}
 	}

@@ -13,20 +13,21 @@ global $flavour;
 $cache_time = CACHE_TIME;
 
 if(!function_exists('display_items')) {
-	function display_items (&$parents, $level = 0) {
+	function display_items (&$parents, $level = 0, $pos = 0) {
 		global $document;
 		global $id;
 		global $design;
-		list($key, $value) = each($parents);
+		//$key = key($parents);
+		//$value = current($parents);
 		for($i = 0; $i < $level; $i++) {
 			$pre .= '&nbsp;&nbsp;';
 			}
 		if($level > 0) $pre .= '<img src="'.$design['nav_bullet'].'" />';
-		$related = get_children(0, 100, -1, true, 'DESC', true, $key);
-		while(list($docid, $doc) = each($related)) {
+		$related = get_children(0, 100, -1, true, 'DESC', true, $pos);
+		foreach ($related as $docid => $doc) {
 			if(isset($parents[$docid])) {
 				echo $pre.'<a href="'.get_url($docid).'" class="selectedNav">'.$doc['title']."</a><br />\n";
-				display_items($parents, $level + 1);
+				display_items($parents, $level + 1, $docid);
 				}
 			else {
 				echo $pre.'<a href="'.get_url($docid).'" class="normalNav">'.$doc['title']."</a><br />\n";

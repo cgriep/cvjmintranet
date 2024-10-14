@@ -2,7 +2,7 @@
 
 
 /**
-Modul Programmübersicht
+Modul ProgrammÃ¼bersicht
 
 */
 
@@ -16,9 +16,9 @@ if ($profile["editor"] != 1)
 	require_once(INC_PATH.'Smarty/Smarty.class.php');
 	require_once(INC_PATH.'cvjm/Event.class.php');
 	require_once(INC_PATH.'cvjm/Buchung.class.php');
-	require_once(INC_PATH.'cvjm/Artikel.class.php');
-  	$Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';	
+	require_once(INC_PATH.'cvjm/Artikel.class.php');  	
   	$Smarty = new Smarty();
+	$Smarty->template_dir = TEMPLATEPATH; 
   	$Anzahl = 0;
 	$Smarty->assign('title',transform($document['title'], $document['datatype']['title']));
 	if (isset ($_REQUEST["Datum"]))
@@ -72,7 +72,7 @@ if ($profile["editor"] != 1)
 		$zeilen[] = $row;
 	}
 	sql_free_result($query);
-	$Smarty->assign_by_ref('zeilen', $zeilen);
+	$Smarty->assign('zeilen', $zeilen);
 	$Smarty->display('Programmuebersicht.tpl');
 
 } // wenn nicht Editor

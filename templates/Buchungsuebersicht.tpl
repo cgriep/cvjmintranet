@@ -1,7 +1,7 @@
 <!-- Template Buchungsuebersicht -->
 
 <noscript>
-<div class="Fehler">Javascript ist deaktiviert. Keine Belegung möglich.</div>
+<div class="Fehler">Javascript ist deaktiviert. Keine Belegung mÃ¶glich.</div>
 </noscript>
 
 
@@ -85,7 +85,7 @@
   </th>
   <td></td>
   <td {if $buchung.Buchung_Nr >= 0 && $buchung.Von < $Tag} bgcolor="red"{/if} >  
-  <a href="?id={$id}&{$params}&Tag={$TageZurueck}" title="5 Tage früher">&lt;&lt;&lt;</a>
+  <a href="?id={$id}&{$params}&Tag={$TageZurueck}" title="5 Tage frÃ¼her">&lt;&lt;&lt;</a>
   </td>
   <th colspan="{eval var=$smarty.session.ANZAHLTAGE-2}">
     <a href="?id={$id}&{$params}&Tage={eval var=$smarty.session.ANZAHLTAGE-5}">&larr;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -95,7 +95,7 @@
   <td align="right"  
   {if $buchung.Buchung_Nr >= 0 && $buchung.Bis >= $AnzeigeEnde}
     bgcolor="red" {/if} >
-    <a href="?id={$id}&{$params}&Tag={$TageVor}" title="5 Tage später">&gt;&gt;&gt;</a>
+    <a href="?id={$id}&{$params}&Tag={$TageVor}" title="5 Tage spÃ¤ter">&gt;&gt;&gt;</a>
   </td>
 </tr>
 <tr class="ueberschrift">
@@ -138,7 +138,7 @@
   </td>      
   <td valign="top">
   {if $buchung.Buchung_Nr> 0 && !$mitZeit }
-    <input type="Checkbox" title="für den gesamten Aufenthalt" value="v" id="Alle{$artikel.id}"
+    <input type="Checkbox" title="fÃ¼r den gesamten Aufenthalt" value="v" id="Alle{$artikel.id}"
     name="{if $artikel.anzahl == ($buchung.Bis - $buchung.Von)/86400+1}Reise" 
     checked="checked{else}Artikel[{$artikel.id}][Reise]{/if}" 
     onClick="javascript:xajax_gesamteReise({$buchung.Buchung_Nr},{$artikel.id},{$docinput.Page},this.checked,'{$docinput.Artikelnummern}');"
@@ -176,7 +176,7 @@
 {if isset($Schlafplaetze)}
 <tr class="ueberschrift">
   <td>
-    <em>Schlafplätze</em>
+    <em>SchlafplÃ¤tze</em>
   </td>
   <td></td>
   {foreach from=$Schlafplaetze key=tagnr item=platz}
@@ -193,12 +193,12 @@
   {if $buchung.Buchung_Nr >= 0 && $buchung.Von < $Tag}
     bgcolor="red"
   {/if}>
-    <a href="?id={$id}&{$params}&Tag={$TageZurueck}" title="5 Tage früher">&lt;&lt;&lt;</a>
+    <a href="?id={$id}&{$params}&Tag={$TageZurueck}" title="5 Tage frÃ¼her">&lt;&lt;&lt;</a>
   </td>
   <td align="right" colspan="{math equation="x/2+(x%2)" x=$smarty.session.ANZAHLTAGE}" 
   {if $buchung.Buchung_Nr >= 0 && $buchung.Bis >= $AnzeigeEnde}
     bgcolor="red"
-  {/if}><a href="?id={$id}&{$params}&Tag={$TageVor}" title="5 Tage später">&gt;&gt;&gt;</a>
+  {/if}><a href="?id={$id}&{$params}&Tag={$TageVor}" title="5 Tage spÃ¤ter">&gt;&gt;&gt;</a>
   </td>
 </tr>
 </table>

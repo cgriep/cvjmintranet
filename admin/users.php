@@ -12,10 +12,15 @@ error_reporting(1); // Disable Warnings
 
 define('SESSION_STATUS', 'ok');
 
+foreach ( $_REQUEST  as $key => $val)
+{
+        $$key = $val;
+}
+/*
 while(list($key, $val) = each ($_REQUEST)) {
 	$$key = $val;
 	}
-
+*/
 $inc_value = 50;
 
 $_BASEPATH = dirname(dirname($_SERVER['SCRIPT_FILENAME']));
@@ -24,7 +29,7 @@ $_BASEPATH = dirname(dirname($_SERVER['SCRIPT_FILENAME']));
 include($_BASEPATH.'/inc/database.inc');
 include($_BASEPATH.'/inc/db_tables.inc');
 include($_BASEPATH.'/inc/functions.inc');
-
+echo TABLE_SETUP;
 init_groups();
 
                 // Read all contstants from database
@@ -117,14 +122,14 @@ if(isset($id)) {
 <title>
 Liquid Bytes AWF User Management
 </title>
-<?
+<?php
 	include('header.inc');
 ?>
 <center>
 <table width="90%" cellpadding="0" cellspacing="0" border="0">
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> User Management</h2></center>
-<?
+<center><h2><?php if (defined('SITE_TITLE')) { echo SITE_TITLE;} ?> User Management</h2></center>
+<?php
 if($action=='delete' && isset($id) && $id < 2) {
 	echo '<center><span style="color:#ff0000"><b>This user can\'t be removed.</b></span></center>';
 	}
@@ -174,21 +179,22 @@ elseif($action=='edit' && isset($id)) {
 		<input type="hidden" name="order_by" value="<?=$order_by?>">
 		<b>Group memberships</b><br />
 		<select name="group" size="5">
-		<? while(list($key, $value) = each($groups)) { ?>
-		<option value="<?=$key?>"><?=$value?><? if($profile['group_'.$key] == 1) echo ' [Member]'; ?></option>
-		<? } ?>
+		<?php foreach ( $groups as $key=>$value) { ?>
+		<option value="<?=$key?>"><?=$value?>
+       <?php if($profile['group_'.$key] == 1){ echo ' [Member]';} ?></option>
+		<?php } ?>
 		</select><br />
 		<input type="submit" value="Add / Remove">
 		</form>
 		<b>Profile</b>
-		<?
+		<?php
 
 		if(isset($profile)) {
 		echo '<table width="450" border="0" cellpadding="2" cellspacing="1">';
 		echo '<tr><td width="100" bgcolor="#dddddd">Key</td>
 			<td width="300" bgcolor="#dddddd" align="right">Value</td>
 			<td width="50" bgcolor="#dddddd">Edit</td></tr>';
-		while(list($key, $value) = each($profile)) {
+			foreach($profiles as $key=>$value )  {
 			echo '<tr><td width="100" bgcolor="#eeeeee">'.$key.'</td>
 				<td width="300" bgcolor="#eeeeee" align="right">'.$value.'</td>
 				<td width="50" bgcolor="#eeeeee">
@@ -208,7 +214,7 @@ elseif($action=='edit' && isset($id)) {
 else {
 	?>
 	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-	<?
+	<?php
 	$qres = sql_query("SELECT count(*) FROM ".TABLE_USERS." $where");
 	$row  = sql_fetch_row($qres);
         $total_count = $row[0];
@@ -226,24 +232,24 @@ else {
 	<table width="100%" border="0" cellpadding="2" cellspacing="1">
         <tr>
         <td bgcolor="#ddffdd" width="7%" align="center">
-                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<? echo $first_item; ?>&order_by=id%20DESC"><b>ID</b></a></td>
+                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<?php echo $first_item; ?>&order_by=id%20DESC"><b>ID</b></a></td>
         <td bgcolor="#ffdddd" width="61%">
-                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<? echo $first_item; ?>&order_by=email"><b>eMail</b></a></td>
-<?
+                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<?php echo $first_item; ?>&order_by=email"><b>eMail</b></a></td>
+<?php
 /*
 	<td bgcolor="#ffdddd" width="20%">
-                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<? echo $first_item; ?>&order_by=password"><b>Password</b></a></td>
+                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<?php echo $first_item; ?>&order_by=password"><b>Password</b></a></td>
 */
 ?>
 	<td bgcolor="#ddddff" width="6%" align="center">
-                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<? echo $first_item; ?>&order_by=valid"><b>Valid</b></a></td>
+                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<?php echo $first_item; ?>&order_by=valid"><b>Valid</b></a></td>
         <td bgcolor="#ddddff" width="6%" align="right">
-                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<? echo $first_item; ?>&order_by=views%20DESC"><b>Views</b></a></td>
+                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<?php echo $first_item; ?>&order_by=views%20DESC"><b>Views</b></a></td>
         <td bgcolor="#ffddff" width="10%" align="right">
-                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<? echo $first_item; ?>&order_by=last_login"><b>Last Login</b></a></td>
+                <a href="<?=$_SERVER['PHP_SELF']?>?first_item=<?php echo $first_item; ?>&order_by=last_login"><b>Last Login</b></a></td>
         <td bgcolor="#dddddd" width="10%" align="center"><b>Options</b></td>
         </tr>
-		<?
+		<?php
 		while($row = sql_fetch_row($qres)) {
 			if($save_valid == 'true' && $user_valid[$row[0]] != '1') $user_valid[$row[0]] = '0';
 			if($save_valid == 'true' && $row[3] != $user_valid[$row[0]]) {
@@ -254,29 +260,29 @@ else {
 			else { $row[3] = '<input value="1" name="user_valid['.$row[0].']" type="checkbox">'; } 
 			?>
 	<tr>
-        <td bgcolor="#eeffee" width="7%" align="center"><? echo $row[0]; ?></td>
-        <td bgcolor="#ffeeee" width="61%"><? echo $row[1]; ?></td>
-<?
+        <td bgcolor="#eeffee" width="7%" align="center"><?php echo $row[0]; ?></td>
+        <td bgcolor="#ffeeee" width="61%"><?php echo $row[1]; ?></td>
+<?php
 /*
-        <td bgcolor="#ffeeee" width="20%"><? echo $row[2]; ?></td>
+        <td bgcolor="#ffeeee" width="20%"><?php echo $row[2]; ?></td>
 */
 ?>
-        <td bgcolor="#eeeeff" width="6%" align="center"><? echo $row[3]; ?></td>
-        <td bgcolor="#eeeeff" width="6%" align="right"><? echo $row[4]; ?></td>
-        <td bgcolor="#ffeeff" width="10%" align="right"><? echo $row[5]; ?></td>
+        <td bgcolor="#eeeeff" width="6%" align="center"><?php echo $row[3]; ?></td>
+        <td bgcolor="#eeeeff" width="6%" align="right"><?php echo $row[4]; ?></td>
+        <td bgcolor="#ffeeff" width="10%" align="right"><?php echo $row[5]; ?></td>
         <td bgcolor="#eeeeee" width="10%" align="center">
-		<a href="<?=$_SERVER['PHP_SELF']?>?id=<? echo $row[0]; ?>&action=delete&first_item=<? echo $first_item; ?>"><img
+		<a href="<?=$_SERVER['PHP_SELF']?>?id=<?php echo $row[0]; ?>&action=delete&first_item=<?php echo $first_item; ?>"><img
 			src="img/delete.gif" border="0" alt="Delete"></a>&nbsp;
-		<a href="<?=$_SERVER['PHP_SELF']?>?id=<? echo $row[0]; ?>&action=edit&first_item=<? echo $first_item; ?>"><img
+		<a href="<?=$_SERVER['PHP_SELF']?>?id=<?php echo $row[0]; ?>&action=edit&first_item=<?php echo $first_item; ?>"><img
 			src="img/edit.gif" border="0" alt="Edit"></a></td>
         </tr>
-			<?
+			<?php
                 	}
 	?>
 	<tr>
         <td bgcolor="#ffffff" width="7%" align="center"></td>
         <td bgcolor="#ffffff" width="61%"></td>
-<?
+<?php
 /*
         <td bgcolor="#ffffff" width="20%"></td>
 */
@@ -287,7 +293,7 @@ else {
         <td bgcolor="#ffffff" width="10%" align="center"></td>
         </tr>
 	</table></form><center>
-	<?
+	<?php
 	if($total_count > $inc_value) {
            echo '<br />Page ';
            $temp_counter = $inc_value;
@@ -312,7 +318,7 @@ else {
 ?>
 </td></tr>
 </table>
-<?
+<?php
         include('footer.inc');
 ?>
 </center>

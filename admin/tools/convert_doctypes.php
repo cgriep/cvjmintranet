@@ -1,5 +1,5 @@
 #!/usr/bin/php -q
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -38,7 +38,7 @@ $rows = sql_query_array("SELECT type_id, name, template, parent_id, visible, des
 		TABLE_TYPEDATA.",".TABLE_TYPES." WHERE ".TABLE_TYPES.".id=".TABLE_TYPEDATA.".
 		type_id AND platform='phpweb' ORDER BY type_id", 'type_id');
 
-while(list($key, $row) = each($rows)) {
+foreach ( $rows as $key => $value )  {
 
 	$newid = sql_insert(TABLE_DOCTYPES, array(
 		'id' 		=> $key,

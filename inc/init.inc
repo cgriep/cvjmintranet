@@ -120,8 +120,7 @@ if(SESSION_STATUS != 'ok') {
         }
 $keys = "0,";
 $allkeys = false;
-reset ($profile);
-while ( list($key, $value) = each ($profile) )
+foreach ($profile as $key => $value) 
 {
   if ( substr($key, 0, 4) == "key_" && $value == 1 )
     if ( substr($key,4) == "master" )
@@ -140,8 +139,8 @@ if(!isset($profile['nickname'])) $profile['nickname'] = get_user_nickname();
 // set wildcards
 if(file_exists(INC_PATH.DATA_PATH.'wildcards.conf')) {
         $lines = file(INC_PATH.DATA_PATH.'wildcards.conf');
-        while(list($line_num, $line) = each($lines)) {
-          $buffer = split('\|', $line);
+        foreach ( $lines as $line_num => $line) {
+          $buffer =  explode('\|', $line);
           $wildcards[$buffer[0]] = trim($buffer[1]);
           }
         }
@@ -166,8 +165,7 @@ if($profile['editor'] == '1' && $_REQUEST['self_loop'] != 'true') {
                 update_node($id, $doc['parent_id'], $doc['type_id'], $doc['sort_order'], $doc['enabled'],
                         $doc['published'], $doc['description'], $doc['key_id'], $doc['searchable'], $doc['cacheable']);
                 if(isset($docdata)) {
-                reset($docdata);
-                while(list($key, $value) = each($docdata)) {
+                foreach ( $docdata as $key => $value) {
                         if(isset($docdatatype[$key])) {
                                 $datatype = $docdatatype[$key];
                                 }
@@ -184,7 +182,7 @@ if($profile['editor'] == '1' && $_REQUEST['self_loop'] != 'true') {
                         }
 
                 if(isset($_FILES['docupload'])) {
-                while(list($key, $tmp_name) = each($_FILES['docupload']['tmp_name'])) {
+                foreach ($_FILES['docupload']['tmp_name'] as $key => $tmp_name) {
                         $filename = $_FILES['docupload']['name'][$key];
 
                         if($tmp_name != '' && $tmp_name != 'none') {
@@ -244,7 +242,7 @@ if($profile['editor'] == '1' && $_REQUEST['self_loop'] != 'true') {
 
 $document = get_node($id, $flavour);
 
-if($document[key_id] == '0' || (SESSION_STATUS == 'ok' && ($profile['key_'.$document[key_id]] == '1' || $profile['key_master'] == '1'))) {
+if($document['key_id'] == '0' || (SESSION_STATUS == 'ok' && ($profile['key_'.$document['key_id']] == '1' || $profile['key_master'] == '1'))) {
         define('DOCUMENT_ACCESS','1');
         }
 
@@ -276,7 +274,7 @@ if(!isset($document['enabled'])) {
         }
 
 if(!isset($document['title'])) {
-        if($profile[editor] != 1) { $flavour  = $default_flavour; } else { $document['title'] = 'Unknown'; }
+        if($profile['editor'] != 1) { $flavour  = $default_flavour; } else { $document['title'] = 'Unknown'; }
         unset($document);
         $document = get_node($id, $flavour);
         }
@@ -373,10 +371,10 @@ header('Pragma: no-cache');
 $pre    = '?';
 if(defined('URL_REWRITE')) { $self = get_url($id); }
 else { $self = $_SERVER['PHP_SELF']; }
-$_GP_REQUEST = array_merge($_GET, $POST);
-while (list ($key, $value) = each ($_GP_REQUEST)) {
+$_GP_REQUEST = array_merge($_GET, $_POST);
+foreach ( $_GP_REQUEST as $key => $value){
         // loop through filter
-        if(!($key == 'docinput' || $key == 'docdata' || $key == 'doc' || $key == 'docupload' || (defined(URL_REWRITE) && $key == 'id'))) {
+        if(!($key == 'docinput' || $key == 'docdata' || $key == 'docdatatype' || $key == 'doc' || $key == 'docupload' || (defined('URL_REWRITE') && $key == 'id'))) {
                 $self .= $pre.$key.'='.urlencode($value);
                 $pre = '&';
                 }

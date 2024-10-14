@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   [ <a href="?id={$ret}&Bearbeiten={$Adresse->Adresse.Adressen_id}">
-  Zurück zu den Adressdaten</a> ]
+  ZurÃ¼ck zu den Adressdaten</a> ]
 </div>
 <table width="100%">
 {assign var="i" value="0"}
@@ -36,5 +36,5 @@
 </table>
 <div align="center">
   [ <a href="?id={$ret}&Bearbeiten={$Adresse->Adresse.Adressen_id}">
-  Zurück zu den Adressdaten</a> ]
+  ZurÃ¼ck zu den Adressdaten</a> ]
 </div>

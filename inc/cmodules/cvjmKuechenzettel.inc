@@ -84,7 +84,7 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
         $sql = 'UPDATE '.TABLE_BUCHUNGSEINTRAEGE.' SET Menge='.$docinput['NeueAnzahl'].
           ' WHERE F_Buchung_Nr='.$docinput['Buchungsnr'].' AND Datum='.$eintrag['Datum'].
           ' AND F_Artikel_Nr='.$eintrag['id'];
-        if ( ! sql_query($sql)) echo 'Fehler '.$sql.': '.mysql_error();
+        if ( ! sql_query($sql)) echo 'Fehler '.$sql.': '.sql_error();
         $anz ++;
       }
       sql_free_result($query);
@@ -96,7 +96,7 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
       $sql = 'UPDATE '.TABLE_BUCHUNGSEINTRAEGE.' SET Menge='.$docinput['NeueAnzahl'].
         ' WHERE F_Buchung_Nr='.$docinput['Buchungsnr'].' AND Datum='.$docinput['Tag'].
         ' AND F_Artikel_Nr='.$docinput['Art'];
-      if ( ! sql_query($sql)) echo "Fehler $sql: ".mysql_error();
+      if ( ! sql_query($sql)) echo "Fehler $sql: ".sql_error();
     }
     $bemerkung .= "\n".addslashes($docinput['Hinweise']);
     sql_query('INSERT INTO '.TABLE_BUCHUNGSBEMERKUNGEN.' (F_Buchung_Nr,Bemerkung, Logtext) VALUES ('.
@@ -126,10 +126,10 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
       // bisher-Wert anzeigen
 	  $sql = 'SELECT Menge FROM '.TABLE_BUCHUNGSEINTRAEGE.' WHERE F_Artikel_Nr='.$docinput['Art'].' AND F_Buchung_Nr='.
 	  $docinput['Buchung_Nr'].' AND Datum='.$docinput['Datum'];
-      if ( ! $mengequery = sql_query($sql) ) echo "Fehler $sql: ".mysql_error();
-      $row = mysql_fetch_array($mengequery);
+      if ( ! $mengequery = sql_query($sql) ) echo "Fehler $sql: ".sql_error();
+      $row = sql_fetch_array($mengequery);
       echo ' (bisher <b>'.$row['Menge'].'</b>)';
-      mysql_free_result($mengequery);
+      sql_free_result($mengequery);
       echo '<input type="hidden" name="docinput[Buchungsnr]" value="'.$docinput["Buchung_Nr"].
         '" />';
       echo '<input type="hidden" name="docinput[Art]" value="'.$docinput["Art"].'" />';
@@ -214,7 +214,7 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
       TABLE_ARTIKEL." ON id=F_Artikel_Nr) INNER JOIN ".TABLE_BUCHUNGEN.
       " ON F_Buchung_Nr=Buchung_Nr WHERE F_Art_id=".CVJMART_VERPFLEGUNG.
         " AND $Where ORDER BY Datum, F_Speiseraum_id, F_Adressen_id";
-    if ( ! $Eintraege = sql_query($sql) ) echo "Fehler $sql: ".mysql_error();
+    if ( ! $Eintraege = sql_query($sql) ) echo "Fehler $sql: ".sql_error();
     $Artikel = array();
     $Essen = array();
     $Buchungen = array();
@@ -243,10 +243,10 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
     $Smarty = new Smarty();
     $Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
     $Smarty->assign('id', $id);
-    $Smarty->assign_by_ref('Artikel', $Artikel);
+    $Smarty->assign('Artikel', $Artikel);
     $Smarty->assign('Datum', $Datum);
-    $Smarty->assign_by_ref('Buchungen', $Buchungen);
-    $Smarty->assign_by_ref('Essen', $Essen);
+    $Smarty->assign('Buchungen', $Buchungen);
+    $Smarty->assign('Essen', $Essen);
     setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");
     $Smarty->display('Kuechenuebersicht.tpl');
   }

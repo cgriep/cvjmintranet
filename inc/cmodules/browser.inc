@@ -113,9 +113,9 @@ else {
         ?>
         <tr><td bgcolor="<?=$design['table_row_bright']?>" align="left">
         <?=LANG_DOCUMENT?>:
-        <?
-        $buffer = split('/', $subject);
-        while(list($nr, $dir) = each($buffer)) {
+        <?php
+        $buffer =  explode('/', $subject);
+        foreach ($buffer as $nr => $dir) {
           $real_path .= $dir.'/';
           if($nr==0) echo('<a href="'.get_url($id,'subject=%2f').'">'.$document['title'].'</a> > ');
           if($dir != '') {
@@ -126,11 +126,11 @@ else {
         ?>
         </td>
         <td bgcolor="<?=$design['table_row_bright']?>" align="right">
-        <a href="redirect.php?url=<? echo str_replace(' ', '%20',$basedir.$subject.$view); ?>"><?=LANG_DOWNLOAD?></a>
+        <a href="redirect.php?url=<?php echo str_replace(' ', '%20',$basedir.$subject.$view); ?>"><?=LANG_DOWNLOAD?></a>
         </td></tr>
         <?=$design['table_end']?>
         <br />
-        <?
+        <?php
 
         $file_extention = strtolower(substr($view,strlen($view)-4,4));
         switch ($file_extention) {
@@ -174,13 +174,13 @@ if($profile['allow_upload'] == '1' || file_exists(BASE_PATH.$basedir.$subject.'.
 if($profile['editor'] == '0') { ?>
 <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post">
 <input type="hidden" name="id" value="<?=$id?>">
-<? } else { echo '<p>'; } ?>
+<?php } else { echo '<p>'; } ?>
 <input type="hidden" name="subject" value="<?=$subject?>">
 <?=LANG_BROWSE_UPLOAD?><br /><input name="userfile" type="file">
 <input type="submit" value="<?=LANG_BROWSE_SENDFILE?>">
-<? if($profile['editor'] == '0') { ?>
+<?php if($profile['editor'] == '0') { ?>
 </form>
-<? }
+<?php }
 
 }
 
@@ -189,13 +189,13 @@ if($profile['allow_createdir'] == '1' || file_exists(BASE_PATH.$basedir.$subject
 if($profile['editor'] == '0') { ?>
 <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="post">
 <input type="hidden" name="id" value="<?=$id?>">
-<? } else { echo '<p>'; } ?>
+<?php } else { echo '<p>'; } ?>
 <input type="hidden" name="subject" value="<?=$subject?>">
 <?=LANG_BROWSE_CREATEDIR?><br /><input name="docinput[newdir]" type="text">
 <input type="submit" value="<?=LANG_BROWSE_CREATE?>">
-<? if($profile['editor'] == '0') { ?>
+<?php if($profile['editor'] == '0') { ?>
 </form>
-<? }
+<?php }
 
 }
 }

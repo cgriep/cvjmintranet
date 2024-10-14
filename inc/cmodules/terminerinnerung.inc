@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2003 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -27,7 +27,7 @@ elseif($profile['editor']!='1') {
   		$sql = 'DELETE FROM cvjm_Erinnerung WHERE Termin_id='.
   		  $_REQUEST['Termin_id'].' AND User_id='.$value;
   		
-  		if ( ! sql_query($sql)) echo mysql_error();
+  		if ( ! sql_query($sql)) echo sql_error();
   	}
   	// Daten speichern
   	foreach ( $docinput['Betroffen'] as $value )
@@ -53,7 +53,7 @@ elseif($profile['editor']!='1') {
   if($document['title'] != '')
       echo '<h2>'.transform($document['title'], $document['datatype']['title']).'</h2>';
   
-  echo 'Erinnerung für Termin '.$_REQUEST['Termin_id'];
+  echo 'Erinnerung fÃ¼r Termin '.$_REQUEST['Termin_id'];
   echo '<form action="'.get_url($id,'Termin_id='.$_REQUEST['Termin_id']).'" method="post">';
   echo 'Vorhandene Erinnerungen (markieren zum Entfernen)<br />' .
   		'<select name="docinput[Entfernen][]" multiple="multiple">';
@@ -89,7 +89,7 @@ elseif($profile['editor']!='1') {
   echo 'an Gruppe ';
   echo '<select name="docinput[Gruppe][]" size="5" multiple="multiple">';
   foreach ($groups as $key => $gruppe) {
-        // Nur Gruppenmitglieder können die Gruppe einladen!
+        // Nur Gruppenmitglieder kÃ¶nnen die Gruppe einladen!
         if ( InGruppe($key) || $profile[$document['Terminrecht']] == '1' )
         {
           echo '<option value="' . $key . '"';
@@ -103,7 +103,7 @@ elseif($profile['editor']!='1') {
   echo '<input type="submit" value="Erinnerungseinstellungen speichern" ' .
   		'name="SaveErinnerung"/>';
   echo '</form>';
-  echo('[ <a href="'.get_url($_REQUEST['Termin_id']).'">Zurück zum Termin'.
+  echo('[ <a href="'.get_url($_REQUEST['Termin_id']).'">ZurÃ¼ck zum Termin'.
       '</a> ]');
 }
 ?>

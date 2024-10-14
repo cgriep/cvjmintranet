@@ -12,8 +12,8 @@ function BuchungstabelleAnzeigen($Where, $nurAnsicht = true, $WhereSeminar = '')
 	global $docinput;
 	global $document;
 	// Liste der vorhandenen Buchungen
-	// ‹bersicht ¸ber die aktuellen Belegungen
-	$Status = 'BStatus = -1'; // zun‰chst nichts anzeigen
+	// √úbersicht √ºber die aktuellen Belegungen
+	$Status = 'BStatus = -1'; // zun√§chst nichts anzeigen
 	if ( isset($_REQUEST['Search'] ))
 	{
 		if ( isset($docinput['Reservierungen']) )
@@ -76,7 +76,7 @@ function BuchungstabelleAnzeigen($Where, $nurAnsicht = true, $WhereSeminar = '')
 	$Where = 'WHERE ('.$Where.')';
 	if ( Count($stat) > 0 ) //$Status != '' ) 
 	{
-		$Status = 'BStatus IN ('.implode($stat,',').')';
+		$Status = 'BStatus IN ('.implode(',',$stat).')';
 		$Where .= 'AND ('.$Status.')';
 		if ( $WhereSeminar != '' ) $WhereSeminar .= ' AND ('.$Status.')';
 	}	
@@ -87,7 +87,7 @@ function BuchungstabelleAnzeigen($Where, $nurAnsicht = true, $WhereSeminar = '')
 	if ( ! $nurAnsicht )
 	{
 		if ( ! $query = sql_query('SELECT Count(*) FROM '.TABLE_BUCHUNGEN.
-		' INNER JOIN '.TABLE_ADRESSEN." ON Adressen_id=F_Adressen_id $Where")) echo mysql_error();
+		' INNER JOIN '.TABLE_ADRESSEN." ON Adressen_id=F_Adressen_id $Where")) echo sql_error();
 		$anz = sql_fetch_row($query);
 		$Gesamtanzahl = $anz[0];
 		$AnzahlProSeite = 15;
@@ -138,7 +138,7 @@ function BuchungstabelleAnzeigen($Where, $nurAnsicht = true, $WhereSeminar = '')
 	$Smarty->assign('Seiten', $Gesamtanzahl/$AnzahlProSeite);
 	$Smarty->assign('Seite', $Seite);
 	$sql = 'SELECT Buchung_Nr, Von FROM '.TABLE_BUCHUNGEN.' INNER JOIN '.TABLE_ADRESSEN.' ON F_Adressen_id=Adressen_id '.$Where;
-	//Seminar erg‰nzen
+	//Seminar erg√§nzen
 	if ( $WhereSeminar != '')
 	{
 		$sql .= ' UNION SELECT Buchung_Nr, Von FROM '.TABLE_BUCHUNGEN.' INNER JOIN ('.TABLE_SEMINARTEILNEHMER.
@@ -148,7 +148,7 @@ function BuchungstabelleAnzeigen($Where, $nurAnsicht = true, $WhereSeminar = '')
 	$sql .= ' ORDER BY Von '. sql_limit($AnzahlProSeite,($Seite-1)*$AnzahlProSeite);
 	if ( ! $query = sql_query($sql))
 	{
-		throw new Exception('Buchungstabelle Anzeigen: '.$sql.'/'.mysql_error());
+		throw new Exception('Buchungstabelle Anzeigen: '.$sql.'/'.sql_error());
 	}
 	$Buchungen = array();
 	while ( $buchung = sql_fetch_array($query) )

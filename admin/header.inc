@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -29,7 +29,7 @@ border="0" width="366" height="90" hspace="0" vspace="0"></a></td>
 <td colspan="2" align="left"><table cellpadding="1" cellspacing="0" border="0">
 <tr>
 <td>&nbsp;</td>
-<? include('make_nav.inc'); ?>
+<?php include('make_nav.inc'); ?>
 </tr>
 </table></td>
 </tr>

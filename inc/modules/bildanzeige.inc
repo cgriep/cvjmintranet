@@ -10,7 +10,7 @@
    init_published_roots();
    $nr = 0;
    global $published_roots;
-   while ( list($did, $value) = each($published_roots) ) {
+   foreach ($published_roots as $did => $value)  {
      $nr++;
      // echo "--->".$did." ";
      if ( $root_parent_id == $did ) $dienr = $nr;

@@ -1,7 +1,7 @@
 <?php
 /*
  * Created on 12.11.2006
- * Serverkomponente für die AJAX-Anfragen der Templates
+ * Serverkomponente fÃ¼r die AJAX-Anfragen der Templates
  *
  * Christoph Griep
  */
@@ -18,15 +18,15 @@ function zeigeFertigkeit($fertigkeit_id)
 	  $ids[0] = $ids;
 	if ( is_numeric($ids[0]))
 	{
-	  $query = mysql_query('SELECT Fertigkeit, Beschreibung FROM T_Fertigkeiten ' .
+	  $query = sql_query('SELECT Fertigkeit, Beschreibung FROM T_Fertigkeiten ' .
 			  'WHERE Fertigkeit_id='.$ids[0]);
-	  if( $beschreibung = mysql_fetch_row($query))
+	  if( $beschreibung = sql_fetch_row($query))
 	  {		
 		if ( $beschreibung[1] != '')
 		  $ergebnis = nl2br($beschreibung[1]);
 		$ergebnis = '<h1>'.$beschreibung[0].'</h1>'.$ergebnis;
   	  }
-	  mysql_free_result($query);
+	  sql_free_result($query);
 	}
 	$ergebnis = utf8_encode($ergebnis);
 	$objResponse = new xajaxResponse();
@@ -41,9 +41,9 @@ function zeigeRasse($rassen_id)
 	if ( is_numeric($rassen_id))
 	{
 	  $smarty = new Smarty;			  
-	  $query = mysql_query('SELECT Rasse, Bild, Beschreibung, Rasse FROM T_Rassen ' .
+	  $query = sql_query('SELECT Rasse, Bild, Beschreibung, Rasse FROM T_Rassen ' .
 			  'WHERE Rasse_id='.$rassen_id);
-	  if( $beschreibung = mysql_fetch_array($query))
+	  if( $beschreibung = sql_fetch_array($query))
 	  {
 	  	if ( $beschreibung['Beschreibung'] != '')		
 		  $ergebnis = $beschreibung['Beschreibung'];
@@ -54,19 +54,19 @@ function zeigeRasse($rassen_id)
 		    $beschreibung['Rasse'].'" alt="'.$beschreibung['Rasse'].'" />';		
         $smarty->assign('Rasse', utf8_encode($beschreibung['Rasse']));   	  
   	  }
-	  mysql_free_result($query);
+	  sql_free_result($query);
 	  // Rassenbesonderheiten anzeigen 
 	  $besonderheiten = array();
-	  $query = mysql_query('SELECT * FROM T_RassenFertigkeiten INNER JOIN T_Fertigkeiten ' .
+	  $query = sql_query('SELECT * FROM T_RassenFertigkeiten INNER JOIN T_Fertigkeiten ' .
 	  		'ON F_Fertigkeit_id=Fertigkeit_id WHERE F_Rasse_id='.$rassen_id);
-	  while ( $b = mysql_fetch_array($query))
+	  while ( $b = sql_fetch_array($query))
 	  {
 	  	foreach ( $b as $key => $value)
 	  	$bb[$key] = utf8_encode($value);
 	  	if ( $bb['Beschreibung'] == '') $bb['Beschreibung'] = '(keine Beschreibung vorhanden)';
 	  	$besonderheiten[] = $bb;
 	  }
-	  mysql_free_result($query);	  
+	  sql_free_result($query);	  
 	  $smarty->assign('Beschreibung', utf8_encode($ergebnis));
 	  $smarty->assign('Besonderheiten', $besonderheiten);
 	  $ergebnis = $smarty->fetch('rasse.tpl');
@@ -79,30 +79,30 @@ function zeigeRasse($rassen_id)
 
 function zeigeSpruchliste($id)
 {	
-	$s = '(keine Einträge vorhanden)';
+	$s = '(keine EintrÃ¤ge vorhanden)';
 	if ( is_numeric($id))
 	{
-	  $query = mysql_query('SELECT Klasse, Spezialisierung, Meisterpunkte, Grossmeisterpunkte, ' .
+	  $query = sql_query('SELECT Klasse, Spezialisierung, Meisterpunkte, Grossmeisterpunkte, ' .
 	  		'Spruchliste, Allgemein FROM T_Spezialisierungen INNER JOIN T_Spezialisierungsklassen ' .
 	  		'ON F_Klasse_id=Klasse_id ' .
 			'WHERE Spezialisierung_id='.$id);
-	  $name = mysql_fetch_array($query);
-	  mysql_free_result($query);
-	  $query = mysql_query('SELECT Fertigkeit_id, Fertigkeit, Kosten, Rang, ' .
+	  $name = sql_fetch_array($query);
+	  sql_free_result($query);
+	  $query = sql_query('SELECT Fertigkeit_id, Fertigkeit, Kosten, Rang, ' .
 	  		  'T_Fertigkeiten.Beschreibung AS Beschreibung FROM T_Fertigkeiten ' .
 			  'INNER JOIN (T_SpezialisierungenFertigkeiten INNER JOIN T_Raenge ' .
 			  'ON Rang_id=F_Rang_id) ON F_Fertigkeit_id=Fertigkeit_id ' .
 			  'WHERE F_Spezialisierung_id='.$id.' ORDER BY Rang_id, Kosten, Fertigkeit');
-	  while( $beschreibung = mysql_fetch_array($query))
+	  while( $beschreibung = sql_fetch_array($query))
 	  {			
 			if ($beschreibung['Beschreibung']=='')
 			  $beschreibung['Beschreibung'] = '(ohne Beschreibung)';
 			$sprueche[] = $beschreibung;
   	  }
-  	  mysql_free_result($query);
+  	  sql_free_result($query);
 	  $smarty = new Smarty;		
 	  $smarty->assign('Spezialisierung', $name);
-	  $smarty->assign_by_ref('Sprueche', $sprueche);
+	  $smarty->assign('Sprueche', $sprueche);
 	  $s = $smarty->fetch('spruchliste.tpl');
 	}
 	$s = utf8_encode($s);
@@ -118,25 +118,25 @@ function zeigeKlasse($klassen_id)
 	$bild = '(kein Bild vorhanden)';	
 	if ( is_numeric($klassen_id))
 	{
-	  $query = mysql_query('SELECT Bild, Beschreibung, Klasse, Adeptenpunkte, ' .
+	  $query = sql_query('SELECT Bild, Beschreibung, Klasse, Adeptenpunkte, ' .
 	  		'Spruchlistenanzahl FROM T_Spezialisierungsklassen ' .
 			  'WHERE Klasse_id='.$klassen_id);
-	  if( $beschreibung = mysql_fetch_array($query))
+	  if( $beschreibung = sql_fetch_array($query))
 	  {
 		$ergebnis = '<h1>'.$beschreibung['Klasse'].'</h1>';
 		if ( $beschreibung['Beschreibung'] != '')		
 		  $ergebnis = $beschreibung['Beschreibung'];
-		$ergebnis .= '<p>Zum Adepten benötigt man in dieser Klasse '.$beschreibung['Adeptenpunkte'].' Punkte';
+		$ergebnis .= '<p>Zum Adepten benÃ¤tigt man in dieser Klasse '.$beschreibung['Adeptenpunkte'].' Punkte';
 		if ( $beschreibung['Spruchlistenanzahl']>0)
 		{
-			$ergebnis .= ', man hat insgesamt '.$beschreibung['Spruchlistenanzahl'].' Spruchlisten zur Verfügung';
+			$ergebnis .= ', man hat insgesamt '.$beschreibung['Spruchlistenanzahl'].' Spruchlisten zur VerfÃ¼gung';
 		}
 		$ergebnis .= '.</p>';
 		if ( $beschreibung['Bild'] != '')		
 		  $bild = '<img src="zeigeBild.php?Klasse='.$klassen_id.'&Groesse=-240" title="'.
 		    $beschreibung['Klasse'].'" alt="'.$beschreibung['Klasse'].'" />';		
   	  }
-	  mysql_free_result($query);
+	  sql_free_result($query);
 	}
 	$objResponse = new xajaxResponse();
 	$objResponse->addAssign("Beschreibung", "innerHTML", utf8_encode($ergebnis));
@@ -150,7 +150,7 @@ function zeigeKlasse($klassen_id)
 function zeigeDaten($id= NULL)
 {
 	include_once('character.class.php');
-	$ergebnis = '(kein Charakter ausgewählt)';
+	$ergebnis = '(kein Charakter ausgewÃ¤hlt)';
 	if (is_numeric($id))
 	{
 		$Charakter = new Charakter();
@@ -170,7 +170,7 @@ function zeigeDaten($id= NULL)
 	if ( isset($Charakter))
 	{
 	  $smarty = new Smarty;		
-	  $smarty->assign_by_ref('Character', $Charakter->alsFeld(true));
+	  $smarty->assign('Character', $Charakter->alsFeld(true));
 	  $ergebnis = $smarty->fetch('character.tpl');		
 	}
 	$objResponse = new xajaxResponse();

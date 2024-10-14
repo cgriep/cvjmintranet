@@ -36,10 +36,10 @@ if ( $profile['editor'] != 1 )
   $Benutzer = SESSION_DBID;
   $Arbeitsarten = array(
   'ALG' => 'Allgemein',
-  'AUS' => 'Außenbereich',
+  'AUS' => 'AuÃŸenbereich',
   'KIO'	=> 'Kiosk',
-  'KUE'	=> 'Küche',
-  'PAE' => 'Pädagogik',
+  'KUE'	=> 'KÃ¼che',
+  'PAE' => 'PÃ¤dagogik',
   'PUT' => 'Putzen',
   'TIE' => 'Tiere',
   'VER' => 'Verwaltung',
@@ -60,7 +60,7 @@ if ( $profile['editor'] != 1 )
   echo get_user_nickname($Benutzer).')</h2>';
   if ( SESSION_STATUS != 'ok' )
   {
-    echo 'Sie müssen sich einloggen damit Sie den Stundenzettel ansehen können.<br />';
+    echo 'Sie mÃ¼ssen sich einloggen damit Sie den Stundenzettel ansehen kÃ¶nnen.<br />';
   } // SESSION nicht ok
   else
   {
@@ -92,14 +92,14 @@ if ( $profile['editor'] != 1 )
       {
         unset($_REQUEST['Monatsabschluss']);
         unset($docinput['Bemerkung']);
-        echo '<strong>&gt;&gt;&gt; Fehler: Ungültiger Anfangszeitpunkt!</strong><br />';
+        echo '<strong>&gt;&gt;&gt; Fehler: ungÃ¼ltiger Anfangszeitpunkt!</strong><br />';
         $docinput['Datum'] = time();
       }
       if ( ($docinput['Bis'] = strtotime(date('Y-m-d',$stand).' '.$docinput['Bis']) ) === -1 )
       {
         unset($_REQUEST['Monatsabschluss']);
         unset($docinput['Bemerkung']);
-        echo '<strong>&gt;&gt;&gt; Fehler: Ungültiger Endzeitpunkt!</strong><br />';
+        echo '<strong>&gt;&gt;&gt; Fehler: ungÃ¼ltiger Endzeitpunkt!</strong><br />';
       }
       // Monatsabschluss
       if ( isset($_REQUEST['Monatsabschluss']) && isset($profile[$document['Zugriffsrecht']]) )
@@ -111,7 +111,7 @@ if ( $profile['editor'] != 1 )
          date('t',$docinput['Datum']),date('y',$docinput['Datum']))))
           echo '<strong>&gt;&gt;&gt; Monatsabschluss</strong><br />';
          else
-           echo 'Fehler: '.mysql_error();
+           echo 'Fehler: '.sql_error();
       }
       // Speichern
       if ( isset($docinput['Bemerkung'] ) )
@@ -121,12 +121,12 @@ if ( $profile['editor'] != 1 )
           // Update
           $sql = 'UPDATE '.TABLE_STUNDENZETTEL.
             ' SET Datum='.$docinput['Datum'].',Bis='.$docinput['Bis'].",Bemerkung='";
-          $sql .= mysql_real_escape_string($docinput["Bemerkung"])."', Art='".
-          mysql_real_escape_string($docinput['Art'])."' WHERE id=".$docinput["ZID"];
+          $sql .= sql_real_escape_string($docinput["Bemerkung"])."', Art='".
+          sql_real_escape_string($docinput['Art'])."' WHERE id=".$docinput["ZID"];
           if ( sql_query($sql))
-            echo "<strong>&gt;&gt;&gt; Arbeitszeit geändert.<br /></strong>";
+            echo "<strong>&gt;&gt;&gt; Arbeitszeit geÃ¤ndert.<br /></strong>";
           else
-            echo "<string>&gt;&gt;&gt; Fehler </strong>".mysql_error()."<br />";
+            echo "<string>&gt;&gt;&gt; Fehler </strong>".sql_error()."<br />";
         }
         else
         {
@@ -134,12 +134,12 @@ if ( $profile['editor'] != 1 )
           $sql = "INSERT INTO ".TABLE_STUNDENZETTEL.
             " (Datum, Bis, Bemerkung, Person_id,Art) VALUES (";
           $sql .= $docinput["Datum"].",".$docinput["Bis"].",'";
-          $sql .= mysql_real_escape_string($docinput["Bemerkung"])."',".$Benutzer.",'".
-          mysql_real_escape_string($docinput['Art'])."')";
+          $sql .= sql_real_escape_string($docinput["Bemerkung"])."',".$Benutzer.",'".
+          sql_real_escape_string($docinput['Art'])."')";
           if ( sql_query($sql))
             echo "<strong>&gt;&gt;&gt; Arbeitszeit gespeichert.<br /></strong>";
           else
-            echo "<string>&gt;&gt;&gt; Fehler </strong>".mysql_error()."<br />";
+            echo "<string>&gt;&gt;&gt; Fehler </strong>".sql_error()."<br />";
         }
       }
     }
@@ -147,11 +147,11 @@ if ( $profile['editor'] != 1 )
     $Smarty = new Smarty();
     $Smarty->template_dir = TEMPLATEPATH; //'/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/templates';
     $Smarty->assign('id', $id);
-    $Smarty->assign_by_ref('docinput', $docinput);
+    $Smarty->assign('docinput', $docinput);
     if ( isset($docinput['Del']) && is_numeric($docinput['Del']))
     {
     	$query = sql_query("DELETE FROM ".TABLE_STUNDENZETTEL." WHERE id=".$docinput['Del']);
-    	mysql_free_result($query);
+    	sql_free_result($query);
     } 
     if ( isset($docinput["Zeit"]) && is_numeric($docinput['Zeit']))
     {
@@ -165,9 +165,9 @@ if ( $profile['editor'] != 1 )
         $eintrag["Datum"] = time();
         $eintrag["Bis"] = time();
     }
-    $Smarty->assign_by_ref('eintrag', $eintrag);
+    $Smarty->assign('eintrag', $eintrag);
     $Smarty->assign('Benutzer', $Benutzer);
-    $Smarty->assign_by_ref('Arbeitsarten', $Arbeitsarten);
+    $Smarty->assign('Arbeitsarten', $Arbeitsarten);
     $Smarty->display('Stundenzettel_Eingabe.tpl');
     
     if ( ! isset($docinput["Datum"]) || ! is_numeric($docinput["Datum"]) )
@@ -204,7 +204,7 @@ if ( $profile['editor'] != 1 )
       }
       $eintraege[] = $row;
     }
-    $Smarty->assign_by_ref('Eintraege', $eintraege);
+    $Smarty->assign('Eintraege', $eintraege);
     $Smarty->assign('Stunden', sprintf("%.02f",$Stunden));
     $Smarty->assign('SoStunden', sprintf("%.02f",$SoStunden));
     $Smarty->assign('FeierStunden', sprintf("%.02f",$FeierStunden));
@@ -221,7 +221,7 @@ if ( $profile['editor'] != 1 )
       echo '<div align="center" class="noprint">[ <a href="'.get_url($id,
         "docinput[Benutzer]=$Benutzer&docinput[Datum]=".date("d.m.Y",
           strtotime("-1 month",$docinput["Datum"])));
-      echo '">Monat zurück</a> ] [ <a href="'.get_url($id,"docinput[Benutzer]=$Benutzer&docinput[Datum]=".
+      echo '">Monat ZurÃ¼ck</a> ] [ <a href="'.get_url($id,"docinput[Benutzer]=$Benutzer&docinput[Datum]=".
         date("d.m.Y",strtotime("+1 month",$docinput["Datum"])));
       echo '">Monat vor</a> ]</div>';
       echo '<form action="'.get_url($id).'" name="Springen" method="post" class="noprint">';
@@ -245,7 +245,6 @@ if ( $profile['editor'] != 1 )
         $user[$row[0]] = get_user_nickname($row[0]);
       }
       sql_free_result($query);
-      //reset($user);
       //array_multisort($user, SORT_ASC);
       echo '<hr class="noprint" /><form action="'.get_url($id).'" method="post" class="noprint">';
       echo "Stunden von Benutzer ";
@@ -264,7 +263,7 @@ if ( $profile['editor'] != 1 )
       echo '<input type="Submit" value="anzeigen">';
       echo '[ <a href="'.get_url($id,"Monatsabschluss=$Benutzer&docinput[Datum]=".
         date("d.m.Y",$docinput["Datum"])).
-        '">Monat für Mitarbeiter abschließen/freigeben</a>]';
+        '">Monat fÃ¼r Mitarbeiter abschlieÃŸen/freigeben</a>]';
        echo '</form>';
     }
   } // SESSION ist ok

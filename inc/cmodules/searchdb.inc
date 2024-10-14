@@ -12,7 +12,7 @@
 
 load_lang('search');
 
-$search = mysql_real_escape_string(trim($_REQUEST['search']));
+$search = sql_real_escape_string(trim($_REQUEST['search']));
 $manner = $_REQUEST['manner'];
 
 // if not set, default to 1 (phrase)
@@ -26,7 +26,7 @@ if($profile['editor'] != 1) {
 <input type="text" size="50" name="search" value="<?=$search?>">
 
 <input type="submit" value="<?=LANG_SEARCH?>"><br />
-<?
+<?php
 if ($manner == 1) {
 echo '<input type="radio" value="1" name="manner" checked>'.LANG_SEARCH_PHRASE;
 echo '<input type="radio" value="2" name="manner">'.LANG_SEARCH_ALL;
@@ -67,7 +67,7 @@ if ( isset($document["DBNamen"]) )
   $document["DBNamen"] = explode("\n",$document["DBNamen"]);
   echo "Fundstellen in";
   echo "<ul>";
-  while ( list($key, $value) = each($document["DBNamen"]) )
+  foreach ( $document["DBNamen"] as $key => $value) 
   {
     if ( $value != "" )
     {
@@ -126,14 +126,13 @@ if(DBMS == 'mysql') {
     $lookfor.'%" OR value LIKE "%'.$lookforHTML.'%")';
 }
 else { $where = "value LIKE '%".$lookfor."%'"; }
-
 $search_results = search_nodes ($where);
 
 if($search_results) {
 	?>
 	<table width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="#ffffff"><tr>
 	<td align="left" bgcolor="<?=$design['table_header']?>">
-	<? printf(LANG_SEARCHED_THIS_SITE.'<br />('.$way.')','<b>'.$search.'</b>'); ?>	</td>
+	<?php printf(LANG_SEARCHED_THIS_SITE.'<br />('.$way.')','<b>'.$search.'</b>'); ?>	</td>
 	<td align="right" bgcolor="<?=$design['table_header']?>">
 	<?php printf(LANG_RESULT_COUNT, count($search_results), $search_time); ?>
 	</td>
@@ -142,7 +141,7 @@ if($search_results) {
 	<table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#ffffff">
 	<?php
 	$counter = 0;
-	while(list($key,$value) = each ($search_results)) {
+	foreach ($search_results as $key => $value)  {
 		$counter++;
 		echo '<tr><td align="right" bgcolor="'.$design['table_row_dark'].'" valign="top" width="5%">'.$counter.'</td>
 	        <td align="left" bgcolor="'.$design['table_row_bright'].'" valign="top" width="95%">
@@ -162,8 +161,8 @@ else {
 	printf('<p>'.LANG_NOT_FOUND.' ('.$way.')</p>','<b>'.$search.'</b>');
 	}
  // Datenbanken durchsuchen
- reset($document["DBNamen"]);
- while ( list($key, $value) = each($document["DBNamen"]) )
+// reset($document["DBNamen"]);
+ foreach ( $document["DBNamen"] as $key => $value) 
  {
    echo '<hr />';
    list($Beschreibung,$seitenid, $param, $Datenbankname, $Felder) = explode(":",$value);
@@ -190,14 +189,14 @@ else {
    {
      $SearchString = "";
      $fel = explode("|", $FeldArray);
-     while ( list($kkey, $vvalue) = each($fel) )
+     foreach ( $fel as $kkey => $vvalue) 
      {
        if ( $SearchString == "" )
          $SearchString = "(";
        else
          $SearchString .= " OR (";
        $fel2 = explode(" ", $search);
-       while ( list($kkkey, $vvvalue) = each($fel2) )
+       foreach ( $fel2 as $kkkey => $vvvalue) 
          $SearchString .= $vvalue." REGEXP '".$vvvalue."' AND ";
        $SearchString .= "1)";
      }
@@ -211,14 +210,14 @@ else {
      $sql = "SELECT $FeldString FROM $Datenbankname WHERE ($SearchString) AND $suchen";
    }
    else
-     $sql = "SELECT $FeldString FROM $Datenbankname WHERE $SearchString";
+     $sql = "SELECT $FeldString FROM $Datenbankname WHERE $SearchString";     
    if ( ! $query = sql_query($sql) )
-     echo mysql_error();
+     echo sql_error();
    $Felder = explode("|", $Felder);
    while ( $found = sql_fetch_array($query) )
    {
      reset($FeldArray);
-     while ( list($kkey, $vvalue) = each($FeldArray) )
+     foreach ( $FeldArray as $kkey => $vvalue) 
      {
        if ( $kkey == 0 )
          echo '<a href="'.get_url($seitenid,$param."=".$found[$vvalue]).'">';
@@ -238,6 +237,6 @@ else {
 } // if search
 } // if Editor
 else
-  create_editor_input("Zusätzlich durchsuchte Datenbanken", "DBNamen", "area_input");
+  create_editor_input("ZusÃ¤tzlich durchsuchte Datenbanken", "DBNamen", "area_input");
 
 ?>

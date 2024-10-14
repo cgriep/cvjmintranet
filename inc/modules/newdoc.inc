@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -24,8 +24,7 @@ if($profile['editor']) {
                 <span title="The document type tells AWF how to display the new document.">Document Type</span><br />
                 <select name="docinput[doctype]">
                 <?php
-                reset($doctypes);
-                while (list ($docname, $value) = each ($doctypes)) {
+                foreach ($doctypes as $docname => $value)  {
 			if($docdescriptions[$value] != '') { 
 				$docname = $docdescriptions[$value]; 
 				if(strlen($docname) > 18) { $docname = substr($docname, 0, 18).'...'; }
@@ -55,6 +54,6 @@ if($profile['editor']) {
                 <br />
                 <input type="submit" value="Create" />
                 </form>
-		<?
+		<?php
 		}
 

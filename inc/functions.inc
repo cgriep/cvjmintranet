@@ -32,7 +32,7 @@ function cross_sum ($number) {
         $sum = 0;
         $number = (string) $number;
         for($i = 0; $i < strlen($number); $i++) {
-                $sum += (integer) $number{$i};
+                $sum += (integer) $number[$i];
                 }
 
         if($sum > 9) {
@@ -53,8 +53,7 @@ function replace_wildcards ($text, $array) {
         if(!is_array($array)) return $text;
         global $profile;
         if(DISABLE_WILDCARDS == 1 || $profile['editor'] == 1) return $text;
-        reset($array);
-        while (list ($key, $value) = each ($array)) {
+        foreach ( $array as $key => $value) {
                 $text = str_replace('%%'.$key.'%%', $value, $text);
                 }
         return $text;
@@ -65,12 +64,11 @@ function replace_pattern ($text, $array, $override = false, $mode = 'fast') {
         if(!is_array($array)) return $text;
         global $profile;
         if((DISABLE_WILDCARDS == 1 || $profile['editor'] == 1) && $override = false) return $text;
-        reset($array);
         if($mode == 'fast') {
                 $text = strtr($text, $array);
                 }
         else {
-                while (list ($key, $value) = each ($array)) {
+                foreach ( $array as $key => $value)  {
                         // variable?
                         if($value[0] == '$') {
                                 if(strstr($value, ']')) {
@@ -82,7 +80,7 @@ function replace_pattern ($text, $array, $override = false, $mode = 'fast') {
                                         }
                                 }
                         // replace!
-                        $text = ereg_replace($key, $value, $text);
+                        $text = preg_replace($key, $value, $text);
                         }
                 }
         return $text;
@@ -91,7 +89,7 @@ function replace_pattern ($text, $array, $override = false, $mode = 'fast') {
 function email_to_string ($email) {
         // michael@liquidbytes.net -> michael at liquidbytes dot net
         if($email == '') return '';
-        $search  = array ("." => ' '.LANG_DOT.' ', "@" => " at ");
+        $search  = array ("." => ' '.LANG_DOT.' ', "@" => " at ");        
         return strtr($email, $search);
         }
 
@@ -114,9 +112,9 @@ function isemail ($email, $override = false) {
 function url_to_link ($in, $override = false) {
         // makes URLs and email addresses "clickable"
         if(DISABLE_URL_TO_LINK == 1 && !$override) return $in;
-        $out = eregi_replace( "([[:alnum:]]+)://([^[:space:]]*)([[:alnum:]#?/&=])",
+        $out = preg_replace( "/([[:alnum:]]+)\:\/\/([^[:space:]]*)([[:alnum:]#?\/&=])/i",
                 "<a href=\"\\1://\\2\\3\" target=\"_blank\">\\1://\\2\\3</a>", $in);
-        $out = eregi_replace( "(([a-z0-9_]|\\-|\\.)+@([^[:space:]]*)([[:alnum:]-]))",
+        $out = preg_replace( "/(([a-z0-9_]|\\-|\\.)+@([^[:space:]]*)([[:alnum:]-]))/i",
                 "<a href=\"mailto:\\1\">\\1</a>", $out);
         return $out;
         }
@@ -172,7 +170,6 @@ function get_user_email ($user_id = -1) {
 
         // enforce secure db queries
         if(!is_numeric($user_id)) return false;
-
         if($user_id == -1) {
                 if(!defined("SESSION_DBID")) { return false; }
                 $user_id = SESSION_DBID;
@@ -183,12 +180,12 @@ function get_user_email ($user_id = -1) {
                         sql_free_result($email);
                         return stripslashes($prow[0]);
                         }
-        return "";
+        return "n/a";
         }
 
 function get_user_id ($email) {
         // returns the user_id corresponding to the given email address
-        if(defined(SESSION_EMAIL) && SESSION_EMAIL == $email) return SESSION_DBID;
+        if(defined('SESSION_EMAIL') && SESSION_EMAIL == $email) return SESSION_DBID;
         $user_id = sql_query ("SELECT id FROM ".TABLE_USERS." WHERE email='".addslashes($email)."'");
                 if(sql_num_rows($user_id) > 0) {
                         $prow = sql_fetch_row($user_id);
@@ -207,14 +204,14 @@ function get_user_nickname ($user_id = -1) {
         if($user_id == -1 || (defined(SESSION_DBID) && $user_id == SESSION_DBID)) {
                 global $profile;
                 if(!isset($profile['nickname'])) $profile['nickname'] = LANG_STRANGER;
-                return htmlchars($profile[nickname]);
+                return htmlchars($profile['nickname']);
                 }
         $nickname = sql_query ("SELECT value FROM ".TABLE_USERDATA." WHERE user_id=".$user_id." AND name='nickname'");
                 if(sql_num_rows($nickname) > 0) {
                         $prow = sql_fetch_row($nickname);
-                               sql_free_result($nickname);
+                        sql_free_result($nickname);                        
                         return stripslashes($prow[0]);
-                        }
+                }                
         return email_to_string(get_user_email($user_id));
         }
 
@@ -438,6 +435,7 @@ function get_nodedata ($id, $flavour_id) {
         if(!is_numeric($id) || !is_numeric($flavour_id)) return false;
 
         $qresult = sql_query("SELECT name, value, datatype FROM ".TABLE_NODEDATA." WHERE node_id=$id AND (flavour_id=$flavour_id OR flavour_id=0)");
+        $document = array();
         if(sql_num_rows($qresult) > 0) {
                 while($row = sql_fetch_row($qresult)) {
                         $document[stripslashes($row[0])] = stripslashes($row[1]);
@@ -465,7 +463,7 @@ function get_node ($id, $flavour_id, $counter_inc = true) {
                 $row = sql_fetch_array($qresult);
                 sql_free_result($qresult);
 
-                while(list($key, $value) = each($row)) {
+                foreach ( $row as $key => $value )  {
                         $document[$key] = stripslashes($value);
                         }
 
@@ -559,14 +557,13 @@ function get_children ($offset, $count, $type_id = -1, $key_only = false, $sort_
                                         cacheable, key_id, id, release_date, expiration_date, members_only, ssl_only,
                                         views, created, last_change FROM ".TABLE_NODES." WHERE parent_id=$id $enabled_filter $filter
                                         ORDER BY sort_order $sort_order ".sql_limit($count,$offset));
-
+                $document = array();
                 if(sql_num_rows($qresult) > 0) {
                         while($row = sql_fetch_array($qresult)) {
 
-                                while(list($key, $value) = each($row)) {
+                                foreach ( $row as $key => $value )  {
                                         $document[$key] = stripslashes($value);
                                         }
-
                         $children[$row['id']] = array_merge(get_nodedata($row['id'], $flavour), $document);
                         }
                 sql_free_result($qresult);
@@ -640,7 +637,7 @@ function get_siblings ($offset, $count, $type = -1, $title_only = false, $publis
                 if(sql_num_rows($qresult) > 0) {
                 while($row = sql_fetch_array($qresult)) {
                         if($row['id'] != $id || $no_filter) {
-                                while(list($key, $value) = each($row)) {
+                                foreach ( $row as $key => $value )  {
                                         $related[$key] = stripslashes($value);
                                         }
                                 }
@@ -657,7 +654,7 @@ function get_siblings ($offset, $count, $type = -1, $title_only = false, $publis
 
                 if(sql_num_rows($qresult) > 0) {
                         while($row = sql_fetch_array($qresult)) {
-                                while(list($key, $value) = each($row)) {
+                                foreach ( $row as $key => $value )  {
                                         $doc[$key] = stripslashes($value);
                                         }
                                 $related[$row['id']] = array_merge(get_nodedata($row['id'], $flavour), $doc);
@@ -687,7 +684,7 @@ function init_published_children () {
         (flavour_id=$flavour OR flavour_id=0) AND published=1 $enabled_filter ORDER BY sort_order DESC");
         if(sql_num_rows($qresult) > 0) {
         while($row = sql_fetch_array($qresult)) {
-                while(list($key, $value) = each($row)) {
+                foreach ( $row as $key => $value )  {
                         $published_children[$row['node_id']][$key] = stripslashes($value);
                         }
                 }
@@ -1091,7 +1088,7 @@ function search_messages ($user_id = -1, $type = '', $status = -1, $release_date
         $message_query = sql_query("SELECT id, user_id, subject, message, sender, sender_id, type, status, created,
                 delivered, release_date, expiration_date FROM ".TABLE_MESSAGES." $where ORDER BY created $sort_dir");
         while($row = sql_fetch_array($message_query)) {
-                while(list($key, $value) = each($row)) {
+                foreach ( $row as $key => $value )  {
                         $messages[$row['id']][$key] = stripslashes($value);
                         }
                 if($mark) mark_message($row['id']);
@@ -1109,7 +1106,7 @@ function get_message ($message_id, $mark = true) {
         $message_query = sql_query("SELECT id, user_id, subject, message, sender, sender_id, type, status, created,
                 delivered, release_date, expiration_date FROM ".TABLE_MESSAGES." WHERE id = $message_id ORDER BY created");
         $row = sql_fetch_array($message_query);
-        while(list($key, $value) = each($row)) {
+        foreach ( $row as $key => $value )  {
                 $message[$key] = stripslashes($value);
                 }
         sql_free_result($message_query);
@@ -1337,8 +1334,8 @@ function load_lang ($name, $lang = '') {
                 }
         $lines = file($filename);
         // parse file
-        while (list ($line_num, $line) = each ($lines)) {
-                $buffer = split("\t", $line);
+        foreach ($lines as $$line_num => $line) {
+                $buffer = explode("\t", $line);
                 if(!strstr('#', $buffer[0])) {
                         $text   = trim(strstr($line, "\t"));
                         if(!defined('LANG_'.strtoupper($buffer[0]))) define('LANG_'.strtoupper($buffer[0]), $text);
@@ -1384,8 +1381,8 @@ function html2txt ($content) {
 
         if(file_exists('inc/data/html_replace.conf')) {
                 $lines = file('inc/data/html_replace.conf');
-                while (list ($line_num, $line) = each ($lines)) {
-                        $buffer = split('        ', $line);
+                foreach ( $lines as $line_num => $line)  {
+                        $buffer = explode('        ', $line);
                         $wildcards[$buffer[0]] = trim($buffer[1]);
                         }
                 }
@@ -1479,7 +1476,7 @@ function transform ($value, $datatype) {
                 if(file_exists($value)) include(BASE_PATH.INC_PATH.'misc/show_image.inc'); return '';
                 return '';
         case 'clean': return trim(strip_tags(replace_pattern(replace_wildcards($value, $profile), $wildcards)));
-        case 'text': return nl2br(subst_document_refs(url_to_link(replace_pattern(replace_wildcards(htmlchars($value), $profile)), $wildcards)));
+        case 'text': return nl2br(subst_document_refs(url_to_link(replace_pattern(replace_wildcards(htmlchars($value), $profile), $wildcards))));
         case 'usertext': return nl2br(url_to_link(replace_pattern(htmlchars($value), $wildcards)));
         case 'html': return subst_document_refs(replace_pattern(replace_wildcards($value, $profile), $wildcards));
         case 'extrans': return nl2br(subst_document_refs(replace_pattern(replace_wildcards($value, $profile), $wildcards)));
@@ -1570,8 +1567,8 @@ function get_online_users ($time = 10) {
 
         $avg_activity = ($avg_views / $avg_reg_time);
 
-        $qres = sql_query("SELECT id, email, views, registered, last_login FROM ".TABLE_USERS." WHERE last_login >= ".date(YmdHis, $time)." AND online = 1 ORDER BY last_login DESC");
-
+        $qres = sql_query("SELECT id, email, views, registered, last_login FROM ".TABLE_USERS." WHERE last_login >= ".date('YmdHis', $time)." AND online = 1 ORDER BY last_login DESC");
+        $users = array();
         while($row = sql_fetch_row($qres)) {
 
                 $users[$row[0]]['email']         = stripslashes($row[1]);
@@ -1654,14 +1651,14 @@ function get_users ($userlist, $time = 10) {
 
         $avg_activity = ($avg_views / $avg_reg_time);
 
-        while(list($key, $value) = each($userlist)) {
+        foreach ( $userlist as $key => $value) {
                 $qres = sql_query("SELECT id, email, views, registered, last_login FROM ".TABLE_USERS." WHERE id = $key");
 
                 $row = sql_fetch_row($qres);
                 $users[$row[0]]['email']         = stripslashes($row[1]);
                 $users[$row[0]]['views']         = $row[2];
                 $users[$row[0]]['registered']         = $row[3];
-                $users[$row[0]]['online']         = ($row[4] >= date(YmdHis, $time));
+                $users[$row[0]]['online']         = ($row[4] >= date('YmdHis', $time));
                 $users[$row[0]]['activity']         = round((($row[2] / (time() - $row[3])) / (($row[2] / (time() - $row[3])) + $avg_activity)) * 100);
 
                 $qres2 = sql_query("SELECT name, value FROM ".TABLE_USERDATA." WHERE user_id = $row[0] AND
@@ -1736,7 +1733,7 @@ function is_online ($user_id, $time = 10) {
 
         $row = sql_fetch_row($qres);
         sql_free_result($qres);
-        return ($row[0] >= date(YmdHis, $time));
+        return ($row[0] >= date('YmdHis', $time));
         }
 
 function user_since ($user_id) {
@@ -1755,14 +1752,13 @@ function include_modules ($position) {
         global $modules;
         global $profile;
         if(isset($modules)){
-                reset($modules);
                 if(SESSION_STATUS != 'ok') {
-                        while (list ($modid, $value) = each ($modules)) {
+                        foreach ($modules as $modid => $value)  {
                                 include_module($value, 1, $position);
                                 }
                         }
                 else {
-                        while (list ($modid, $value) = each ($modules)) {
+                        foreach ($modules as $modid => $value)  {
                                 if($value['removeable'] == 1 && isset($profile['module_'.$modid])) {
                                         $value['visible'] = $profile['module_'.$modid];
                                         }
@@ -1800,18 +1796,29 @@ function get_url ($id, $params = '', $add_base_url = false) {
         if(is_array($params)) {
                 $param_str = '';
                 $pre = '';
-                while(list($key, $value) = each($params)) {
+                foreach ( $params as $key => $value) {
                   if ( is_array($value) )
                          {
-                           while ( list($kkey, $vvalue) = each($value) )
-                           {
-                             $param_str .= $pre.urlencode($key)."[".urlencode($kkey).
-                               "]=".urlencode($vvalue);
+                           foreach ($value as $kkey => $vvalue) 
+                           {                             
                              $pre = "&";
+                             if ( is_array($vvalue))
+                             {
+                                foreach ($vvalue as $kkkey => $vvvalue)
+                                {
+                                        $param_str .= $pre.urlencode($key)."[".urlencode($kkey)."][".urlencode($kkkey)."]=".urlencode($vvvalue);
+                                }
+                             }
+                             else 
+                             {
+                               $param_str .= $pre.urlencode($key)."[".urlencode($kkey)."]=".urlencode($vvalue);
+                             }                             
                            }
                          }
                          else
-                        $param_str .= $pre.urlencode($key).'='.urlencode($value);
+                        {
+                                $param_str .= $pre.urlencode($key).'='.urlencode($value);
+                        }
                         $pre = '&';
                         }
                 unset($params);
@@ -1837,7 +1844,7 @@ function get_cmodule_id ($doctype) {
         // returns the id of a cmodule with the given doctype
         global $doctypes;
         static $cmodules = array();
-        if(count($cmodules == 0)) $cmodules = load_var('common_cmodules');
+        if(count($cmodules) == 0) $cmodules = load_var('common_cmodules');
         if(isset($cmodules[$doctype])) {
                 return $cmodules[$doctype];
                 }
@@ -1859,7 +1866,7 @@ function get_cmodule_id ($doctype) {
 function mkdirs ($path, $create_mask) {
         $tmp_path = '';
         $dirs = explode('/', $path);
-        while(list($key, $value) = each($dirs)) {
+        foreach ( $dirs as $key => $value) {
                 $tmp_path .= $value.'/';
                 if(!file_exists($tmp_path)) mkdir($tmp_path, $create_mask);
                 @chmod ($tmp_path, $create_mask);
@@ -1908,7 +1915,7 @@ function subst_document_refs ($htmlcode) {
         $res = $htmlcodelist[0];
         for($i = 1; $i < count($htmlcodelist); $i = $i + 2) {
                 $id = $htmlcodelist[$i];
-                if(ereg("^[[:digit:]]+$", $id)) {
+                if(preg_match("^[[:digit:]]+$", $id)) {
                         $ref_id                = $id;
                         $ref_name        = get_document_title($id);
                         }
@@ -2108,7 +2115,7 @@ function items_save_docinput ($select, $target, $target_id, $category) {
                 }
 
         sql_query("DELETE FROM ".TABLE_ITEMMAP." WHERE target='".addslashes($target)."' AND target_id=$target_id AND (".$query.")");
-        while(list($key, $value) = each($select)) {
+        foreach ($select as $key => $value) {
                 if(is_numeric($value)) {
                         sql_query("INSERT INTO ".TABLE_ITEMMAP." SET item_id=$value, target='".addslashes($target)."', target_id=$target_id");
                         }
@@ -2239,7 +2246,7 @@ function output_blob ($sid) {
 function sql_queries ($query_string, $table_prefix_wildcard = 'table_prefix_') {
         global $db_table_prefix;
         $sql_queries = explode(";\n", $query_string);
-        while(list($line_nr, $sql_query) = each($sql_queries)) {
+        foreach ( $sql_queries as $line_nr => $sql_query) {
                 $sql_query = trim($sql_query);
                 if($sql_query != '') {
                         $sql_query = str_replace($table_prefix_wildcard, $db_table_prefix, $sql_query);

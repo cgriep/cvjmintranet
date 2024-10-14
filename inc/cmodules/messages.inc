@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -31,7 +31,7 @@ if(SESSION_STATUS == 'ok' && $profile['editor'] != '1') {
 	<input type="submit" value="<?=LANG_SEARCH?>" />
 	</form><br />
 	<table width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="<?=$design['table_header']?>">
-	<?
+	<?php
 
 	// $search set?
 	if(!isset($search)) $search == '';
@@ -40,17 +40,17 @@ if(SESSION_STATUS == 'ok' && $profile['editor'] != '1') {
 
 	if(count($messages) == 0) echo LANG_NO_MESSAGES;
 
-	while(list($key, $value) = each($messages)) { ?>
+	foreach ( $messages as $key => $value)  { ?>
 		<tr bgcolor="<?=$design['table_row_dark']?>">
 		<td><?=printf(LANG_MESSAGES_IM_SENT_BY, transform($value['sender_id'], 'user_id'), transform($value['created'], 'datetime'))?>
-		<? if($value['status'] == '0') echo ' <span style="color:#ff0000">'.LANG_NEW.'</span>'; ?></td>
+		<?php if($value['status'] == '0') echo ' <span style="color:#ff0000">'.LANG_NEW.'</span>'; ?></td>
 		<td align="right" nowrap>[ <a href="<?=get_url($id, 'docinput[remove_message]='.$key)?>"><?=LANG_DELETE?></a> ]</td></tr>
 		<tr bgcolor="<?=$design['table_row_bright']?>"><td colspan="2"><?=transform($value['message'], 'usertext')?></td></tr>
-		<?
+		<?php
 		}
 	?>
 	</table>
-	<?
+	<?php
 	}
 elseif($profile['editor']=='1') {
 	// Image Input

@@ -15,7 +15,7 @@ Zeigen ab <input type="text" name="ShowDatum" id="ShowDatum" value="{$AbDatum}"
   			/>
 <input type="submit" value="anzeigen" />
 </form>
-<h2>Übersicht: Weideorte</h2>
+<h2>Ãœbersicht: Weideorte</h2>
 <form id="Weideliste" method="post" action="?id={$id}"> 
 <table class="drucklinien" border="1" style="empty-cells:show">
 <tr><th>Datum</th><th>Ort</th><th>Tierart</th><th>Erstellt</th><th>Bemerkung</th></tr>

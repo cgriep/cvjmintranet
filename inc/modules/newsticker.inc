@@ -24,7 +24,7 @@ if($profile['editor'] == 1) {
 	<input type="hidden" name="subject" value="<?=$GLOBALS['subject']?>">
 	<input type="hidden" name="search" value="<?=$GLOBALS['search']?>">
 	<select name="module_news_source_<?=$module['id']?>">
-<?
+<?php
 	$handle = opendir(BASE_PATH.INC_PATH.DATA_PATH.'rdf');
 	while (false!==($file = readdir($handle))) {
 	    if ($file != "." && $file != "..") {
@@ -34,7 +34,7 @@ if($profile['editor'] == 1) {
 	closedir($handle); 
 	
 	natcasesort($files);
-	while(list($key, $file) = each($files)) {
+	foreach ( $files as $key => $file) {
 	        if($file == $source) { $sel = ' selected="selected"'; } else { $sel = ''; }
 		echo "\t".'<option value="'.$file.'"'.$sel.'>'.$file."</option>\n";
         }
@@ -43,7 +43,7 @@ if($profile['editor'] == 1) {
 	</select><br />
 	<input type="submit" value="<?=LANG_SAVE?>" />
 	</form>
-	<?
+	<?php
 	}
 else {
 
@@ -61,15 +61,15 @@ else {
 	if($source == '') $source = 'heise.rdf';
 	$item = new rdfFile(BASE_PATH.INC_PATH.DATA_PATH."rdf/$source");
 	$item->parse(true);
-	?><span style="font-size: 10px"><?
-	while(list($key, $value) = each ($item->Items)) {
-		?><img src="<?=$design['nav_bullet']?>" border="0" width="10" height="7">&nbsp;<a target="_blank" href="<?
+	?><span style="font-size: 10px"><?php
+	foreach ($item->Items as $key => $value) {
+		?><img src="<?=$design['nav_bullet']?>" border="0" width="10" height="7">&nbsp;<a target="_blank" href="<?php
 		echo $value['Link'].'">'.$value['Title'].'</a><br />';
 		}
 
 	?>
 	</span>
-	<? 
+	<?php 
 	$content = ob_get_contents();
 	ob_end_clean();
 	if($cache_time != 0) {

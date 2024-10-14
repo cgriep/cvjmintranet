@@ -16,11 +16,11 @@
         <a href="http://www.cvjm-feriendorf.de/index.php">
         <img src="../img/design/feriendorf/logodorf_mini.gif" /></a>
         <div class="linkeSeite" width="20%">
-<? if($profile['editmode'] === 0) { ?>
+<?php if($profile['editmode'] === 0) { ?>
 <a href="<?=get_url($id, array('editmode' => 1))?>"><img src="../img/small_edit/editmode_on.gif" style="background:gray" /></a>
-<? } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
+<?php } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
 <a href="<?=get_url($id, array('editmode' => 0))?>"><img src="../img/small_edit/editmode_off.gif" /></a>
-<? } ?>
+<?php } ?>
 </div>
      </td>
 
@@ -41,7 +41,7 @@
 <tr>
 <td>
 <?php
-/*  Schnipsel für Felder 1-5 mit Namen und Hintergrundbilddatei ../img/design/feriendorf/ebene1_th.gif bis   ../img/design/feriendorf/ebene5_th.gif und Sprungbefehl
+/*  Schnipsel fÃ¼r Felder 1-5 mit Namen und Hintergrundbilddatei ../img/design/feriendorf/ebene1_th.gif bis   ../img/design/feriendorf/ebene5_th.gif und Sprungbefehl
 */
 
 if ( !isset($flavour) ) $flavour = $default_flavour;
@@ -49,7 +49,7 @@ init_published_roots();
 global $root_parent_id;
 global $published_roots;
 $ids = Array();
-while ( list($did, $value) = each($published_roots) ) {
+foreach ( $published_roots as $did => $value)  {
   $ids[] = $did;
   $titel[] = $value['title'];
 }
@@ -74,7 +74,7 @@ Code von oben, dann PHP ende: ?>
   init_parents();
   if(isset($parents)) {
     reset($parents);
-    while (list($docid, $value) = each ($parents)) {
+    foreach ($parents as $docid => $value)  {
       $section_title = '<a href="'.get_url($docid).'">'.$value['title'].'</a> &gt; '.$section_title;
     }
   }

@@ -18,7 +18,7 @@ global $design;
 	<b>Edit document (<span title="Each document has an unique ID as identifier.">ID <?=$id?></span>)</b>
 	</td></tr>
 	<tr><td>
-<?
+<?php
 
 if($profile['simple_edit'] == 1) { ?>
 	<input type="hidden" name="doc[description]" value="<?=$document['description']?>" />
@@ -30,8 +30,7 @@ if($profile['simple_edit'] == 1) { ?>
                 <span title="The document type tells AWF how to display the current document.">Document Type</span><br />
                 <select name="doc[type_id]">
                 <?php
-                reset($doctypes);
-                while (list ($docname, $value) = each ($doctypes)) {
+                foreach ($doctypes as $docname => $value)  {
 			if($docdescriptions[$value] != '') {
                                 $docname = $docdescriptions[$value];
                                 if(strlen($docname) > 20) { $docname = substr($docname, 0, 20).'...'; }
@@ -66,13 +65,12 @@ if($profile['simple_edit'] == 1) { ?>
 	<input type="text" size="<?=$design['input_size']?>" name="docdata[title]" value="<?=htmlentities(transform($document['title'], $document['datatype']['title']))?>">
 	<input type="hidden" name="docdatatype[title]" value="clean"><br clear="all" />
 	</p>
-<? } else { ?>
+<?php } else { ?>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td>
                 <span title="The document type tells AWF how to display the current document.">Document Type</span><br />
                 <select name="doc[type_id]">
                 <?php
-                reset($doctypes);
-                while (list ($docname, $value) = each ($doctypes)) {
+                foreach ( $doctypes as $docname => $value)  {
 			if($docdescriptions[$value] != '') {
                                 $docname = $docdescriptions[$value];
                                 if(strlen($docname) > 20) { $docname = substr($docname, 0, 20).'...'; }
@@ -102,7 +100,7 @@ if($profile['simple_edit'] == 1) { ?>
                 &nbsp;<span title="Check, if the search function is allowed to find this document.">Searchable</span>
                 </td><td>
 		<input type="checkbox" value="1" name="doc[cacheable]"<?php if($document['cacheable'] == 1) echo ' CHECKED'; ?>>
-		&nbsp;<span title="Check, if you want this document to be cached.<? if(CACHE_TIME == 0) echo ' Note: You will have to enable the caching feature in admin/config.php too, as it is disabled at the moment.' ?>">Allow caching</span>
+		&nbsp;<span title="Check, if you want this document to be cached.<?php if(CACHE_TIME == 0) echo ' Note: You will have to enable the caching feature in admin/config.php too, as it is disabled at the moment.' ?>">Allow caching</span>
                 </td></tr><tr><td>
 		<span title="Optional keywords that will be used in HTML meta tags.">Meta-Keywords</span><br />
 		<input type="text" size="20" name="docdata[keywords]" value="<?=$document['keywords']?>">
@@ -120,11 +118,11 @@ if($profile['simple_edit'] == 1) { ?>
 	<?php
 	if(!$document['timestamp']) { $date = 'UNKNOWN'; } else { $date = transform($document['timestamp'], 'datetime'); }
         if(!$document['author']) $document['author'] = 'UNKNOWN';
-	echo '<p>Last update: '.$date.' by '.transform($document[author_id], 'user_id').'</p>';
+	echo '<p>Last update: '.$date.' by '.transform($document['author_id'], 'user_id').'</p>';
 	?>
         <p>
 	Document Title (Note: HTML tags will be converted to text)<br />
 	<input type="text" size="<?=$design['input_size']?>" name="docdata[title]" value="<?=htmlentities(transform($document['title'], $document['datatype']['title']))?>">
 	<input type="hidden" name="docdatatype[title]" value="clean">
 	</p>
-<? } ?>
+<?php } ?>

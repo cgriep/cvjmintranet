@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -22,13 +22,13 @@ if(SESSION_STATUS == 'ok' && $profile[$document['fileposter']] == '1') {
     clear_cache($id);
     remove_profile('editor_'.$id);
     $id = $document['parent_id'];
-    echo "<b>Das Dokument wurde gelöscht!</b><br />";
-    echo "Übergeordnetes Dokument:<br />";
+    echo "<b>Das Dokument wurde gelÃ¶scht!</b><br />";
+    echo "Ãœbergeordnetes Dokument:<br />";
     $document = get_node($id, $flavour);
   }
   if ( $_REQUEST['savefile'] == '1') {
     if( $docinput['title'] == '') {
-      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?
+      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?php
     }
     else {
       clear_cache($id);
@@ -76,7 +76,7 @@ if(SESSION_STATUS == 'ok' && $profile[$document['fileposter']] == '1') {
   }
   elseif ( $_REQUEST['savesub'] == '1') {
     if($docinput['summary'] == '' || $docinput['title'] == '') {
-      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?
+      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?php
     }
     else {
       clear_cache($id);
@@ -107,7 +107,7 @@ if($_REQUEST['postfile'] == '1' && SESSION_STATUS == 'ok' && $profile[$document[
         <b>Datei hochladen</b><br /><input name="userfile" type="file">
         <br />
         oder <b>Link auf Seite</b><br /><input name="docinput[Link]" type="text" size=60>
-        <br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?
+        <br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?php
         }
 else if($_REQUEST['postsub'] == '1' && SESSION_STATUS == 'ok' && $profile[$document['fileposter']] == '1') {
         ?><form action="<?=get_url($id)?>" method="post" ><?=LANG_TITLE?>
@@ -115,7 +115,7 @@ else if($_REQUEST['postsub'] == '1' && SESSION_STATUS == 'ok' && $profile[$docum
         <br /><input type="text" name="docinput[title]"  size="<?=$design['input_size']?>" maxlength="80" value="<?=$docinput['title']?>">
         <br /><?=LANG_BODY?><br /><textarea name="docinput[summary]" cols="<?=$design['input_size']?>" wrap="virtual" rows="<?=$design['input_rows']?>"></textarea>
         <br />
-        <br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?
+        <br /><input type="submit" value="<?=LANG_SUBMIT?>"></form><?php
         }
 else {
   $children =  get_children (0, 100, $doctypes['file_para']);
@@ -143,24 +143,23 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "send_email") {
         <?=LANG_MULTIPLE_RECIPIENTS?>
         <br />
         <br />
-        <? if(SESSION_STATUS != 'ok') { ?>
+        <?php if(SESSION_STATUS != 'ok') { ?>
         <?=LANG_YOUR_EMAIL_ADDRESS?><br />
         <input type="text" name="docinput[sender]" size="50"><br />
         <br />
-        <? }
+        <?php }
         else { ?>
         <input type="hidden" name="docinput[sender]" value="<?=SESSION_EMAIL?>">
-        <? } ?>
+        <?php } ?>
         <?=LANG_MESSAGE?><br />
         <input type="text" name="docinput[body]" size="50"><br />
         <br />
         <input type="submit" value="Send">
         </form>
-        <?
+        <?php
         }
 elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($docinput['email']) && strlen($docinput['email']) > 3 && isemail($docinput['sender'])) {
         if(isset($children)) {
-        reset($children);
                 if($docinput['sender'] == '') { $docinput['sender'] = 'unknown_user@'.$SERVER_NAME; }
                 $counter = 0;
                 if($docinput['body'] != '') {
@@ -170,7 +169,7 @@ elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($d
                         $message_body = '';
                         }
 
-                while (list ($docid, $value) = each ($children)) {
+                foreach ( $children as $docid => $value) {
                         $message_body .= transform($value['title'],'clean')."\n".
                         transform(transform($value['body'], $value['datatype']['body']), 'html2txt')."\n\n";
                         }
@@ -181,7 +180,7 @@ elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($d
                 "From: ".email_to_string($docinput['sender']).' <'.$docinput['sender'].'>');
         ?>
         <p><?=LANG_DOC_SENT_TO?> <b><?=$docinput['email']?></b></p>
-        <?
+        <?php
         }
         }
   if ( $document['title'] != '') echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
@@ -194,7 +193,7 @@ elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($d
   $uchildren =  get_children (0, 100, $doctypes['file_doc']);
   if(isset($uchildren)) {
     $ueberda = false;
-    while (list ($docid, $value) = each ($uchildren) ) {
+    foreach ($uchildren as $docid => $value) {
       if($value['type_id']==$doctypes['file_doc']) {
         if ( ! $ueberda ) {
           echo "<p><b><i>Unterkategorien:</i></b><br />";
@@ -221,10 +220,9 @@ if(isset($children)) {
         echo '<table width="100%" border="1" style="border-collapse:collapse;border-color: '.$document['bordercolor'].';">';
         echo '<tr style="background: '.$document['backgroundcolor'].';border: thin solid;border-bottom-width: 2pt; border-left-width: 1pt;' .
          'border-right-width: 1pt; border-top-width: 1pt; padding: 2pt"><th>Name</th><th>Beschreibung</th></tr>';
-        reset($children);
         $counter = 0;
-        while (list ($docid, $value) = each ($children) and $counter < $max_newscount) {
-                if($value['type_id']==$doctypes['file_para']) {
+        foreach ($children as $docid => $value)  {
+                if($counter < $max_newscount && $value['type_id']==$doctypes['file_para']) {
                         $counter++;
                         if($counter > $first_item) {
                                 echo '<tr style="border: thin solid;border-bottom-width: 2pt; border-left-width: 1pt;' .
@@ -266,10 +264,9 @@ else {
 }
 elseif($profile['editor']=='1') {
   if(isset($children)) {
-        reset($children);
         $counter = 0;
-        while (list ($docid, $value) = each ($children) and $counter < $max_newscount) {
-                if($value['type_id']==$doctypes['file_para']) {
+        foreach ($children as $docid => $value)  {
+                if( $counter < $max_newscount && $value['type_id']==$doctypes['file_para']) {
                         if($value['title'] == '') $value['title'] = 'Unknown';
                                 $counter++;
                                 if($counter > $first_item) {
@@ -300,10 +297,10 @@ elseif($profile['editor']=='1') {
 ?>
 <p>
 <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
-<td nowrap="nowrap"><? create_editor_input('User comments at bottom','comments','onoff_input'); ?></td>
-<td nowrap="nowrap"><? create_editor_input('Send to a friend','allow_forward','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('User comments at bottom','comments','onoff_input'); ?></td>
+<td nowrap="nowrap"><?php create_editor_input('Send to a friend','allow_forward','onoff_input'); ?></td>
 </tr></table>
-<?
+<?php
 echo '<br />';
 // Image Input
 create_editor_input('Image','image','image_input');

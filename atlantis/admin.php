@@ -18,7 +18,7 @@ session_start();
  echo '<option value="T_Rassen">Rassen</option>';
  echo '<option value="T_Spezialisierungsklassen">Spezialisierungsklassen</option>';
  echo '</select>';
- echo '<input type="submit" value="Wählen" />';
+ echo '<input type="submit" value="WÃ¤hlen" />';
  echo '</form>';
  if ( isset($_REQUEST['Tabelle']))
  {
@@ -43,7 +43,7 @@ session_start();
     	echo '</option>'."\n";
     }
     echo '</select>';
-    echo '<input type="submit" value="Wählen" />';
+    echo '<input type="submit" value="WÃ¤hlen" />';
     echo '</form>';
     if ( session_is_registered('Eintrag'))
     {
@@ -52,7 +52,7 @@ session_start();
  	  	$key = array_keys($_SESSION['Eintrag']);
  	  	//print_r($key);
  	  	$sql = 'UPDATE '.$_SESSION['Tabelle'].' SET Beschreibung="'.
- 	  	  mysql_real_escape_string($_REQUEST['Bemerkung']).'" WHERE '.$key[1].
+ 	  	  sql_real_escape_string($_REQUEST['Bemerkung']).'" WHERE '.$key[1].
  	  	  '='.$_SESSION['Eintrag'][0];
  	  	 echo $sql;
  	  	if ( ! mysql_query($sql)) echo mysql_error();

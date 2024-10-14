@@ -2,7 +2,7 @@
 
 /* Modul Auftrag
 
-‹berarbeitung des Auftragsmoduls f¸r Kalender
+√ºberarbeitung des Auftragsmoduls f√ºr Kalender
 (unfertig)
 
 */
@@ -61,12 +61,12 @@ class Auftrag extends Event {
 				else
 				{
 					// an Auftragnehmer senden
-					$this->sendBenachrichtigung('Auftrag ge‰ndert');
+					$this->sendBenachrichtigung('Auftrag ge√§ndert');
 				}
 		}
 	}
 	/**
-	 * ƒndert den Status eines Auftrages
+	 * √§ndert den Status eines Auftrages
 	 * @param int $Status der neue Status
 	 */
 	function neuerStatus($Status)
@@ -93,10 +93,10 @@ class Auftrag extends Event {
 		}
 	}
 	/**
-	 * sucht nach Auftr‰gen eines Betroffenen.
+	 * sucht nach Auftr√§gen eines Betroffenen.
 	 * @param int $Betroffene die ID des Betroffenen
-	 * @param boolean $Alle true, wenn alle (auch erledigte) Auftr‰ge angezeigt werden sollen
-	 * @param int $Ort der Ort zu dem Auftr‰ge angezeigt werden sollen (-1 = alle)
+	 * @param boolean $Alle true, wenn alle (auch erledigte) Auftr√§ge angezeigt werden sollen
+	 * @param int $Ort der Ort zu dem Auftr√§ge angezeigt werden sollen (-1 = alle)
 	 * @param string $Sort die Sortierung
 	 * @return array die Auftraege
 	 */
@@ -119,7 +119,7 @@ class Auftrag extends Event {
 			{
 				$Sort = ' Prioritaet,Datum DESC';
 			}
-		$sql .= mysql_real_escape_string($Sort).',Status';
+		$sql .= sql_real_escape_string($Sort).',Status';
 		if ( $qu = sql_query($sql) ) {
 			while ( $row = sql_fetch_row($qu)) {
 				$Auftrag = new Auftrag($row[0]);
@@ -128,11 +128,11 @@ class Auftrag extends Event {
 					$Auftraege[] = $Auftrag;
 				}
 			}
-			mysql_free_result($qu);
+			sql_free_result($qu);
 		}
 		else
 		{
-			throw new Exception('Auftrag: '.mysql_error());
+			throw new Exception('Auftrag: '.sql_error());
 		}
 		return $Auftraege;
 	}

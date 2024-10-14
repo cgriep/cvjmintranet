@@ -77,7 +77,7 @@ function aendereRechnungsMenge($rechnung_id, $artikel_nr, $Datum, $Richtung='+')
 		$sql .= ' BETWEEN '.$anf.' AND '.$end;
 	}
 	if (!sql_query($sql1.$sql))
-	$ergebnis = 'Fehler: ' . $sql1.$sql . ': ' . mysql_error();
+	$ergebnis = 'Fehler: ' . $sql1.$sql . ': ' . sql_error();
 	else
 	{
 		$query = sql_query('SELECT Menge FROM '.TABLE_RECHNUNGSEINTRAEGE.
@@ -101,7 +101,7 @@ function entferneArtikel($buchung_nr, $artikel_id, $datum, $menge,$artikelnummer
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($artikel_id) || ! is_numeric($datum) || ! is_numeric($menge))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'));
+		$objResponse->addAlert('Fehler - ungültige Argumente.');
 	}
 	else
 	{
@@ -132,7 +132,7 @@ function entferneArtikel($buchung_nr, $artikel_id, $datum, $menge,$artikelnummer
 			$Menge= $Buchung->personenAnzahl();
 		}
 		$Smarty->assign('menge', $Menge);
-		$content = utf8_encode($Smarty->fetch('Buchungsuebersicht_InaktiveZelle.tpl'));
+		$content = $Smarty->fetch('Buchungsuebersicht_InaktiveZelle.tpl');
 		$objResponse->addAssign('A'.$artikel_id.'D'.$datum, 'innerHTML', $content);
 		$objResponse->addAssign('Schlaf'.$datum, 'innerHTML', Max(0,$Buchung->BerechneAlleSchlafplaetze($datum,$artikelnummern)));
 		$objResponse->addAssign('Fehleranzeige', 'innerHTML', '');
@@ -148,7 +148,7 @@ function fuegeArtikelHinzu($buchung_nr, $artikel_id, $datum, $artikelnummern)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($artikel_id) || ! is_numeric($datum) )
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'));
+		$objResponse->addAlert('Fehler - ungültige Argumente.');
 	}
 	else
 	{
@@ -168,7 +168,7 @@ function fuegeArtikelHinzu($buchung_nr, $artikel_id, $datum, $artikelnummern)
 		$docinput['Artikelnummern'] = $artikelnummern;
 		$Smarty->assign('docinput', $docinput);
 		$Smarty->assign('Programmpaket', false);
-		$content = utf8_encode($Smarty->fetch('Buchungsuebersicht_AktiveZelle.tpl'));
+		$content = $Smarty->fetch('Buchungsuebersicht_AktiveZelle.tpl');
 		$objResponse->addAssign('Schlaf'.$datum, 'innerHTML', Max(0,$Buchung->BerechneAlleSchlafplaetze($datum, $artikelnummern)));
 		$objResponse->addAssign('A'.$artikel_id.'D'.$datum, 'innerHTML', $content);
 		$s = '';
@@ -196,7 +196,7 @@ function gesamteReise($buchung_nr, $artikel_id, $art, $setzen,$artikelnummern, $
 	}
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($artikel_id) || ! is_numeric($art))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'));
+		$objResponse->addAlert('Fehler - ungültige Argumente.');
 	}
 	else
 	{
@@ -230,7 +230,6 @@ function gesamteReise($buchung_nr, $artikel_id, $art, $setzen,$artikelnummern, $
 				$Buchung->entbucheArtikel($artikel_id, $tag, 0); // alle löschen
 				$content = $Smarty->fetch('Buchungsuebersicht_InaktiveZelle.tpl');
 			}
-			$content = utf8_encode($content);
 			$objResponse->addAssign('A'.$artikel_id.'D'.$tag, 'innerHTML', $content);
 			$objResponse->addAssign('Schlaf'.$tag, 'innerHTML', Max(0, $Buchung->BerechneAlleSchlafplaetze($tag, $artikelnummern)));
 			$tag = strtotime('+1day',$tag);
@@ -243,7 +242,7 @@ function gesamterBereich($buchung_nr, $artikelnummern, $art, $setzen)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($buchung_nr) || ! is_numeric($art))
 	{
-		$objResponse->addAlert(utf8_encode('Fehler - ungültige Argumente.'));
+		$objResponse->addAlert('Fehler - ungültige Argumente.');
 	}
 	else
 	{
@@ -272,15 +271,15 @@ function aktualisiereKorrespondenzListe($id, $Adressen_id, $id_nr)
 		$Rechnung_Nr = substr($id_nr, 1);
 		// Rechnung holen
 		$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_Nr = ' . $Rechnung_Nr);
-		$rechnung = mysql_fetch_array($query);
-		mysql_free_result($query);
+		$rechnung = sql_fetch_array($query);
+		sql_free_result($query);
 		$Buchungsvorlagen = holeVorlagen('Fakturierung/' .$DokArten[$rechnung['Rechnung']], 'Rechnung');
 		$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 		$korrespondenz['Buchung_Nr'] = $Buchung_Nr;
 		$korrespondenz['Rechnung_id'] = $Rechnung_id;
 	}
 	$korrespondenz['Adressen_id']=$Adressen_id;
-	$content = utf8_encode(holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true));
+	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true);
 	return $objResponse;
 }
 /**
@@ -305,8 +304,8 @@ function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 			$Rechnung_Nr = substr($id_nr, 1);
 			// Rechnung holen
 			$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_id = ' . $Rechnung_Nr);
-			$rechnung = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$rechnung = sql_fetch_array($query);
+			sql_free_result($query);
 			$Buchungsvorlagen = holeVorlagen('Fakturierung/' .$DokArten[$rechnung['Rechnung']], 'Rechnung');
 			$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 			$korrespondenz['Buchung_Nr'] = $Buchung_Nr;
@@ -322,38 +321,37 @@ function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 	}
 	// Adresse
 	$korrespondenz['Adressen_id']=$Adressen_id;
-	$datei = utf8_decode($dokument);
+	$datei = $dokument;
 	if ( ! unlink($datei) )
 	{
-		$objResponse->addAlert(utf8_encode('Datei '.$datei.' konnte nicht gelöscht werden.'));
+		$objResponse->addAlert('Datei '.$datei.' konnte nicht gelöscht werden.');
 	}
 	else
 	{
-		//$objResponse->addAlert(utf8_encode('Datei '.$datei.' wurde gelöscht.'));
 		if ( $Buchung_Nr > 0 )
 		{
 			global $session_userid;
-			$qresult = sql_query("SELECT id FROM ".TABLE_USERS." WHERE email='".mysql_real_escape_string($session_userid)."'");
-			$idresult = mysql_fetch_row($qresult);
+			$qresult = sql_query("SELECT id FROM ".TABLE_USERS." WHERE email='".sql_real_escape_string($session_userid)."'");
+			$idresult = sql_fetch_row($qresult);
 			$idresult = $idresult[0];
-			mysql_free_result($qresult);
-			$query = mysql_query('SELECT value FROM '.TABLE_USERDATA.' WHERE name="nickname" AND user_id='.$idresult);
-			$user = mysql_fetch_array($query);
-			mysql_free_result($query);
+			sql_free_result($qresult);
+			$query = sql_query('SELECT value FROM '.TABLE_USERDATA.' WHERE name="nickname" AND user_id='.$idresult);
+			$user = sql_fetch_array($query);
+			sql_free_result($query);
 			$nickname = $user['value'];
 			// Profil laden wegen Nickname
 			if ( ! sql_query('UPDATE '.TABLE_BUCHUNGEN." SET Logtext=CONCAT('".date('d.m.Y H:i').
-			' Korrespondenz '.mysql_real_escape_string(utf8_decode($dokument)).' gelöscht '.
+			' Korrespondenz '.sql_real_escape_string($dokument).' gelöscht '.
 			$nickname."\n',Logtext) ".
 			' WHERE Buchung_Nr='.$Buchung_Nr))
-			$objResponse->addAlert(utf8_encode('Datenbankfehler beim Löschen: '.mysql_error()));
-			$query = mysql_query('SELECT Logtext FROM '.TABLE_BUCHUNGEN.' WHERE Buchung_Nr='.$Buchung_Nr);
-			$buchung = mysql_fetch_array($query);
-			mysql_free_result($query);
-			$objResponse->addAssign('Historie', 'innerHTML', utf8_encode(nl2br($buchung['Logtext'])));
+			$objResponse->addAlert('Datenbankfehler beim Löschen: '.sql_error());
+			$query = sql_query('SELECT Logtext FROM '.TABLE_BUCHUNGEN.' WHERE Buchung_Nr='.$Buchung_Nr);
+			$buchung = sql_fetch_array($query);
+			sql_free_result($query);
+			$objResponse->addAssign('Historie', 'innerHTML', nl2br($buchung['Logtext']));
 		}
 	}
-	$content = utf8_encode(holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true));
+	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true);
 	$objResponse->addAssign('Korrespondenzdiv', 'innerHTML', $content);
 	return $objResponse;
 }
@@ -383,8 +381,8 @@ function aktualisiereKorrespondenz($id, $Adressen_id, $id_nr = -1)
 			$Rechnung_Nr = substr($id_nr, 1);
 			// Rechnung holen
 			$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_id = ' . $Rechnung_Nr);
-			$rechnung = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$rechnung = sql_fetch_array($query);
+			sql_free_result($query);
 			$Buchungsvorlagen = holeVorlagen('Fakturierung/' .$DokArten[$rechnung['Rechnung']], 'Rechnung');
 			$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 			$korrespondenz['Buchung_Nr'] = $Buchung_Nr;
@@ -400,7 +398,7 @@ function aktualisiereKorrespondenz($id, $Adressen_id, $id_nr = -1)
 	}
 	// Adresse
 	$korrespondenz['Adressen_id']=$Adressen_id;
-	$content = utf8_encode(holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true));
+	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true);
 	$objResponse->addAssign('Korrespondenzdiv', 'innerHTML', $content);
 	return $objResponse;
 }
@@ -423,10 +421,10 @@ function setzeAdressKategorie($Adressen_id, $Kategorie_id, $set = true)
 			sql_query('DELETE FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Adressen_id='.$Adressen_id.' AND F_Kategorie_id='.$Kategorie_id);
 		}
 		// Anzahlen korrigieren
-		$query = mysql_query('SELECT Count(*) FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Kategorie_id='.$Kategorie_id);
-		$anzahl = mysql_fetch_row($query);
+		$query = sql_query('SELECT Count(*) FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Kategorie_id='.$Kategorie_id);
+		$anzahl = sql_fetch_row($query);
 		$anzahl = $anzahl[0];
-		mysql_free_result($query);
+		sql_free_result($query);
 		$objResponse->addAssign('K'.$Kategorie_id, 'innerHTML', $anzahl);
 	}
 	return $objResponse;
@@ -439,7 +437,7 @@ function zeigeKategorien($Adressen_id, $edit = false)
 	$Smarty->template_dir = TEMPLATEPATH;
 	$Adresse = new Adresse($Adressen_id);
 	$edit = convertJavaScriptBool($edit);
-	$Smarty->assign_by_ref('Adresse', $Adresse);
+	$Smarty->assign('Adresse', $Adresse);
 	if ( $edit )
 	{
 		$content = $Smarty->fetch('Adressen_Kategorien_Edit.tpl');
@@ -452,7 +450,6 @@ function zeigeKategorien($Adressen_id, $edit = false)
 		$objResponse->addAssign('KategorienLink', 'innerHTML', 'Kategorien festlegen');
 		$objResponse->addEvent('KategorienLink', 'onclick', 'xajax_zeigeKategorien('.$Adressen_id.',true);return false;');
 	}
-	$content = utf8_encode($content);
 	$objResponse->addAssign('Kategorien', 'innerHTML', $content);
 	return $objResponse;
 }
@@ -485,7 +482,7 @@ function zeigeSeminarKorrespondenz($Buchung_Nr, $Adressen_id, $zeigen = true)
 			$Buchung_Nr.','.$Adressen_id.',true);');
 			$objResponse->addAssign('KorrLink'.$Adressen_id, 'innerHTML', 'K');
 		}
-		$objResponse->addAssign('Korrespondenz'.$Adressen_id, 'innerHTML', utf8_encode($content));
+		$objResponse->addAssign('Korrespondenz'.$Adressen_id, 'innerHTML', $content);
 	}
 	return $objResponse;
 
@@ -514,8 +511,8 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 			$Rechnung_Nr = substr($id_nr, 1);
 			// Rechnung holen
 			$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN.' WHERE Rechnung_Nr = ' . $Rechnung_Nr);
-			$rechnung = mysql_fetch_array($query);
-			mysql_free_result($query);
+			$rechnung = sql_fetch_array($query);
+			sql_free_result($query);
 			$Buchung_Nr = $rechnung['F_Buchung_Nr'];
 				
 		}
@@ -526,7 +523,7 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 		}
 		catch ( Exception $e )
 		{
-			$objResponse->addAlert(utf8_encode('Ungültige Referenz!'));
+			$objResponse->addAlert('Ungültige Referenz!');
 		}
 	}
 	else
@@ -540,22 +537,21 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 		}
 		catch ( Exception $e )
 		{
-			$objResponse->addAlert(utf8_encode('Ungültige Adressen-ID'));
+			$objResponse->addAlert('Ungültige Adressen-ID');
 		}
 	}
 	if ( isset($Adresse))
 	{
 		if ( $Adresse->Email != '' || $mailadresse != '')
 		{
-			require('php/Mail.php');
-			require_once('php/Mail/mime.php');
-			require_once('php/MIME/Type.php');
+			require('Mail.php');
+			require_once('Mail/mime.php');
+			require_once('MIME/Type.php');
 			try{
 				$mime = new Mail_mime("\n");
-				$mime->setTXTBody(utf8_decode($Text));
+				$mime->setTXTBody($Text);
 				foreach ( $dateien as $datei)
 				{
-					$datei = utf8_decode($datei);
 					$p = pathinfo($datei);
 					switch (strtolower($p['extension']))
 					{
@@ -578,10 +574,10 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 				$body = $mime->get();
 				$hdrs = array('From'=>'buchhaltung@cvjm-feriendorf.de', 
 				'Bcc'=>'info@cvjm-feriendorf.de', // get_user_email()
-				'Subject'=>utf8_decode($Betreff));
+				'Subject'=>$Betreff);
 				$hdrs = $mime->headers($hdrs);
 
-				$mail =& Mail::factory('mail','-f buchhaltung@cvjmferiendorf.de');
+				$mail =& Mail::factory('mail','-f buchhaltung@cvjm-feriendorf.de');
 				if ( $mailadresse == '' ) 
 					$mailadresse = $Adresse->Email;
 				if ( $mail->send($mailadresse, $hdrs, $body) === true )
@@ -590,11 +586,11 @@ function sendeKorrespondenzMail($Adressen_id, $id_nr, $Betreff, $Text, $dateien,
 					' wurde per Mail an '.$mailadresse.' versendet.');
 					if ( isset($Buchung))
 					{
-						$Buchung->logAction('Korrespondenz '.mysql_real_escape_string(utf8_decode(implode(',',$dateien))).
-							' per Mail mit Betreff '.utf8_decode($Betreff).' an '.
-							mysql_real_escape_string($mailadresse).' gesendet');
+						$Buchung->logAction('Korrespondenz '.sql_real_escape_string(implode(',',$dateien)).
+							' per Mail mit Betreff '.$Betreff.' an '.
+							sql_real_escape_string($mailadresse).' gesendet');
 							// TODO Korrektur URL für Verlinkung übergeben
-						$objResponse->addAssign('Historie', 'innerHTML', utf8_encode(nl2br($Buchung->holeHistory(''))));
+						$objResponse->addAssign('Historie', 'innerHTML', nl2br($Buchung->holeHistory('')));
 						// Speichern der Mail-Datei bei der Buchung
 						$mail = 'An: '.$mailadresse."\n";
 						$mail.= 'Betreff: '.$Betreff."\n";
@@ -638,7 +634,7 @@ function aendereZuordnung($Adressen_id, $art, $wert, $Zuordnung)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Adressen_id) || !is_numeric($Zuordnung))
 	{
-		$objResponse->addAlert(utf8_encode('Ungültige Adressen_id!'));
+		$objResponse->addAlert('Ungültige Adressen_id!');
 	}
 	else
 	{
@@ -673,16 +669,16 @@ function sucheArtikel($suche, $Buchung_Nr, $Spalten, $id, $Rechnung_id=-1)
 	$Smarty->template_dir = TEMPLATEPATH;
 	$Smarty->assign('spalten', $Spalten);
 	$Smarty->assign('id', $id);
-	$Smarty->assign_by_ref('Buchung', $Buchung);
+	$Smarty->assign('Buchung', $Buchung);
 	$docinput = array();
-	$docinput['ArtikelSearch']=utf8_decode($suche);
+	$docinput['ArtikelSearch']=$suche;
 	if ( $Rechnung_id >0)
 	{
 		$docinput['Rechnung_id'] = $Rechnung_id;
 	}
 	$Smarty->assign('docinput', $docinput);
 	$content = $Smarty->fetch('Buchung_Artikel_hinzu.tpl');
-	$objResponse->addAssign('Artikel_Hinzu', 'innerHTML', utf8_encode($content));
+	$objResponse->addAssign('Artikel_Hinzu', 'innerHTML', $content);
 	return $objResponse;
 }
 /**
@@ -696,7 +692,7 @@ function moveArtikel($id, $Artikel_id, $Richtung)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Artikel_id)  || ! is_numeric($id))
 	{
-		$objResponse->addAlert(utf8_encode('Ungültige Artikel-id'));
+		$objResponse->addAlert('Ungültige Artikel-id');
 	}
 	else
 	{
@@ -705,9 +701,9 @@ function moveArtikel($id, $Artikel_id, $Richtung)
 		$Smarty = new Smarty();
 		$Smarty->template_dir = TEMPLATEPATH;
 		$Smarty->assign('id', $id);
-		$Smarty->assign_by_ref('Artikel', $Artikel);
+		$Smarty->assign('Artikel', $Artikel);
 		$content = $Smarty->fetch('Artikel_Baumliste.tpl');
-		$objResponse->addAssign('Artikelbaumliste', 'innerHTML', utf8_encode($content));
+		$objResponse->addAssign('Artikelbaumliste', 'innerHTML', $content);
 	}
 	return $objResponse;
 }
@@ -722,7 +718,7 @@ function aendereArtikelAnzahl($id, $Artikel_id, $Anzahl)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Artikel_id) || ! is_numeric($id))
 	{
-		$objResponse->addAlert(utf8_encode('Ungültige id!'));
+		$objResponse->addAlert('Ungültige id!');
 	}
 	else
 	{
@@ -731,10 +727,10 @@ function aendereArtikelAnzahl($id, $Artikel_id, $Anzahl)
 		$Artikel = new Artikel($Artikel_id);
 		$Smarty = new Smarty();
 		$Smarty->template_dir = TEMPLATEPATH;
-		$Smarty->assign_by_ref('Artikel', $Artikel);
+		$Smarty->assign('Artikel', $Artikel);
 		$Smarty->assign('id', $id);
 		$content = $Smarty->fetch('Artikel_Baumliste.tpl');
-		$objResponse->addAssign('Artikelbaumliste', 'innerHTML', utf8_encode($content));
+		$objResponse->addAssign('Artikelbaumliste', 'innerHTML', $content);
 	}
 	return $objResponse;
 }
@@ -806,16 +802,16 @@ function zeigePersonenwahlDialog($Buchung_Nr, $Artikel_Nr, $Datum)
 	}
 	sql_free_result($query);
 	asort($users);
-	$Smarty->assign_by_ref('users', $users);
+	$Smarty->assign('users', $users);
 	init_groups();
-	$Smarty->assign_by_ref('groups', $groups);
+	$Smarty->assign('groups', $groups);
 	$Smarty->assign('title', 'Zuständiger für '.$Artikel->Bezeichnung.' am '.date('d.m.Y',$Datum));
 	$Smarty->assign('extern', $extern);
 	$Smarty->assign('markiertU', $markiertU);
 	$Smarty->assign('markiertG', $markiertG);
-	$Smarty->assign_by_ref('Artikel', $Artikel);
+	$Smarty->assign('Artikel', $Artikel);
 	$dialog = $Smarty->fetch('Personenauswahlliste.tpl');
-	$objResponse->addPrepend('Personenwahldialog','innerHTML',utf8_encode($dialog));
+	$objResponse->addPrepend('Personenwahldialog','innerHTML',$dialog);
 	$objResponse->addAssign('Artikeltabelle','style.opacity','0.6');
 	return $objResponse;
 }
@@ -833,7 +829,7 @@ function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 	$objResponse = new xajaxResponse();
 	if ( ! is_numeric($Buchung_Nr) || ! is_numeric($Artikel_Nr) )
 	{
-		$objResponse->addAlert(utf8_encode('Ungültige Parameter übergeben!'));
+		$objResponse->addAlert('Ungültige Parameter übergeben!');
 	}
 	else
 	{
@@ -933,19 +929,19 @@ function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 		/*
 		foreach ( $Daten as $Datum )
 		{
-			if ( !mysql_query('INSERT INTO '.TABLE_BUCHUNGPERSONEN.' (F_Buchung_Nr,PersonenArt,F_Artikel_Nr,Datum,Status,Person) '.
-			'VALUES ('.$Buchung_Nr.',"Person",'.$Artikel_Nr.','.$Datum.',"","'.mysql_real_escape_string($Person).
-			'") ON DUPLICATE KEY UPDATE Person="'.mysql_real_escape_string(trim($Person)).'"'))
+			if ( !sql_query('INSERT INTO '.TABLE_BUCHUNGPERSONEN.' (F_Buchung_Nr,PersonenArt,F_Artikel_Nr,Datum,Status,Person) '.
+			'VALUES ('.$Buchung_Nr.',"Person",'.$Artikel_Nr.','.$Datum.',"","'.sql_real_escape_string($Person).
+			'") ON DUPLICATE KEY UPDATE Person="'.sql_real_escape_string(trim($Person)).'"'))
 			{
 				$Fehler = true;
 			}
 			// Leere Personen entfernen
-			mysql_query('DELETE FROM '.TABLE_BUCHUNGPERSONEN.' WHERE Person=""');
+			sql_query('DELETE FROM '.TABLE_BUCHUNGPERSONEN.' WHERE Person=""');
 		}
 		*/
 		if ( $Fehler )
 		{
-			$objResponse->addAlert('Fehler - Konnte Ereignis nicht eintragen.'.mysql_error());
+			$objResponse->addAlert('Fehler - Konnte Ereignis nicht eintragen.'.sql_error());
 		}
 		else
 		{
@@ -953,7 +949,7 @@ function tragePersonEin($Buchung_Nr, $Artikel_Nr, $Datum, $Person,$id)
 			{
 				$text = 'Zuständig: '.$text;
 			}
-			$objResponse->addAssign('Person'.$id,'innerHTML',utf8_encode($text));
+			$objResponse->addAssign('Person'.$id,'innerHTML',$text);
 		}
 
 	}
@@ -981,7 +977,7 @@ function showKundenAuswahl($Buchung_Nr)
 	$objResponse = new xajaxResponse();
 	$Smarty = new Smarty;
 	$Smarty->template_dir = TEMPLATEPATH;
-	$Liste = utf8_encode($Smarty->fetch('Buchung_Kundenauswahl.tpl'));
+	$Liste = $Smarty->fetch('Buchung_Kundenauswahl.tpl');
 	$objResponse->addAssign('KundeAendernFeld', 'innerHTML', $Liste);
 	$objResponse->addAssign('KundeAendernFeld', 'style.visibility', '');
 	$objResponse->addAssign('KundeAendern', 'style.visibility', 'hidden');
@@ -991,18 +987,18 @@ function sucheKunden($Name)
 {
 	$objResponse = new xajaxResponse();
 	$Kunden = array();
-	$Name = trim(mysql_real_escape_string(utf8_decode($Name)));
-	$query = mysql_query('SELECT Adressen_id FROM '.TABLE_ADRESSEN.' WHERE Kunden_Nr>0 AND (Name LIKE "%'.
+	$Name = trim(sql_real_escape_string($Name));
+	$query = sql_query('SELECT Adressen_id FROM '.TABLE_ADRESSEN.' WHERE Kunden_Nr>0 AND (Name LIKE "%'.
 	$Name.'" OR Vorname LIKE "%'.$Name.'%" OR Kunden_Nr="'.$Name.'") LIMIT 20');
-	while ( $k = mysql_fetch_row($query))
+	while ( $k = sql_fetch_row($query))
 	{
 		$Kunden[] = new Adresse($k[0]);
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 	$Smarty = new Smarty;
 	$Smarty->template_dir = TEMPLATEPATH;
 	$Smarty->assign('Kunden', $Kunden);
-	$Liste = utf8_encode($Smarty->fetch('Buchung_Kundenauswahl.tpl'));
+	$Liste = $Smarty->fetch('Buchung_Kundenauswahl.tpl');
 	$objResponse->addAssign('KundeAendernFeld', 'innerHTML', $Liste);
 	return $objResponse;
 }

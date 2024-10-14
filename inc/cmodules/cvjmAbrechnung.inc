@@ -5,12 +5,12 @@
  *   Modul cvjmAbrechnung
  *  AWF-Name: cvjmabrechnung
 *
-*   Vorlagen-Dateien m¸ssen im Verzeichnis Vorlagen/Buchung liegen
+*   Vorlagen-Dateien m√ºssen im Verzeichnis Vorlagen/Buchung liegen
 *
  *  Parameter:
  *  docinput[Buchung_Nr] - Die Buchungsnummer
- *  Storno: Status bei Stornierungen. Zun‰chst wird eine Abrechnung gemacht, danach der
- *          neue Status gesetzt und die Buchungseintr‰ge gelˆcht.
+ *  Storno: Status bei Stornierungen. Zun√§chst wird eine Abrechnung gemacht, danach der
+ *          neue Status gesetzt und die BuchungsEintr√§ge gel√∂cht.
 */
 
 include (INC_PATH . 'cvjm_ajax.php');
@@ -47,19 +47,19 @@ function entferneBerechneteEintraege($Rechnung_id, $Buchung_nr)
 			echo $eintrag['F_artikel_Nr'] . ": $anzahl vorh, " . $eintrag['Menge'] . ' auf Rechnung<br />';
 			if ($eintrag['Menge'] - $anzahl == 0)
 			{
-				// Eintrag vorhanden - lˆschen
+				// Eintrag vorhanden - l√∂schen
 				if (!sql_query('DELETE FROM ' . TABLE_RECHNUNGSEINTRAEGE .
 					" WHERE F_Rechnung_id=$Rechnung_id AND F_Artikel_Nr=" . $eintrag['F_Artikel_Nr'] .
 					' AND Datum=' . $eintrag['Datum']))
-					echo mysql_error();
+					echo sql_error();
 			} else
 			{
-				// Eintrag vorhanden - ‰ndern
+				// Eintrag vorhanden - √§ndern
 				if (!sql_query('UPDATE ' . TABLE_RECHNUNGSEINTRAEGE .
 					' SET Menge=' . ($eintrag['Menge'] - $anzahl) .
 					" WHERE F_Rechnung_id=$Rechnung_id AND F_Artikel_Nr=" . $eintrag['F_Artikel_Nr'] .
 					' AND Datum=' . $eintrag['Datum']))
-					echo mysql_error();
+					echo sql_error();
 			}
 		}
 	}
@@ -76,7 +76,7 @@ function ergaenzeFreibetraege($eintrag, $eintraege, $nullMenge = '')
 		$eintrag['Menge'] = 0;
 	if ($eintrag['Menge'] != 0 && ($eintrag['Typ'] == ABRECHNUNGSTYP_KOPFNACHT || $eintrag['Typ'] == ABRECHNUNGSTYP_KOPF || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGNACHT || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGPAUSCHAL || $eintrag['Typ'] == ABRECHNUNGSTYP_PAUSCHAL))
 	{
-		// Datum allgemein: es ist egal wann die zugehˆrigen Dinge gebucht sind
+		// Datum allgemein: es ist egal wann die zugeh√∂rigen Dinge gebucht sind
 		$eintrag['Datum'] = 0;
 	}
 	$query = sql_query('SELECT * FROM ' . TABLE_ARTIKELBEZIEHUNGEN .
@@ -120,7 +120,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Menge'] = $eintrag['Menge'];
 	// unterscheidung: Welche Steuer muss ausgewiesen werden?     
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['MWST'] = $MWST[$eintrag['F_MWSt']];
-	// Alles was nicht geringwertig ist kann erm‰ﬂigt werden
+	// Alles was nicht geringwertig ist kann erm√§√üigt werden
 	if (!$eintrag['Steuerpflicht'])
 	{
 		$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['MWST'] = Min($buchung['Steuerbehandlung'], $MWST[$eintrag['F_MWSt']]);
@@ -140,14 +140,14 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Dauer'] = $eintrag['Dauer'];
 	$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Preis'] = holePreis($eintrag['id'], $buchung['F_Preisliste_id'], $eintrag['Dauer'] > 0);
 	$neuMenge = $eintrag['Menge'];
-	// Sonderf‰lle pr¸fen
+	// Sonderf√§lle pr√ºfen
 	// Schritt 1: Essen?
 	if ($eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNG || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGNACHT || $eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNGPAUSCHAL)
 	{
 		// Pro Kopf und Altersgruppe
 		if (PersonenAnzahl($buchung) != $eintrag['Menge'])
 		{
-			// zus‰tzliches Essen
+			// zus√§tzliches Essen
 			echo '<div class="Fehler">';
 			echo date('d.m.Y', $eintrag['Datum']) . ': ';
 			echo 'Essensanzahl ' . $eintrag['Bezeichnung'] .
@@ -164,7 +164,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 		}
 		if ($eintrag['id'] != CVJM_SELBSTVERPFLEGUNG && $neuMenge > 0)
 		{
-			// Pr¸fen, ob Pauschale Vegetarisch anf‰llt
+			// pr√ºfen, ob Pauschale Vegetarisch anf√§llt
 			if ($buchung['Vegetarier'] > 0 && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_VEGETARIER]))
 			{
 				// Eintrag bauen:
@@ -177,7 +177,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$vegetarier['Dauer'] = 0;
 				$Abrechnungseintraege = EintragAufnehmen($vegetarier, $buchung, $Abrechnungseintraege);
 			}
-			// Pr¸fen, ob Pauschale Schweinefleischlos anf‰llt
+			// pr√ºfen, ob Pauschale Schweinefleischlos anf√§llt
 			if ($buchung['Schweinelos'] > 0 && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_SCHWEINEFLEISCHLOS]))
 			{
 				// Eintrag bauen:
@@ -190,14 +190,14 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$vegetarier['Dauer'] = 0;
 				$Abrechnungseintraege = EintragAufnehmen($vegetarier, $buchung, $Abrechnungseintraege);
 			}
-			// Pr¸fen, ob Pauschale 'ohne Hilfe' anf‰llt
+			// pr√ºfen, ob Pauschale 'ohne Hilfe' anf√§llt
 			if (!$buchung['Kuechenhilfe'] && !isset ($Abrechnungseintraege[$eintrag['Datum']][CVJM_OHNEMITHILFE]))
 			{
 				// nur wenn noch keine Hilfe an diesem Tag
 				if (!$q = sql_query('SELECT * FROM ' . TABLE_ARTIKEL . ' INNER JOIN ' .
 					TABLE_ARTIKELARTEN .
 					' ON F_Art_id=Art_id WHERE id=' . CVJM_OHNEMITHILFE))
-					echo mysql_error();
+					echo sql_error();
 				$hilfe = sql_fetch_array($q);
 				sql_free_result(q);
 				$hilfe['Datum'] = $eintrag['Datum'];
@@ -256,7 +256,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$Abrechnungseintraege[$eintrag['Datum']][$eintrag['id']]['Preis'] = 0;
 		}
 	}
-	// Freibetr‰ge aufnehmen
+	// Freibetr√§ge aufnehmen
 	$Abrechnungseintraege = ergaenzeFreibetraege($eintrag, $Abrechnungseintraege, $neuMenge);
 	return $Abrechnungseintraege;
 }
@@ -272,7 +272,7 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 		//echo date('d.m.Y H:i',$datum).'<br />';
 		foreach ($artikel as $artikel_id => $value)
 		{
-			// Freibetr‰ge verrechnen
+			// Freibetr√§ge verrechnen
 			if (isset ($value['Menge']))
 			{
 				// Debug
@@ -284,7 +284,7 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 				}
 				if ($Abrechnungseintraege[$datum][$artikel_id]['Berechnen'] > 0)
 				{
-					// gibt es Freieintr‰ge, bei denen der Abrechnungszeitraum egal ist?
+					// gibt es FreiEintr√§ge, bei denen der Abrechnungszeitraum egal ist?
 					if (isset ($Abrechnungseintraege[0][$artikel_id]['Frei']))
 					{
 						$frei = $Abrechnungseintraege[0][$artikel_id]['Frei'];
@@ -364,9 +364,9 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 			}
 		} // foreach
 	}
-	// Nun noch alle Eintr‰ge in die Datenbank schreiben
+	// Nun noch alle Eintr√§ge in die Datenbank schreiben
 	$gesamt = 0;
-	// TODO: Wof¸r ist $vorhanden???
+	// TODO: Wof√ºr ist $vorhanden???
 	$vorhanden = 0;
 	foreach ($Abrechnungseintraege as $datum => $artikel)
 		foreach ($artikel as $artikel_id => $value)
@@ -379,25 +379,25 @@ function ueberarbeiteEintraege($rechnung_id, $buchung, $Abrechnungseintraege)
 						' (F_Rechnung_id, Datum,MWSt,Rabatt,Art,Einheit,Menge,Dauer,' .
 						'F_Bezeichnung,F_Preis,F_Artikel_Nr) VALUES (' .
 						$rechnung_id . ',' . $datum . ',' . $value['MWST'] . ',' . $value['Rabatt'] .
-						',"' . $value['Art'] . '","' . mysql_real_escape_string($value['Einheit']) . '",' . str_replace(',','.',$value['Berechnen'] - $vorhanden) .
-						',' . $value['Dauer'] . ',"' . mysql_real_escape_string($value['Bezeichnung']) . '",' .
+						',"' . $value['Art'] . '","' . sql_real_escape_string($value['Einheit']) . '",' . str_replace(',','.',$value['Berechnen'] - $vorhanden) .
+						',' . $value['Dauer'] . ',"' . sql_real_escape_string($value['Bezeichnung']) . '",' .
 						$value['Preis'] . ',' . $artikel_id . ')';
 					if (!sql_query($sql))
-						echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler 1:' . mysql_error() . "/".$sql."</div>";
+						echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler 1:' . sql_error() . "/".$sql."</div>";
 					$gesamt += berechnePreis($value['Preis'], $value['Berechnen'], $value['Dauer'], $value['Rabatt']);
 				}
 				// wenn teilweise Berechnung
 				if (($value['Menge'] != $value['Berechnen'] && $value['Menge'] != 0) || ($value['Berechnen'] == 0 && $value['Freieintrag'])) //&& ! $value['Uebernachtung']) )
 				{
-					// die ¸berz‰hligen Artikel werden mit Preis 0 eingetragen
+					// die √ºberz√§hligen Artikel werden mit Preis 0 eingetragen
 					// Uhrzeit ist dann 00:00:01
 					if (!sql_query('INSERT INTO ' . TABLE_RECHNUNGSEINTRAEGE .
 						' (F_Rechnung_id, Datum,MWSt,Rabatt,Art,Einheit,Menge,Dauer,' .
 						'F_Bezeichnung,F_Preis,F_Artikel_Nr) VALUES (' .
 						$rechnung_id . ',' . ($datum +1) . ',' . $value['MWST'] . ',' . $value['Rabatt'] .
-						",'" . $value['Art'] . "','" . mysql_real_escape_string($value['Einheit']) . "'," . str_replace(',','.',$value['Menge'] - $value['Berechnen']) .
-						',' . $value['Dauer'] . ",'" . mysql_real_escape_string($value['Bezeichnung']) . "',0," . $artikel_id . ')'))
-						echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler 2:' . mysql_error() . "</div>";
+						",'" . $value['Art'] . "','" . sql_real_escape_string($value['Einheit']) . "'," . str_replace(',','.',$value['Menge'] - $value['Berechnen']) .
+						',' . $value['Dauer'] . ",'" . sql_real_escape_string($value['Bezeichnung']) . "',0," . $artikel_id . ')'))
+						echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler 2:' . sql_error() . "</div>";
 				}
 			}
 		}
@@ -424,7 +424,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 	{
 		$mySql .= '0,';
 	}
-	$mySql .= "'" . $eintrag['Art'] . "','" . mysql_real_escape_string($eintrag['Einheit']) . "',";
+	$mySql .= "'" . $eintrag['Art'] . "','" . sql_real_escape_string($eintrag['Einheit']) . "',";
 	// &Uuml;bertragen des Eintrages nach Rechnungseintr&auml;ge
 	// Schritt 1: Essen?
 	if ($eintrag['Typ'] == ABRECHNUNGSTYP_VERPFLEGUNG) // $eintrag['F_Art_id'] == CVJMART_VERPFLEGUNG )
@@ -453,7 +453,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 					$preis = 0;
 				$fSql .= $anz . ',' . $eintrag['Dauer'] . ",'" . $bez . "'," . $preis . ',' . $artid . ')';
 				if (!sql_query($fSql))
-					echo "&gt;&gt;&gt; Fehler $fSql: " . mysql_error() . '<br />';
+					echo "&gt;&gt;&gt; Fehler $fSql: " . sql_error() . '<br />';
 				$essenBezahlt += $anz;
 				$gesamt += berechnePreis($preis, $anz);
 			}
@@ -461,7 +461,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 		$mySql = '';
 		if ($essenBezahlt < $eintrag['Menge'])
 		{
-			// zus‰tzliches Essen
+			// zus√§tzliches Essen
 			echo '<div class="Fehler">';
 			echo date('d.m.Y', $eintrag['Datum']) . ': ';
 			echo 'Weniger Essen ' . $eintrag['Bezeichnung'] .
@@ -471,7 +471,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 			// TODO: Wozu dient das: ? && $tag != $eintrag['Datum'])
 		{
 			$tag = $eintrag['Datum'];
-			// Pr¸fen, ob Pauschale Vegetarisch anf‰llt
+			// pr√ºfen, ob Pauschale Vegetarisch anf√§llt
 			if ($buchung['Vegetarier'] > 0)
 			{
 				$mySql .= $sql . $eintrag['Datum'] . ',';
@@ -487,7 +487,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 				{
 					$mySql .= '0,';
 				}
-				$mySql .= "'" . $Artikelarten[$vegetarier['F_Art_id']] . "','" . mysql_real_escape_string($vegetarier['Einheit']) . "',";
+				$mySql .= "'" . $Artikelarten[$vegetarier['F_Art_id']] . "','" . sql_real_escape_string($vegetarier['Einheit']) . "',";
 				$mySql .= $buchung['Vegetarier'] . ',' . $eintrag['Dauer'] . ",'" . $vegetarier['Bezeichnung'] . "',";
 				$preis = holeEndPreis(CVJM_VEGETARIER, $buchung);
 				$mySql .= $preis . ',' . CVJM_VEGETARIER . ');';
@@ -495,7 +495,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 				// keine Fehlerausgabe, da nur einmal Vegetarier pro Tag
 				// doppelte Eintr&auml;ge werden dadurch ignoriert
 				//if (! sql_query($mySql) )
-				//echo 'Vegetarier: '.mysql_error();
+				//echo 'Vegetarier: '.sql_error();
 				$mySql = '';
 				$gesamt += berechnePreis($preis, $buchung['Vegetarier']);
 			}
@@ -506,7 +506,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 				if (!$q = sql_query('SELECT Count(*) FROM ' . TABLE_RECHNUNGSEINTRAEGE .
 					' WHERE F_Artikel_Nr=' . CVJM_OHNEMITHILFE . ' AND F_Rechnung_id=' .
 					$docinput['Rechnung_id'] . ' AND Datum=' . $eintrag['Datum']))
-					echo mysql_error();
+					echo sql_error();
 				$hilfe = sql_fetch_row($q);
 				sql_free_result(q);
 				if ($hilfe[0] == 0)
@@ -514,7 +514,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 					if (!$q = sql_query('SELECT * FROM ' . TABLE_ARTIKEL . ' INNER JOIN ' . TABLE_ARTIKELARTEN .
 						' ON F_Art_id=Art_id WHERE id=' . CVJM_OHNEMITHILFE))
 						{
-						echo mysql_error();
+						echo sql_error();
 						}
 					$hilfe = sql_fetch_array($q);
 					sql_free_result(q);
@@ -620,7 +620,7 @@ function EintragBearbeiten($sql, $buchung, $eintrag)
 		$mySql .= ')';
 		if (!sql_query($mySql))
 			echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler ' .
-			$mySql . ': ' . mysql_error() . '</div>';
+			$mySql . ': ' . sql_error() . '</div>';
 	}
 }
 
@@ -651,7 +651,7 @@ function Rechnungspositionen($rechnung)
 	$sql = 'SELECT * FROM ' . TABLE_RECHNUNGSEINTRAEGE .
 	' WHERE F_Rechnung_id = ' . $rechnung['Rechnung_id'] . ' ORDER BY ' . $Sort;
 	if (!$query = sql_query($sql))
-		echo 'Fehler ' . $sql . ': ' . mysql_error();
+		echo 'Fehler ' . $sql . ': ' . sql_error();
 	// Ausgaben unterdruecken
 	ob_start();
 	$Art = -1;
@@ -688,7 +688,7 @@ function Rechnungspositionen($rechnung)
 		}
 	} // while
 	if (sql_num_rows($query) == 0)
-		echo '<tr><td colspan="11" class="zentriert">keine Eintr‰ge vorhanden</td></tr>';
+		echo '<tr><td colspan="11" class="zentriert">keine Eintr√§ge vorhanden</td></tr>';
 	else
 	{
 		$Gesamtsumme += ZusammenfassungAnzeigen($Meineintrag, $Color, $Art);
@@ -698,13 +698,13 @@ function Rechnungspositionen($rechnung)
 			echo '</td>';
 			echo '<td align="right">' . number_format($Gesamtsumme + $Rabattsumme, 2);
 			echo "</td></tr>\n";
-			echo '<tr><td colspan="3"></td><td colspan="6">abz¸glich Rabatt';
+			echo '<tr><td colspan="3"></td><td colspan="6">abz√ºglich Rabatt';
 			echo '</td>';
 			echo '<td align="right">' . number_format(- $Rabattsumme, 2);
 			echo "</td></tr>\n";
 		}
 		echo '<tr><td colspan="3"></td><td colspan="6"><strong><em>Gesamtsumme</em></strong>';
-		echo ' (' . sql_num_rows($query) . ' Eintr‰ge)</td>';
+		echo ' (' . sql_num_rows($query) . ' Eintr√§ge)</td>';
 		echo '<td align="right">' . number_format($Gesamtsumme, 2);
 		echo "</td></tr>\n";
 		//if ( $buchung['MwStAusweisen'])
@@ -759,7 +759,7 @@ function ZusammenfassungAnzeigen($eintrag, $Color, & $LetzteArt)
 	global $buchung;
 	global $Rabattsumme;
 	global $MwStSumme;
-	// ‹berschrift
+	// √ºberschrift
 	if ($eintrag['Art'] != $LetzteArt)
 	{
 		$LetzteArt = $eintrag['Art'];
@@ -953,7 +953,7 @@ function ZusammenfassungAnzeigen($eintrag, $Color, & $LetzteArt)
 		echo '#Einzelheiten" onClick="javascript:return window.confirm(\'Eintrag ' .
 		stripslashes($eintrag['F_Bezeichnung']) .
 		' ' . $datum;
-		echo ' wirklich lˆschen?\');"><img src="/img/small_edit/delete.gif" border="0"/></a>';
+		echo ' wirklich l√∂schen?\');"><img src="/img/small_edit/delete.gif" border="0"/></a>';
 		echo "</td></tr>\n";
 		return $gesamt;
 	}
@@ -1019,8 +1019,8 @@ if ($profile['editor'] != 1)
 			$Buchung = new Buchung($docinput['Buchung_Nr']);
 			$buchung = holeBuchung($docinput['Buchung_Nr']);
 			$anzString = '';
-			// wenn keine Anzahlung get‰tigt wurde (Bemerkung leer) dann auf 0 setzen
-			// damit die Anzahlung aus der Liste der offenen Anzahlungen rausf‰llt 
+			// wenn keine Anzahlung get√§tigt wurde (Bemerkung leer) dann auf 0 setzen
+			// damit die Anzahlung aus der Liste der offenen Anzahlungen rausf√§llt 
 			$Buchung->anzahlungNullen();
 			$Buchung->logAction('Rechnung Nr. '.$docinput['Rechnungsnummer'].' erstellt');
 		}
@@ -1040,16 +1040,16 @@ if ($profile['editor'] != 1)
 			$Zahlungsziel = 0;
 		// Rechnung speichern
 		$sql = 'UPDATE ' . TABLE_RECHNUNGEN . ' SET VorhAnzahlung=' . $docinput['VorhAnzahlung'] .
-		',Barzahlung=' . $docinput['Barzahlung'] . ",Hinweise='" . trim(mysql_real_escape_string($docinput['Hinweise'])) .
+		',Barzahlung=' . $docinput['Barzahlung'] . ",Hinweise='" . trim(sql_real_escape_string($docinput['Hinweise'])) .
 		"',Rechnungsdatum=" . $docinput['Rechnungsdatum'] . ",Rechnungsnummer=" .
 			$docinput['Rechnungsnummer'] . ",Zahlungsziel=$Zahlungsziel," . //MwStAusweisen=$MwSt,".
-			'Rechnung=' . $docinput['IstRechnung'] . ", Name='" . mysql_real_escape_string($docinput['Name']) . "'" .
-			",Vorname='" . mysql_real_escape_string($docinput['Vorname']) . "',PLZ='" . mysql_real_escape_string($docinput['PLZ']) . "'," .
-			"Ort='" . mysql_real_escape_string($docinput['Ort']) . "',Strasse='" . mysql_real_escape_string($docinput['Strasse']) . "'" .
+			'Rechnung=' . $docinput['IstRechnung'] . ", Name='" . sql_real_escape_string($docinput['Name']) . "'" .
+			",Vorname='" . sql_real_escape_string($docinput['Vorname']) . "',PLZ='" . sql_real_escape_string($docinput['PLZ']) . "'," .
+			"Ort='" . sql_real_escape_string($docinput['Ort']) . "',Strasse='" . sql_real_escape_string($docinput['Strasse']) . "'" .
 		" $Rechnung WHERE Rechnung_id=" . $docinput['Rechnung_id'];
 		if (!sql_query($sql))
 		{
-		echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler '.$sql.':' . mysql_error().'</div>';
+		echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler '.$sql.':' . sql_error().'</div>';
 		}
 	}
 	if (isset ($docinput['Rechnung_id']) && isset ($docinput['Kundenwechsel']) && is_numeric($docinput['Kundenwechsel']) && is_numeric($docinput['Rechnung_id']))
@@ -1075,7 +1075,7 @@ if ($profile['editor'] != 1)
 			'F_Kunden_Nr=Kunden_Nr,F_Adressen_id=Adressen_id ' .
 			' WHERE Rechnung_id=' . $docinput['Rechnung_id'] . ' AND Adressen_id=' .
 			$docinput['Kundenwechsel']))
-			echo mysql_error();
+			echo sql_error();
 	}
 	
 	if (isset ($docinput['Buchung_Nr']) && is_numeric($docinput['Buchung_Nr']))
@@ -1092,7 +1092,7 @@ if ($profile['editor'] != 1)
 		' ON Adressen_id = F_Adressen_id WHERE Buchung_Nr = ' . $docinput['Buchung_Nr']);
 		if ($buchung = sql_fetch_array($bquery))
 		{
-			echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchung')) . '">Zur Buchungs¸bersicht</a> ]</div>';
+			echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchung')) . '">Zur Buchungs√úbersicht</a> ]</div>';
 			// Kopf: Wichtige Daten
 			ZeigeBuchungskopf($buchung);
 			// Ende Kopf
@@ -1106,7 +1106,7 @@ if ($profile['editor'] != 1)
 				$query = sql_query('SELECT * FROM ' . TABLE_BUCHUNGSBEMERKUNGEN .
 				' WHERE F_Buchung_Nr = ' . $docinput['Buchung_Nr'] . ' ORDER BY Bemerkung_id DESC');
 				echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchungsbemerkungen'), 'docinput[Buchung_Nr]=' .
-				$docinput['Buchung_Nr']) . '">Bemerkungen hinzuf¸gen</a> ]';
+				$docinput['Buchung_Nr']) . '">Bemerkungen hinzuf√ºgen</a> ]';
 				echo '</div>';
 				if (sql_num_rows($query) > 0)
 				{
@@ -1148,21 +1148,21 @@ if ($profile['editor'] != 1)
 					$sql = 'INSERT INTO ' . TABLE_RECHNUNGEN . ' (Name, Vorname, Strasse, PLZ, Ort, Zusatz,' .
 					'Titel,Anrede,ReVon, ReBis,Rechnungsdatum,VorhAnzahlung,Barzahlung,Rechnung, ' .
 					'F_Adressen_id, F_Kunden_Nr,F_Buchung_Nr,Rechnungsnummer) ' .
-					"VALUES ('" . mysql_real_escape_string($buchung['Name']) . "','" . 
-					mysql_real_escape_string($buchung['Vorname']) . "','" . mysql_real_escape_string($buchung['Strasse']) .
-					"','" . $buchung["PLZ"] . "','" . mysql_real_escape_string($buchung['Ort']) . "','" . 
-					mysql_real_escape_string($buchung['Zusatz']) . "','" .
-					mysql_real_escape_string($buchung['Titel']) . "','" . 
+					"VALUES ('" . sql_real_escape_string($buchung['Name']) . "','" . 
+					sql_real_escape_string($buchung['Vorname']) . "','" . sql_real_escape_string($buchung['Strasse']) .
+					"','" . $buchung["PLZ"] . "','" . sql_real_escape_string($buchung['Ort']) . "','" . 
+					sql_real_escape_string($buchung['Zusatz']) . "','" .
+					sql_real_escape_string($buchung['Titel']) . "','" . 
 					$Anredearten[$buchung['F_Anrede_id']] . "'," . $buchung['Von'] . ',' .
 						$buchung['Bis'] . ',' . strtotime(date('Y-m-d')) . ',' . 
-						$Anzahlung . ',0,3,' . // 3- Best‰tigung
+						$Anzahlung . ',0,3,' . // 3- Best√§tigung
 					$buchung['Adressen_id'] . ',' . $buchung['Kunden_Nr'] .
 					',' . $buchung['Buchung_Nr'] . ',0)';
 					if (!sql_query($sql))
-						echo '<div class="SchwererFehler">Fehler $sql: ' . mysql_error() . '</div>';
+						echo '<div class="SchwererFehler">Fehler $sql: ' . sql_error() . '</div>';
 					$docinput['Rechnung_id'] = sql_insert_id();
 					$_SESSION['LetzteRechnung'] = $docinput['Rechnung_id'];
-					// Nun noch die Eintr‰ge ¸bernehmen
+					// Nun noch die Eintr√§ge √ºbernehmen
 					$sql = 'INSERT INTO ' . TABLE_RECHNUNGSEINTRAEGE . ' (F_Rechnung_id, Datum,MWSt,' .
 					'Rabatt,Art,Einheit,Menge,Dauer,F_Bezeichnung,F_Preis,F_Artikel_Nr) VALUES (' .
 					$docinput['Rechnung_id'] . ',';
@@ -1173,7 +1173,7 @@ if ($profile['editor'] != 1)
 						' ON F_Art_id=Art_id) ON id=F_Artikel_Nr ' .
 						' WHERE F_Buchung_Nr = ' . $buchung['Buchung_Nr'] . ' AND NOT Unberechnet ORDER BY Datum'))
 						{
-						echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler ' . mysql_error() . '</div>';
+						echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler ' . sql_error() . '</div>';
 						}
 					$tag = 0;
 					$gesamt = 0; // Gesamtpreis
@@ -1193,7 +1193,7 @@ if ($profile['editor'] != 1)
 					// Minimalkosten fuer Anzahlung: 50
 					if ($gesamt < 50)
 						$gesamt = 50;
-					// Pr¸fen: Wenn Anzahlung noch nicht vorhanden, dann eintragen
+					// pr√ºfen: Wenn Anzahlung noch nicht vorhanden, dann eintragen
 					if (($buchung['Anzahlung'] == '' || $buchung['Anzahlung'] == 0) && $buchung['Anzahlungsbemerkung'] == '')
 					{
 						sql_query('UPDATE ' . TABLE_BUCHUNGEN . ' SET Anzahlung=' . $gesamt .
@@ -1207,17 +1207,17 @@ if ($profile['editor'] != 1)
 				else
 					$docinput['Rechnung_id'] = $_SESSION['LetzteRechnung'];
 			} // neue Abrechnung
-			// Status‰nderung:
+			// Status√§nderung:
 			if (isset ($docinput['Storno']) && is_numeric($docinput['Storno']) && $docinput['Storno'] == BUCHUNG_STORNIERT)
 			{
-				// Wenn Storno dann kann nun gelˆscht werden!
+				// Wenn Storno dann kann nun gel√∂scht werden!
 				echo '<strong>&gt;&gt;&gt; Storniere Buchung...</strong>';
 				if (!sql_query('DELETE FROM ' . TABLE_BUCHUNGSEINTRAEGE . ' WHERE F_Buchung_Nr=' . $buchung['Buchung_Nr']))
-					echo mysql_error();
+					echo sql_error();
 				if (!sql_query('UPDATE ' . TABLE_BUCHUNGEN . ' SET BStatus=' . $docinput['Storno'] .
 					', Logtext=CONCAT("' . date('d.m.Y H:i') . ' storniert ' . get_user_nickname() . '\n",Logtext) ' .
 					' WHERE Buchung_Nr=' . $buchung['Buchung_Nr']))
-					echo mysql_error();
+					echo sql_error();
 			}
 			if (isset ($_REQUEST['DelEintrag']))
 			{
@@ -1239,8 +1239,8 @@ if ($profile['editor'] != 1)
 			// Mehrwertsteuer erlassen
 			if (isset ($_REQUEST['MWST']) && is_numeric($_REQUEST['MWST']))
 			{
-				// Berechnung des Nachlasses f¸r MWST
-				$steuer = array_search('Gesch‰ftsbetrieb', $Steuerarten);
+				// Berechnung des Nachlasses f√ºr MWST
+				$steuer = array_search('Gesch√§ftsbetrieb', $Steuerarten);
 
 				// CVJM_PAUSCHALE holen
 				$sql = 'SELECT * FROM (' . TABLE_ARTIKEL . ' INNER JOIN ' . TABLE_MWST .
@@ -1251,23 +1251,23 @@ if ($profile['editor'] != 1)
 				{
 					$NachlassMWST = Min($artikel['MWST'], $buchung['Steuerbehandlung']);
 					$nachlass = -number_format($_REQUEST['MWST']/(1+$NachlassMWST/100),2); 
-					// Einf¸gen eines entsprechenden Artikels 
+					// Einf√ºgen eines entsprechenden Artikels 
 					$sql = 'INSERT INTO ' . TABLE_RECHNUNGSEINTRAEGE .
 						' (F_Rechnung_id, Datum,MWSt,Rabatt,Art,Einheit,Menge,Dauer,' .
 						'F_Bezeichnung,F_Preis,F_Artikel_Nr) VALUES (' .
 						$docinput['Rechnung_id'] . ',' . $buchung['Bis'] . ',' . $NachlassMWST .
-						',0,"' . mysql_real_escape_string($artikel['Art']) . '","' . 
-						mysql_real_escape_string($artikel['Einheit']) .
+						',0,"' . sql_real_escape_string($artikel['Art']) . '","' . 
+						sql_real_escape_string($artikel['Einheit']) .
 						 '",1,0,"' . 
-						mysql_real_escape_string($artikel['Bezeichnung']) . '",' . str_replace(',','.',$nachlass) . ',-1)';
+						sql_real_escape_string($artikel['Bezeichnung']) . '",' . str_replace(',','.',$nachlass) . ',-1)';
 					if (!sql_query($sql))
 					{
-						echo '<div class="SchwererFehler">Der Mahrwertsteuernachlass konnte nicht in die Datenbank eingef¸gt werden!</div>';
-						echo mysql_error().'/'.$sql;
+						echo '<div class="SchwererFehler">Der Mahrwertsteuernachlass konnte nicht in die Datenbank eingef√ºgt werden!</div>';
+						echo sql_error().'/'.$sql;
 					}
 					else
 					{
-						echo '<div class="Erledigt">Die Mehrwertsteuer wurde durch Einf¸gen eines Nachlasses genullt.</div>';
+						echo '<div class="Erledigt">Die Mehrwertsteuer wurde durch Einf√ºgen eines Nachlasses genullt.</div>';
 					}
 
 				} else
@@ -1275,12 +1275,12 @@ if ($profile['editor'] != 1)
 					echo '<div class="SchwererFehler">Der Gutschrift-Artikel ' . CVJM_PAUSCHALE . ' konnte nicht geladen werden!</div>';
 					echo $sql;
 				}
-				mysql_free_result($q);
+				sql_free_result($q);
 			}
 
 			if (isset ($_REQUEST['Menge']) && isset ($_REQUEST['Richtung']) && isset ($_REQUEST['Datum']) && is_numeric($_REQUEST['Menge']))
 			{
-				// Eintragsmenge erhˆhen
+				// Eintragsmenge erh√∂hen
 				$Richtung = $_REQUEST['Richtung'];
 				if ($Richtung != '+' && $Richtung != '-')
 					$Richtung = '+';
@@ -1296,22 +1296,22 @@ if ($profile['editor'] != 1)
 					$sql .= " BETWEEN $anf AND $end";
 				}
 				if (!sql_query($sql))
-					echo 'Fehler: ' . $sql . ': ' . mysql_error();
+					echo 'Fehler: ' . $sql . ': ' . sql_error();
 			}
 			// Die Rechnungsdaten holen
 			if (!$query = sql_query('SELECT * FROM ' . TABLE_RECHNUNGEN . ' WHERE Rechnung_id=' .
 				$docinput['Rechnung_id']))
-				echo 'Fehler: ' . mysql_error();
+				echo 'Fehler: ' . sql_error();
 			$rechnung = sql_fetch_array($query);
 			sql_free_result($query);
 			if (isset ($docinput['Bereinigen']) && $rechnung['Rechnung'] == 1)
 			{
 				entferneBerechneteEintraege($docinput['Rechnung_id'], $buchung['Buchung_Nr']);
 			}
-			// Editieren einzelner Eintr‰ge
+			// Editieren einzelner Eintr√§ge
 			if (isset ($_REQUEST['SaveEdit']))
 			{
-				// Eintr‰ge speichern
+				// Eintr√§ge speichern
 				foreach ($docinput['Bezeichnung'] as $key => $value)
 				{
 					list ($Artikelnr, $datum) = explode(',', $key);
@@ -1326,7 +1326,7 @@ if ($profile['editor'] != 1)
 					else
 						$Datum = "BETWEEN $von AND $bis";
 					$sql = 'UPDATE ' . TABLE_RECHNUNGSEINTRAEGE . " SET F_Bezeichnung='";
-					$sql .= mysql_real_escape_string($value) . "', F_Preis=";
+					$sql .= sql_real_escape_string($value) . "', F_Preis=";
 					$docinput['Preis'][$key] = str_replace(',', '.', $docinput['Preis'][$key]);
 					if (is_numeric($docinput['Preis'][$key]))
 						$sql .= $docinput['Preis'][$key];
@@ -1355,12 +1355,12 @@ if ($profile['editor'] != 1)
 					$sql .= "WHERE F_Artikel_Nr = $Artikelnr AND Datum $Datum AND ";
 					$sql .= 'F_Rechnung_id = ' . $docinput['Rechnung_id'];
 					if (!sql_query($sql))
-						echo "Fehler $sql: " . mysql_error();
+						echo "Fehler $sql: " . sql_error();
 				}
 			}			    			
 			$Smarty->assign('id', $id);
-			$Smarty->assign_by_ref('docinput', $docinput);
-			$Smarty->assign_by_ref('rechnung', $rechnung);						
+			$Smarty->assign('docinput', $docinput);
+			$Smarty->assign('rechnung', $rechnung);						
 			asort($DokArten);
 			$Smarty->assign('DokArten_values', array_keys($DokArten));
 			$Smarty->assign('DokArten_output', array_values($DokArten));
@@ -1369,7 +1369,7 @@ if ($profile['editor'] != 1)
 					
 			if (isset ($docinput['Kundenwahl']) && isset ($docinput[Kunde]) && $docinput['Kunde'] != '') 
 			{
-				// die Kunden aufz‰hlen und eine Auswahl mˆglich machen
+				// die Kunden aufz√§hlen und eine Auswahl m√∂glich machen
 					// Anzeigen der gefundenen Kunden
 					$query = sql_query('SELECT * FROM ' . TABLE_ADRESSEN . ' WHERE Name LIKE "%' .
 					$docinput['Kunde'] . '%" ORDER BY Name');
@@ -1440,17 +1440,17 @@ if ($profile['editor'] != 1)
 					echo '<form action="' . get_url($id) . '#Einzelheiten" method="post">';
 					echo '<input type="hidden" name="docinput[Rechnung_id]" value="' . $rechnung['Rechnung_id'] . '" />';
 					echo '<tr><td colspan="9" class="zentriert"><input type="Submit" ';
-					echo 'name="SaveEdit" value="Eintr‰ge speichern">';
+					echo 'name="SaveEdit" value="Eintr√§ge speichern">';
 					echo "</td></tr>\n";
 				} else
 				{
 					echo '<tr><td colspan="9" class="zentriert">';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1&Alle=1#Einzelheiten');
-					echo '">Eintr‰ge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
+					echo '">Eintr√§ge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1#Einzelheiten');
-					echo '">Eintr‰ge bearbeiten</a> ]';
+					echo '">Eintr√§ge bearbeiten</a> ]';
 				    if ( $buchung['AnzahlungsBemerkung'] == '')
 					{
 					  echo ' [ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
@@ -1466,7 +1466,7 @@ if ($profile['editor'] != 1)
 				if (isset ($_REQUEST['Edit']))
 				{
 					echo '<tr><td colspan="9" class="zentriert"><input type="Submit" ';
-					echo 'name="SaveEdit" value="Eintr‰ge speichern">';
+					echo 'name="SaveEdit" value="Eintr√§ge speichern">';
 					echo "</td></tr>\n";
 					echo '</form>';
 				} else
@@ -1474,10 +1474,10 @@ if ($profile['editor'] != 1)
 					echo '<tr><td colspan="9" class="zentriert">';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1&Alle=1#Einzelheiten');
-					echo '">Eintr‰ge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
+					echo '">Eintr√§ge einzeln bearbeiten</a> ]&nbsp;&nbsp;';
 					echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
 					'&Edit=1#Einzelheiten');
-					echo '">Eintr‰ge bearbeiten</a> ] ';
+					echo '">Eintr√§ge bearbeiten</a> ] ';
 					if ( $buchung['AnzahlungsBemerkung'] == '')
 					{
 					  echo '[ <a href="' . get_url($id, 'docinput[Rechnung_id]=' . $docinput['Rechnung_id'] .
@@ -1504,5 +1504,5 @@ if ($profile['editor'] != 1)
 	echo '<div class="zentriert">[ <a href="' . get_url(get_cmodule_id('cvjmbuchung')) . '">Zur Buchungs&uuml;bersicht</a> ]</div>';
 } // editor
 else
-	create_editor_input('Recht f¸r Ver‰nderungen', 'SpeicherRecht', 'text_input');
+	create_editor_input('Recht f√ºr Ver√§nderungen', 'SpeicherRecht', 'text_input');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -28,7 +28,7 @@ if($profile['editor']!='1') {
                      // Anmeldung widerrufen
       $daten = get_profile($SpielerNr, false);
       mail($document["MeldungsEMail"], $document['title'].
-                        " - Anmeldung gelöscht",
+                        " - Anmeldung gelÃ¶scht",
                         "Eine Anmeldung wurde widerrufen ($SpielerNr):\nName: " .
                         $daten['Name'] . " ".$daten["Vorname"]."\n" .
                         "EMail: " . get_user_email($SpielerNr) . "\nGruppe: ".
@@ -57,11 +57,11 @@ if($profile['editor']!='1') {
                   date("d.m.Y H:i",strtotime($document['Beginn'])).
                 " bis ".$Tage[date("w",strtotime($document['Ende']))].", ".
                 date("d.m.Y H:i",strtotime($document['Ende']))."</p>";
-  echo '<p>Das Mindestalter für die Teilnahme beträgt '.
+  echo '<p>Das Mindestalter fÃ¼r die Teilnahme betrÃ¤gt '.
                   $document["Mindestalter"]." Jahre.</p>";
   echo $design['table_begin'].'<tr bgcolor="'.$design['table_header'].
                   '"><th></th><th align="center">Spieler</th><th align="center">NSC</th></tr>';
-  // Belegte Plätze berechnen
+  // Belegte PlÃ¤tze berechnen
   $sql = "SELECT count(user_id) FROM ".TABLE_USERDATA." WHERE name = 'V".
                   $id."' AND value='SC'";
   $query = sql_query($sql);
@@ -126,7 +126,7 @@ if($profile['editor']!='1') {
     echo "</tr>\n"; 
   }
   echo '<tr><td colspan="3"><hr /></td></tr>'; 
-  echo '<tr><td>freie Plätze</td><td align="center">';
+  echo '<tr><td>freie PlÃ¤tze</td><td align="center">';
   if ( $document['SC']-$SCBezahlt <= 0 ) echo '<font color="red"><b>';
   echo ($document['SC']-$SCBezahlt);  
   if ( $document['SC']-$SCBezahlt <= 0 ) echo '</b></font>';
@@ -135,7 +135,7 @@ if($profile['editor']!='1') {
   echo ($document['NSC']-$NSCBezahlt);  
   if ( $document['NSC']-$NSCBezahlt <= 0 ) echo '</b></font>';
   echo "</td></tr>\n"; 
-  echo '<tr><td>vorläufige Anmeldungen ohne Zahlungseingang</td><td align="center">';
+  echo '<tr><td>vorlÃ¤ufige Anmeldungen ohne Zahlungseingang</td><td align="center">';
   echo ($SCBelegt-$SCBezahlt);
   echo '</td><td align="center">';
   echo ($NSCBelegt-$NSCBezahlt);
@@ -146,16 +146,16 @@ if($profile['editor']!='1') {
   {
     if ( $document['SC']-$SCBezahlt <= 0)
     {
-    	echo '<b>Achtung: Keine SC-Plätze frei! Nur Anmeldungen für die Warteliste möglich!</b><br />';
+    	echo '<b>Achtung: Keine SC-PlÃ¤tze frei! Nur Anmeldungen fÃ¼r die Warteliste mÃ¶glich!</b><br />';
     }
     elseif ( $SCBelegt >= $document['SC'] )
     {
-    	echo '<b>Achtung: Mehr SC-Anmeldungen als freie Plätze! Plätze werden in Reihenfolge des Geldeingangs vergeben!</b><br />';
+    	echo '<b>Achtung: Mehr SC-Anmeldungen als freie PlÃ¤tze! PlÃ¤tze werden in Reihenfolge des Geldeingangs vergeben!</b><br />';
     }
   	if ( SESSION_STATUS == "ok" )
                     echo 'Gleich <a href="?id='.get_cmodule_id('steinsberg_anmeldung').'&Ref='.$id.'">online anmelden/Anmeldung bearbeiten</a>...<br /><br />';
                   else
-                    echo "Zum Online-Anmelden müssen Sie sich einloggen!<br /><br />";
+                    echo "Zum Online-Anmelden mÃ¼ssen Sie sich einloggen!<br /><br />";
   }
   echo '<hr />';
   if($document['image'] != '' || $document['body'] != '') {
@@ -171,7 +171,7 @@ if($profile['editor']!='1') {
     if ( SESSION_STATUS == "ok" )
       echo 'Gleich <a href="?id='.get_cmodule_id('steinsberg_anmeldung').'&Ref='.$id.'">online anmelden/Anmeldung bearbeiten</a>...<br /><br />';
     else
-      echo "Zum Online-Anmelden müssen Sie sich einloggen!<br /><br />";
+      echo "Zum Online-Anmelden mÃ¼ssen Sie sich einloggen!<br /><br />";
   }*/
 
   //if(isset($parents)) {
@@ -179,7 +179,7 @@ if($profile['editor']!='1') {
   //}
 }
   /* 
-   * Änderung 07.01.06: Unterseiten auflisten
+   * Ã¤nderung 07.01.06: Unterseiten auflisten
    */
   $children =  get_children (0, 100, -1, false, 'DESC', false);
   if(isset($children)) {
@@ -219,9 +219,9 @@ if($profile['editor']=='1') {
   // Text Input
   create_editor_input('NSC-Preis','NSCPreis','text_input');
   echo '<br /><br />';
-  create_editor_input('AWF-Keynummer für SC','Key SC','text_input');
+  create_editor_input('AWF-Keynummer fÃ¼r SC','Key SC','text_input');
   echo '<br /><br />';
-  create_editor_input('AWF-Keynummer für NSC','Key NSC','text_input');
+  create_editor_input('AWF-Keynummer fÃ¼r NSC','Key NSC','text_input');
   echo '<br /><br />';
   create_editor_input('Mindestalter in Jahren','Mindestalter','text_input');
   echo '<br /><br />';

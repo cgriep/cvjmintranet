@@ -1,19 +1,19 @@
 {$title}
 
 <div class="noprint">
- [ <a href="?id={$id}&newauf=1">Auftrag hinzufügen</a> ] 
+ [ <a href="?id={$id}&newauf=1">Auftrag hinzufÃ¼gen</a> ] 
  [ <a href="?id={$id}&Alle={$Alle}{$BernutzerURL}">{$AlleText}erledigte anzeigen</a> ]
  {if ( isset($smarty.request.SearchOrt))}
     [ <a href="?id={$id}">Alle anzeigen</a> ]
  {/if}
  {if ( isset($smarty.request.MyWork) )}
-    [ <a href="?id={$id}">Nur Aufträge für mich anzeigen</a> ] 
+    [ <a href="?id={$id}">Nur AuftrÃ¤ge fÃ¼r mich anzeigen</a> ] 
  {else}
-    [ <a href="?id={$id}&MyWork=1{$BenutzerURL}">Auftragsstatus erteilter Aufträge anzeigen</a> ] 
+    [ <a href="?id={$id}&MyWork=1{$BenutzerURL}">Auftragsstatus erteilter AuftrÃ¤ge anzeigen</a> ] 
   {/if}
 </div>
 
-<h2>Aufträge von {$Benutzer}, Stand {$smarty.now|date_format:"%d.%m.%Y %H:%M"}</h2>
+<h2>AuftrÃ¤ge von {$Benutzer}, Stand {$smarty.now|date_format:"%d.%m.%Y %H:%M"}</h2>
 
 <table width="100%" border="1" style="border-collapse:collapse;" class="drucklinien">
 <tr style="border: thin solid; border-width: 1pt;padding: 2pt">
@@ -21,7 +21,7 @@
     <a title="nach Bezeichnung sortieren" href="?id={$id}&Sort=Titel">Bezeichnung</a>
   </th>
   <th class="small">
-    <a href="?id={$id}&Sort=Prioritaet">Priorität</a>/<br/>
+    <a href="?id={$id}&Sort=Prioritaet">PrioritÃ¤t</a>/<br/>
     <a href="?id={$id}&Sort=Status">Status</a>
   </th>
   <th class="small">Neuer Status</th>
@@ -67,11 +67,11 @@
 </table>
 <br /><br />
 
-{* Aufträge anderer ansehen *}
+{* AuftrÃ¤ge anderer ansehen *}
 {if ( isset($User) )}
 <hr class="noprint" />
 <form action="?id={$id}" method="post" class="noprint">
-Aufträge von Benutzer 
+AuftrÃ¤ge von Benutzer 
 <select name="docinput[Benutzer]" size="1">
       {html_options options=$User selected=$BenutzerID}
 </select>
@@ -80,15 +80,15 @@ Aufträge von Benutzer
 {/if}
 
 <div class="noprint">
- [ <a href="?id={$id}&newauf=1">Auftrag hinzufügen</a> ] 
+ [ <a href="?id={$id}&newauf=1">Auftrag hinzufÃ¼gen</a> ] 
  [ <a href="?id={$id}&Alle={$Alle}{$BernutzerURL}">{$AlleText}erledigte anzeigen</a> ]
  {if ( isset($smarty.request.SearchOrt))}
     [ <a href="?id={$id}">Alle anzeigen</a> ]
  {/if}
  {if ( isset($smarty.request.MyWork) )}
-    [ <a href="?id={$id}">Nur Aufträge für mich anzeigen</a> ] 
+    [ <a href="?id={$id}">Nur AuftrÃ¤ge fÃ¼r mich anzeigen</a> ] 
  {else}
-    [ <a href="?id={$id}&MyWork=1{$BenutzerURL}">Auftragsstatus erteilter Aufträge anzeigen</a> ] 
+    [ <a href="?id={$id}&MyWork=1{$BenutzerURL}">Auftragsstatus erteilter AuftrÃ¤ge anzeigen</a> ] 
   {/if}
 </div>
 ddd

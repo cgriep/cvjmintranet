@@ -57,7 +57,7 @@ Neuer Artikel</a>&nbsp;]
   </td>
   <td align="right">
 	<a href="?id={$id}&Seite={$Seite}&docinput[AnzahlProSeite]={eval var=$AnzahlProSeite-5}&{$params2}" 
-	title="Anzeigeanzahl reduzieren">&uarr;</a><br />{$Gesamtanzahl} Einträge
+	title="Anzeigeanzahl reduzieren">&uarr;</a><br />{$Gesamtanzahl} EintrÃ¤ge
   </td>
 </tr>
 {/if}
@@ -99,9 +99,9 @@ Neuer Artikel</a>&nbsp;]
   {/section}
   </td>
   <td align="right">
-	{$Gesamtanzahl} Einträge<br />
+	{$Gesamtanzahl} EintrÃ¤ge<br />
 	<a href="?id={$id}&Seite={$Seite}&docinput[AnzahlProSeite]={eval var=$AnzahlProSeite+5}&{$params2}" 
-	title="Anzeigeanzahl erhöhen">&darr;</a>
+	title="Anzeigeanzahl erhÃ¶hen">&darr;</a>
   </td>
 </tr>
 {/if} {* mehr als eine Seite *}

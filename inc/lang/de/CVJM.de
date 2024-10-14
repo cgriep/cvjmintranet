@@ -1,20 +1,20 @@
 SUBMIT	Speichern
 NEUERSTATUS	Neuer<br />Status
 STATUS	Status
-PRIORITAET	Priorität
+PRIORITAET	PrioritÃ¤t
 DATUMAUTOR	Datum<br />Autor
 BEZEICHNUNG_SORTIEREN	Nach Bezeichnung sortieren
 BEZEICHNUNG	Bezeichnung
 AUFTRAGBEARBEITEN	Auftrag bearbeiten
 BEARBEITER	Bearbeiter
-MEHREREBEARBEITER	Mehrere Bearbeiter bei gedrückter Strg-Taste anwählen
+MEHREREBEARBEITER	Mehrere Bearbeiter bei gedrÃ¼ckter Strg-Taste anwÃ¤hlen
 BESCHREIBUNG	Beschreibung
 TITEL	Titel
 ORT	Ort
 OHNEORT	-ohne Angabe-
 BEMERKUNGEN	Bemerkungen
-LOESCHEN	Auftrag löschen
-HINZUFUEGEN	Auftrag hinzufügen
+LOESCHEN	Auftrag lÃ¶schen
+HINZUFUEGEN	Auftrag hinzufÃ¼gen
 ALLEORTE	Alle Orte anzeigen
 OFFEN	offen
 INARBEIT	in Arbeit
@@ -25,7 +25,7 @@ HATZEIT	hat Zeit
 DRINGEND	dringend
 WICHTIG	wichtig
 NORMAL	normal
-DELETED	gelöscht
+DELETED	gelÃ¶scht
 AUFTRAG	Auftrag
 ERTEILT	erteilt
 LISTEANZEIGEN	Auftragsliste anzeigen

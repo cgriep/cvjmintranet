@@ -73,7 +73,7 @@
     // die Funktion getswitchcolor
     $colorswitch = 0;
     include(INC_PATH.'misc/forum_functions.inc');
-    while ( $data = mysql_fetch_array($query))
+    while ( $data = sql_fetch_array($query))
     {
       echo '<tr bgcolor = "';
       if ( isset($document['Markierung']) && $data[$document['Markierung']] == $document['Markierbedingung']
@@ -105,9 +105,9 @@
             $Link = "";
             $LinkEnde = "";
           }
-          if ( mysql_field_type($query, $Feldanzahl) == "int" || mysql_field_type($query, $Feldanzahl) == "real")
+          if ( sql_field_type($query, $Feldanzahl) == "int" || sql_field_type($query, $Feldanzahl) == "real")
           {
-            if ( mysql_field_len($query, $Feldanzahl) == 1)
+            if ( sql_field_len($query, $Feldanzahl) == 1)
             {
               // Bool-Wert
               echo ' align="center">';
@@ -122,12 +122,12 @@
               echo ' align="right">' .$Link. $data[$Feld].$LinkEnde;
             }
           }
-          elseif ( mysql_field_type($query, $Feldanzahl) == "datetime" )
+          elseif ( sql_field_type($query, $Feldanzahl) == "datetime" )
           {
             // Datumsfeld
             echo ">" . date("d.m.Y H:i",strtotime($data[$Feld]));
           }
-          elseif ( mysql_field_type($query, $Feldanzahl) == "timestamp" )
+          elseif ( sql_field_type($query, $Feldanzahl) == "timestamp" )
           {
             // Datumsfeld
             echo ">$Link";
@@ -162,7 +162,7 @@
         }
         else
         {
-          echo ">"; // >- Feld (nur Überschrift
+          echo ">"; // >- Feld (nur Ãœberschrift
         }
         echo '</td>';
         $Feldanzahl++;

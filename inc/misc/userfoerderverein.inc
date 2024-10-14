@@ -6,14 +6,14 @@ if ( SESSION_STATUS == "ok" && is_numeric(SESSION_DBID)) {
     // Datenbank aktualisieren
     $dbdata = $_REQUEST["dbdata"];
     $sql = "UPDATE fv_mitglieder SET ";
-    while ( list($key, $value) = each($dbdata) ) {
+    foreach ($dbdata as $key => $value) {
       $value = addslashes(str_replace('"', "", stripslashes($value)));  // " wegmachen wegen HTML
       $sql .= $key."='".transform($value,"clean")."',";
     }
     $sql = substr($sql, 0, strlen($sql)-1); // letztes Komma wegschneiden
     $sql .= " WHERE awf_id = ".SESSION_DBID;
     //echo $sql;
-    if ( ! sql_query($sql) ) echo "Update-Datenbankfehler: ".mysql_error();
+    if ( ! sql_query($sql) ) echo "Update-Datenbankfehler: ".sql_error();
   }
   $sql = "SELECT * FROM fv_mitglieder WHERE awf_id = ".SESSION_DBID;
   $qu = sql_query($sql);
@@ -21,7 +21,7 @@ if ( SESSION_STATUS == "ok" && is_numeric(SESSION_DBID)) {
     // Neuen User anlegen
     sql_free_result($qu);
     $sql2 = "INSERT INTO fv_mitglieder (awf_id, Name, Email_p) VALUES (".SESSION_DBID.",'".$profile["nickname"]."','".SESSION_EMAIL."')";
-    if ( ! sql_query($sql2) ) echo "Einf&uuml;gefehler: ".mysql_error();
+    if ( ! sql_query($sql2) ) echo "Einf&uuml;gefehler: ".sql_error();
     $qu = sql_query($sql);
   }
   if ( $row = sql_fetch_array($qu) ) {
@@ -108,6 +108,6 @@ if ( SESSION_STATUS == "ok" && is_numeric(SESSION_DBID)) {
     echo '<br /><br />';
   }
   else
-    echo "Datenbankfehler: ".mysql_error();
+    echo "Datenbankfehler: ".sql_error();
 }
 ?>

@@ -21,7 +21,7 @@ global $document;
 
 $children = get_sorted_children (0, 2, 'timestamp', $doctypes['newsitem'], $news_id);
 
-?><span style="font-size: 10px"><?
+?><span style="font-size: 10px"><?php
 
 foreach ($children as $docid => $value) {
 	if(strlen($value['title']) > 47) { $value['title'] = substr($value['title'], 0, 44).'...'; }
@@ -31,13 +31,13 @@ foreach ($children as $docid => $value) {
 	<a href="<?=get_url($docid)?>">
 	<?=transform($value['title'], $value['datatype']['title'])?></a>
 	<br />
-	<?
+	<?php
 }
 	?>
 	<a href="<?=get_url($news_id)?>"><?=LANG_MORE_NEWS?>...</a>
 	<hr />
 	
-	<?
+	<?php
              
 // Termine suchen
   $Monat = date("n");
@@ -77,7 +77,7 @@ foreach ($children as $docid => $value) {
   {
     $fTermine = array();
   }
-  while ( list($key, $value) = each($fTermine) )
+  foreach ( $fTermine as $key => $value)  )
   {
     if ( $value["Datum"] < mktime(0,0,0,$Monat,$Tag,$Jahr) )
     {
@@ -189,17 +189,17 @@ foreach ($children as $docid => $value) {
        echo 'bis '.date('d.m.Y H:i',$value['Enddatum']);
     if ( strtotime("$Jahr-$Monat-$Tag 23:59") < $value['Enddatum'] )
     {
-      echo ' (ganztägig!)';
+      echo ' (ganztÃ¤gig!)';
     }
     switch ( $value['Turnus'] )
     {
-      case 'd': echo ' täglich';
+      case 'd': echo ' tÃ¤glich';
         break;
-      case 'w': echo ' wöchentlich';
+      case 'w': echo ' wÃ¶chentlich';
         break;
       case 'm': echo ' monatlich';
         break;
-      case 'j': echo ' jährlich';
+      case 'j': echo ' jÃ¤hrlich';
     }
     echo '">'.transform($value['title'],'clean')."</a>";
     echo '</div>';

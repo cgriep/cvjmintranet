@@ -41,7 +41,7 @@
 <tr class="ueberschrift">
   <td></td>
   <td>
-    <a href="?id={$id}&{$params}&Tag={$TageZurueck}#K{$kat_id}" title="5 Tage früher">&lt;&lt;&lt;</a>
+    <a href="?id={$id}&{$params}&Tag={$TageZurueck}#K{$kat_id}" title="5 Tage frÃ¼her">&lt;&lt;&lt;</a>
   </td>
   <th colspan="{eval var=$anzahltage-2}">
     <a href="?id={$id}&{$params}&Tage={eval var=$anzahltage-5}" title="5 Tage weniger anzeigen">&larr;</a>
@@ -51,7 +51,7 @@
     <a href="?id={$id}&{$params}&Tage={eval var=$anzahltage+5}" title="5 Tage mehr anzeigen">&rarr;</a>
   </th>
   <td align="right">
-    <a href="?id={$id}&{$params}&Tag={$TageVor}#K{$kat_id}" title="5 Tage später">&gt;&gt;&gt;</a>
+    <a href="?id={$id}&{$params}&Tag={$TageVor}#K{$kat_id}" title="5 Tage spÃ¤ter">&gt;&gt;&gt;</a>
   </td>
 </tr>
 <tr class="ueberschrift">
@@ -83,7 +83,7 @@
        {popup text=$buchungtext|nl2br|escape caption=$titel}
        >X</a>      
     {/foreach}
-    {if count($eintraege) == 0}
+    {if count($Buchungen) == 0}
       &nbsp;
     {/if}
   </td>
@@ -95,10 +95,10 @@
   <td>
   </td>
   <td colspan="{eval var=$anzahltage/2}" align="left">
-    <a href="?id={$id}&{$params}&Tag={$TageZurueck}#K{$kat_id}" title="5 Tage früher">&lt;&lt;&lt;</a>
+    <a href="?id={$id}&{$params}&Tag={$TageZurueck}#K{$kat_id}" title="5 Tage frÃ¼her">&lt;&lt;&lt;</a>
   </td>
   <td align="right" colspan="{math equation="x/2+a%2" x=$anzahltage}">
-    <a href="?id={$id}&{$params}&Tag={$TageVor}#K{$kat_id}" title="5 Tage später">&gt;&gt;&gt;</a>
+    <a href="?id={$id}&{$params}&Tag={$TageVor}#K{$kat_id}" title="5 Tage spÃ¤ter">&gt;&gt;&gt;</a>
   </td>
 </tr>
 <tr>

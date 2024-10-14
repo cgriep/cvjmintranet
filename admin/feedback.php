@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -11,7 +11,7 @@
 
 error_reporting(1); // Disable Warnings
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ($_REQUEST as $key => $val= {
         $$key = $val;
         }
 
@@ -34,7 +34,7 @@ if(sql_num_rows($qresult) > 0) {
 if($_POST['send_feedback'] == 'true') {
 	$body = '<?xml version="1.0" encoding="UTF-8"?>'."\n".'<form type="awf_feedback">'."\n";
 	$docinput = $_POST['docinput'];
-	while(list($key, $value) = each($docinput)) {
+	foreach ( $docinput as $key => $value) {
 		$body .= '<'.utf8_encode($key).'>'.utf8_encode($value).'</'.utf8_encode($key).">\n";
 		}
 	$body .= '</form>';
@@ -50,13 +50,13 @@ if($_POST['send_feedback'] == 'true') {
 <title>
 Liquid Bytes AWF Feedback
 </title>
-<?
+<?php
         include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<? if($_POST['send_feedback'] != 'true') { ?>
+<?php if($_POST['send_feedback'] != 'true') { ?>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
 <input type="hidden" name="send_feedback" value="true">
 <input type="hidden" name="docinput[awf_version]" value="<?=VERSION?>">
@@ -158,7 +158,7 @@ Note: Only fields marked with <b>*</b> are required.
 <p>
 <input type="submit" value="Send">
 </form>
-<? 	} 
+<?php 	} 
 
 else { 
 	?>
@@ -168,11 +168,11 @@ else {
 	Liquid Bytes will read and archive every single feedback message. We consider the feedback of our customers as very valuable. Please understand, 
 	that it is not possible to write an individual reply in every case.
 	
-<?
+<?php
 	}
 ?>
 </td></tr></table></center>
-<?
+<?php
 	include('footer.inc');
 ?>
 </body>

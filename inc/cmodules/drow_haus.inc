@@ -30,7 +30,7 @@ if ( isset($_SESSION['Anmelderecht']) && is_numeric($_REQUEST['Ver']) )
 			mail(get_user_email($spieler),  
 			$veranstaltung['title'].' - Anmeldung abgelehnt',
 			'Hallo '.$p['Vorname'].' '.$p['Name'].",\n\n".
-			'du hast dich für '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
+			'du hast dich fÃ¼r '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
 			date("d.m.Y",strtotime($veranstaltung['Ende'])).' im Haus '.$p['VGruppe'.$_REQUEST['Ver']].
 			' angemeldet. Leider hat der Hausverantwortliche '.
 			'deine Anmeldung abgelehnt. Damit ist deine Anmeldung nichtig.'."\n".
@@ -57,7 +57,7 @@ if ( isset($_SESSION['Anmelderecht']) && is_numeric($_REQUEST['Ver']) )
 			mail(get_user_email($spieler),  
 			$veranstaltung['title'].' - Anmeldung akzeptiert',
 			'Hallo '.$p['Vorname'].' '.$p['Name'].",\n\n".
-			'du hast dich für '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
+			'du hast dich fÃ¼r '.$veranstaltung['title'].' von '.date("d.m.Y",strtotime($veranstaltung['Beginn'])).' bis '.
 			date("d.m.Y",strtotime($veranstaltung['Ende'])).' im Haus '.$p['VGruppe'.$_REQUEST['Ver']].
 			' angemeldet. Der Hausverantwortliche hat deine Anmeldung akzeptiert.'."\n".
 			'Damit ist deine Anmeldung verbindlich. Bitte trage nun deine Charakterdaten ein.'."\n\n".
@@ -70,9 +70,9 @@ if ( isset($_SESSION['Anmelderecht']) && is_numeric($_REQUEST['Ver']) )
 	}
 }		
 
-// Auflistung aller Häuser
+// Auflistung aller HÃ¤user
 // wenn angemeldeter = Verantwortlicher dann Anzeige der Anmeldungen pro Veranstaltung
-// und Button für Annahme / Ablehnung
+// und Button fÃ¼r Annahme / Ablehnung
 
 if ( $document['title'] != '') echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
 if ( $document['body'] != '') echo transform($document['body'],$document['datatype']['body']).'<br />';
@@ -135,7 +135,7 @@ while ( $row = sql_fetch_array($query) )
 		$charquery = sql_query($sql);
 		$Adel = 0;
 		$NichtAdel = 0;
-		if ( mysql_num_rows($charquery) == 0)
+		if ( sql_num_rows($charquery) == 0)
 		{
 			echo 'Keine Charaktere vorhanden';
 		}
@@ -153,10 +153,10 @@ while ( $row = sql_fetch_array($query) )
 			if ( $profile['SteinsbergSL'] == '1')
 			{
 				$sql = 'SELECT node_id FROM '.TABLE_NODEDATA.' WHERE name="Charakter_id" AND value="'.$char['Charakter_id'].'"';
-				$lquery = mysql_query($sql);
-				$node_id = mysql_fetch_row($lquery);
+				$lquery = sql_query($sql);
+				$node_id = sql_fetch_row($lquery);
 				$node_id = $node_id[0];
-				mysql_free_result($lquery);
+				sql_free_result($lquery);
 				echo '<a href="?id='.$node_id.'">'.$char['Name'].'</a>';
 			}
 			else 
@@ -189,7 +189,7 @@ while ( $row = sql_fetch_array($query) )
 		echo '</table>';
 		if ( $Adel + $NichtAdel > 0)
 		{
-			echo $Adel.' Adlige, '.$NichtAdel.' bürgerliche - Adelsprozentsatz '.number_format($Adel/($Adel+$NichtAdel)*100,2).'%';
+			echo $Adel.' Adlige, '.$NichtAdel.' bÃ¼rgerliche - Adelsprozentsatz '.number_format($Adel/($Adel+$NichtAdel)*100,2).'%';
 		}
 		}
 		echo '</td>';
@@ -222,8 +222,8 @@ while ( $row = sql_fetch_array($query) )
 				echo '<tr><th>Charakter</th><th>Spieler</th><th>Anmeldestatus</th><th>Geldeingang</th></tr>';
 				$sql = "SELECT DISTINCT T1.user_id FROM ".TABLE_USERDATA." AS T1 INNER JOIN ".TABLE_USERDATA." AS T2 ".
 				"ON T1.user_id=T2.user_id WHERE T1.name='V".$Veranstaltungen[$vnr]['id']."' AND T2.name='VGruppe".
-				mysql_real_escape_string($Veranstaltungen[$vnr]['id'])."' AND T2.value='".
-				mysql_real_escape_string($row['Hausname'])."'";
+				sql_real_escape_string($Veranstaltungen[$vnr]['id'])."' AND T2.value='".
+				sql_real_escape_string($row['Hausname'])."'";
 				$charquery = sql_query($sql);
 				while ( $char = sql_fetch_row($charquery))
 				{
@@ -235,10 +235,10 @@ while ( $row = sql_fetch_array($query) )
 					if ( $profile['SteinsbergSL'] == '1')
 					{
 						$sql = 'SELECT node_id FROM '.TABLE_NODEDATA.' WHERE name="Charakter_id" AND value="'.$charakter['Charakter_id'].'"';
-						$lquery = mysql_query($sql);
-						$node_id = mysql_fetch_row($lquery);
+						$lquery = sql_query($sql);
+						$node_id = sql_fetch_row($lquery);
 						$node_id = $node_id[0];
-						mysql_free_result($lquery);
+						sql_free_result($lquery);
 						echo '<a href="?id='.$node_id.'">'.$charakter['Name'].'</a>';
 						echo ' <a href="/DrowCharakterbogen.class.php?Charakter_id='.$charakter['Charakter_id'].
 						'" target="_blank" title="Charakterbogen (PDF)"><img src="/img/icons_16/pdf.png" border="0" /></a>';
@@ -255,7 +255,7 @@ while ( $row = sql_fetch_array($query) )
 					{
 						echo '<a href="'.get_url($id).'&Akzeptieren='.$char[0].'&Ver='.$Veranstaltungen[$vnr]['id'].'">Akzeptieren</a> / ';
 						echo '<a href="'.get_url($id).'&Ablehnen='.$char[0].'&Ver='.$Veranstaltungen[$vnr]['id'];
-						echo '" onClick="javascript:return confirm(\'Soll diese Anmeldung tatsächlich unwiderruflich abgelehnt werden?\');">Ablehnen</a>';
+						echo '" onClick="javascript:return confirm(\'Soll diese Anmeldung tatsÃ¤chlich unwiderruflich abgelehnt werden?\');">Ablehnen</a>';
 					}
 					else
 					{
@@ -268,7 +268,7 @@ while ( $row = sql_fetch_array($query) )
 						echo 'vorhanden';
 					echo '</td></tr>';
 				}
-				mysql_free_result($charquery);
+				sql_free_result($charquery);
 				echo '</table>';
 				echo '</td>';
 				echo '</tr>';
@@ -276,7 +276,7 @@ while ( $row = sql_fetch_array($query) )
 			} // foreach
 		}
 		} // if Veranstaltungen vorhanden
-		mysql_free_result($qres);
+		sql_free_result($qres);
 	} // if SL oder Verantwortlicher
 } // while
 sql_free_result($query);

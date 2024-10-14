@@ -19,14 +19,14 @@ if ( $profile['editor'] != 1 ) {
   $qres = sql_query ("SELECT id, views, DATE_FORMAT(last_login, '%Y-%m-%d %T') As lastlogin FROM ".TABLE_USERS);
   $user = array();
   while($row = sql_fetch_row($qres)) {
-    $user[$row[0]][views] = $row[1];
-    $user[$row[0]][nickname] = get_user_nickname($row[0]);
-    $user[$row[0]][last_login] = $row[2];
-    $user[$row[0]][id] = $row[0];
+    $user[$row[0]]['views'] = $row[1];
+    $user[$row[0]]['nickname'] = get_user_nickname($row[0]);
+    $user[$row[0]]['last_login'] = $row[2];
+    $user[$row[0]]['id'] = $row[0];
   }
   sql_free_result($qres);
   $sortarray = array();
-  while ( list($key, $value) = each($user) )
+  foreach ( $user as $key => $value) 
   {
     $sortarray[] = $value[$Sort];
   }

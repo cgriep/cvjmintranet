@@ -15,14 +15,14 @@ if ( $profile["editor"] != 1 )
 	include(INC_PATH."misc/cvjmBuchungstools.inc");
 	if ( $document['title'] != '') echo '<h1>'.transform($document['title'],$document['datatype']['title']).'</h1>';
 	// Liste der vorhandenen Buchungen
-	// Übersicht über die aktuellen Belegungen
+	// Ãœbersicht Ã¼ber die aktuellen Belegungen
 	echo $design["table_begin"];
 	echo '<tr bgcolor="'.$design["table_header"].
 	'"><th>Wieder-<br />vorlage</th><th>Datum</th><th>Bemerkung</th><th>Adresse</th><th>Buchung</th></tr>';
 	$Where = "WHERE Wiedervorlage > 0";
 	$sql = "SELECT Bemerkung, Bemerkung_id, Wiedervorlage, Datum, Name, ".
 	"Zusatz, PLZ, Ort, Von, Bis, Bemerkungen, Adressen_id, Buchung_Nr, BStatus, ".
-	"Personenanzahl, Altersgruppe FROM (".
+	"Altersgruppe FROM (".
 	TABLE_ADRESSENBEMERKUNGEN.
 	" INNER JOIN ".TABLE_ADRESSEN." ON Adressen_id = F_Adressen_id) LEFT JOIN ".
 	TABLE_BUCHUNGEN." ON F_Buchung_Nr = Buchung_Nr $Where ORDER BY Wiedervorlage";
@@ -54,7 +54,7 @@ if ( $profile["editor"] != 1 )
 		{
 			switch ( $buchung["BStatus"] )
 			{
-				case 9: // gelöscht
+				case 9: // gelÃ¶scht
 					echo '<img src="img/small_edit/notok.gif" border="0" title="Vorreservierung gel&ouml;scht">';
 					break;
 				case 0:
@@ -111,13 +111,13 @@ if ( $profile["editor"] != 1 )
 	$Where = 'WHERE Anzahlung>0 AND BStatus < '.BUCHUNG_FERTIG.
 	' AND BStatus <> '.BUCHUNG_STORNIERT.
 	' AND AnzahlungsBemerkung="" AND Rechnung=3 AND Rechnungsdatum<'.
-	strtotime('-'.$document['WiedervorlageTagAnzahl'].' days'); // Bestätigung
+	strtotime('-'.$document['WiedervorlageTagAnzahl'].' days'); // BestÃ¤tigung
 	$sql = 'SELECT Rechnung_id,F_Buchung_Nr, Name,Vorname, '.TABLE_RECHNUNGEN.
 	'.F_Adressen_id, Von, Bis, '.
 	'Zusatz, PLZ, Ort, Anzahlung, Rechnungsdatum FROM '.
 	TABLE_BUCHUNGEN.' INNER JOIN '.TABLE_RECHNUNGEN.' ON Buchung_Nr = F_Buchung_Nr '.
 	$Where.' ORDER BY Rechnungsdatum';
-	if ( ! $query = sql_query($sql) ) echo mysql_error();
+	if ( ! $query = sql_query($sql) ) echo sql_error();
 	$Eintraege = array();
 	$Summe = 0;
 	while ( $buchung = sql_fetch_array($query) )
@@ -202,7 +202,7 @@ if ( $profile["editor"] != 1 )
 	"Zusatz, PLZ, Ort, Anzahlung, Rechnungsdatum FROM ".
 	TABLE_BUCHUNGEN." INNER JOIN ".TABLE_RECHNUNGEN." ON Buchung_Nr = F_Buchung_Nr ".
 	"$Where ORDER BY Rechnungsdatum";
-	if ( ! $query = sql_query($sql) ) echo mysql_error();
+	if ( ! $query = sql_query($sql) ) echo sql_error();
 	$Summe = 0;
 	$Color = "helleZeile";
 	while ( $buchung = sql_fetch_array($query) )
@@ -235,10 +235,10 @@ if ( $profile["editor"] != 1 )
 - (Menge*F_Preis*CASE WHEN Dauer=0 THEN 1 ELSE Dauer END * Rabatt)/100) AS Summe
 FROM cvjm_Rechnungseintraege
 WHERE F_Rechnung_id='.$buchung['Rechnung_id'];
-		$qr = mysql_query($sql);
-		$result = mysql_fetch_row($qr);
+		$qr = sql_query($sql);
+		$result = sql_fetch_row($qr);
 		$Sum = $result[0];
-		mysql_free_result($qr);
+		sql_free_result($qr);
 		$Summe += $Sum;
 		echo '<td align="right">'.sprintf('%01.2f',$Sum);
 		echo '<a href="'.get_url(get_cmodule_id('cvjmabrechnung'),'docinput[Rechnung_id]='.
@@ -286,7 +286,7 @@ WHERE F_Rechnung_id='.$buchung['Rechnung_id'];
 	"Telefon1, Telefon2, Logtext FROM ".
 	TABLE_BUCHUNGEN." INNER JOIN ".TABLE_ADRESSEN.
 	" ON F_Adressen_id=Adressen_id $Where ORDER BY BuchungStand, Von";
-	if ( ! $query = sql_query($sql) ) echo mysql_error();
+	if ( ! $query = sql_query($sql) ) echo sql_error();
 	$Summe = 0;
 	$Color = "helleZeile";
 	while ( $buchung = sql_fetch_array($query) )
@@ -363,7 +363,7 @@ WHERE F_Rechnung_id='.$buchung['Rechnung_id'];
 	"Telefon1, Telefon2, Logtext FROM ".
 	TABLE_BUCHUNGEN." INNER JOIN ".TABLE_ADRESSEN.
 	" ON F_Adressen_id=Adressen_id $Where ORDER BY BuchungStand, Von";
-	if ( ! $query = sql_query($sql) ) echo mysql_error();
+	if ( ! $query = sql_query($sql) ) echo sql_error();
 	$Summe = 0;
 	$Color = "helleZeile";
 	while ( $buchung = sql_fetch_array($query) )

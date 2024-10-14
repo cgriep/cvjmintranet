@@ -29,9 +29,9 @@ else {
 <?=$design['table_begin']?>
 <tr><td bgcolor="<?=$design['table_row_bright']?>">
 <?=LANG_DIRECTORY?>:
-<?
-$buffer = split('/', $subject);
-while(list($nr, $dir) = each($buffer)) {
+<?php
+$buffer =  explode('/', $subject);
+foreach ( $buffer as $nr => $dir) {
   $real_path .= $dir.'/';
   if($nr==0) echo('<a href="'.get_url($id,'subject=%2f').'">'.$document['title'].'</a> > ');
   if($dir != '') {
@@ -42,11 +42,11 @@ while(list($nr, $dir) = each($buffer)) {
 </td></tr>
 <?=$design['table_end']?>
 <br />
-<?
+<?php
 if (!strstr($subject, '.')) {
 ?>
 <table width="100%" cellpadding="1" cellspacing="0" border="0">
-<?
+<?php
 
 $file_counter = 0;
 $total_size   = 0;
@@ -62,12 +62,12 @@ sort($filelist);
 sort($dirlist);
 $filelist = array_merge($dirlist,$filelist);
 
-while (list($nr,$file) = each($filelist)) {
+foreach ( $filelist as $nr => $file) {
     if ($file != "." && $file != ".." && strlen($file) > 0 && $file[0] != '.') { 
       $file_counter++;
       ?>
       <tr><td width="1%" align="left">
-      <?
+      <?php
       if (filetype($value.$subject.$file) == 'dir' || filetype($value.$subject.$file) == 'link')  { 
         echo '<a href="'.get_url($id, 'subject='.urlencode($subject.$file)).'%2f"><img hspace="5" src="img/icons_16/folder.png" border="0"></a></td>
 		<td width="33%" align="left"><a href="'.get_url($id, 'subject='.urlencode($subject.$file.'/')).'">'.$file.'</a></td>'; }
@@ -126,7 +126,7 @@ while (list($nr,$file) = each($filelist)) {
 	}
       ?>
       </td>
-      <td width="20%" align="right" nowrap><? 
+      <td width="20%" align="right" nowrap><?php 
 	if(filetype($value.$subject.$file) == 'dir') {
 		echo htmlentities('<DIR>');
 		$dir_counter++;
@@ -148,7 +148,7 @@ while (list($nr,$file) = each($filelist)) {
       ?>
       </td>
       <td width="5%" align="right">&nbsp;</td>
-      <td width="20%" align="right" nowrap><?
+      <td width="20%" align="right" nowrap><?php
       echo timestamp_to_string(filemtime($value.$subject.$file), 'datetime');
       
       ?>
@@ -182,4 +182,4 @@ printf(' '.LANG_BROWSE_FILES, ($file_counter - $dir_counter), $dir_counter);
 ?>
 </td></tr>
 <?=$design['table_end']?>
-<? } ?>
+<?php } ?>

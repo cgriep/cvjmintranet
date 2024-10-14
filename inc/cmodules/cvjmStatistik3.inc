@@ -33,7 +33,7 @@ if ( $profile["editor"] != 1 )
         TABLE_RECHNUNGEN." ON F_Rechnung_id=Rechnung_id) INNER JOIN ".TABLE_ARTIKEL.
         " ON id=F_Artikel_Nr) INNER JOIN ".TABLE_BUCHUNGEN.
         " ON Buchung_Nr=F_Buchung_Nr WHERE Rechnung=1 AND BStatus<=".BUCHUNG_FERTIG.
-        " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht berücksichtigt
+        " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht berÃ¼cksichtigt
         " AND F_Art_id=".CVJMART_ORT.
         " AND Datum BETWEEN $anfang AND $ende".
         " AND Menge > 0 AND NOT Storno ORDER BY Datum");
@@ -47,7 +47,7 @@ if ( $profile["editor"] != 1 )
       {
         if ( $schlafplaetze > 0 )
         {
-          // Hütten-Übernachtung
+          // HÃ¼tten-Ãœbernachtung
           $bereich = getOrtsname(holeArtikelMasterParent($eintrag["F_Art_id"],
             $eintrag["Position"],$eintrag["Einruecken"]));
           $eintrag["Datum"] = strtotime(date("Y-m-d", $eintrag["Datum"]));
@@ -76,6 +76,7 @@ if ( $profile["editor"] != 1 )
             //echo date("d.m.Y",$datum)."/";
             $uebernachtungen[$bereich] = array();
             $uebernachtungen[$bereich]["Anzahl"] = 0;
+            $uebernachtungen[$bereich]["Buchungen"] = array();
           }
           if ( $schlafplaetze > 0 )
           {
@@ -96,10 +97,10 @@ if ( $profile["editor"] != 1 )
         }
       }
     }
-    echo "<h2>In ".$docinput["Monat"]."/".$docinput["Jahr"]." vorhandene Übernachtungen:</h2>";
+    echo "<h2>In ".$docinput["Monat"]."/".$docinput["Jahr"]." vorhandene Ãœbernachtungen:</h2>";
     foreach ( $uebernachtungen as $bereich => $jahre )
     {
-      echo 'Übernachtungen in '.$bereich.':'.$jahre["Anzahl"].'<br />';
+      echo 'Ãœbernachtungen in '.$bereich.':'.$jahre["Anzahl"].'<br />';
     }
     echo '<br />';
     echo "In ".$docinput["Monat"]."/".$docinput["Jahr"]." neu hinzugekommene Personen:<br />";
@@ -108,11 +109,11 @@ if ( $profile["editor"] != 1 )
       TABLE_RECHNUNGEN." ON F_Rechnung_id=Rechnung_id) INNER JOIN ".TABLE_ARTIKEL.
       " ON id=F_Artikel_Nr) INNER JOIN ".TABLE_BUCHUNGEN.
      " ON Buchung_Nr=F_Buchung_Nr WHERE Rechnung=1 AND BStatus<=".BUCHUNG_FERTIG.
-      " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht berücksichtigt
+      " AND BStatus <> ".BUCHUNG_STORNIERT." AND Datum > Von ".  // Vorhut wird nicht berÃ¼cksichtigt
       " AND Von BETWEEN $anfang AND $ende".
       " AND Menge > 0 AND NOT Storno ORDER BY Datum");
     $anz = 0;
-    while ( $row = mysql_fetch_array($query) )
+    while ( $row = sql_fetch_array($query) )
     {
        if ( isset($plaetze[$row["Buchung_Nr"]]))
        {
@@ -120,7 +121,7 @@ if ( $profile["editor"] != 1 )
          foreach ( $erstesDatum as $bereich => $wert )
            $anz += $wert;
        }
-       // Rausrechnen: Übernachtungen
+       // Rausrechnen: Ãœbernachtungen
     }
     echo $anz." Personen";
   }

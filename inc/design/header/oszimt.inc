@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         23.06.2002: Adapted to XHTML 1.0 [michael@liquidbytes.net]
 */
@@ -13,21 +13,21 @@ Oberstufenzentrum Informations- und Medizintechnik</big><br />
 Informationen zum Unterricht in den Klassen von Herrn Griep</big></strong></td>
 <td width="10%" align="right" valign="middle">
 &nbsp;&nbsp;<a href="http://www.berlin.de"><img src="img/berlinlogo.gif" border="0" alt="Berlin" /></a>
-<? if($profile['editmode'] === 0) { ?>
+<?php if($profile['editmode'] === 0) { ?>
 <a href="<?=get_url($id, array('editmode' => 1))?>"><img src="img/small_edit/editmode_on.gif"
 style="background:gray" border="0" alt="Editmode" /></a>
-<? } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
+<?php } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
 <a href="<?=get_url($id, array('editmode' => 0))?>"><img
 src="img/small_edit/editmode_off.gif" border="0" alt="Editmode aus" /></a>
-<?
+<?php
 if($profile['simple_edit'] == 1) { ?>
 <a href="<?=get_url($id, array('simple_edit' => 0))?>">
 <img src="img/small_edit/advanced_edit.gif" border="0" alt="Advanced Edit" /></a>
-<? } else { ?>
+<?php } else { ?>
 <a href="<?=get_url($id, array('simple_edit' => 1))?>">
 <img src="img/small_edit/simple_edit.gif" border="0" alt="Edit" /></a>
-<? } ?>
-<? } ?>
+<?php } ?>
+<?php } ?>
 </td></tr>
 </table>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"><tr>

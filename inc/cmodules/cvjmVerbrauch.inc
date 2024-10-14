@@ -10,8 +10,8 @@ define('TABLE_GROESSEN', 'cvjm_Verbrauchsgroessen');
 define('TABLE_KOSTEN', 'cvjm_Verbrauchspreise');
 define('TABLE_VERBRAUCH', 'cvjm_Verbrauchsdaten');
 
-$turnusse[0] = 'täglich';
-$turnusse[1] = 'wöchentlich';
+$turnusse[0] = 'tÃ¤glich';
+$turnusse[1] = 'wÃ¶chentlich';
 $turnusse[2] = 'monatlich';
 
 function holeAktuellenPreis($groesse_id, $Datum = -1)
@@ -23,7 +23,7 @@ function holeAktuellenPreis($groesse_id, $Datum = -1)
 	'(SELECT Max(Datum) FROM ' . TABLE_KOSTEN .
 	' WHERE F_Groesse_id=' . $groesse_id . ' AND Datum<' . $Datum . ')';
 	if (!$q = sql_query($sql))
-		echo mysql_error();
+		echo sql_error();
 	if (!$preis = sql_fetch_row($q))
 		$preis[0] = '-nicht vorhanden-';
 	sql_free_result($q);
@@ -33,7 +33,7 @@ function holeAktuellenPreis($groesse_id, $Datum = -1)
 function verbrauchBerechnen($Datum, $Groesse, $Wert, $Fuellung = false, $NurBerechnung = false)
 {
     $Bemerkung = get_user_nickname();
-    // Eine Sekunde erhöhen, damit die Füllung immer die neuste am Tag ist
+    // Eine Sekunde erhÃ¶hen, damit die FÃ¼llung immer die neuste am Tag ist
 	if ( $Fuellung )	  
 	{
       $Datum++;
@@ -51,7 +51,7 @@ function verbrauchBerechnen($Datum, $Groesse, $Wert, $Fuellung = false, $NurBere
 	' WHERE F_Groesse_id=' . $Groesse . ' AND Datum IN(SELECT MAX(Datum) FROM '.
 	TABLE_VERBRAUCH.' WHERE Datum<'.$Datum.' AND F_Groesse_id='.$Groesse.') ORDER BY Wert DESC';
 	$query = sql_query($sql);
-	if ($altwert = mysql_fetch_row($query))
+	if ($altwert = sql_fetch_row($query))
 	{
 		$altwert = $altwert[0];
 	}
@@ -62,11 +62,11 @@ function verbrauchBerechnen($Datum, $Groesse, $Wert, $Fuellung = false, $NurBere
 	sql_free_result($query);
 	if (! $NurBerechnung)
 	{
-	// Eintrag einfügen
+	// Eintrag einfÃ¼gen
 	if (!sql_query('INSERT INTO ' . TABLE_VERBRAUCH .
 		' (F_Groesse_id,Datum,Wert,Bemerkung,Verbrauch) VALUES (' .
 		$Groesse . ',' . $Datum . ',' . $Wert . ',"' . $Bemerkung . '",1)'))  // Verbrauch muss ungleich null sein
-		echo 'Fehler: ' . mysql_error();
+		echo 'Fehler: ' . sql_error();
 	}
 	$Verbrauch = 0;
 	// Alles ab Datum neu berechnen 
@@ -89,7 +89,7 @@ function verbrauchBerechnen($Datum, $Groesse, $Wert, $Fuellung = false, $NurBere
 		$sql = 'UPDATE ' . TABLE_VERBRAUCH . ' SET Verbrauch=' . $Verbrauch .
 		',Verbrauchskosten=' . $Verbrauchskosten .
 		' WHERE F_Groesse_id=' . $Groesse . ' AND Datum=' . $eintrag['Datum'];
-		  if (!sql_query($sql)) echo mysql_error();
+		  if (!sql_query($sql)) echo sql_error();
 		}
 		$altwert = $eintrag['Wert'];		
 	}
@@ -116,7 +116,7 @@ if ($profile['editor'] != 1)
 		  verbrauchBerechnen($Datum, $groessen['Groesse_id'], 0, false, true);
 		  echo $groessen['Groesse_id'];
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 	}
 	if (isset ($_REQUEST['SaveValues']))
 	{
@@ -147,17 +147,17 @@ if ($profile['editor'] != 1)
 		{
 			if (!$q = sql_query('SELECT Wert FROM ' . TABLE_VERBRAUCH . ' WHERE Datum=' . $groessen['Dat'] .
 				' AND F_Groesse_id=' . $groessen['Groesse_id']))
-				mysql_error();
+				sql_error();
 			$groessen['werte'] = array ();
 			if ($wert = sql_fetch_row($q))
 			{
 				$groessen['werte'][] = $wert[0];
 			}
 			$dieGroessen[] = $groessen;
-			mysql_free_result($q);
+			sql_free_result($q);
 		}
 		sql_free_result($query);
-		$Smarty->assign_by_ref('groessen', $dieGroessen);
+		$Smarty->assign('groessen', $dieGroessen);
 		$Smarty->assign('id', $id);
 		setlocale(LC_ALL, "de_DE@euro", "de_DE", "de", "ge");
 		$Smarty->display('Verbrauch_Eingabe.tpl');
@@ -165,7 +165,7 @@ if ($profile['editor'] != 1)
 	}
 	elseif (isset ($docinput['Groesse']) && is_numeric($docinput['Groesse']))
 	{
-		// Größe bearbeiten
+		// GrÃ¶ÃŸe bearbeiten
 		if (!is_numeric($docinput['Turnus']))
 			$docinput['Turnus'] = 0;
 		if (!is_numeric($docinput['Faktor']))
@@ -177,34 +177,34 @@ if ($profile['editor'] != 1)
 		$docinput['Datum'] = convertDatumToTimestamp($docinput['Datum']);
 		if ($docinput['Groesse'] == -1)
 		{
-			// Neue Größe
+			// Neue GrÃ¶ÃŸe
 			$sql = 'INSERT INTO ' . TABLE_GROESSEN . " (Bezeichnung,Einheit,Turnus,Faktor,Ableseeinheit) VALUES ('";
-			$sql .= mysql_real_escape_string($docinput['Bezeichnung']) . "','" .
-			mysql_real_escape_string($docinput['Einheit']) . "','" .
-			mysql_real_escape_string($docinput['Ableseeinheit']) .
+			$sql .= sql_real_escape_string($docinput['Bezeichnung']) . "','" .
+			sql_real_escape_string($docinput['Einheit']) . "','" .
+			sql_real_escape_string($docinput['Ableseeinheit']) .
 			"'," . $docinput['Turnus'] . ',' . $docinput['Faktor'] . ')';
 			if (!sql_query($sql))
-			  echo '<div class="Fehler">Fehler: ' . mysql_error() . ' (' . $sql . ')</div>';			
+			  echo '<div class="Fehler">Fehler: ' . sql_error() . ' (' . $sql . ')</div>';			
 		} else
 		{
-			// Vorhandene Größe
+			// Vorhandene GrÃ¶ÃŸe
 			if (isset ($docinput['Einheit']))
 			{
 				$sql = 'UPDATE ' . TABLE_GROESSEN . " SET Bezeichnung='" . $docinput['Bezeichnung'] .
-				"', Einheit='" . mysql_real_escape_string($docinput['Einheit']) .
+				"', Einheit='" . sql_real_escape_string($docinput['Einheit']) .
 				"', Turnus=" . $docinput['Turnus'] .
-				", Ableseeinheit='" . mysql_real_escape_string($docinput['Ableseeinheit']) . "'" .
+				", Ableseeinheit='" . sql_real_escape_string($docinput['Ableseeinheit']) . "'" .
 				", Faktor=" . $docinput['Faktor'] . ' WHERE Groesse_id=' . $docinput['Groesse'];
 				if (!sql_query($sql))
-			  echo '<div class="Fehler">Fehler: ' . mysql_error() . ' (' . $sql . ')</div>';
+			  echo '<div class="Fehler">Fehler: ' . sql_error() . ' (' . $sql . ')</div>';
 			}
 			elseif (isset ($docinput['Hinweis']))
 			{
 				$sql = 'INSERT INTO ' . TABLE_KOSTEN . ' (F_Groesse_id,Datum,Preis,Hinweis) VALUES (' .
 				$docinput['Groesse'] . ',' . $docinput['Datum'] . ',' . $docinput['Preis'] . ",'" .
-				mysql_real_escape_string($docinput['Hinweis']) . "')";
+				sql_real_escape_string($docinput['Hinweis']) . "')";
 				if (!sql_query($sql))
-			  echo '<div class="Fehler">Fehler: ' . mysql_error() . ' (' . $sql . ')</div>';
+			  echo '<div class="Fehler">Fehler: ' . sql_error() . ' (' . $sql . ')</div>';
 			}
 			elseif (is_numeric($docinput['Wert']))
 			{
@@ -216,7 +216,7 @@ if ($profile['editor'] != 1)
 			{
 				$sql = 'DELETE FROM ' . TABLE_VERBRAUCH . ' WHERE Wert_id=' . $docinput['Del'];
 				if (!sql_query($sql))
-			  echo '<div class="Fehler">Fehler: ' . mysql_error() . ' (' . $sql . ')</div>';
+			  echo '<div class="Fehler">Fehler: ' . sql_error() . ' (' . $sql . ')</div>';
 			}
 			if ( isset($docinput['WertVorher']))
 			{
@@ -231,7 +231,7 @@ if ($profile['editor'] != 1)
 	{
 		if (!$query = sql_query('SELECT * FROM ' . TABLE_GROESSEN . ' INNER JOIN ' . TABLE_VERBRAUCH .
 			' ON F_Groesse_id=Groesse_id ORDER BY Datum, Bezeichnung'))
-			echo mysql_error();
+			echo sql_error();
 		$Verbrauch = array ();
 		$Jahre = array ();
 		$JahresWert = array ();
@@ -265,12 +265,12 @@ if ($profile['editor'] != 1)
 			$JahresWert[date('Y', $zaehldatum)]['Kosten'] += $groesse['Verbrauchskosten'];
 			$JahresWert[date('Y', $zaehldatum)]['Verbrauch'] += $groesse['Verbrauch'];
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 		$Smarty->assign('Ueberschrift', $_REQUEST['Gesamt']);
-		$Smarty->assign_by_ref('Verbrauch', $Verbrauch);
-		$Smarty->assign_by_ref('Jahre', $Jahre);
-		$Smarty->assign_by_ref('JahresWert', $JahresWert);
-		$Smarty->assign_by_ref('MonatVerbrauch', $JahresWert);
+		$Smarty->assign('Verbrauch', $Verbrauch);
+		$Smarty->assign('Jahre', $Jahre);
+		$Smarty->assign('JahresWert', $JahresWert);
+		$Smarty->assign('MonatVerbrauch', $JahresWert);
 		$Smarty->display('Verbrauch_jahr.tpl');
 	}
 	if (isset ($_REQUEST['Groesse']) && is_numeric($_REQUEST['Groesse']))
@@ -278,13 +278,13 @@ if ($profile['editor'] != 1)
 		$query = sql_query('SELECT * FROM ' . TABLE_GROESSEN . ' WHERE Groesse_id=' . $_REQUEST['Groesse']);
 		if (!$Groesse = sql_fetch_array($query))
 		{
-			$Groesse['Bezeichnung'] = 'Neue Verbrauchsgröße';
+			$Groesse['Bezeichnung'] = 'Neue VerbrauchsgrÃ¶ÃŸe';
 			$Groesse['Faktor'] = 1;
 		}
 		sql_free_result($query);
 		if (isset ($_REQUEST['Stat']))
 		{
-			// Daten für Template vorbereiten
+			// Daten fÃ¼r Template vorbereiten
 			$Smarty->assign('Ueberschrift', $Groesse['Bezeichnung']);
 			$query = sql_query('SELECT * FROM ' . TABLE_VERBRAUCH . ' WHERE F_Groesse_id=' .
 			$Groesse['Groesse_id'] . ' ORDER BY Datum ASC');
@@ -314,7 +314,7 @@ if ($profile['editor'] != 1)
 				$MonatVerbrauch[date('Y', $zaehldatum)][date('n', $zaehldatum)]['Kosten'] += $wert['Verbrauchskosten'];
 				$MonatVerbrauch[date('Y', $zaehldatum)][date('n', $zaehldatum)]['Verbrauch'] += $wert['Verbrauch'];
 			}
-			$Smarty->assign_by_ref('MonatVerbrauch', $MonatVerbrauch);
+			$Smarty->assign('MonatVerbrauch', $MonatVerbrauch);
 			sql_free_result($query);
 			$Smarty->display('Verbrauch_groesse.tpl');
 		}
@@ -384,7 +384,7 @@ if ($profile['editor'] != 1)
 		} else
 		{
 			// Werte eingeben
-			$Smarty->assign_by_ref('Groesse', $Groesse);
+			$Smarty->assign('Groesse', $Groesse);
 			$query = sql_query("SELECT * FROM " . TABLE_VERBRAUCH . " WHERE F_Groesse_id=" .
 			$Groesse["Groesse_id"] . " ORDER BY Datum DESC");
 			$Werte = array();
@@ -392,7 +392,7 @@ if ($profile['editor'] != 1)
 			{
 				$Werte[] = $wert;				
 			}
-			$Smarty->assign_by_ref('Werte', $Werte);			
+			$Smarty->assign('Werte', $Werte);			
 			sql_free_result($query);
 			if ( $_REQUEST['Wert'] < 0)
 			{
@@ -435,10 +435,10 @@ if ($profile['editor'] != 1)
 		}
 		sql_free_result($query);
 		echo '<li><a href="' . get_url($id, "Groesse=-1") .
-		'">Neue Verbrauchsgröße hinzufügen</a></li>';
+		'">Neue VerbrauchsgrÃ¶ÃŸe hinzufÃ¼gen</a></li>';
 		echo '</ul>';
 		echo '<div class="noprint">';
-		echo '[ <a href="' . get_url($id, "Eingabe=Alle") . '">Eingabemaske für alle Werte</a> ] ';
+		echo '[ <a href="' . get_url($id, "Eingabe=Alle") . '">Eingabemaske fÃ¼r alle Werte</a> ] ';
 		echo '[ <a href="' . get_url($id, "Gesamt=Verbrauch") . '">Gesamtstatistik</a> ] ';
 		echo '</div>';	
 }

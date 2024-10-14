@@ -76,7 +76,7 @@ if ($profile['editor'] != '1')
 		' ON node_id=' . TABLE_NODES . ".id WHERE value<>'1' AND name='Personal' AND type_id = " .
 		$doctypes['cvjmadressen']))
 		{
-			echo mysql_error();
+			echo sql_error();
 		}
 		if ($node = sql_fetch_row($qres))
 		{
@@ -102,25 +102,25 @@ if ($profile['editor'] != '1')
 		if (isset ($docinput['Kategorie']) && is_numeric($docinput['Kategorie']))
 		{
 			if (sql_query('UPDATE ' . TABLE_KATEGORIEN . " SET Kategorie='" .
-			mysql_real_escape_string($docinput['KategorieName']) .
+			sql_real_escape_string($docinput['KategorieName']) .
 			"' WHERE Kategorie_id=" . $docinput['Kategorie']))
 			{
 				echo '<div class="Erledigt">&gt;&gt;&gt; Kategorie umbenannt.</div>';
 			} else
 			{
-				echo '<div class="SchwererFehler">Fehler beim Umbenennen der Kategorie.' . mysql_error() . '</div>';
+				echo '<div class="SchwererFehler">Fehler beim Umbenennen der Kategorie.' . sql_error() . '</div>';
 			}
 		}
 		else
 		{
 			if (sql_query('INSERT INTO ' . TABLE_KATEGORIEN . " (Kategorie) VALUES ('" .
-			mysql_real_escape_string($docinput['KategorieName']) . "')"))
+			sql_real_escape_string($docinput['KategorieName']) . "')"))
 			{
 				echo '<div class="Erledigt">&gt;&gt;&gt; Kategorie hinzugefügt.</div>';
 				$docinput['Kategorie'] = sql_insert_id();
 			} else
 			{
-				echo '<div class="SchwererFehler">Fehler beim Hinzufügen der Kategorie.' . mysql_error() . "</div>";
+				echo '<div class="SchwererFehler">Fehler beim Hinzufügen der Kategorie.' . sql_error() . "</div>";
 			}
 		}
 	}
@@ -213,7 +213,7 @@ if ($profile['editor'] != '1')
 			{
 				// Korrektur
 				$sql = "UPDATE " . TABLE_ADRESSENBEMERKUNGEN . " SET Bemerkung='" .
-				mysql_real_escape_string($docinput["Bemerkung"]) . "\ngeändert " . date("d.m.Y H:i") . " " .
+				sql_real_escape_string($docinput["Bemerkung"]) . "\ngeändert " . date("d.m.Y H:i") . " " .
 				get_user_nickname() . "',Datum=$Datum,Wiedervorlage=$Wiedervorlage," .
 				"Anhang='" . $_FILES["Anhang"]["name"] . "' WHERE Bemerkung_id=" . $docinput["Bemerkung_id"];
 			} else
@@ -222,13 +222,13 @@ if ($profile['editor'] != '1')
 				$sql = "INSERT INTO " . TABLE_ADRESSENBEMERKUNGEN .
 				" (F_Adressen_id,Bemerkung,Datum,Wiedervorlage,Anhang) VALUES (" .
 				$_REQUEST["Bearbeiten"] . ",'" .
-				mysql_real_escape_string($docinput["Bemerkung"]) . "\nerzeugt " . date("d.m.Y H:i") . " " .
+				sql_real_escape_string($docinput["Bemerkung"]) . "\nerzeugt " . date("d.m.Y H:i") . " " .
 				get_user_nickname() . "'," . $Datum . "," .
 				$Wiedervorlage . ",'" . $_FILES["Anhang"]["name"] . "')";
 			}
 			if (!sql_query($sql))
 			{
-				echo mysql_error();
+				echo sql_error();
 			}
 			if (!is_numeric($docinput["Bemerkung_id"]))
 			{
@@ -254,13 +254,13 @@ if ($profile['editor'] != '1')
 		/* Beginn Template */
 		$Smarty->assign('Speichern', $profile[$document['SpeicherRecht']] == '1');
 		$Smarty->assign('Buchungurl', get_url(get_cmodule_id("cvjmbuchung")));
-		$Smarty->assign_by_ref('Adresse', $Adresse);
+		$Smarty->assign('Adresse', $Adresse);
 		if (!$Adresse->isNeu())
 		{
 			include (INC_PATH . "misc/cvjmKorrespondenz.inc");
 			ob_start();
 			$Vorlagen = ZeigeVorlagen($Adresse->Adressen_id, 'Adressen');
-			$Smarty->assign_by_ref('Vorlagenliste',holeVorlagen('Adressen'));
+			$Smarty->assign('Vorlagenliste',holeVorlagen('Adressen'));
 			$Smarty->assign('Vorlagen', ob_get_contents());
 			ob_end_clean();
 
@@ -348,7 +348,7 @@ if ($profile['editor'] != '1')
 	{
 		// Liste der Adressen aufbauen
 		$Smarty->assign('title', transform($document['title'], $document['datatype']['title']));
-		$Smarty->assign_by_ref('document', $document);
+		$Smarty->assign('document', $document);
 		$Smarty->assign('Speichern', $profile[$document['SpeicherRecht']] == '1');
 
 		if ($document['Personal'] == 1 && !isset ($_REQUEST['Bearbeiten']))
@@ -384,7 +384,7 @@ if ($profile['editor'] != '1')
 				}
 			}
 			sql_free_result($query);
-			$Smarty->assign_by_ref('Kategorien', $Kategorien);
+			$Smarty->assign('Kategorien', $Kategorien);
 		}
 		$params = array ();
 		if (isset ($docinput['Zugehoerig']) && is_numeric($docinput['Zugehoerig']))
@@ -437,7 +437,7 @@ if ($profile['editor'] != '1')
 		}
 		if (isset ($_REQUEST['Search']))
 		{
-			$Search = trim(mysql_real_escape_string($_REQUEST['Search']));
+			$Search = trim(sql_real_escape_string($_REQUEST['Search']));
 			if ($Search == '')
 			{
 				$Search = 'NOT Geloescht';
@@ -548,10 +548,10 @@ if ($profile['editor'] != '1')
 			$Liste['Color'] = $Color;
 			$Anzeigeliste[] = $Liste;
 		}
-		$Smarty->assign_by_ref('Listen', $Anzeigeliste);
+		$Smarty->assign('Listen', $Anzeigeliste);
 		if (isset ($_REQUEST['Sort']) && trim($_REQUEST['Sort']) != '')
 		{
-			$Sort = mysql_real_escape_string($_REQUEST['Sort']);
+			$Sort = sql_real_escape_string($_REQUEST['Sort']);
 		}
 		else
 		{
@@ -595,7 +595,7 @@ if ($profile['editor'] != '1')
 		}
 		if (!$query = sql_query($sql))
 		{
-			throw new Exception('Fehler beim Adressenanzeigen: '.mysql_error());
+			throw new Exception('Fehler beim Adressenanzeigen: '.sql_error());
 		}
 		$p = $params;
 		unset ($p['Search']);
@@ -633,21 +633,21 @@ if ($profile['editor'] != '1')
 			// Adressen aus der Datenbank holen
 			if (!$query = sql_query($sql . ' ' . sql_limit($AnzahlProSeite, ($Seite -1) * $AnzahlProSeite)))
 			{
-				echo mysql_error();
+				echo sql_error();
 			}
 		}
-		$Smarty->assign_by_ref('Felder', $DBFelder);
+		$Smarty->assign('Felder', $DBFelder);
 		while ($adresse = sql_fetch_array($query))
 		{
 			$Adressen[] = new Adresse($adresse['Adressen_id']);
 		} // while
 		sql_free_result($query);
-		$Smarty->assign_by_ref('Adressen', $Adressen);
+		$Smarty->assign('Adressen', $Adressen);
 		$Smarty->assign('Seite', $Seite);
 		$Smarty->assign('AnzahlProSeite', $AnzahlProSeite);
 		$Smarty->assign('params', feldToParams($params));
 		$Smarty->assign('Sort', $Sort);
-		$Smarty->assign_by_ref('docinput', $docinput);
+		$Smarty->assign('docinput', $docinput);
 		$p = $params;
 		unset ($p['docinput[Edit]']);
 		$Smarty->assign('paramsOhneEdit', feldToParams($p));

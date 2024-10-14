@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -233,8 +233,8 @@ md5(file_get_contents(BASE_PATH.$node->get_attribute('name')))
 
 
 function lbi_is_shared($name, $version) {
-	$basename = strtr(strtolower($name), ' -/\()[]=?.;,!äöüß', '______________aous');
-	$baseversion = strtr(strtolower($version), ' -/\()[]=?;,!äöüß', '................');
+	$basename = strtr(strtolower($name), ' -/\()[]=?.;,!ï¿½ï¿½ï¿½ï¿½', '______________aous');
+	$baseversion = strtr(strtolower($version), ' -/\()[]=?;,!ï¿½ï¿½ï¿½ï¿½', '................');
 			
 	$url = LBI_SHARE_SERVER.'?request=is_shared&product_name='.LBI_PRODUCT_NAME.'&product_version='.LBI_PRODUCT_VERSION.'&name='.$basename.'&version='.$baseversion;
 	$result = file_get_contents($url);
@@ -243,8 +243,8 @@ function lbi_is_shared($name, $version) {
 	}
 
 function lbi_share($name, $version) {
-	$basename = strtr(strtolower($name), ' -/\()[]=?.;,!äöüß', '______________aous');
-	$baseversion = strtr(strtolower($version), ' -/\()[]=?;,!äöüß', '................');
+	$basename = strtr(strtolower($name), ' -/\()[]=?.;,!ï¿½ï¿½ï¿½ï¿½', '______________aous');
+	$baseversion = strtr(strtolower($version), ' -/\()[]=?;,!ï¿½ï¿½ï¿½ï¿½', '................');
 
 	$url = LBI_SHARE_SERVER.'?request=share_package&client='.LBI_SHARE_CLIENT.'&product_name='.LBI_PRODUCT_NAME.
 	'&product_version='.LBI_PRODUCT_VERSION.'&name='.$basename.'&version='.$baseversion;

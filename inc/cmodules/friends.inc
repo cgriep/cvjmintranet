@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -27,7 +27,7 @@ function sendicqmessage(user_id)
 // -->
 </script> 
 
-<?
+<?php
 
 if(SESSION_STATUS == 'ok') {
 	$friends = load_var('friends', SESSION_DBID);
@@ -60,7 +60,7 @@ else {
 
 		echo $design['table_begin'];
 		
-		while(list($key, $value) = each ($users)) { 
+		foreach ( $users as $key => $value)  { 
 			// Does the user still exist?
 			if($key < 1) { 
 				unset($users[$key]); 

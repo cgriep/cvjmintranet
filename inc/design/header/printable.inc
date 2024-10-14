@@ -15,7 +15,7 @@
         init_parents();
         if(isset($parents)) {
                 reset($parents);
-                while (list($docid, $value) = each ($parents)) {
+                foreach ($parents as $docid => $value)  {
                         $section_title = $value['title'].' &gt; '.$section_title;
                         }
                 }

@@ -3,25 +3,25 @@
 /*
 
    cvjmAuftragstools.inc
-   Hilfsfunktionen f¸r Auftr‰ge
+   Hilfsfunktionen f√ºr Auftr√§ge
 
 */
 
 /**
-*  Betroffen enth‰lt kommasepariert die Betroffenen des Auftrages in der form:
+*  Betroffen enth√§lt kommasepariert die Betroffenen des Auftrages in der form:
 *  gXX  - Gruppe XX
 *  XX - Benutzer XX
 *  XX ist die jeweilige AWF-Nummer
 * @param string $Titel
 * @param string $Beschreibung 
 * @param integer $Prioritaet
-* @param string $Betroffen - kommaseparierte Liste der Betroffenen (ID, gID f¸r Gruppen)
+* @param string $Betroffen - kommaseparierte Liste der Betroffenen (ID, gID f√ºr Gruppen)
 * @param date $BearbeitenBis
 * @param integer $Ort
 * @param integer $Status 1-4, 4=erledigt
 * @param integer $Autor ID des Autors, Std=Session_DBID 
 */
-function insertAuftrag($Titel, $Beschreibung, $Prioritaet = 2, $Betroffen, $BearbeitenBis, $Ort = -1,
+function insertAuftrag($Titel, $Beschreibung, $Prioritaet, $Betroffen, $BearbeitenBis, $Ort = -1,
                        $Status = 1, $Autor = SESSION_DBID)
 {
   global $Prioritaeten;
@@ -32,10 +32,10 @@ function insertAuftrag($Titel, $Beschreibung, $Prioritaet = 2, $Betroffen, $Bear
   if ( ! is_numeric($Prioritaet) ) $Prioritaet = 2;
   $sql = 'INSERT INTO '.TABLE_AUFTRAG." (Datum, Titel, Beschreibung, Prioritaet, Autor, Ort, Status, Betroffene, BearbeitenBis) VALUES ('";
   $sql .= date('Y-m-d H:i')."','";
-  $sql .= mysql_real_escape_string($Titel)."','".mysql_real_escape_string($Beschreibung);
+  $sql .= sql_real_escape_string($Titel)."','".sql_real_escape_string($Beschreibung);
   $sql .= "',".$Prioritaet;
   $sql .= ",$Autor,".$Ort.','.$Status.',';
-  $sql .= "'".mysql_real_escape_string($Betroffen)."',";
+  $sql .= "'".sql_real_escape_string($Betroffen)."',";
   $sql .= $BearbeitenBis.')';
   // Mail an Betroffene schicken
   $wer = explode(',',$Betroffen);
@@ -77,7 +77,7 @@ function insertAuftrag($Titel, $Beschreibung, $Prioritaet = 2, $Betroffen, $Bear
            ")\n".$ZusatzText.'Datum: '.date('d.m.Y H:i')."\n".
            'Zugewiesen an: '.$Adressat."\n".
            addslashes($Beschreibung)."\nOrt: ".Ortsname($Ort, false).
-           "\nPriorit‰t: ". $Prioritaeten[$Prioritaet]['name']."\n".
+           "\nPriorit√§t: ". $Prioritaeten[$Prioritaet]['name']."\n".
            $BearbeitenBis,             
            'From: '.get_user_nickname($Autor).' <'.get_user_email($Autor).'>');
         }
@@ -91,13 +91,13 @@ function insertAuftrag($Titel, $Beschreibung, $Prioritaet = 2, $Betroffen, $Bear
             '[Auftrag '.$Titel.'] '.LANG_ERTEILT,  
             'Von: '.get_user_email($Autor).' ('.get_user_nickname($Autor).
              ")\n$ZusatzText.'Datum: ".date('d.m.Y H:i')."\n".
-             $Beschreibung."\nOrt: ".Ortsname($Ort,false)."\nPriorit‰t: ".
+             $Beschreibung."\nOrt: ".Ortsname($Ort,false)."\nPriorit√§t: ".
              $Prioritaeten[$Prioritaet]['name'],
              'From: '.get_user_nickname($Autor).' <'.get_user_email($Autor).'>');
        }
   if ( ! sql_query($sql) )
   {
-    echo '<strong>&gt;&gt; Fehler: '. mysql_error().'</strong><br /><br />';
+    echo '<strong>&gt;&gt; Fehler: '. sql_error().'</strong><br /><br />';
     return -1;
   }
   else
@@ -115,17 +115,17 @@ function updateAuftrag($Auftrag, $Titel, $Beschreibung, $Bemerkung, $Prioritaet,
       if ( ! is_numeric($Ort) ) $Ort = -1 ;
       if ( ! is_numeric($Status) ) $Status = 0;
       if ( ! is_numeric($BearbeitenBis)) $BearbeitenBis = 0;
-      // Update, nur Autoren d¸rfen Auftrag ‰ndern
-      $sql = 'UPDATE '.TABLE_AUFTRAG." SET Titel = '".mysql_real_escape_string($Titel);
-      $sql .= "', Bemerkung = '".mysql_real_escape_string($Bemerkung);
-      $sql .= "', Beschreibung = '".mysql_real_escape_string($Beschreibung)."',";
+      // Update, nur Autoren d√ºrfen Auftrag √§ndern
+      $sql = 'UPDATE '.TABLE_AUFTRAG." SET Titel = '".sql_real_escape_string($Titel);
+      $sql .= "', Bemerkung = '".sql_real_escape_string($Bemerkung);
+      $sql .= "', Beschreibung = '".sql_real_escape_string($Beschreibung)."',";
       $sql .= 'Prioritaet = '.$Prioritaet.',';
       $sql .= 'Status = '.$Status.',';
       $sql .= 'BearbeitenBis='.$BearbeitenBis.',';
-      $sql .= "Betroffene = '".mysql_real_escape_string($Betroffen)."',";
+      $sql .= "Betroffene = '".sql_real_escape_string($Betroffen)."',";
       $sql .= 'Ort = '.$Ort;
       $sql .= ' WHERE id = '.$Auftrag;
-      if (! mysql_query($sql)) echo '&gt;&gt;&gt; Fehler '.mysql_error().'<br />';
+      if (! sql_query($sql)) echo '&gt;&gt;&gt; Fehler '.sql_error().'<br />';
     }
     sql_free_result($qu);
   }

@@ -12,8 +12,8 @@
     {$row.Datum|date_format:"%d.%m.%Y"}
     {if ( ! $row.Gebucht )}</a>{/if}
     {if ( ! $row.Gebucht )}<a href="?id={$id}&docinput[Del]={$row.id}&docinput[Benutzer]={$Benutzer}" 
-    onClick="return window.confirm('Eintrag wirklich lˆschen?');">
-      <img src="/img/small_edit/delete.gif" border="0" title="Lˆschen" /></a>{/if}
+    onClick="return window.confirm('Eintrag wirklich lÔøΩschen?');">
+      <img src="/img/small_edit/delete.gif" border="0" title="LÔøΩschen" /></a>{/if}
     {$row.Datum|date_format:"%d.%m.%Y"}
     {if ( ! $row.Gebucht )}</a>{/if}
   </td>
@@ -33,7 +33,7 @@
 </tr>
 {/foreach}
 <tr>
-  <td>Eintr‰ge</td>
+  <td>Eintr√§ge</td>
   <td colspan="2">{$Eintraege|@count}</td>
   <td>Gesamt (inkl. Zulagen)</td>
   <td align="right">{$Stunden}</td>

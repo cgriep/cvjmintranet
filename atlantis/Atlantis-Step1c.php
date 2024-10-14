@@ -25,10 +25,10 @@ if (isset ($_REQUEST['Spruchliste']) && is_numeric($_REQUEST['Spruchliste']))
 		// Fehler: Keine freien Spruchlisten mehr
 	} else
 	{
-		$query = mysql_query('SELECT * FROM T_Spezialisierungen ' .
+		$query = sql_query('SELECT * FROM T_Spezialisierungen ' .
 		'WHERE Spezialisierung_id = ' . $_REQUEST['Spruchliste']);
-		$sl = mysql_fetch_array($query);
-		mysql_free_result($query);
+		$sl = sql_fetch_array($query);
+		sql_free_result($query);
 		$Charakter->Spruchlisten[$_REQUEST['Spruchliste']] = $sl; 			
 		$_SESSION['Charakter'] = serialize($Charakter);
 	}
@@ -41,11 +41,11 @@ elseif (isset ($_REQUEST['Entfernen']) && is_numeric($_REQUEST['Entfernen']))
 	header('Location: ' . $_SERVER['PHP_SELF']);
 } else
 {
-	if (!$query = mysql_query('SELECT * FROM T_Spezialisierungen WHERE Spruchliste AND F_Klasse_id=' .
+	if (!$query = sql_query('SELECT * FROM T_Spezialisierungen WHERE Spruchliste AND F_Klasse_id=' .
 		$Charakter->F_Klasse_id . ' ORDER BY Spezialisierung'))
-		echo '<div class="Fehler">' . mysql_error() . '</div>';
+		echo '<div class="Fehler">' . sql_error() . '</div>';
     $verfuegbar = $Charakter->getKlasseSpruchlistenAnzahl()-Count($Charakter->Spruchlisten);
-	if ( $verfuegbar > 0 && $verfuegbar < mysql_num_rows($query))
+	if ( $verfuegbar > 0 && $verfuegbar < sql_num_rows($query))
 	{
 		require 'Smarty/libs/Smarty.class.php';
 		$smarty = new Smarty();
@@ -55,7 +55,7 @@ elseif (isset ($_REQUEST['Entfernen']) && is_numeric($_REQUEST['Entfernen']))
 		$vspruchliste_values = array ();
 		$vspruchliste_output = array ();
 		$vspruchliste_selected = '';
-		while ($row = mysql_fetch_array($query)) // Zeile holen
+		while ($row = sql_fetch_array($query)) // Zeile holen
 		{
 			if (in_array($row['Spezialisierung_id'], array_keys($Charakter->Spruchlisten)))
 			{
@@ -80,10 +80,10 @@ elseif (isset ($_REQUEST['Entfernen']) && is_numeric($_REQUEST['Entfernen']))
 		$smarty->display('Atlantis-Step1c.tpl');
 	} else
 	{
-		if ($verfuegbar>=mysql_num_rows($query))
+		if ($verfuegbar>=sql_num_rows($query))
 		{
 			// alle Spruchlisten auswaehlen
-			while ($liste = mysql_fetch_array($query))
+			while ($liste = sql_fetch_array($query))
 			{
 				$Charakter->Spruchlisten[$liste['Spezialisierung_id']] = $liste;
 			}
@@ -91,6 +91,6 @@ elseif (isset ($_REQUEST['Entfernen']) && is_numeric($_REQUEST['Entfernen']))
 		}
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']).'/Atlantis-Step2.php');
 	}
-	mysql_free_result($query);
+	sql_free_result($query);
 }
 ?>

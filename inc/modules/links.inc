@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -11,8 +11,8 @@
 
           Der Disclaimer kann so direkt in die Links.txt eingebaut werden...
                 1|*|3|<b>Disclaimer</b><br /><center>
-                1|*|3|Gem&auml;&szlig; ง 5 Abs.1 TDG sind wir ausschlie&szlig;lich nur f&uuml;r die eigenen Inhalte verantwortlich. F&uuml;r Links<br />
-                1|*|3|auf fremde Inhalte dritter Anbieter sind wir gem&auml;&szlig; ง 5 Abs.2 TDG nur verantwortlich, wenn wir von<br />
+                1|*|3|Gem&auml;&szlig; ยง 5 Abs.1 TDG sind wir ausschlie&szlig;lich nur f&uuml;r die eigenen Inhalte verantwortlich. F&uuml;r Links<br />
+                1|*|3|auf fremde Inhalte dritter Anbieter sind wir gem&auml;&szlig; ยง 5 Abs.2 TDG nur verantwortlich, wenn wir von<br />
                 1|*|3|einem rechtswidrigen oder strafbaren Gehalt positive Kenntnis haben und es technisch m&ouml;glich und<br />
                 1|*|3|zumutbar ist, deren Nutzung zu verhindern. Auch sind wir nicht verpflichtet, in periodischen<br />
                 1|*|3|Abst&auml;nden den Inhalt von Angeboten Dritter auf deren Rechtswidrigkeit oder Strafbarkeit zu &uuml;ber-<br />
@@ -61,8 +61,8 @@ function userisokandisdoctoo ($checkdata1, $checkdata2, $checkdata3="", $checkda
 global $id;
 $filename = INC_PATH.DATA_PATH.'links.txt';
 $lines = file($filename);
-while (list ($line_num, $line) = each ($lines)) {
-        $buffer = split('\|', $line);
+foreach ( $lines as $line_num => $line)  {
+        $buffer =  explode('\|', $line);
         if ($buffer[0] == '1') {
                 userisokandisdoctoo ($buffer[1], $buffer[2], $buffer[3], $buffer[4]);
         }

@@ -26,7 +26,7 @@
     	<input type="Checkbox" name="docinput[Reparatur]" id="Reparatur" value="v" />
     	<!-- 
     	&nbsp;&nbsp;
-      	  <label for="Kueche">Küchenauftrag</label>
+      	  <label for="Kueche">KÃ¼chenauftrag</label>
       	  <input type="Checkbox" name="docinput[Kueche]" id="Kueche" value="v" />
       	   -->
       	&nbsp;&nbsp;
@@ -34,7 +34,7 @@
       	  <input type="Checkbox" name="docinput[Verwaltung]" id="Verwaltung" value="v" />
     	<!-- 
       	&nbsp;&nbsp;
-      	  <label for="Paedagogik">Pädagogikauftrag</label>
+      	  <label for="Paedagogik">PÃ¤dagogikauftrag</label>
       	  <input type="Checkbox" name="docinput[Paedagogik]" id="Paedagogik" value="v" />
     	 -->
     <br/>
@@ -50,7 +50,7 @@
 <tr class="{cycle values="helleZeile,dunkleZeile"}">
   <td>
     {if ! ($bemerkung.F_Auftrag_id=='')}
-    Zu dieser Bemerkung gehört ein <a href="{$Auftragurl}&EditAuftrag={$bemerkung.F_Auftrag_id}">Auftrag {$bemerkung.F_Auftrag_id}</a><br />
+    Zu dieser Bemerkung gehÃ¶rt ein <a href="{$Auftragurl}&EditAuftrag={$bemerkung.F_Auftrag_id}">Auftrag {$bemerkung.F_Auftrag_id}</a><br />
     {/if}
     {$bemerkung.Bemerkung|nl2br}<br />
     <textarea name="docinput[H{$bemerkung.Bemerkung_id}]" cols="40" rows="2">{$bemerkung.Hinweis}</textarea>

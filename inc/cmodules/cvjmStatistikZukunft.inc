@@ -113,7 +113,7 @@ if ( $profile['editor'] != 1 )
 		sql_free_result($query);
 
 		$sql = 'SELECT Buchung_Nr, Von FROM cvjm_Buchungen WHERE FROM_UNIXTIME(Von,"%Y")='.$docinput['Jahr'].' AND BStatus<='.BUCHUNG_FERTIG;
-		$query = mysql_query($sql);
+		$query = sql_query($sql);
 		for ( $i = 1; $i<13; $i++)
 		{
 			if ( $i < 10 ) 			
@@ -121,14 +121,14 @@ if ( $profile['editor'] != 1 )
 			else
 			$summe[$docinput['Jahr']][$i] = 0;
 		}
-		while ( $eintrag = mysql_fetch_array($query))
+		while ( $eintrag = sql_fetch_array($query))
 		{
 			// Neuesten Eintrag aus den Angeboten/Berechnungen/Rechnungen holen
 			$sql = 'SELECT Sum( Menge * F_Preis * CASE WHEN Dauer =0 THEN 1 ELSE Dauer END - ( Menge * F_Preis * CASE WHEN Dauer =0 THEN 1 ELSE Dauer
 	END * Rabatt ) /100 ) AS Summe FROM cvjm_Rechnungseintraege INNER JOIN cvjm_Rechnungen ON F_Rechnung_Id = Rechnung_Id
 	WHERE F_Buchung_Nr ='.$eintrag['Buchung_Nr'].' AND Storno=0 GROUP BY Rechnung_id ORDER BY Rechnungsdatum DESC';
-			$qr = mysql_query($sql);
-			if ( $result = mysql_fetch_row($qr) )
+			$qr = sql_query($sql);
+			if ( $result = sql_fetch_row($qr) )
 			{
 				if ( ! isset($summe[date('Y',$eintrag['Von'])][date('m',$eintrag['Von'])]) )
 				{
@@ -141,9 +141,9 @@ if ( $profile['editor'] != 1 )
 				//keine Abrechnung etc. vorhanden
 				//$summe[$eintrag['Buchung_Nr']] = 0;
 			}
-			mysql_free_result($qr);
+			sql_free_result($qr);
 		}
-		mysql_free_result($query);
+		sql_free_result($query);
 
 
 		// Nun die Auslastung der Bereiche berechnen
@@ -153,7 +153,7 @@ if ( $profile['editor'] != 1 )
 			$query = sql_query('SELECT Count(*) FROM '.TABLE_BUCHUNGSEINTRAEGE.
 			' WHERE F_Artikel_Nr='.CVJM_SELBSTVERPFLEGUNG." AND F_Buchung_Nr=$buchung_nr");
 			$row = sql_fetch_row($query);
-			mysql_free_result($query);
+			sql_free_result($query);
 			$Selbstverpflegung[$buchung_nr] = $row[0];
 			foreach ( $plaetze[$buchung_nr] as $datum => $bereiche )
 			{
@@ -359,7 +359,7 @@ if ( $profile['editor'] != 1 )
 		') AND Datum > '.time().' AND '.$Jahr.
 		' ORDER BY YEAR(FROM_UNIXTIME(Datum)),MONTH(FROM_UNIXTIME(Datum)),F_Artikel_Nr';
 		if (! $query = sql_query($sql))
-		echo mysql_error();
+		echo sql_error();
 		$paket = array();
 		while ( $eintrag = sql_fetch_array($query) )
 		{
@@ -412,7 +412,7 @@ if ( $profile['editor'] != 1 )
 		"' AND (BStatus=".BUCHUNG_RESERVIERUNG." OR BStatus<=".BUCHUNG_VORRESERVIERUNG.
 		") AND Datum > ".time().' AND '.$Jahr.
 		" GROUP BY YEAR(FROM_UNIXTIME(Datum)),MONTH(FROM_UNIXTIME(Datum)),F_Artikel_Nr"))
-		echo mysql_error();
+		echo sql_error();
 		$paket = array();
 		while ( $eintrag = sql_fetch_array($query) )
 		{
@@ -472,18 +472,18 @@ if ( $profile['editor'] != 1 )
 	} // wenn Jahr übergeben wurde
 	echo '<form action="" method="post">';
 	echo 'Jahr ';
-	$query = mysql_query('SELECT DISTINCT FROM_UNIXTIME(Datum,"%Y") FROM '.
+	$query = sql_query('SELECT DISTINCT FROM_UNIXTIME(Datum,"%Y") FROM '.
 	TABLE_BUCHUNGSEINTRAEGE.' WHERE Datum>='.strtotime('-5 days').' ORDER BY Datum DESC');
 	echo '<select name="docinput[Jahr]">';
 	echo '<option value="-1">-alle-</option>';
-	while ( $jahr = mysql_fetch_row($query))
+	while ( $jahr = sql_fetch_row($query))
 	{
 		echo '<option ';
 		if ( $jahr[0] == date('Y') ) echo 'selected="selected"';
 		echo '>'.$jahr[0].'</option>'."\n";
 	}
 	echo '</select> ';
-	mysql_free_result($query);
+	sql_free_result($query);
 	echo '<input type="submit" value="Anzeigen" />';
 	echo '</form>';
 }

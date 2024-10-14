@@ -16,7 +16,7 @@ include(INC_PATH."misc/cvjmArtikeltools.inc");
 OrtsAuswahlScriptEinfuegen();
 $Artikelarten = holeArtikelarten();
 
-// CSS-Styles für ein- und ausgeblendete Nodes
+// CSS-Styles fÃ¼r ein- und ausgeblendete Nodes
 ?>
 <style type="text/css">
 <!--
@@ -117,7 +117,6 @@ if ( $profile["editor"] != 1 )
   if ( !isset($_REQUEST["Wahl"]) ) {
     echo '<form action="'.get_url($id).'" method="post">';
     echo 'Kategorie <select name="Art">';
-    reset($Artikelarten);
     foreach ( $Artikelarten as $key => $value)
     {
       echo "<option ";
@@ -125,7 +124,7 @@ if ( $profile["editor"] != 1 )
       echo ">".$value."</option>";
     }
     echo '</select>';
-    echo '<input type="Submit" value="Kategorie ändern">';
+    echo '<input type="Submit" value="Kategorie Ã¤ndern">';
     echo '</form><br />';
   }
   else
@@ -193,7 +192,7 @@ function OrteAnzeigenLinear()
   global $openNodes;
   // Zeigt alle Orte als Baum an
   if ( ! $qu = sql_query("SELECT id, Bezeichnung, Einruecken FROM ".TABLE_ARTIKEL.
-    " WHERE F_Art_id = ".$DieArt." ORDER BY Position")) echo mysql_error();
+    " WHERE F_Art_id = ".$DieArt." ORDER BY Position")) echo sql_error();
   $class = "da";
   $einrueck = 0;
   $parent = array();
@@ -252,7 +251,7 @@ function DeleteAll($id = -1)
   if ( $id > -1 && is_numeric($id) )
   {
     if ( ! sql_query("DELETE FROM ".TABLE_ARTIKEL." WHERE id = ".$id) )
-      echo mysql_error();
+      echo sql_error();
     $qu = sql_query("SELECT id FROM ".TABLE_ARTIKEL." WHERE parent = ".$id);
     while ( $row = sql_fetch_array($qu) )
       DeleteAll($row["id"]);
@@ -260,26 +259,26 @@ function DeleteAll($id = -1)
   }
 }
 
-// Hinzufügen
+// HinzufÃ¼gen
 if ( isset($_REQUEST["OrtName"]) && is_numeric($_REQUEST["Ort"]) && is_numeric($DieArt) ) {
   if ( $_REQUEST["OrtName"] != "" ) {
     if ( ! sql_query("INSERT INTO ".TABLE_ARTIKEL." (Bezeichnung, parent, F_Art_id, Anzeigen) VALUES ('".
       addslashes($_REQUEST["OrtName"])."',".$_REQUEST["Ort"].",".$DieArt.",1)") )
-        echo mysql_error();
+        echo sql_error();
     // $_REQUEST["Ort"] = sql_insert_id();
   }
 }
 
-// Ändern
+// Ã¤ndern
 if ( isset($_REQUEST["OrtNeu"]) && is_numeric($_REQUEST["Ort"]) ) {
   if ( $_REQUEST["OrtNeu"] != "" ) {
     if ( isset($_REQUEST["Anzeigen"])) $Anzeigen = 1;
     else $Anzeigen = 0;
     if ( ! sql_query("UPDATE ".TABLE_ARTIKEL." SET Bezeichnung = '".addslashes($_REQUEST[OrtNeu]).
-      "', Anzeigen=".$Anzeigen." WHERE id = ".$_REQUEST["Ort"]) ) echo mysql_error();
+      "', Anzeigen=".$Anzeigen." WHERE id = ".$_REQUEST["Ort"]) ) echo sql_error();
   }
 }
-// Löschen, verschieben
+// lÃ¶schen, verschieben
 if ( is_numeric($_REQUEST["DelV"])  ) {
     $qu = sql_query("SELECT parent FROM ".TABLE_ARTIKEL." WHERE id = ".$_REQUEST["DelV"]);
     if ( $row = sql_fetch_array($qu) )
@@ -288,12 +287,12 @@ if ( is_numeric($_REQUEST["DelV"])  ) {
       $parent = -1;
     sql_free_result($qu);
     if ( ! sql_query("UPDATE ".TABLE_ARTIKEL." SET parent = $parent WHERE parent = ".$_REQUEST["DelV"]) )
-      echo mysql_error();
+      echo sql_error();
     if ( ! sql_query("DELETE FROM ".TABLE_ARTIKEL." WHERE id = ".$_REQUEST["DelV"]) )
-      echo mysql_error();
+      echo sql_error();
     $_REQUEST["Ort"] = $parent;
 }
-// Löschen, vollständig
+// lÃ¶schen, vollstÃ¤ndig
 if ( is_numeric($_REQUEST["DelX"])  ) {
   DeleteAll($_REQUEST["DelX"]);
 }
@@ -332,7 +331,7 @@ if($profile['editor']!='1') {
     echo '<input type="hidden" name="Ort" value="-1" />';
   echo '<input type="hidden" name="Art" value="'.$DieArt.'" />';
   echo '<input type="text" name="OrtName" />';
-  echo '<input type="submit" value="Unterkategorie hinzufügen" /></form>';
+  echo '<input type="submit" value="Unterkategorie hinzufÃ¼gen" /></form>';
   if ( is_numeric($_REQUEST["Ort"]) ) {
     echo '<a id="Edit" name="Edit"></a><form action="'.get_url($id).'" method="post">';
     echo '<input type="hidden" name="Ort" value="'.$_REQUEST["Ort"].'" />';
@@ -360,8 +359,8 @@ if($profile['editor']!='1') {
   }
   /*
   if ( is_numeric($_REQUEST["Ort"]) && $_REQUEST["Ort"] >= 0 ) {
-    echo '<a href="'.get_url($id,'DelV='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' löschen, Untereintr&auml;ge aufr&uuml;cken</a><br />';
-    echo '<a href="'.get_url($id,'DelX='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' löschen, Untereintr&auml;ge entfernen</a><br />';
+    echo '<a href="'.get_url($id,'DelV='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' lÃ¶schen, Untereintr&auml;ge aufr&uuml;cken</a><br />';
+    echo '<a href="'.get_url($id,'DelX='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' lÃ¶schen, Untereintr&auml;ge entfernen</a><br />';
     echo '<a href="'.get_url($id,'Copy='.$_REQUEST["Ort"]).'">Element '.$DerOrt.' verschieben</a><br />';
   }
   */
@@ -379,7 +378,7 @@ if($profile['editor']!='1') {
       echo '>'.$row["Bezeichnung"].'</option>';
     }
     echo "</select>";
-    echo '<input type="submit" value="'.$Artikelarten[$DieArt].' auswählen" />';
+    echo '<input type="submit" value="'.$Artikelarten[$DieArt].' auswÃ¤hlen" />';
     echo '</form>';
   }
   sql_free_result($qu);

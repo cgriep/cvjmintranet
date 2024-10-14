@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -28,7 +28,7 @@ function add_tab($name, $label) {
 	?><td bgcolor="<?=$bg?>" width="1" background="img/edge_left.gif"><img src="img/pixel.gif" /></td><td
 bgcolor="<?=$bg?>" align="center" nowrap="nowrap"><a style="<?=$style?>"
 href="<?=$_SERVER['PHP_SELF'].'?page='.$name?>"><?=$label?></a></td><td bgcolor="<?=$bg?>" width="1"
-background="img/edge_right.gif"><img src="img/pixel.gif" width="5" /></td><?
+background="img/edge_right.gif"><img src="img/pixel.gif" width="5" /></td><?php
 	}
 
 if(isset($_REQUEST['page'])) {
@@ -50,11 +50,11 @@ function open_window(url) {
 </script>
 <table width="90%" cellpadding="0" cellspacing="0" border="0">
 <tr><td align="left">
-<?
+<?php
 if(function_exists('domxml_open_mem') && version_compare("4.3.0", phpversion()) < 1) {
 ?>
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 add_tab('list', 'Install/Remove');
 if(LBI_ENABLE_FILE_SHARING) {
 	add_tab('share', 'Share');
@@ -67,7 +67,7 @@ add_tab('settings', 'Settings');
 </tr>
 </table>
 <table bgcolor="<?=$design['color_3']?>" width="100%" cellpadding="9" cellspacing="0" border="0"><tr><td>
-<? 
+<?php 
 /*
 ================================================================================================
 Settings page
@@ -106,7 +106,7 @@ if($page == 'settings') {
 
 ?>
 <b>Settings saved.</b>
-<?
+<?php
 		}
 	else {
 	?>
@@ -120,33 +120,33 @@ if($page == 'settings') {
 <table width="50%" cellpadding="5" cellspacing="0" border="0">
 <tr>
 <td>
-<input type="checkbox" name="settings[delete_modified_files]" <?
+<input type="checkbox" name="settings[delete_modified_files]" <?php
 if(LBI_DELETE_MODIFIED_FILES == '1') echo 'checked="checked" ';
 ?>value="1" /> Delete modified files
 </td><td>
-<input type="checkbox" name="settings[overwrite_existing_files]" <? 
+<input type="checkbox" name="settings[overwrite_existing_files]" <?php 
 if(LBI_OVERWRITE_EXISTING_FILES == '1') echo 'checked="checked" ';
 ?>value="1" /> Overwrite existing files
 </td>
 </tr>
 <tr>
 <td>
-<input type="checkbox" name="settings[execute_sql_commands]" <? 
+<input type="checkbox" name="settings[execute_sql_commands]" <?php 
 if(LBI_EXECUTE_SQL_COMMANDS == '1') echo 'checked="checked" ';
 ?>value="1" /> Execute SQL commands
 </td><td>
-<input type="checkbox" name="settings[execute_php_commands]" <? 
+<input type="checkbox" name="settings[execute_php_commands]" <?php 
 if(LBI_EXECUTE_PHP_COMMANDS == '1') echo 'checked="checked" ';
 ?>value="1" /> Execute PHP commands
 </td>
 </tr>
 <tr>
 <td>
-<input type="checkbox" name="settings[enable_compression]" <? 
+<input type="checkbox" name="settings[enable_compression]" <?php 
 if(LBI_ENABLE_COMPRESSION == '1') echo 'checked="checked" ';
 ?>value="1" /> Enable compression
 </td><td>
-<input type="checkbox" name="settings[enable_file_sharing]" <? 
+<input type="checkbox" name="settings[enable_file_sharing]" <?php 
 if(LBI_ENABLE_FILE_SHARING == '1') echo 'checked="checked" ';
 ?>value="1" /> Enable file sharing
 </td>
@@ -187,7 +187,7 @@ Package Path<br />
 </form>
 </td>
 </tr></table>
-	<?
+	<?php
 		}
 	}
 
@@ -253,7 +253,7 @@ if (is_uploaded_file($_FILES['package_file']['tmp_name']) && $_REQUEST['upload']
 <td align="center"><b>Delete</b></td>
 </td>
 </tr>
-<?
+<?php
 
 $lbi_files = lbi_get_package_list(LBI_PACKAGE_PATH);
 
@@ -270,14 +270,14 @@ while(list($key, $value) = each($lbi_files)) {
 	<img src="img/lbi_edit.gif" border="0" /></a></td>
         <td align="center"><input onclick="return confirm('Are you sure?')" type="submit" name="<?=base64_encode($key)?>" value="Delete" />
         </td>
-        </tr><?
+        </tr><?php
 	}
         }
 ?>
 </table>
 </form>
 </td></tr></table>
-<? 
+<?php 
 // }
 }
 elseif($page == 'share' && LBI_ENABLE_FILE_SHARING) {
@@ -295,7 +295,7 @@ elseif($page == 'share' && LBI_ENABLE_FILE_SHARING) {
 <td align="center"><b>Status</b></td>
 </td>
 </tr>
-<?
+<?php
 
 $lbi_files = lbi_get_package_list(LBI_PACKAGE_PATH);
 
@@ -310,17 +310,17 @@ while(list($key, $value) = each($lbi_files)) {
         <td><?=$value['category']?></td>
         <td><?=$value['author_name']?></td>
         <td><?=$value['license']?></td>
-        <td align="center"><?
+        <td align="center"><?php
 		$is_shared = lbi_is_shared($value['name'], $value['version']);
 		if($is_shared) {
 			echo 'Shared';
 			}
 		else {
-		        ?><input type="submit" name="<?=base64_encode($key)?>" value="Share" /><?
+		        ?><input type="submit" name="<?=base64_encode($key)?>" value="Share" /><?php
 			}
 	?>
 	</td>
-        </tr><?
+        </tr><?php
 	}
         }
 ?>
@@ -328,7 +328,7 @@ while(list($key, $value) = each($lbi_files)) {
 </form>
 <b>Please note:</b> You can share files with GPL license only. This function requires, that your website is not password protected
 and that a working share server is available.
-<?
+<?php
 
 } elseif($page == 'create') {	
 
@@ -364,7 +364,7 @@ else {
 </tr>
 <tr>
 <td bgcolor="<?=$design['color_2']?>">
-<?
+<?php
 create_input('author_name', 'Name/Company');
 create_input('author_address', 'Address (street, zip, city, country)');
 create_input('author_email', 'eMail');
@@ -379,7 +379,7 @@ create_input('author_website', 'Website URL (e.g. &quot;http://www.domain.com/&q
 </tr>
 <tr>
 <td bgcolor="<?=$design['color_2']?>">
-<?
+<?php
 create_input('category', 'Category (e.g. &quot;Themes&quot;)');
 create_input('name', 'Name (e.g. &quot;Dummy Software&quot;)');
 create_input('version', 'Version (e.g. &quot;1.0&quot;)');
@@ -389,7 +389,7 @@ Description<br />
 rows="10"><?=htmlentities($package['description'])?></textarea>
 <br />
 <br />
-<?
+<?php
 create_input('dependencies', 'Dependencies');
 create_input('download_url', 'Download URL');
 create_input('license', 'License (e.g. &quot;GPL&quot;)');
@@ -443,7 +443,7 @@ rows="10"><?=htmlentities($package['php_remove'])?></textarea>
 </form>
 </td></tr>
 </table>
-<?
+<?php
 }
 elseif($_REQUEST['package']['name'] != '' && $_REQUEST['package']['version'] != '' && $_REQUEST['package']['author_name'] != '') {
 
@@ -451,8 +451,8 @@ $package = $_REQUEST['package'];
 
 lbi_save_var('linstaller_defaults.db', $package);
 
-$basename = strtr(strtolower($package['name']), ' -/\()[]=?.;,!äöüß', '______________aous');
-$baseversion = strtr(strtolower($package['version']), ' -/\()[]=?;,!äöüß', '................');
+$basename = strtr(strtolower($package['name']), ' -/\()[]=?.;,!ï¿½ï¿½ï¿½ï¿½', '______________aous');
+$baseversion = strtr(strtolower($package['version']), ' -/\()[]=?;,!ï¿½ï¿½ï¿½ï¿½', '................');
 $filename = LBI_PACKAGE_PATH.$basename.'-'.$baseversion.'.lbi';
 
 $fp = fopen($filename,'w');
@@ -471,7 +471,7 @@ fwrite($fp, '<?xml version="1.0" encoding="UTF-8"?>'."\n<liquid_installer_packag
 "<download_url>".$package['download_url']."</download_url>\n".
 "<description>".$package['description']."</description>\n");
 
-?>Added XML header and meta information<br /><?
+?>Added XML header and meta information<br /><?php
 
 $files = explode(',', $package['files']);
 while(list($key, $value) = each($files)) {
@@ -483,22 +483,22 @@ while(list($key, $value) = each($files)) {
 	}
 
 if($package['sql_install'] != '') {
-	?>Added SQL install code<br /><?
+	?>Added SQL install code<br /><?php
 	lbi_add_code ($fp, 'sql_install', $package['sql_install']);
 	}
 
 if($package['sql_remove'] != '') {
-	?>Added SQL remove code<br /><?
+	?>Added SQL remove code<br /><?php
 	lbi_add_code ($fp, 'sql_remove', $package['sql_remove']);
 	}
 
 if($package['php_install'] != '') {
-	?>Added PHP install code<br /><?
+	?>Added PHP install code<br /><?php
 	lbi_add_code ($fp, 'php_install', $package['php_install']);
 	}
 
 if($package['php_remove'] != '') {
-	?>Added PHP remove code<br /><?
+	?>Added PHP remove code<br /><?php
 	lbi_add_code ($fp, 'php_remove', $package['php_remove']);
 	}
 
@@ -507,7 +507,7 @@ fclose($fp);
 
 ?>
 <b>Package created in <a href="<?=$filename?>"><?=$filename?></a></b>
-<?
+<?php
 }
 }
 elseif($page == 'list') {
@@ -529,7 +529,7 @@ $lbi_files = lbi_get_package_list(LBI_PACKAGE_PATH);
 <td align="center"><b>Action</b></td>
 </td>
 </tr>
-<?
+<?php
 
 $package_db = array();
 
@@ -552,16 +552,16 @@ while(list($key, $value) = each($lbi_files)) {
 	<td><?=$value['version']?></td>
 	<td><?=$value['category']?></td>
 	<td><?=$value['author_name']?></td>
-	<td align="center"><?
+	<td align="center"><?php
 		if(isset($package_db[$key])) {
-			?><input onclick="return confirm('Are you sure?')" type="submit" name="<?=base64_encode($key)?>" value="Remove" /><?
+			?><input onclick="return confirm('Are you sure?')" type="submit" name="<?=base64_encode($key)?>" value="Remove" /><?php
 			}
 		else {
-			?><input type="submit" name="<?=base64_encode($key)?>" value="Install" /><?
+			?><input type="submit" name="<?=base64_encode($key)?>" value="Install" /><?php
 			}
 	?>
 	</td>
-	</tr><?
+	</tr><?php
 	}
 
 lbi_save_var('linstaller.db', $package_db);
@@ -569,7 +569,7 @@ lbi_save_var('linstaller.db', $package_db);
 ?>
 </table>
 </form>
-<?
+<?php
 }
 else {
 	echo 'The directory <b>'.LBI_PACKAGE_PATH.'</b> does not exist. Check settings.';
@@ -582,7 +582,7 @@ else {
 ?>
 </td></tr>
 </table>
-<?
+<?php
 if(isset($javascript_info)) {
 ?>
 <script language="javascript">
@@ -590,5 +590,5 @@ if(isset($javascript_info)) {
 alert('<?=$javascript_info?>');
 // -->
 </script>
-<? } ?>
+<?php } ?>
 

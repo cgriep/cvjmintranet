@@ -24,7 +24,7 @@
 <div id="Dialog">
 {$title}<br />
 <button onClick="speichern(true);return false;">Speichern</button>
-<button onClick="speichern(false);return false;">ohne Speichern schlieﬂen</button>
+<button onClick="speichern(false);return false;">ohne Speichern schlie√üen</button>
 <form action="" method="post" id="Daten" onSend="return false">
 Aufgabe/Beschreibung<br />
 <textarea name="Beschreibung" cols="40" rows="5">{$Artikel->Bezeichnung}
@@ -59,6 +59,6 @@ Gruppen
 </div> 
 </form>
 <button onClick="speichern(true);return false;">Speichern</button>
-<button onClick="speichern(false);return false;">ohne Speichern schlieﬂen</button>
+<button onClick="speichern(false);return false;">ohne Speichern schlie√üen</button>
 
 </div>

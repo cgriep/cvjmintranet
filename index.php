@@ -15,8 +15,9 @@
 	include("inc/wysiwyg.inc");
 	include(BASE_PATH.INC_PATH.INIT_INC);
 	include(BASE_PATH.INC_PATH.DESIGN_INC);
+
+    include(BASE_PATH.INC_PATH."html_head.inc"); 
 ?>
-<?php include(BASE_PATH.INC_PATH."html_head.inc"); ?>
 <body background="<?=$design['background']?>" bgcolor="<?=$design['bgcolor']?>"  link="<?=$design['linkcolor']?>" vlink="<?=$design['vlinkcolor']?>" text="<?=$design['textcolor']?>"> 
 
 <?php

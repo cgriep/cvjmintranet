@@ -10,14 +10,14 @@
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-<?
+<?php
 	if(SESSION_STATUS == 'ok' && count_messages(SESSION_DBID, 'instant', '0') > 0 && (!isset($profile['im_popup']) || $profile['im_popup'] == '1')) {
 
 	$messages = search_messages(SESSION_DBID, 'instant', 0, time(), -1, '', '', false);
 
-	while(list($key, $value) = each($messages)) { ?>
+	foreach($messages as $key => $value)  { ?>
 	newWindows<?=$key?> = open('message.php?docinput[lang]=<?=$lang?>&message_id=<?=$key?>&session_passwd=<?=$session_passwd?>&session_userid=<?=$session_userid?>','message<?=$key?>',"height=269,width=309,dependent=yes,toolbar=no,menubar=no,scrollbars=yes,resizable=no,status=no,location=no");
-	<?
+	<?php
 	}
 }
 ?>
@@ -39,6 +39,6 @@ function open_print_window()
 // -->
 </script>
 
-<?
+<?php
 if(file_exists('inc/custom/custom_javascript.inc')) include('inc/custom/custom_javascript.inc');
 ?>

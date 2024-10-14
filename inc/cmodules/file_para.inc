@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2001 Liquid Bytes (R), Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -23,20 +23,20 @@ if($profile['editor']!='1') {
   <?=LANG_MULTIPLE_RECIPIENTS?>
   <br />
   <br />
-  <? if(SESSION_STATUS != 'ok') { ?>
+  <?php if(SESSION_STATUS != 'ok') { ?>
     <?=LANG_YOUR_EMAIL_ADDRESS?><br />
-    <strong>Sie müssen eingeloggt sein, um Nachrichten zu versenden!</strong>
+    <strong>Sie mÃ¼ssen eingeloggt sein, um Nachrichten zu versenden!</strong>
     <br />
-  <? }
+  <?php }
   else { ?>
     <input type="hidden" name="docinput[sender]" value="<?=SESSION_EMAIL?>" />
-  <? } ?>
+  <?php } ?>
   <?=LANG_MESSAGE?><br />
   <input type="text" name="docinput[body]" size="50" /><br />
   <br />
   <input type="submit" value="Send" /></p>
   </form>
-  <?
+  <?php
   }
   elseif(isset($docinput['save']) && $docinput['save'] == "send_email" && isset($docinput['email']) &&
    strlen($docinput['email']) > 3 && isemail($docinput['sender'])) {
@@ -63,8 +63,7 @@ if($profile['editor']!='1') {
     sort($filelist);
     sort($dirlist);
     $filelist = array_merge($dirlist,$filelist);
-    reset($filelist);
-    while (list($nr,$file) = each($filelist)) {
+    foreach ($filelist as $nr => $file) {
       if ($file != "." && $file != ".." && strlen($file) > 0 && $file[0] != '.') {
         $message_body .= $file;
       }
@@ -73,7 +72,7 @@ if($profile['editor']!='1') {
         "From: ".email_to_string($docinput['sender']).' <'.$docinput['sender'].'>');
     ?>
       <p><?=LANG_DOC_SENT_TO?> <b><?=$docinput['email']?></b></p>
-    <?
+    <?php
   }
   if ($document['author_id'] == SESSION_DBID ) {
     global $profile;
@@ -93,8 +92,8 @@ if($profile['editor']!='1') {
     clear_cache($id);
     remove_profile('editor_'.$id);
     $id = $document['parent_id'];
-    echo "<b>Das Dokument wurde gelöscht!</b><br />";
-    echo "Übergeordnetes Dokument:<br />";
+    echo "<b>Das Dokument wurde gelÃ¶scht!</b><br />";
+    echo "Ãœbergeordnetes Dokument:<br />";
     $document = get_node($id, $flavour);
   }
   elseif ( $_REQUEST["action"] == "edit" && $document['author_id'] == SESSION_DBID) {
@@ -116,7 +115,7 @@ if($profile['editor']!='1') {
   }
   elseif ( $_REQUEST["action"] == "savefile" && $document['author_id'] == SESSION_DBID ) {
     if( $docinput['title'] == '') {
-      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?
+      ?><b>&gt;&gt;</b> <font color="#ff0000"><?=LANG_TITLE_AND_BODY_REQUIRED?></font><?php
     }
     else {
       update_nodedata($id, 'body', $docinput['body'], $flavour, 'extrans');
@@ -143,8 +142,8 @@ if($profile['editor']!='1') {
   if ( $document['Link'] != "" ) {
     echo '<strong>Zum Aufsuchen dieser Seite <a target="_blank" href="/redirect.php?url=';
     echo urlencode($document["Link"]).'">hier klicken</a></strong>.<br /><br />';
-    echo '(die Seite öffnet sich in einem eigenen Fenster. Sie befindet sich auf einer anderen Website. Ihr Inhalt liegt ';
-    echo 'außerhalb des Einflußbereiches der Betreiber dieser Seite.)<br /><br />';
+    echo '(die Seite Ã¶ffnet sich in einem eigenen Fenster. Sie befindet sich auf einer anderen Website. Ihr Inhalt liegt ';
+    echo 'auÃŸerhalb des EinfluÃŸbereiches der Betreiber dieser Seite.)<br /><br />';
   }
   if(isset($parents)) {
     echo('[ <a href="'.get_url($document['parent_id'],'first_item='.$first_item).'">'.LANG_SHOW_COMPLETE_DOC.'</a> ]  ');
@@ -169,7 +168,7 @@ else {
   }
   elseif ( isset($document["redirect"]) )
   {
-     // Redirection löschen
+     // Redirection lÃ¶schen
      delete_nodedata($id, "redirect", "", $flavour);
   }
   // Image Input

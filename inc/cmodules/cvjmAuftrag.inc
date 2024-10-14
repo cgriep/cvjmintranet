@@ -4,13 +4,13 @@
 
 AWF-Name: auftrag
 Parameter:
-Delete - Löscht Auftrag mit id
+Delete - LÃ¶scht Auftrag mit id
 
 Auftrag - id des Auftrages
 Titel, Betroffen, Status, Prioritaet, Ort - Speichert einen Auftrag
 newauf - Neuer Auftrag
 
-docinput[VTitel] - Vorgabe für Titel
+docinput[VTitel] - Vorgabe fÃ¼r Titel
 
 */
 include(INC_PATH.'misc/CVJM.inc');
@@ -33,7 +33,7 @@ if ( isset($profile[CVJM_VERWALTUNGSGRUPPE]))
 }
 
 /*
- * Löschen eines Auftrags, nur der Autor darf das
+ * LÃ¶schen eines Auftrags, nur der Autor darf das
  */
 if ( is_numeric($_REQUEST['Delete']) )
 {
@@ -41,7 +41,7 @@ if ( is_numeric($_REQUEST['Delete']) )
 	if ( $event->istAutor(SESSION_DBID) )
 	{
 		$event->loeschen();
-		echo '<div class="Hinweis">Auftrag '.$_REQUEST['Delete'].' wurde gelöscht.</div>';
+		echo '<div class="Hinweis">Auftrag '.$_REQUEST['Delete'].' wurde gelÃ¶scht.</div>';
 	}
 }
 /*
@@ -58,7 +58,7 @@ if ( isset($_REQUEST['Titel']) && is_numeric($_REQUEST['Auftrag']))
 	$Auftrag->Ort = $_REQUEST['Ort'];
 	$Auftrag->Betroffene = array(); 
 	/*
-	 * falls nur ein Feld von Betroffenen übergeben wird, dann umwandeln mit
+	 * falls nur ein Feld von Betroffenen Ã¼bergeben wird, dann umwandeln mit
 	 * Standardwerten
 	 */
 	if (isset($_REQUEST['Betroffen']) && is_array($_REQUEST['Betroffen']))
@@ -84,7 +84,7 @@ if ( isset($_REQUEST['Titel']) && is_numeric($_REQUEST['Auftrag']))
 	}
 	$Auftrag->Save();	
 }
-// Abfrage, ob der Status eines Auftrages geändert werden soll
+// Abfrage, ob der Status eines Auftrages geÃ¤ndert werden soll
 if ( isset($_REQUEST['Auftrag']) && isset($_REQUEST['NewStatus']) &&
 is_numeric($_REQUEST['Auftrag']) && is_numeric($_REQUEST['NewStatus']) ) {
 	$Auftrag = new Auftrag($_REQUEST['Auftrag']);
@@ -119,7 +119,7 @@ isset($_REQUEST['newauf'])))
 		$Ort = -1;
 	}
 
-	$Smarty->assign_by_ref('Profil', $profile);
+	$Smarty->assign('Profil', $profile);
 	if ( ! isset($profile['AlleAuftraege']) )
 	{
 		$Smarty->assign('Alle', '1');
@@ -143,8 +143,8 @@ isset($_REQUEST['newauf'])))
 		$_REQUEST['Sort'] = 'Prioritaet,Datum DESC';
 	}
 	$Auftraege = Auftrag::searchAuftraege($Benutzer, $Alle, $Ort, $_REQUEST['Sort']);
-	$Smarty->assign_by_ref('Auftraege', $Auftraege);
-	$Smarty->assign_by_ref('Statusse', Event::$Statusse);
+	$Smarty->assign('Auftraege', $Auftraege);
+	$Smarty->assign('Statusse', Event::$Statusse);
 	if ( isset($profile[CVJM_VERWALTUNGSGRUPPE]) )
 	{
 		// Berechtigter Nutzer: Anzeige der User
@@ -157,7 +157,7 @@ isset($_REQUEST['newauf'])))
 		sql_free_result($query);
 		$u = $user;
 		asort($u);
-		$Smarty->assign_by_ref('User', $u);
+		$Smarty->assign('User', $u);
 	}
 	$Smarty->display('Auftragsliste.tpl');
 }
@@ -175,7 +175,7 @@ if ( is_numeric($_REQUEST['EditAuftrag']) || isset($_REQUEST['newauf']))
 	}
 	OrtsAuswahlScriptEinfuegen();
 	
-	$Smarty->assign_By_Ref('Auftrag', $Auftrag);
+	$Smarty->assign('Auftrag', $Auftrag);
 	$Smarty->display('Auftrag_Daten.tpl');
 }
 

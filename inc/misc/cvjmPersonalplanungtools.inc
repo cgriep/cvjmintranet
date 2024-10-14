@@ -43,7 +43,7 @@ function show_users($name, $gruppe, $aktiv = '')
 
 function speichereSchluessel($docinput)
 {
-  // speichert die in docinput[Ort] abgelegten Schlüsselanzahlen
+  // speichert die in docinput[Ort] abgelegten SchlÃ¼sselanzahlen
   if ( is_array($docinput['Ort']) )
   {
     foreach ($docinput['Ort'] as $key => $value )
@@ -54,10 +54,10 @@ function speichereSchluessel($docinput)
         {
           if (! sql_query('DELETE FROM '.TABLE_SCHLUESSEL.' WHERE F_Buchung_Nr='.
             $docinput['Buchung_Nr'].
-            ' AND F_Artikel_Nr='.$key)) echo mysql_error();
+            ' AND F_Artikel_Nr='.$key)) echo sql_error();
         }
         elseif ( ! is_numeric($value) )
-          echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler beim Schlüsseleintragen: Keine Zahl!</div>';
+          echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler beim SchlÃ¼sseleintragen: Keine Zahl!</div>';
         else
         {
           if ( ! sql_query('INSERT INTO '.TABLE_SCHLUESSEL.
@@ -66,48 +66,48 @@ function speichereSchluessel($docinput)
             {
               if (! sql_query('UPDATE '.TABLE_SCHLUESSEL.' SET Anzahl='.$value.
                 ' WHERE F_Buchung_Nr='.$docinput['Buchung_Nr'].' AND F_Artikel_Nr='.$key))
-                  echo mysql_error();
+                  echo sql_error();
             }
         }
       }
     }
-    echo "<strong>&gt;&gt;&gt; Schlüsseldaten gespeichert.</strong><br />";
-    sql_query('UPDATE '.TABLE_BUCHUNGEN." SET Logtext=CONCAT('".date('d.m.Y H:i').' Schlüssel verwaltet '.
+    echo "<strong>&gt;&gt;&gt; SchlÃ¼sseldaten gespeichert.</strong><br />";
+    sql_query('UPDATE '.TABLE_BUCHUNGEN." SET Logtext=CONCAT('".date('d.m.Y H:i').' SchlÃ¼ssel verwaltet '.
               get_user_nickname()."\n',Logtext)".
             ' WHERE Buchung_Nr = '.$docinput['Buchung_Nr']);
   }
   if ( isset($docinput['Sonstige']['id']) && is_numeric($docinput['Sonstige']['id']) )
   {
-    // Schlüsselbemerkung speichern
+    // SchlÃ¼sselbemerkung speichern
     if ( $docinput['Sonstige']['id'] != -1 )
     {
-      // Prüfen ob geändert
+      // prÃ¼fen ob geÃ¤ndert
       $sql = 'SELECT Hinweis FROM '.TABLE_BUCHUNGSBEMERKUNGEN.' WHERE Bemerkung_id='.
         $docinput['Sonstige']['id'];
       $query = sql_query($sql);
       $row = sql_fetch_row($query);
       sql_free_result($query);
-      if ( $row[0] != trim(mysql_real_escape_string($docinput['Sonstige']['Bemerkung'])) )
+      if ( $row[0] != trim(sql_real_escape_string($docinput['Sonstige']['Bemerkung'])) )
       {
         if ( trim($docinput['Sonstige']['Bemerkung']) == '' )
-          // Bemerkung löschen
+          // Bemerkung lÃ¶schen
           sql_query('DELETE FROM '.TABLE_BUCHUNGSBEMERKUNGEN.' WHERE Bemerkung_id='.$docinput['Sonstige']['id']);
         else
         {
           $sql = 'UPDATE '.TABLE_BUCHUNGSBEMERKUNGEN." SET Hinweis='".trim(
-            mysql_real_escape_string($docinput['Sonstige']['Bemerkung'])).
-            "', Logtext=CONCAT('".date('d.m.Y H:i').' geändert '.
+            sql_real_escape_string($docinput['Sonstige']['Bemerkung'])).
+            "', Logtext=CONCAT('".date('d.m.Y H:i').' geÃ¤ndert '.
             get_user_nickname()."\n',Logtext) WHERE Bemerkung_id = ".$docinput['Sonstige']['id'];
-          if ( ! sql_query($sql) ) echo mysql_error();
+          if ( ! sql_query($sql) ) echo sql_error();
         }
       }
     }
     elseif ( trim($docinput['Sonstige']['Bemerkung']) != '' )
     {
-      // Neue Bemerkung anfügen
+      // Neue Bemerkung anfÃ¼gen
       if ( !sql_query('INSERT INTO '.TABLE_BUCHUNGSBEMERKUNGEN.' (F_Buchung_Nr,Bemerkung,Hinweis,Logtext) VALUES ('.
             $docinput['Buchung_Nr'].",'".CVJMSCHLUESSELMITTEILUNG."','".
-            mysql_real_escape_string($docinput['Sonstige']['Bemerkung'])."','".date('d.m.Y H:i').
+            sql_real_escape_string($docinput['Sonstige']['Bemerkung'])."','".date('d.m.Y H:i').
             ' erstellt '.get_user_nickname()."')"))
             echo '<div class="SchwererFehler">&gt;&gt;&gt; Fehler beim Erzeugen der Bemerkung.</div>';
     }
@@ -120,7 +120,7 @@ function ZeigeSchluesselliste($Buchung)
 {
   global $design;
   if ( ! is_array($Buchung) ) die('Fehler in ZeigeSchluesselliste: Kein Buchungsfeld');
-  // Schlüssel zur Auswahl für die Buchung anzeigen
+  // SchlÃ¼ssel zur Auswahl fÃ¼r die Buchung anzeigen
   $sql = 'SELECT DISTINCT id, Bezeichnung FROM '.TABLE_ARTIKEL.' WHERE F_Art_id='.CVJMART_ORT.
     ' AND Anzeigen ORDER BY Position';
   $query = sql_query($sql);
@@ -129,7 +129,7 @@ function ZeigeSchluesselliste($Buchung)
   echo $design['table_begin'];
   $nr = 0;
   echo '<tr class="ueberschrift"><th colspan="'.SCHLUESSELSPALTENANZAHL.
-    '">ausgegebene Schlüssel';
+    '">ausgegebene SchlÃ¼ssel';
   // bisherige Anzahl anzeigen!
   $query2 = sql_query('SELECT SUM(Anzahl) FROM '.TABLE_SCHLUESSEL.' WHERE F_Buchung_Nr='.
     $Buchung['Buchung_Nr']);
@@ -153,7 +153,7 @@ function ZeigeSchluesselliste($Buchung)
     if ( $schluessel = sql_fetch_array($query2) )
     {
       $tabelle[$zeile][$spalte] .= $schluessel["Anzahl"];
-      $tabelle[$zeile][$spalte] .= '" title="zuletzt geändert durch '.
+      $tabelle[$zeile][$spalte] .= '" title="zuletzt geÃ¤ndert durch '.
          get_user_nickname($schluessel["Ausgeber"])." am ".
          $schluessel["Ausgegeben"];
     }
@@ -185,7 +185,7 @@ function ZeigeSchluesselliste($Buchung)
   }
   echo '</table>';
   sql_free_result($query);
-  echo '<div class="ueberschriftzeile">Besondere Schlüssel</div>';
+  echo '<div class="ueberschriftzeile">Besondere SchlÃ¼ssel</div>';
   echo '<textarea name="docinput[Sonstige][Bemerkung]" cols="60" rows="5">';
   $query2 = sql_query("SELECT * FROM ".TABLE_BUCHUNGSBEMERKUNGEN.
      " WHERE F_Buchung_Nr=".$Buchung["Buchung_Nr"]." AND Bemerkung ='".
@@ -206,7 +206,7 @@ function ZeigeSchluesselliste($Buchung)
 /**
  *  Zeigt den INHALT der Personalplanung als Tabelle
  *  Tabellenrumpf muss vorher vorhanden sein
- *  Buchungsnummer wird in docinput[Buchung_Nr] übergeben
+ *  Buchungsnummer wird in docinput[Buchung_Nr] Ã¼bergeben
  *  Formular und Submit-Button muss ebenfalls selbst gemqacht werden!
  */
 function ZeigePersonalplanung($Buchung, $FormName ='')
@@ -293,19 +293,19 @@ function speicherePersonalplanung($docinput)
     $sql .= "Rechnungname='".$docinput["Rechnungname"]."',";
     $sql .= 'Logtext=CONCAT("'.date("d.m.Y H:i").' Personaleinteilung '.get_user_nickname().'\n",LogText)';
     $sql .= " WHERE Buchung_Nr=".$docinput["Buchung_Nr"];
-    if ( ! sql_query($sql) ) echo "Fehler: ".mysql_error();
+    if ( ! sql_query($sql) ) echo "Fehler: ".sql_error();
     echo "<strong>&gt;&gt;&gt; Personaldaten gespeichert.</strong><br />";
     // Mail an bestroffene senden
     if ( $zeit1 != 0 )
     {
-      $Nachricht = "Personalplanung für Buchung ".$docinput["Buchung_Nr"].
+      $Nachricht = "Personalplanung fÃ¼r Buchung ".$docinput["Buchung_Nr"].
         "\n\nAnreise am ".date("d.m.Y H:i",$zeit1)." : ";
       if ( is_numeric($docinput["Anreisename"]))
         $Nachricht .= get_user_nickname($docinput["Anreisename"]);
       else
         $Nachricht .= "-nicht festgelegt-";
     }
-    if ( zeit2 != 0 )
+    if ( $zeit2 != 0 )
     {
       $Nachricht .= "\nAbnahme am ".date("d.m.Y H:i",$zeit2)." : ";
       if ( is_numeric($docinput["Abnahmename"]))
@@ -340,7 +340,7 @@ function speicherePersonalplanung($docinput)
     $sql .= 'Logtext=CONCAT("'.date("d.m.Y H:i").' '.$docinput['Entfernen'].
         ' entfernt von '.get_user_nickname().'\n",LogText)';
     $sql .= ' WHERE Buchung_Nr='.$docinput['Buchung_Nr'];
-    if ( ! sql_query($sql) ) echo 'Fehler: '.mysql_error();      
+    if ( ! sql_query($sql) ) echo 'Fehler: '.sql_error();      
   }
 }
 

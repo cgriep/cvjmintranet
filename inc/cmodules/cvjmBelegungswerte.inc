@@ -49,12 +49,12 @@
 			}
 		}
 	}
- 	$Smarty->assign_by_ref('Vergleichsdatum', $maxDat);
- 	$Smarty->assign_by_ref('JahrGesamt', $JahrGesamt);
- 	$Smarty->assign_by_ref('Werte', $Werte);
- 	$Smarty->assign_by_ref('dieJahre', $dieJahre);
+ 	$Smarty->assign('Vergleichsdatum', $maxDat);
+ 	$Smarty->assign('JahrGesamt', $JahrGesamt);
+ 	$Smarty->assign('Werte', $Werte);
+ 	$Smarty->assign('dieJahre', $dieJahre);
  	
- 	$Smarty->assign_by_ref('Vergleich', $Vergleich);
+ 	$Smarty->assign('Vergleich', $Vergleich);
  	$Smarty->display('Belegungshistorie.tpl');
  }
  

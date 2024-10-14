@@ -1,4 +1,4 @@
-<?
+<?php
 /*
         Copyright (C) 2000-2003 Liquid Bytes (R) Technologies, Germany. All rights reserved.
         http://www.liquidbytes.net/
@@ -10,7 +10,7 @@
 
 error_reporting(1); // Disable Warnings
 
-while(list($key, $val) = each ($_REQUEST)) {
+foreach ($_REQUEST as $key => $val= {
         $$key = $val;
         }
 
@@ -58,14 +58,14 @@ if($save == 'new_module') {
 <title>
 Liquid Bytes AWF Module Config
 </title>
-<?
+<?php
         include('header.inc');
 ?>
 <center>
 <table width=90% cellpadding=0 cellspacing=0 border=0>
 <tr><td align="left">
-<center><h2><? echo SITE_TITLE; ?> Module Config</h2></center>
-<?
+<center><h2><?php echo SITE_TITLE; ?> Module Config</h2></center>
+<?php
 if($action=='delete' && isset($id)) {
         echo '<center><h3>Delete: Are you sure?</h3>';
         echo '<h3><a href="modules.php?first_item='.$first_item.'">No</a>&nbsp;
@@ -79,7 +79,7 @@ elseif($action=='new') {
 	<table width="700" border="0" cellpadding="2" cellspacing="1"><tr><td>
 	Name<br>
 	<select name="name" size=1>
-        <?
+        <?php
         $handle=opendir('../'.INC_PATH.MODULE_PATH);
         while (false!==($file = readdir($handle))) {
         if ($file != "." && $file != ".." && '.inc' == substr($file, -4)) {
@@ -113,7 +113,7 @@ elseif($action=='new') {
         <option value="0" SELECTED>---</option>
         <option value="1">PUBLIC</option>
         <option value="2">USERS</option>
-        <option value="3"<? if($row[9] == '3') echo 'SELECTED'; ?>>ADMIN</option>
+        <option value="3"<?php if($row[9] == '3') echo 'SELECTED'; ?>>ADMIN</option>
         </select>
 	</td>
 	<tr>
@@ -140,7 +140,7 @@ elseif($action=='new') {
 	<form action="modules.php" method="get">
 	<input type="submit" value="Back">
         </form>
-	<?
+	<?php
 	}
 elseif($action=='edit' && isset($id)) {
 $qres = sql_query("SELECT id, sort_order, name, placement, flavour_id, section_id, document_id, visible, removeable, 
@@ -152,12 +152,12 @@ target,
 	?>
 	<form action="modules.php" method="post">
 	<input type="hidden" name="save" value="module">
-	<input type="hidden" name="save_id" value="<? echo $id; ?>">
+	<input type="hidden" name="save_id" value="<?php echo $id; ?>">
 	<h3>Module properties</h3>
 	<table width="700" border="0" cellpadding="2" cellspacing="1"><tr><td>
 	Name<br>
 	<select name="name" size=1>
-        <?
+        <?php
         $handle=opendir('../'.INC_PATH.MODULE_PATH);
         while (false!==($file = readdir($handle))) {
         if ($file != "." && $file != ".." && '.inc' == substr($file, -4)) {
@@ -171,47 +171,47 @@ target,
 	</td><td>
 	Position<br>
 	<select name="position" size=1>
-	<option value="left"<? if($row[3] == 'left') echo 'SELECTED'; ?>>left</option>
-	<option value="right"<? if($row[3] == 'right') echo 'SELECTED'; ?>>right</option>
+	<option value="left"<?php if($row[3] == 'left') echo 'SELECTED'; ?>>left</option>
+	<option value="right"<?php if($row[3] == 'right') echo 'SELECTED'; ?>>right</option>
 	</select>
 	</td><td>
 	Visible<br>
 	<select name="visible" size=1>
-        <option value="0"<? if($row[7] == '0') echo 'SELECTED'; ?>>No</option>
-        <option value="1"<? if($row[7] == '1') echo 'SELECTED'; ?>>Yes</option>
+        <option value="0"<?php if($row[7] == '0') echo 'SELECTED'; ?>>No</option>
+        <option value="1"<?php if($row[7] == '1') echo 'SELECTED'; ?>>Yes</option>
         </select>
 	</td><td>
 	Removeable<br>
 	<select name="removeable" size=1>
-        <option value="0"<? if($row[8] == '0') echo 'SELECTED'; ?>>No</option>
-        <option value="1"<? if($row[8] == '1') echo 'SELECTED'; ?>>Yes</option>
+        <option value="0"<?php if($row[8] == '0') echo 'SELECTED'; ?>>No</option>
+        <option value="1"<?php if($row[8] == '1') echo 'SELECTED'; ?>>Yes</option>
         </select>
 	</td><td>
 	Target<br>
         <select name="target" size=1>
-        <option value="0"<? if($row[9] == '0') echo 'SELECTED'; ?>>---</option>
-        <option value="1"<? if($row[9] == '1') echo 'SELECTED'; ?>>PUBLIC</option>
-        <option value="2"<? if($row[9] == '2') echo 'SELECTED'; ?>>USERS</option>
-        <option value="3"<? if($row[9] == '3') echo 'SELECTED'; ?>>ADMIN</option>
+        <option value="0"<?php if($row[9] == '0') echo 'SELECTED'; ?>>---</option>
+        <option value="1"<?php if($row[9] == '1') echo 'SELECTED'; ?>>PUBLIC</option>
+        <option value="2"<?php if($row[9] == '2') echo 'SELECTED'; ?>>USERS</option>
+        <option value="3"<?php if($row[9] == '3') echo 'SELECTED'; ?>>ADMIN</option>
         </select>
 	</td>
 	</tr>
 	<tr>
 	<td>
 	Caption<br>
-	<input type="text" name="caption" size="10" value="<? echo $row[10]; ?>">
+	<input type="text" name="caption" size="10" value="<?php echo $row[10]; ?>">
 	</td><td>
 	FlavourID (-1 for n/a)<br>
-	<input type="text" name="flavour_id" size="10" value="<? echo $row[4]; ?>">
+	<input type="text" name="flavour_id" size="10" value="<?php echo $row[4]; ?>">
 	</td><td>
 	SectionID (-1 for n/a)<br>
-	<input type="text" name="section_id" size="10" value="<? echo $row[5]; ?>" maxlength="10">
+	<input type="text" name="section_id" size="10" value="<?php echo $row[5]; ?>" maxlength="10">
 	</td><td>
 	DocumentID (-1 for n/a)<br>
-	<input type="text" name="document_id" size="10" value="<? echo $row[6]; ?>" maxlength="10">
+	<input type="text" name="document_id" size="10" value="<?php echo $row[6]; ?>" maxlength="10">
 	</td><td>
 	Sort order<br>
-	<input type="text" name="sort_order" size="10" value="<? echo $row[1]; ?>" maxlength="10"><br><br>
+	<input type="text" name="sort_order" size="10" value="<?php echo $row[1]; ?>" maxlength="10"><br><br>
 	</td><td>&nbsp;
 	</td></tr></table>
 	<input type="submit" value="Save">
@@ -219,7 +219,7 @@ target,
 	<form action="modules.php" method="get">
 	<input type="submit" value="Back">
         </form>
-	<?
+	<?php
 	}
 	}
 else {
@@ -256,32 +256,32 @@ if(sql_num_rows($qres) > 0) {
 <table width="100%" border="0" cellpadding="2" cellspacing="1">
         <tr>
         <td bgcolor="#ddffdd" width="3%" align="center">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=id"><b>ID</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=id"><b>ID</b></a></td>
         <td bgcolor="#ddffdd" width="7%" align="center" nowrap="nowrap">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=sort_order"><b>Sort order</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=sort_order"><b>Sort order</b></a></td>
         <td bgcolor="#ffdddd" width="10%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=caption"><b>Caption</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=caption"><b>Caption</b></a></td>
         <td bgcolor="#ffdddd" width="10%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=name"><b>Name</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=name"><b>Name</b></a></td>
         <td bgcolor="#ffffdd" width="10%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=placement"><b>Position</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=placement"><b>Position</b></a></td>
         <td bgcolor="#ddddff" width="10%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=flavour_id"><b>FlavourID</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=flavour_id"><b>FlavourID</b></a></td>
         <td bgcolor="#ddddff" width="10%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=section_id"><b>SectionID</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=section_id"><b>SectionID</b></a></td>
         <td bgcolor="#ddddff" width="10%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=document_id"><b>DocumentID</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=document_id"><b>DocumentID</b></a></td>
         <td bgcolor="#ffddff" width="6%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=visible"><b>Visible</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=visible"><b>Visible</b></a></td>
         <td bgcolor="#ffddff" width="6%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=removeable"><b>Removeable</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=removeable"><b>Removeable</b></a></td>
         <td bgcolor="#ffddff" width="8%">
-                <a href="modules.php?first_item=<? echo $first_item; ?>&order_by=target"><b>Target</b></a></td>
+                <a href="modules.php?first_item=<?php echo $first_item; ?>&order_by=target"><b>Target</b></a></td>
         <td bgcolor="#dddddd" width="10%" align="center">
                 <b>Options</b></td>
         </tr>
-        <?
-	while(list($key, $value) = each($modules)) {
+        <?php
+	foreach ( $modules as $key => $value) {
 		?>
 		<tr>
 		<td bgcolor="#eeffee" align="center"><?=$key?></td>
@@ -296,24 +296,24 @@ if(sql_num_rows($qres) > 0) {
 		<td bgcolor="#ffeeff" align="left"><?=$value['removeable']?></td>
 		<td bgcolor="#ffeeff" align="left"><?=$value['condition']?></td>
 		<td bgcolor="#dddddd" align="center">
-			<a href="modules.php?id=<? echo $key; ?>&action=delete&first_item=<? echo $first_item; ?>"><img
+			<a href="modules.php?id=<?php echo $key; ?>&action=delete&first_item=<?php echo $first_item; ?>"><img
                         src="img/delete.gif" border="0" alt="Delete"></a>&nbsp;
-                	<a href="modules.php?id=<? echo $key; ?>&action=edit&first_item=<? echo $first_item; ?>"><img
+                	<a href="modules.php?id=<?php echo $key; ?>&action=edit&first_item=<?php echo $first_item; ?>"><img
                         src="img/edit.gif" border="0" alt="Edit"></a></td>		
 		</tr>
-		<?
+		<?php
 		} 
 	echo '</table>';
 	}
 	?>
 	<br>
 	<center><a href="modules.php?action=new">Add new module</a></center>
-	<?
+	<?php
 	}
 ?>
 </td></tr>
 </table>
-<?
+<?php
 	include('footer.inc');
 ?>
 </center>

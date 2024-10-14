@@ -50,7 +50,7 @@ load_lang('admin');
 <title>
 Adaptive Website Framework :: Document Types
 </title>
-<?
+<?php
 	include('header.inc');
 ?>
 <center>
@@ -68,7 +68,7 @@ function open_window(url) {
 <input type="hidden" name="page" value="<?=$page?>" />
 <input type="hidden" name="sort_order" value="<?=$sort_order?>" />
 <table width="100%" cellpadding="5" cellspacing="0" border="0"><tr>
-<?
+<?php
 lftk_add_tab('html', 'Overview');
 lftk_add_tab('add_dotype', 'Add Document Type');
 ?>
@@ -77,7 +77,7 @@ lftk_add_tab('add_dotype', 'Add Document Type');
 </table>
 <table bgcolor="<?=$lftk_config['color_3']?>" width="100%" cellpadding="9" cellspacing="0" border="0">
 <tr><td>
-<?
+<?php
 
 /**********************************************************************************************************
 HTML (other Types will be supported in AWF2)
@@ -225,7 +225,7 @@ lftk_display_table_footer();
 </form>
 </td></tr>
 </table>
-<?
+<?php
         include('footer.inc');
 ?>
 </center>

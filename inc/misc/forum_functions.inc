@@ -1,4 +1,4 @@
-<?
+<?php
 /*	Functions for the forum module.
 	maintained by Christoph Stickel <mixer2@web.de>	*/
 
@@ -14,7 +14,7 @@ function SendPostingMail($mid, $docinput, $neu = true)
   global $doctypes;
   reset($parents);
   global $document;
-  // Neueintr‰ge bearbeiten
+  // Neueintr√§ge bearbeiten
   if ( $document["type_id"] == $doctypes["forum_forum"] )
   {
     global $id;
@@ -55,7 +55,7 @@ function SendPostingMail($mid, $docinput, $neu = true)
     sql_free_result($result);
   }
   else
-    echo "Fehler: ".mysql_error();
+    echo "Fehler: ".sql_error();
 }
 
 function printnick($value) {

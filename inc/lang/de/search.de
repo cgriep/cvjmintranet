@@ -4,7 +4,7 @@ not_found		Keine Dokumente mit dem Suchbegriff <b>%s</b> wurden gefunden.
 searched_this_site	Suchte auf dieser Homepage nach %s.
 result_count		Anzahl der Treffer: %d. Die Suche dauerte: %s Sekunden.
 result_created_by	Erstellt von %s am
-SEARCH_PHRASE		exakte Übereinstimmung
-SEARCH_ALL		alle Wörter
+SEARCH_PHRASE		exakte Ãœbereinstimmung
+SEARCH_ALL		alle WÃ¶rter
 SEARCH_ANY		irgendein Wort
 
