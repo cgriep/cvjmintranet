@@ -374,7 +374,8 @@ else { $self = $_SERVER['PHP_SELF']; }
 $_GP_REQUEST = array_merge($_GET, $_POST);
 foreach ( $_GP_REQUEST as $key => $value){
         // loop through filter
-        if(!($key == 'docinput' || $key == 'docdata' || $key == 'docdatatype' || $key == 'doc' || $key == 'docupload' || (defined('URL_REWRITE') && $key == 'id'))) {
+        if(!($key == 'docinput' || $key == 'docdata' || $key == 'docdatatype' || $key == 'doc' || 
+        $key == "Artikel" || $key == 'docupload' || (defined('URL_REWRITE') && $key == 'id'))) {
                 $self .= $pre.$key.'='.urlencode($value);
                 $pre = '&';
                 }
