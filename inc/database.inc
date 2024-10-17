@@ -80,7 +80,10 @@ function sql_error() {
 }
 // MySQL Database settings
 $db_host        = "localhost";
-
+$db_name        = "Verwaltung";
+$db_username    = "cvjm";
+$db_password    = "gfhkj456zwSRT(SW§$";
+$db_table_prefix= "awf_";
  
 if(function_exists("mysqli_connect")) {
         $dbconnection = mysqli_connect($db_host,$db_username,$db_password, $db_name);

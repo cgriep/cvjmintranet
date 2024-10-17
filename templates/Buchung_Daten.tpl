@@ -54,7 +54,7 @@ function uebertrageDatum(wert)
     Kunde</td><td colspan="3">
     <div style="float:right" id="KundeAendern">    
       {if ! $Buchung->isNeu() && ! $KundeAendern}
-      [ <a href="#" onClick="xajax_showKundenAuswahl(); return false;">
+      [ <a href="#" onClick="xajax_showKundenAuswahl({$Buchung->Buchung_Nr}); return false;">
       Kunde ändern</a> ]{/if}
     </div>
     {assign value=$Buchung->Adresse->Uebersicht(true) var=adresse}

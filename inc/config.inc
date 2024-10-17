@@ -22,7 +22,7 @@ if(!defined('SQL_CONNECTION') || SQL_CONNECTION == false) {
 	include('inc/data/errors/db_error.inc'); 
 	// log error
 	error_log($_SERVER['REMOTE_ADDR']."\t".time()."\t".$GLOBALS['id']."\t$db_host\t$db_name\n", 
-			3, 'log/'.date("Y_m").'_dberror.log');
+			3, 'logs/'.date("Y_m").'_dberror.log');
 	// bye
 	exit(); 
 	}
@@ -61,7 +61,7 @@ if(!defined("DEFAULT_LANG")) {
 	}
 if(!isset($lang)) $lang = DEFAULT_LANG;
 
-define('CONFIG_CREATE_MASK', 0707);
+define('CONFIG_CREATE_MASK', 0644);
 
 if (SHOW_WARNINGS == 1) error_reporting(4);
 

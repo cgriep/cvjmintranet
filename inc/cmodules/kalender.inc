@@ -58,6 +58,7 @@ if($profile['editor']!='1') {
         $docinput["EMonat"] = "";
         $docinput["EJahr"] = "";
       }
+      if ($docinput["TurnusDatum"] == "" ) $docinput["TurnusDatum"] = "0.0.0";
       list($docinput["TurnusEndeTag"], $docinput["TurnusEndeMonat"], $docinput["TurnusEndeJahr"]) =
         explode(".", $docinput["TurnusDatum"]);
       if ( ! checkdate($docinput["TurnusEndeMonat"],$docinput["TurnusEndeTag"],$docinput["TurnusEndeJahr"]) )
@@ -102,7 +103,10 @@ if($profile['editor']!='1') {
         add_nodedata($nodeid, 'Person', $Person, $flavour);
       }
       $Gruppe = "";
-      $Gruppe = implode(",",$docinput["Gruppe"]);
+      if (is_array($docinput["Gruppe"]) )
+      {
+        $Gruppe = implode(",",$docinput["Gruppe"]);
+      }
       if ( $_REQUEST["DelGrp"] == "v") $Gruppe = "";
       if ( $Gruppe != "" ) {
         add_nodedata($nodeid, 'Gruppe', $Gruppe, $flavour);

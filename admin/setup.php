@@ -12,11 +12,11 @@ error_reporting(1); // Disable Warnings
 
 $_BASEPATH = dirname(dirname($_SERVER['SCRIPT_FILENAME']));
 
-set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+//set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 
 define('AWF_VERSION', trim(join('', file($_BASEPATH.'/inc/VERSION'))));
 
-foreach ($_REQUEST as $key => $val= {
+foreach ($_REQUEST as $key => $val) {
         $$key = $val;
         }
 
