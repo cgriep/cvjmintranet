@@ -171,7 +171,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$q = sql_query('SELECT * FROM ' . TABLE_ARTIKEL . ' INNER JOIN ' .
 				TABLE_ARTIKELARTEN . ' ON F_Art_id=Art_id WHERE id=' . CVJM_VEGETARIER);
 				$vegetarier = sql_fetch_array($q);
-				sql_free_result(q);
+				sql_free_result($q);
 				$vegetarier['Menge'] = $buchung['Vegetarier'];
 				$vegetarier['Datum'] = $eintrag['Datum'];
 				$vegetarier['Dauer'] = 0;
@@ -184,7 +184,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 				$q = sql_query('SELECT * FROM ' . TABLE_ARTIKEL . ' INNER JOIN ' .
 				TABLE_ARTIKELARTEN . ' ON F_Art_id=Art_id WHERE id=' . CVJM_SCHWEINEFLEISCHLOS);
 				$vegetarier = sql_fetch_array($q);
-				sql_free_result(q);
+				sql_free_result($q);
 				$vegetarier['Menge'] = $buchung['Schweinelos'];
 				$vegetarier['Datum'] = $eintrag['Datum'];
 				$vegetarier['Dauer'] = 0;
@@ -199,7 +199,7 @@ function EintragAufnehmen($eintrag, $buchung, $Abrechnungseintraege)
 					' ON F_Art_id=Art_id WHERE id=' . CVJM_OHNEMITHILFE))
 					echo sql_error();
 				$hilfe = sql_fetch_array($q);
-				sql_free_result(q);
+				sql_free_result($q);
 				$hilfe['Datum'] = $eintrag['Datum'];
 				$hilfe['Menge'] = $eintrag['Menge'];
 				$hilfe['Dauer'] = 0;
