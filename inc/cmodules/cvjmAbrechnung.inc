@@ -1367,7 +1367,7 @@ if ($profile['editor'] != 1)
 			include (INC_PATH . 'misc/cvjmArtikelHinzu.inc');
 			ArtikelHinzufuegen(TABLE_RECHNUNGSEINTRAEGE);
 					
-			if (isset ($docinput['Kundenwahl']) && isset ($docinput[Kunde]) && $docinput['Kunde'] != '') 
+			if (isset ($docinput['Kundenwahl']) && isset ($docinput['Kunde']) && $docinput['Kunde'] != '') 
 			{
 				// die Kunden aufzählen und eine Auswahl möglich machen
 					// Anzeigen der gefundenen Kunden
