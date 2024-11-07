@@ -12,8 +12,8 @@
     {$row.Datum|date_format:"%d.%m.%Y"}
     {if ( ! $row.Gebucht )}</a>{/if}
     {if ( ! $row.Gebucht )}<a href="?id={$id}&docinput[Del]={$row.id}&docinput[Benutzer]={$Benutzer}" 
-    onClick="return window.confirm('Eintrag wirklich l�schen?');">
-      <img src="/img/small_edit/delete.gif" border="0" title="L�schen" /></a>{/if}
+    onClick="return window.confirm('Eintrag wirklich löschen?');">
+      <img src="/img/small_edit/delete.gif" border="0" title="Löschen" /></a>{/if}
     {$row.Datum|date_format:"%d.%m.%Y"}
     {if ( ! $row.Gebucht )}</a>{/if}
   </td>

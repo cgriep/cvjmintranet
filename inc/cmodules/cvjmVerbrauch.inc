@@ -25,7 +25,12 @@ function holeAktuellenPreis($groesse_id, $Datum = -1)
 	if (!$q = sql_query($sql))
 		echo sql_error();
 	if (!$preis = sql_fetch_row($q))
-		$preis[0] = '-nicht vorhanden-';
+        {
+                if ( $Datum > -1)
+                        $preis[0] = 0;
+                else
+                        $preis[0] = '-nicht vorhanden-';
+        }
 	sql_free_result($q);
 	return $preis[0];
 }
