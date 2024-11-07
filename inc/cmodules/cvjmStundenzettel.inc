@@ -150,8 +150,7 @@ if ( $profile['editor'] != 1 )
     $Smarty->assign('docinput', $docinput);
     if ( isset($docinput['Del']) && is_numeric($docinput['Del']))
     {
-    	$query = sql_query("DELETE FROM ".TABLE_STUNDENZETTEL." WHERE id=".$docinput['Del']);
-    	sql_free_result($query);
+    	$query = sql_query("DELETE FROM ".TABLE_STUNDENZETTEL." WHERE id=".$docinput['Del']);    	
     } 
     if ( isset($docinput["Zeit"]) && is_numeric($docinput['Zeit']))
     {
