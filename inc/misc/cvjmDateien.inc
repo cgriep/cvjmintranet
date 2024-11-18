@@ -7,7 +7,7 @@ function Dateihochladen($Verzeichnis, $Parameter)
          $_FILES[$Parameter]["tmp_name"] != "" &&
          $_FILES[$Parameter]['tmp_name'] != 'none')
          {
-         mkdirs ($Verzeichnis, 0777);
+         mkdirs ($Verzeichnis, 0750);
      if(function_exists('move_uploaded_file')) {
        if (file_exists($Verzeichnis.basename($_FILES[$Parameter]['name'])))
          rename ($Verzeichnis.basename($_FILES[$Parameter]['name']),

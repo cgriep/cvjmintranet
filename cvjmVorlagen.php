@@ -1363,7 +1363,7 @@ if ( $Datenbank != 'ArtikelPreislisten' && is_numeric($Adressenid) )
   $Pfadname = CVJM_ADRESSEN_DIR.'/'.$Adressenid.'/';
   $Dateiname = basename($Vorlage,CVJM_ENDUNG)."-$id$Nr-".date('dmyHi');
   if (!is_dir($Pfadname) )
-    mkdirs($Pfadname, 0777);
+    mkdirs($Pfadname, 0750);
   $doc->savefile($Pfadname.$Dateiname.CVJM_ENDUNG);
   // Neu: Weiterleitung auf Erstellung und Ausgabe der PDF-Datei
   if ( $Datenbank != 'Adressen')
