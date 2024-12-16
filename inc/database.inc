@@ -69,6 +69,25 @@ function sql_num_fields($qresult) {
         }
 }
 
+function sql_field_name($qresult, $nr) {
+        if ( $qresult === null )
+        {
+                return false;
+        }
+        else
+        {
+                try {
+                    $properties = mysqli_fetch_field_direct($qresult, $nr);
+                    return is_object($properties) ? $properties->name : null;
+
+                }
+                catch (Exception)
+                {
+                        return null;
+                }
+        }
+}
+
 
 function sql_fetch_array ($qres) {
         return mysqli_fetch_assoc($qres);
