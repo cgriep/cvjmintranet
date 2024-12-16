@@ -52,6 +52,24 @@ function sql_fetch_row ($qresult) {
         }
 }
 
+function sql_num_fields($qresult) {
+        if ( $qresult === null )
+        {
+                return false;
+        }
+        else
+        {
+                try {
+                return mysqli_num_fields($qresult);
+                }
+                catch (Exception)
+                {
+                        return false;
+                }
+        }
+}
+
+
 function sql_fetch_array ($qres) {
         return mysqli_fetch_assoc($qres);
         }
