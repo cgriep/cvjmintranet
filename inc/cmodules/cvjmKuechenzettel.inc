@@ -233,7 +233,10 @@ echo '<script src="/javascript/overlib.js" type="text/javascript"></script>';
     
     }
     sql_free_result($Eintraege);
-    array_multisort($ArtikelPos, SORT_ASC, SORT_NUMERIC, $Artikel, $ArtikelNr);
+    if ( $ArtikelPos )
+    {
+      array_multisort($ArtikelPos, SORT_ASC, SORT_NUMERIC, $Artikel, $ArtikelNr);
+    }
     $art = array();
     foreach ( $Artikel as $k=>$a )
     {
