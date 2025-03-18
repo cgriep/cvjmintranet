@@ -41,10 +41,12 @@ require PCLZIP_INCLUDE_PATH . 'pclzip.lib.php';
 // Use zlib from PHPMyAdmin for writing zipped files,
 // because documents created with PclZip cannot be opened with OpenOffice
 // Needs to be fixed in later version.
+/* removed 18.03.25
 if (!defined('ZIPLIB_INCLUDE_PATH')) {
   define('ZIPLIB_INCLUDE_PATH', "./");
 }
 require ZIPLIB_INCLUDE_PATH . 'zip.lib.php';
+*/
 
 // How are variables defined within the document
 if (!defined('POO_VAR_PREFIX')) {
@@ -342,6 +344,28 @@ class phpOpenOffice
 		return $xml;
 	}
 
+
+	 function folderToZip($folder, &$zipFile, $exclusiveLength) {
+
+    $handle = opendir($folder);
+
+    while (false !== $f = readdir($handle)) {
+      if ($f != '.' && $f != '..') {
+        $filePath = "$folder/$f";
+        // Remove prefix from file path before add to zip.
+	$localPath = substr($filePath, $exclusiveLength);
+        if (is_file($filePath)) {
+          $zipFile->addFile($filePath, $localPath);
+        } elseif (is_dir($filePath)) {
+          // Add sub-directory.
+          $zipFile->addEmptyDir($localPath);
+          $this->folderToZip($filePath, $zipFile, $exclusiveLength);
+        }
+      }
+    }
+    closedir($handle);
+  }
+
 	// Save parsed document
 	function savefile($filename)
 	{
@@ -369,19 +393,25 @@ class phpOpenOffice
 			fclose($fp);
 		}
 
+		 // Added new library for ZIP 18.03.25
+                $zip = new ZipArchive;
+		$zip->open($filename, ZipArchive::CREATE);
+		$this->folderToZip( POO_TMP_PATH."/".$this->tmpDirName, $zip, strlen(POO_TMP_PATH."/".$this->tmpDirName)+1);
+		$zip->close();
+
+
+/* removed 18.03.25
 		// Create new (zip-)file - Add all files and subdirectories from temporary directory
 		$archive = new PclZip($filename);
 		$v_list = $archive->create(POO_TMP_PATH."/".$this->tmpDirName, PCLZIP_OPT_REMOVE_PATH, POO_TMP_PATH."/".$this->tmpDirName."/", PCLZIP_CB_PRE_ADD, "ooPreAdd");
 
 		// zip.lib dirty hack
 		$zip = new zipfile();
-
-
+		
 		// Add specials files without compression
 		for($i = 0; $i < count($archiveFiles); $i++)
 		{
 			$file = $archiveFiles[$i];
-
 			/*if( $file == "mimetype" || $file == "meta.xml" || substr( $file, 0, 9) == "Pictures/" )
 			{
 				$v_list = $archive->add(POO_TMP_PATH."/".$this->tmpDirName."/".$file, PCLZIP_OPT_REMOVE_PATH, POO_TMP_PATH."/".$this->tmpDirName."/", PCLZIP_OPT_NO_COMPRESSION);
@@ -392,7 +422,7 @@ class phpOpenOffice
 			}
 			*/
 
-
+/* removed 18.03.25
 			// zip.lib dirty hack
 			$fp = fopen(POO_TMP_PATH."/".$this->tmpDirName."/".$file, "r");
 			if ( filesize(POO_TMP_PATH."/".$this->tmpDirName."/".$file) > 0 )
@@ -403,12 +433,13 @@ class phpOpenOffice
 			  $content = '';
 			fclose($fp);
 			$zip->addFile($content, $file);
-		}
 
+		}
 		// Finally write file to disk => zip.lib dirty hack
 		$fp = fopen($filename, "w+");
 		fputs($fp, $zip->file());
 		fclose($fp);
+		*/
 	}
 
 
