@@ -279,7 +279,7 @@ function aktualisiereKorrespondenzListe($id, $Adressen_id, $id_nr)
 		$korrespondenz['Rechnung_id'] = $Rechnung_id;
 	}
 	$korrespondenz['Adressen_id']=$Adressen_id;
-	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true);
+	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $array(), true);
 	return $objResponse;
 }
 /**
@@ -351,7 +351,7 @@ function loescheKorrespondenz($id, $Adressen_id, $dokument, $id_nr = -1)
 			$objResponse->addAssign('Historie', 'innerHTML', nl2br($buchung['Logtext']));
 		}
 	}
-	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true);
+	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $array(), true);
 	$objResponse->addAssign('Korrespondenzdiv', 'innerHTML', $content);
 	return $objResponse;
 }
@@ -398,7 +398,7 @@ function aktualisiereKorrespondenz($id, $Adressen_id, $id_nr = -1)
 	}
 	// Adresse
 	$korrespondenz['Adressen_id']=$Adressen_id;
-	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $params, true);
+	$content = holeKorrespondenzListe($id, $Buchungsvorlagen, $korrespondenz, $array(), true);
 	$objResponse->addAssign('Korrespondenzdiv', 'innerHTML', $content);
 	return $objResponse;
 }
