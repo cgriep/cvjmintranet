@@ -40,18 +40,18 @@
 {foreach from=$Anzeige key=kat_id item=kategorie}
 <tr class="ueberschrift">
   <td></td>
-  <td>
-    <a href="?id={$id}&{$params}&Tag={$TageZurueck}#K{$kat_id}" title="5 Tage früher">&lt;&lt;&lt;</a>
+  <td align="right">
+    <a href="?id={$id}&{$params}&Tage={$anzahltage}&Tag={$TageZurueck}#K{$kat_id}" title="5 Tage früher">&lt;&lt;&lt;</a>
   </td>
   <th colspan="{eval var=$anzahltage-2}">
-    <a href="?id={$id}&{$params}&Tage={eval var=$anzahltage-5}" title="5 Tage weniger anzeigen">&larr;</a>
+    <a href="?id={$id}&{$params}&Tage={eval var=$anzahltage-5}&Tag={$Tag}" title="5 Tage weniger anzeigen">&larr;</a>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     {$kategorie.Bezeichnung} {$Tag|date_format:"%Y"}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="?id={$id}&{$params}&Tage={eval var=$anzahltage+5}" title="5 Tage mehr anzeigen">&rarr;</a>
+    <a href="?id={$id}&{$params}&Tage={eval var=$anzahltage+5}&Tag={$Tag}" title="5 Tage mehr anzeigen">&rarr;</a>
   </th>
   <td align="right">
-    <a href="?id={$id}&{$params}&Tag={$TageVor}#K{$kat_id}" title="5 Tage später">&gt;&gt;&gt;</a>
+    <a href="?id={$id}&{$params}&Tage={$anzahltage}&Tag={$TageVor}#K{$kat_id}" title="5 Tage später">&gt;&gt;&gt;</a>
   </td>
 </tr>
 <tr class="ueberschrift">

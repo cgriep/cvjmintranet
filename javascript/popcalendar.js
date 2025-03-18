@@ -1,7 +1,7 @@
 var gotoString = "aktueller Monat";
 var todayString = "heute ist";
 var weekString = "KW";
-monthName = new Array("Januar","Februar","M‰rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember");
+monthName = new Array("Januar","Februar","M√§rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember");
 startAt = 1;    // since we always start at 1, we only change the else part :-) lazy
 if (startAt==0)
 {
@@ -16,11 +16,11 @@ var	fixedY = -1; // y position (-1 if to appear below control)
 var showWeekNumber = 1; // 0 - don't show; 1 - show
 var showToday = 1;  // 0 - don't show; 1 - show
 var imgDir = "img/Kalender/";   // directory for images ... e.g. var imgDir="/img/"
-var scrollLeftMessage = "Vorangegangener Monat. Gedr¸ckt halten zum automatischen Bl‰ttern.";
-var scrollRightMessage = "N‰chster Monat. Gedr¸ckt halten zum automatischen Bl‰ttern.";
-var selectMonthMessage = "Monat ausw‰hlen.";
-var selectYearMessage = "Jahr ausw‰hlen.";
-var selectDateMessage = "Datum [date] ausw‰hlen."; // do not replace [date], it will be replaced by date.
+var scrollLeftMessage = "Vorangegangener Monat. Gedr√ºckt halten zum automatischen Bl√§ttern.";
+var scrollRightMessage = "N√§chster Monat. Gedr√ºckt halten zum automatischen Bl√§ttern.";
+var selectMonthMessage = "Monat ausw√§hlen.";
+var selectYearMessage = "Jahr ausw√§hlen.";
+var selectDateMessage = "Datum [date] ausw√§hlen."; // do not replace [date], it will be replaced by date.
 var	crossobj, crossMonthObj, crossYearObj, monthSelected, yearSelected, dateSelected,
     omonthSelected, oyearSelected, odateSelected, monthConstructed, yearConstructed,
     intervalID1, intervalID2, timeoutID1, timeoutID2, ctlToPlaceValue, ctlNow,

@@ -2,6 +2,7 @@
 /**
  * Abstrakte Grundklasse für Datenbankobjekte
  */
+#[AllowDynamicProperties]
 abstract class DBEntity
 {
 	/**

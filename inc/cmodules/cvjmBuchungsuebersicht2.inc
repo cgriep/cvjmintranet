@@ -61,12 +61,8 @@ if ($profile['editor'] != 1)
 	sql_free_result($query);
 	$Smarty->assign('Kategorien', $Kategorienamen);
 	$Smarty->assign('id', $id);
-	$Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));
-	$params = array (
-		'Tag' => $Tag,
-		'Tage' => ANZAHLTAGE
-	);
-	$Smarty->assign('params', implode('&', $params));
+	$Smarty->assign('Buchungurl', get_url(get_cmodule_id('cvjmbuchung')));	
+	$Smarty->assign('params', "Tag=$Tag&Tage=".ANZAHLTAGE);
 	$Smarty->assign('anzahltage', ANZAHLTAGE);
 	$Smarty->assign('Tag', $Tag);
 	$Smarty->assign('TageZurueck', strtotime('-5 day', $Tag));
@@ -117,7 +113,7 @@ if ($profile['editor'] != 1)
 			for ($i = 0; $i < ANZAHLTAGE; $i++)
 			{
 				$row['Tage'][$i] = array ();
-				while (isset ($buchung) && $buchung['Datum'] >= strtotime('+' . ($i -VORLAUF) . ' day', $Tag) && $buchung['Datum'] < strtotime(($i +1 - VORLAUF) . ' day', $Tag))
+				while (isset ($buchung) && $buchung['Datum'] >= strtotime(($i -VORLAUF) . ' day', $Tag) && $buchung['Datum'] < strtotime(($i +1 - VORLAUF) . ' day', $Tag))
 				{
 					// Durchnummerierung der Buchung für Farben
 					if (!isset ($BuchungFarbe[$buchung['Buchung_Nr']]) && Count($BuchungFarbe) < Count($Belegungsfarbe))

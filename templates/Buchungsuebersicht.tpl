@@ -48,7 +48,7 @@
 {if $buchung.Buchung_Nr>0}
   [ <a href="{$Personalplanungurl}{$dat}">Personalplanung</a> ]
 {/if}
-</div}
+</div>
 <div id="Fehleranzeige" class="Fehler"></div>
 <!--  Reiter aufbauen -->
 <table class="volleTabelle" cellspacing="0px" cellpadding="5px">
