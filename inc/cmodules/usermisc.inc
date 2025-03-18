@@ -49,7 +49,7 @@ if ( isset($_REQUEST["UNr"]) && SESSION_STATUS=="ok" )
   }
 }
 
-$unique_nickname = !(UNIQUE_NICKNAME && !is_unique_nickname($docinput['nickname'], $UserNummer));
+$unique_nickname = !(UNIQUE_NICKNAMES && !is_unique_nickname($docinput['nickname'], $UserNummer));
 
 if(isset($docinput['create_new_user']) && $docinput['create_new_user'] == 'true' && $docinput['email_adr'] != ''
         && $docinput['passwd_1'] != '' && $docinput['passwd_1'] == $docinput['passwd_2'] && isemail($docinput['email_adr']) &&

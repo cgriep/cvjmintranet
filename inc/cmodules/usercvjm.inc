@@ -26,7 +26,7 @@ else {
 
 load_lang('user');
 
-$unique_nickname = !(UNIQUE_NICKNAME && !is_unique_nickname($docinput['nickname'], SESSION_DBID));
+$unique_nickname = !(UNIQUE_NICKNAMES && !is_unique_nickname($docinput['nickname'], SESSION_DBID));
 
 if(isset($docinput['create_new_user']) && $docinput['create_new_user'] == 'true' && $docinput['email_adr'] != ''
         && $docinput['passwd_1'] != '' && $docinput['passwd_1'] == $docinput['passwd_2'] && isemail($docinput['email_adr']) &&
