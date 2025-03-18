@@ -1350,7 +1350,7 @@ if ( $Datenbank == 'Rechnung' ) $Datenbank = 'Fakturierung/'.$DokArten[$daten['R
 
 define('POO_TMP_PATH', "Vorlagen/".$Datenbank."/");
 define('PCLZIP_INCLUDE_PATH','inc/misc/pclzip/');
-define('ZIPLIB_INCLUDE_PATH','inc/misc/');
+//define('ZIPLIB_INCLUDE_PATH','inc/misc/');
 require('inc/misc/phpOpenOffice.php');
 $doc = new phpOpenOffice();
 $doc->loadDocument("Vorlagen/$Datenbank/$Vorlage");
