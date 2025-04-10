@@ -194,7 +194,7 @@ function ArtikelAnzeigen($art, $Tag)
   } // Monatszählung
   $content = ob_get_contents();
   // Content speichern
-  if ( ! $handle = fopen ("/srv/www/vhosts/cvjm-feriendorf.de/subdomains/v/httpsdocs/files/belegung.html", "w") ) 
+  if ( ! $handle = fopen ("/var/www/httpdocs/files/belegung.html", "w") ) 
   {
   	echo 'Fehler beim öffnen der Datei!';
   }

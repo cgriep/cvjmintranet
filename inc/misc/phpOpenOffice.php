@@ -332,16 +332,23 @@ class phpOpenOffice
 	// encode string xml compatible
 	function xmlencode($param)
 	{
-		$xml = $param;
+		if ( is_null($param) )
+		{
+				return '';
+		}
+		else
+		{
+			$xml = $param;
 
-		$xml = str_replace("&", "&amp;", $xml);
-		$xml = str_replace(">", "&gt;", $xml);
-		$xml = str_replace("<", "&lt;", $xml);
-		$xml = str_replace("'", "&apos;", $xml);
-		$xml = str_replace("\"", "&quot;", $xml);
+			$xml = str_replace("&", "&amp;", $xml);
+			$xml = str_replace(">", "&gt;", $xml);
+			$xml = str_replace("<", "&lt;", $xml);
+			$xml = str_replace("'", "&apos;", $xml);
+			$xml = str_replace("\"", "&quot;", $xml);
 
-		//$xml = utf8_encode($xml);  03.09. entfernt
-		return $xml;
+			//$xml = utf8_encode($xml);  03.09. entfernt
+			return $xml;
+		}
 	}
 
 
