@@ -431,7 +431,14 @@ function fuelleProgramme($daten = array() )
         $programm = getOrtsname($bereichid);
         $datum = explode(' ',$daten['ZDATUM'][$key]);
         $tag = explode('.',$datum[0]);
-        $zeit = explode(':',$datum[1]);
+        if ( $datum[1] )
+        {
+          $zeit = explode(':',$datum[1]);
+        }
+        else
+        {
+          $zeit = array(0,0);
+        }
         $programm1[] = mktime($zeit[0],$zeit[1],0,$tag[1],$tag[0],$tag[2]);
         $programm2[] = $programm.': '.$daten['ZBEZEICHNUNG'][$key];
       }
