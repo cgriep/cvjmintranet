@@ -196,42 +196,20 @@ if ( $profile['editor'] != 1 )
     echo $design["table_begin"];
     echo '<tr class="ueberschrift"><th></th><th>Ankunft</th><th>Häuser-<br />abnahme<br />Abfahrt</th><th>Abrechnung</th>'.
       '<th>Smileycard</th><th>Name</th><th>Belegung/<br />Personen</th></tr>';
-      /* Alt:
-    $query = sql_query("SELECT * FROM ".TABLE_BUCHUNGEN." INNER JOIN ".TABLE_ADRESSEN.
-      " ON F_Adressen_id = Adressen_id WHERE Von <= ".strtotime("+".$document["TageLZ"]." day")." AND Bis >= ".
-      strtotime("-".$document["TageLZ"]." day")." AND BStatus < ".BUCHUNG_FERTIG.
-      " AND BStatus <> ".
-      BUCHUNG_STORNIERT." ORDER BY Von");
-      */      
+          
     $sql = 'SELECT DISTINCT '.TABLE_BUCHUNGEN.'.*, '.TABLE_ADRESSEN.
       '.*, F_Buchung_Nr FROM '.TABLE_BUCHUNGEN.
       ' INNER JOIN '.TABLE_ADRESSEN.' ON F_Adressen_id = Adressen_id '.
       ' LEFT JOIN '.TABLE_SCHLUESSEL.' ON F_Buchung_Nr=Buchung_Nr WHERE '. 
-		'((Von <= '.time().' AND (SUBSTRING(Anreisename,1,2) <> "OK" OR '.
-		'SUBSTRING(Abnahmename,1,2) <> "OK" OR '.
-		'SUBSTRING(Rechnungname,1,2) <> "OK" OR '.
+		'((Von <= '.time().' AND (SUBSTRING(IFNULL(Anreisename,""),1,2) <> "OK" OR '.
+		'SUBSTRING(IFNULL(Abnahmename,""),1,2) <> "OK" OR '.
+		'SUBSTRING(IFNULL(Rechnungname,""),1,2) <> "OK" OR '.
     //	'SUBSTRING(Smilycardname,1,2) <> "OK" OR '.
 		' F_Buchung_Nr IS NOT NULL))'.
 		' OR Von BETWEEN '.time().' AND '.strtotime('+'.$document['TageLZ'].' day').')'.
         ' AND BStatus <> '.BUCHUNG_STORNIERT.' AND BStatus<>'.BUCHUNG_GELOESCHT.' ORDER BY Von';
     $query = sql_query($sql);
-/*      
-    if ( sql_num_rows($query) < 5 )
-    {
-      sql_free_result($query);
-      $query = sql_query('SELECT DISTINCT '.TABLE_BUCHUNGEN.'.*, '.TABLE_ADRESSEN.
-      '.*, F_Buchung_Nr FROM '.TABLE_BUCHUNGEN.
-      ' INNER JOIN '.TABLE_ADRESSEN.' ON F_Adressen_id = Adressen_id '.
-      ' LEFT JOIN '.TABLE_SCHLUESSEL.' ON F_Buchung_Nr=Buchung_Nr WHERE '. 
-//Bis >= '.strtotime('-'.$document['TageLZ'].' day').' AND BStatus < '.BUCHUNG_FERTIG.
-        // solange Schlüssel vorhanden oder eine der Abnahmen nicht da
-		'(SUBSTRING(Anreisename,1,2) <> "OK" OR '.
-		'(SUBSTRING(Abreisename,1,2) <> "OK" OR '.
-		'(SUBSTRING(Rechnungname,1,2) <> "OK" OR '.
-		' F_Buchung_Nr IS NOT NULL)'.
-        ' AND BStatus <> '.BUCHUNG_STORNIERT.' ORDER BY Von '.sql_limit(5));
-    }
-*/
+
     $Color = 'helleZeile';
     while ( $buchung = sql_fetch_array($query) )
     {
