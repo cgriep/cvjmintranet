@@ -118,7 +118,7 @@ class Adresse extends DBEntity
 			return false;
 		}
 		$Originalid = $this->Adressen_id;
-		$this->Name = 'Kopie von ' . $this->Name;
+		$this->Name = substr('Kopie von ' . $this->Name, 0, 50);  // db field maxlen 50
 		$this->Geburtsdatum = 0;
 		$this->Kunden_Nr = -1;
 		$this->Adressen_id = -1;
