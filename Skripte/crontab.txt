@@ -1,0 +1,16 @@
+
+*/15    7-20    *       *       *       /root/OOTesten.sh > /root/.run/OOTesten.txt 2> /root/.run/ootesten.err.log
+
+# renew certificate
+10      1       *       *       1       certbot renew --apache >> /root/.run/certbot.log
+
+# CVJM: Belegungshistorie zu sichern
+6       3       1       *       *       /root/SaveBelegungsStatistik.sh &> /root/.run/SaveBelegungsStatistik.log
+# Belegungsücht als Datei erzeugen
+8       2       *       *       *       /root/SaveBelegung.sh &> /root/.run/SaveBelegung.log
+# Mail fuer Events senden
+#11      2       *       *       *       /usr/bin/php Event_Erinnerung.php &> /root/.run/Erinnerung.txt
+
+#34      0       *       *       *       /root/OORestart.sh >> /root/.run/OORestart.txt 2> /root/.run/oorestart.err.log
+14       1      *       *       *       /root/saveBackup.sh > /root/.run/backupftp.txt 2>&1
+
