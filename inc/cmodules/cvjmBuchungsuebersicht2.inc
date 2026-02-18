@@ -43,12 +43,20 @@ if ($profile['editor'] != 1)
 	}
 	// Auswahlfelder für Arten
 	$Kategorien = array ();
-	if (!isset ($docinput['Kategorie']))
+	if ( !isset($profile['Kategorie'.$id]))
+	{
+		$docinput['Kategorie'.$id] = array();
+	}
+	if (!isset ($docinput['Kategorie']) )
+	{		
 		$docinput['Kategorie'] = explode(',', $profile['Kategorie' . $id]);
+	}
 	else
-		set_profile('Kategorie' .
-		$id, implode(',', $docinput['Kategorie']));	
-        $Smarty->assign('docinput', $docinput);
+	{
+		set_profile('Kategorie'.$id, implode(',', $docinput['Kategorie']));
+	}
+
+    $Smarty->assign('docinput', $docinput);	
 	if (!$query = sql_query('SELECT * FROM ' . TABLE_ARTIKEL .
 		' WHERE Einruecken=0 AND F_Art_id IN (' . CVJMART_ORT . ',' . CVJMART_VERPFLEGUNG . ',' .
 		CVJMART_PROGRAMM . ',' . CVJMART_VERLEIH . ',' . CVJMART_PROGRAMMPAKET . ') ORDER BY Bezeichnung'))
