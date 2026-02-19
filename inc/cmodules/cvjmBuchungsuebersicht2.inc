@@ -45,7 +45,7 @@ if ($profile['editor'] != 1)
 	$Kategorien = array ();
 	if ( !isset($profile['Kategorie'.$id]))
 	{
-		$docinput['Kategorie'.$id] = array();
+		$docinput['Kategorie] = array(3, 8 , 9); // JB, FB, ZB
 	}
 	if (!isset ($docinput['Kategorie']) )
 	{		
