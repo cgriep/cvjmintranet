@@ -201,8 +201,8 @@ function ArtikelAnzeigen($art, $Tag)
   else
   {
   	if (!fwrite($handle, $content)) { echo 'Datei nicht schreibbar!'; }
-  }
-  fclose($handle);
+    fclose($handle);
+  }  
   ob_end_flush();
 } // wenn nicht Editor
 ?>
