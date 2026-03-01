@@ -33,12 +33,15 @@ if($value['title'] != '') {
       $bbase = $value['basedir'];
       if ( $bbase == "" ) $bbase = get_dir_name('files',$value['id']).'/published/';
       $handle=opendir($bbase);
-      while (false != ($file = readdir($handle))) {
-        if(filetype($bbase."/".$file) == 'file') {
-          $size += floor(filesize($bbase."/".$file) / 1024);
+      if ( $handle )
+      {
+        while (false != ($file = readdir($handle))) {
+          if(filetype($bbase."/".$file) == 'file') {
+            $size += floor(filesize($bbase."/".$file) / 1024);
+          }
         }
+        closedir($handle);
       }
-      closedir($handle);
       echo $size . " kB)";
     }
     echo '</small></td>';

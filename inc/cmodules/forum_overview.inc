@@ -26,7 +26,7 @@ if($profile['editor'] == 1) {
                         }
                 if($docinput['deleteall'] == '1') {
                         $result = get_children(0, $childcount, $doctypes['forum_forum'], 0, 'DESC');
-                        while(list($key, $value) = each($result)) { destroy_node($key); }
+                        foreach( $result as $key=> $value) { destroy_node($key); }
                         $childcount = 0;
                         }
 
@@ -44,7 +44,7 @@ if($profile['editor'] == 1) {
                                         }
                 $result = get_children (0 ,$childcount,$doctypes['forum_forum']);
                 $colorswitch = '0';
-                while(list($key, $value) = each($result)) {
+                foreach ( $result as $key => $value) {
                         echo '<tr bgcolor = "';
                         $colorswitch = getswitchcolor();
                         ?>"><td width="100%" nowrap><b><a href="<?=get_url($key)?>"><?=transform($value['title'], 'clean')?></a></b></td>
@@ -90,13 +90,13 @@ else {
                 // neu: Datum des letzten Eintrages
                 $result2 = get_sorted_children (0 , 1, 'timestamp', $doctypes['forum_posting'], $key);
                 $z1 = 0;
-                while ( list($k, $v) = each($result2) ) {
+                foreach (  $result2 as $k=> $v ) {
                   //echo transform($v['timestamp'],"datetime");
                   if ( $v['timestamp'] > $z1 ) $z1 = $v['timestamp'];
                 }
                 if ( $z1 != 0 ) echo ' <font size="-2">('.transform($z1, 'datetime').')</font>';
                 $ll = 2147483647;
-                if ( defined(SESSION_LAST_LOGIN) ) {
+                if ( defined('SESSION_LAST_LOGIN') ) {
                   $ll = SESSION_LAST_LOGIN;
                 }
                 else

@@ -46,15 +46,17 @@ $filelist = array();
 $dirlist = array();
 
 $handle=opendir($value.$subject);
-while (false != ($file = readdir($handle))) { 
-	if(filetype($value.$subject.$file) == 'dir' || filetype($value.$subject.$file) == 'link') { $dirlist[] = $file; }
-	if(filetype($value.$subject.$file) == 'file') { $filelist[] = $file; }
-	}
+if ( $handle )
+{
+	while (false != ($file = readdir($handle))) { 
+		if(filetype($value.$subject.$file) == 'dir' || filetype($value.$subject.$file) == 'link') { $dirlist[] = $file; }
+		if(filetype($value.$subject.$file) == 'file') { $filelist[] = $file; }
+		}
 
-sort($filelist);
-sort($dirlist);
-$filelist = array_merge($dirlist,$filelist);
-
+	sort($filelist);
+	sort($dirlist);
+	$filelist = array_merge($dirlist,$filelist);
+}
 echo '<table width="100%" cellpadding="5" cellspacing="0" border="0"  align="center"><tr bgcolor="'.$design['table_row_dark'].'">';
 $colorswitch = 0;
 
@@ -158,7 +160,11 @@ foreach ($filelist as $nr =>$file) {
      }
     } 
 }
-closedir($handle);
+if ( $handle )
+{
+        closedir($handle);
+}
+
 //* if uneven output blank cell
 if ($file_counter % 2 == 1) { 
   echo '<td></td>'; 
