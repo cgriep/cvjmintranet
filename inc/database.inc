@@ -16,7 +16,7 @@ function sql_query ($query) {
         }
         catch (Exception)
         {
-                $regebnis = false;
+                $ergebnis = false;
         }
         return $ergebnis;
 }
@@ -117,16 +117,14 @@ function sql_error() {
 }
 // MySQL Database settings
 $db_host        = "localhost";
-$db_name        = "Verwaltung";
-$db_username    = "cvjm";
-$db_password    = "gfhkj456zwSRT(SW§$";
+$db_name        = "";
+$db_username    = "";
+$db_password    = "";
 $db_table_prefix= "awf_";
  
 if(function_exists("mysqli_connect")) {
         $dbconnection = mysqli_connect($db_host,$db_username,$db_password, $db_name);
         define("SQL_CONNECTION", "1");
-        //mysqli_connect($db_host,$db_username,$db_password,$dbname);
-        //mysql_select_db($db_name));
-        }
+}
 
 ?>
