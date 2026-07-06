@@ -70,11 +70,17 @@ function holeArtikelMasterParent($Art, $Position, $Einruecken)
   if ( ! $zeile = sql_fetch_row($query)) $zeile[0] = -1;
   sql_free_result($query);
   $zeile = $zeile[0];
-  $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.
-    " WHERE Position=$zeile AND F_Art_id=$Art");
-  if ( ! $art = sql_fetch_row($query)) $art[0] = -1;
-  sql_free_result($query);
-  return $art[0];
+  $parent = -1;
+  if ( is_numeric($zeile) )
+  {
+    $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL." WHERE Position=$zeile AND F_Art_id=$Art");
+    if ( $query !== false )
+    {
+        if ( $Master = sql_fetch_row($query)) $parent = $Master[0];
+        sql_free_result($query);
+    }
+  }
+  return $parent;
 }
 
 // Zeigt die Artikel einer bestimmten Art / Buchung

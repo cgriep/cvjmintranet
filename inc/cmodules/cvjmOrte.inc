@@ -119,7 +119,7 @@ if ( $profile["editor"] != 1 )
     echo 'Kategorie <select name="Art">';
     foreach ( $Artikelarten as $key => $value)
     {
-      echo "<option ";
+       echo "<option value=\"$key\" ";
       if ( $key == $DieArt ) echo ' selected="selected"';
       echo ">".$value."</option>";
     }
