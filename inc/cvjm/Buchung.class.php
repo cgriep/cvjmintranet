@@ -1450,7 +1450,7 @@ class Buchung extends DBEntity
 							// Nachschauen, an welchem Datum entfernt werden muss
 							$lquery = sql_query("SELECT Datum FROM ".TABLE_BUCHUNGSEINTRAEGE.
 							" WHERE F_Artikel_Nr=".$art["F_Unterartikel_id"]." AND F_Buchung_Nr=$buchung_nr");
-							if ($artikel = sql_fetch_row($lquery) )
+							if ($lquery !== false && $artikel = sql_fetch_row($lquery) )
 							{
 								$loeschDatum = $artikel[0];
 							}

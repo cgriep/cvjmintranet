@@ -36,7 +36,7 @@ function sql_num_rows ($qresult) {
         }
  
 function sql_fetch_row ($qresult) {
-        if ( $qresult === null )
+        if ( $qresult === null || $qresult === false )
         {
                 return false;
         }
