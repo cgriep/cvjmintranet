@@ -201,7 +201,7 @@ function get_user_nickname ($user_id = -1) {
         // enforce secure db queries
         if(!is_numeric($user_id)) return false;
 
-        if($user_id == -1 || (defined(SESSION_DBID) && $user_id == SESSION_DBID)) {
+        if($user_id == -1 || (defined('SESSION_DBID') && $user_id == SESSION_DBID)) {
                 global $profile;
                 if(!isset($profile['nickname'])) $profile['nickname'] = LANG_STRANGER;
                 return htmlchars($profile['nickname']);
@@ -1702,7 +1702,7 @@ function get_dir_name ($basedir, $id, $create_dir = true) {
 
         if(!is_numeric($id) || !is_bool($create_dir)) return false;
 
-        if(defined(CONFIG_CREATE_MASK)) { $CONFIG_CREATE_MASK = CONFIG_CREATE_MASK; }
+        if(defined('CONFIG_CREATE_MASK')) { $CONFIG_CREATE_MASK = CONFIG_CREATE_MASK; }
         else { $CONFIG_CREATE_MASK = 0707; }
         if(!file_exists($basedir) && $create_dir) mkdir($basedir, $CONFIG_CREATE_MASK);
         if(!is_numeric($id) || $id < 0) {

@@ -1453,12 +1453,12 @@ class Buchung extends DBEntity
 							if ($lquery !== false && $artikel = sql_fetch_row($lquery) )
 							{
 								$loeschDatum = $artikel[0];
+								sql_free_result($lquery);
 							}
 							else
 							{
 								$loeschDatum = $datum;
-							}
-							sql_free_result($lquery);
+							}							
 							$meineMenge = 1;
 						}
 					}
