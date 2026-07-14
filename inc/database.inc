@@ -53,7 +53,7 @@ function sql_fetch_row ($qresult) {
 }
 
 function sql_num_fields($qresult) {
-        if ( $qresult === null )
+        if ( $qresult === null || $qresult === false)
         {
                 return false;
         }
@@ -70,7 +70,7 @@ function sql_num_fields($qresult) {
 }
 
 function sql_field_name($qresult, $nr) {
-        if ( $qresult === null )
+        if ( $qresult === null || $qresult === false)
         {
                 return false;
         }
@@ -94,7 +94,7 @@ function sql_fetch_array ($qres) {
         }
  
 function sql_free_result ($qresult) {
-        if ($qresult === null )
+        if ($qresult === null || $qresult === false)
                 return false;
         else 
                 return mysqli_free_result($qresult);
