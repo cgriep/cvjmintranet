@@ -23,11 +23,36 @@ echo '
   @import url(css/popcalendar.css);
 </style>
 <script type="text/javascript" language="JavaScript" src="javascript/common.js"></script>
-<script type="text/javascript" language="JavaScript" src="javascript/popcalendar.js"></script>';
+<script type="text/javascript" language="JavaScript" src="javascript/popcalendar.js"></script>
+<style>
+    #dropzone {
+      width: 300px;
+      height: 200px;
+      border: 2px dashed #888;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #666;
+    }
+    #dropzone.highlight {
+      border-color: #2a8cff;
+      color: #2a8cff;
+    }
+    #preview img {
+      max-width: 150px;
+      max-height: 150px;
+      margin: 5px;
+    }
+</style>
+<script type="text/javascript" language="JavaScript" src="javascript/common.js"></script>
+<script type="text/javascript" language="JavaScript" src="javascript/popcalendar.js"></script>
+';
 
 require_once(INC_PATH.'Smarty/Smarty.class.php');
 $Smarty = new Smarty;
-$Smarty->template_dir = TEMPLATEPATH; 
+$Smarty->template_dir = TEMPLATEPATH;    
 
 // Namen für Prioritäten und Status
 $Prioritaeten[1]['name'] = LANG_SOFORT;
@@ -102,8 +127,21 @@ if ( isset($_REQUEST['Titel']) )
       else
       {
         // INSERT
-        insertAuftrag($_REQUEST['Titel'], $_REQUEST['Beschreibung'], $_REQUEST['Prioritaet'],
+        $_REQUEST['Auftrag'] = insertAuftrag($_REQUEST['Titel'], $_REQUEST['Beschreibung'], $_REQUEST['Prioritaet'],
           $Betroffen, $BearbeitenBis, $_REQUEST['Ort'], $_REQUEST['Status']);
+      }
+      if ( is_numeric($_REQUEST['Auftrag']))
+      {
+        include(INC_PATH.'misc/cvjmDateien.inc');
+        $subject = 'Auftraege/'.$_REQUEST['Auftrag'].'/';
+        Dateiloeschen($subject, 'DelDatei'); 
+        
+        $uploads = restructureFiles($_FILES);
+        foreach ( $uploads as $file )
+          {
+            $_FILES['uploadTmp'] = $file;
+            Dateihochladen($subject, 'uploadTmp');
+          }                
       }
     }
   }
@@ -136,16 +174,8 @@ if ( isset($_REQUEST['Auftrag']) && isset($_REQUEST['NewStatus']) &&
 if ( ! ((isset($_REQUEST['EditAuftrag']) && is_numeric($_REQUEST['EditAuftrag'])) ||
   isset($_REQUEST['newauf'])))
 {
-  //if ( $_REQUEST['Unterbrochen'] == 1 )
-  //{
-    remove_profile('AuftragUnterbrochen');
-    unset($profile['AuftragUnterbrochen']);
-  //}
-  //else
-  //{
-  //  set_profile('AuftragUnterbrochen', 1);
-  //  $profile['AuftragUnterbrochen'] = 1;
- // }
+  remove_profile('AuftragUnterbrochen');
+  unset($profile['AuftragUnterbrochen']);  
   if ( isset($_REQUEST['MyWork']) )
     echo '<h2>Aufträge von '.get_user_nickname($Benutzer).', Stand '.date('d.m.Y H:i').'</h2>';
   else
@@ -199,7 +229,6 @@ echo '</div>';
   // echo '<th><font size="-1">'.LANG_DATUMAUTOR.'</font></th>';
   echo '<th><font size="-1">'.LANG_NEUERSTATUS.'</font></th></tr>';
 
-
   if ( !isset($_REQUEST["MyWork"]) ) {
     if ( $Where == "" ) $Where = "WHERE (";
      else $Where .= " AND (";
@@ -229,53 +258,47 @@ echo '</div>';
     $sql .= 'Datum DESC';
   else
     $sql .= "Prioritaet, Datum DESC";
-    if ( $qu = sql_query($sql) ) {
-    while ( $row = sql_fetch_array($qu)) {
-      echo '<tr><td valign="top"><a title="'.LANG_AUFTRAGBEARBEITEN.'" href="'.
-        get_url($id,"EditAuftrag=".$row["id"].$BenutzerURL).'">';
-      echo stripslashes($row["Titel"])."</a> ";
-      if ( $row['Ort'] != -1 ) {
-        $ort = getOrtsname($row["Ort"]);
-        echo '<em>( <a title="Alles zu '.OrtsName($row["Ort"], false).' anzeigen" href="'.
-          get_url($id,'SearchOrt='.$row["Ort"].$BenutzerURL).'">'.$ort."</a> )</em>";
-      }
-      echo "&nbsp; von ".transform($row["Autor"],"user_id");
-      echo ' erstellt '.transform(strtotime($row["Datum"]),"datetime");
-      echo "<br />".nl2br(stripslashes($row["Beschreibung"]));
-      if ($row["Bemerkung"] != "")
-        echo "<br />".nl2br(stripslashes($row["Bemerkung"]));
-      echo "</td>";
-      echo '<td valign="top" align="center"><span '.$Prioritaeten[$row["Prioritaet"]]["color"].'>'.
-            $Prioritaeten[$row["Prioritaet"]]["name"]."</span>".
-           "<br /><i ";
-      if ( $row["Status"] == 4 ) echo 'style="background-color:#80FF80"';
-      echo ">".$Status[$row["Status"]]."</i>";
-      //if ( isset($_REQUEST["MyWork"]) ) {
+    if ($qu = sql_query($sql) ) {
+      while ( $row = sql_fetch_array($qu)) {
+        echo '<tr><td valign="top"><a title="'.LANG_AUFTRAGBEARBEITEN.'" href="'.
+          get_url($id,"EditAuftrag=".$row["id"].$BenutzerURL).'">';
+        echo stripslashes($row["Titel"])."</a> ";
+        if ( $row['Ort'] != -1 ) {
+          $ort = getOrtsname($row["Ort"]);
+          echo '<em>( <a title="Alles zu '.OrtsName($row["Ort"], false).' anzeigen" href="'.
+            get_url($id,'SearchOrt='.$row["Ort"].$BenutzerURL).'">'.$ort."</a> )</em>";
+        }
+        echo "&nbsp; von ".transform($row["Autor"],"user_id");
+        echo ' erstellt '.transform(strtotime($row["Datum"]),"datetime");
+        echo "<br />".nl2br(stripslashes($row["Beschreibung"]));
+        if ($row["Bemerkung"] != "")
+          echo "<br />".nl2br(stripslashes($row["Bemerkung"]));
+        echo "</td>";
+        echo '<td valign="top" align="center"><span '.$Prioritaeten[$row["Prioritaet"]]["color"].'>'.
+              $Prioritaeten[$row["Prioritaet"]]["name"]."</span>".
+            "<br /><i ";
+        if ( $row["Status"] == 4 ) echo 'style="background-color:#80FF80"';
+        echo ">".$Status[$row["Status"]]."</i>";
         $wer = explode(",",$row["Betroffene"]);
         echo "<br />";
         foreach ( $wer as $key => $value) 
-          if ( substr($value, 0, 1) == "g" )
-            echo $groups[substr($value,1)]."<br />";
-          elseif ( is_numeric($value) > 0 )
-            echo transform($value,"user_id")."<br />";
-      //}
-      echo "</td>";
-  //    echo '<td><font size="-2">'.date("d.m.Y H:i",strtotime($row['Datum'])).'<br />'.
-  //         transform($row["Autor"], 'user_id')."<br />".date("d.m.Y H:i",strtotime($row['Aenderung']));
-  //    echo "</font></td>";
-      echo '<td valign="top" align="center"><font size="-2">';
-      foreach ($Status as $key => $value) 
-      {
-        if ( $key != $row["Status"] )
-          echo '[&nbsp;<a title="auf '.$Status[$key].' setzen" href="'.
-            get_url($id,'Auftrag='.$row["id"].'&NewStatus='.$key.$BenutzerURL).'">'.$value."</a>&nbsp;]<br />";
+            if ( substr($value, 0, 1) == "g" )
+              echo $groups[substr($value,1)]."<br />";
+            elseif ( is_numeric($value) > 0 )
+              echo transform($value,"user_id")."<br />";
+        echo "</td>";
+        echo '<td valign="top" align="center"><font size="-2">';
+        foreach ($Status as $key => $value) 
+        {
+          if ( $key != $row["Status"] )
+            echo '[&nbsp;<a title="auf '.$Status[$key].' setzen" href="'.
+              get_url($id,'Auftrag='.$row["id"].'&NewStatus='.$key.$BenutzerURL).'">'.$value."</a>&nbsp;]<br />";
+        }
+        echo '</font></td></tr>';
       }
-      echo '</font></td></tr>';
     }
-  }
-  else
-    die("Datenbankfehler: ".sql_error());
-
+    else
+      die("Datenbankfehler: ".sql_error());  
   echo $design['table_end'];
   if ( sql_num_rows($qu) > 0 ) {
     echo sql_num_rows($qu);
@@ -321,7 +344,7 @@ else
 if ( is_numeric($_REQUEST["EditAuftrag"]) || isset($_REQUEST["newauf"]))
 {
   OrtsAuswahlScriptEinfuegen();
-  echo '<form action="?id='.$id.'" method="post" name="Auftrag">';
+  echo '<form id="Auftrag" action="?id='.$id.'" method="post" name="Auftrag" enctype="multipart/form-data">';
   $Titel = $docinput["VTitel"];
   $Bemerkung = "";
   $BearbeitenBis = '';
@@ -411,19 +434,25 @@ if ( is_numeric($_REQUEST["EditAuftrag"]) || isset($_REQUEST["newauf"]))
     echo '<input type="hidden" name="MyWork" value="1" />';
   echo '<span name="Ortname" id="Ortsauswahltext">'.OrtsName($Ort,true).'</span>';
   echo '&nbsp;&nbsp;[ <a href="javaScript:OrtsAuswahl(\'Ortsauswahl\')">Ort auswählen</a> ]<br />';
-/*
-  echo '<select name="Ort">';
-  echo '<option value="-1">'.LANG_OHNEORT.'</option>';
-  $qu = sql_query("SELECT id FROM ".TABLE_ARTIKEL." WHERE Art = 'Ort' ORDER BY Bezeichnung");
-  while ( $row = sql_fetch_array($qu) )
-  {
-    echo '<option value="'.$row['id'].'" ';
-    if ( $Ort == $row['id'] ) echo ' selected="selected"';
-    echo '>'.OrtsName($row['id'], false).'</option>';
-  }
-  sql_free_result($qu);
-  echo '</select><br />';
-*/
+  
+  echo '<label>Bilder</label><br />';
+  $subject = 'Auftraege/'.$_REQUEST['EditAuftrag'].'/';
+  if ( $handle=opendir($subject) )
+		{
+      while (false !== ($file = readdir($handle))) {        
+        if(filetype($subject.$file) == 'file') {
+          $url = 'redirect.php?url='.str_replace(' ', '%20',$subject.$file);
+          echo '<a href="'.$url.'" title="'.$file;
+          echo ' ('.floor(filesize($subject.$file) / 1024).' KB)">';
+          echo '<img src="'.$url.'" /></a><br />';
+          //[ <a href="?id={$id}&docinput[Artikel_Nr]={$Artikel->Artikel_id}&DelDatei={$file.Name}">Löschen</a>]<br />
+				}
+			}
+		}
+  echo '<div id="dropzone">Bild hierher ziehen oder klicken</div>';
+  echo '<input type="file" id="fileInput" accept="image/*" multiple style="display:none">';
+  echo '<div id="preview"></div>';
+
   if ( ! isset($_REQUEST["newauf"]))
     echo '<strong>'.LANG_BEMERKUNGEN.'</strong><br /><textarea name="Bemerkung" cols="60" rows="5">'.$Bemerkung.'</textarea><br />';
   echo '<input type="Submit" name="saveauf" value="'.LANG_SUBMIT.'">';
@@ -447,4 +476,78 @@ if ( ! isset($profile["AlleAuftraege"]) ) echo get_url($id,'Alle=1'.$BenutzerURL
   else
     echo '[ <a href="'.get_url($id,'MyWork=1'.$BenutzerURL).'">Auftragsstatus erteilter Aufträge anzeigen</a> ] ';
 echo '</div>';
+
+echo '<script>
+  const dropzone  = document.getElementById("dropzone");
+  const fileInput = document.getElementById("fileInput");
+  const preview   = document.getElementById("preview");
+  const droppedFiles = []
+
+  // Klick als Fallback
+  dropzone.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", () => handleFiles(fileInput.files));
+
+  // Standardverhalten für Drag&Drop verhindern
+  ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+    dropzone.addEventListener(eventName, e => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
+  });
+
+  // Optik beim Drüberziehen
+  ["dragenter", "dragover"].forEach(eventName => {
+    dropzone.addEventListener(eventName, () => {
+      dropzone.classList.add("highlight");
+    }, false);
+  });
+
+  ["dragleave", "drop"].forEach(eventName => {
+    dropzone.addEventListener(eventName, () => {
+      dropzone.classList.remove("highlight");
+    }, false);
+  });
+
+  // Dateien beim Drop verarbeiten
+  dropzone.addEventListener("drop", e => {
+    const dt    = e.dataTransfer;
+    const files = dt.files;
+    [...files].forEach(file => droppedFiles.push(file));
+    handleFiles(files);
+  });
+
+  function handleFiles(files) {
+    preview.innerHTML = ""; // alte Vorschau löschen
+    [...files].forEach(file => {
+      if (!file.type.startsWith("image/")) return; // nur Bilder
+
+      const img = document.createElement("img");
+      const reader = new FileReader();
+
+      reader.onload = ev => {
+        img.src = ev.target.result;
+        preview.appendChild(img);
+      };
+
+      reader.readAsDataURL(file);      
+    });
+  }
+  Auftrag.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const formData = new FormData(Auftrag);
+    droppedFiles.forEach(file => formData.append("fileInput[]", file));
+
+    fetch("?id='.$id.'", {
+      method: "POST",
+      body: formData
+    }).then(r => r.text()).then(html => {
+      document.open();
+      document.write(html);
+      document.close();
+    });
+  });
+
+</script>'
+
 ?>

@@ -28,4 +28,38 @@ function Dateiloeschen($Verzeichnis, $Parameter)
   }
 }
 
+function restructureFiles(array $files): array {
+    $result = [];
+
+    foreach ($files as $fieldName => $fileData) {
+
+        // Einzeldatei (kein multiple)
+        if (!is_array($fileData['name'])) {
+            $result[] = [
+                'field'    => $fieldName,
+                'name'     => $fileData['name'],
+                'type'     => $fileData['type'],
+                'tmp_name' => $fileData['tmp_name'],
+                'error'    => $fileData['error'],
+                'size'     => $fileData['size']
+            ];
+            continue;
+        }
+
+        // Mehrere Dateien
+        foreach ($fileData['name'] as $i => $name) {
+            $result[] = [
+                'field'    => $fieldName,
+                'name'     => $name,
+                'type'     => $fileData['type'][$i],
+                'tmp_name' => $fileData['tmp_name'][$i],
+                'error'    => $fileData['error'][$i],
+                'size'     => $fileData['size'][$i]
+            ];
+        }
+    }
+
+    return $result;
+}
+
 ?>

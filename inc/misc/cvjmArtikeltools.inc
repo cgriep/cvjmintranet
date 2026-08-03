@@ -39,16 +39,21 @@ function holeArtikelParent($Art, $Position, $Einruecken)
 {
   $sql = 'SELECT MAX(Position) FROM '.TABLE_ARTIKEL;
   $sql .= " WHERE Position<$Position AND Einruecken<$Einruecken AND F_Art_id=$Art";
-  if ( ! $query = sql_query($sql)) echo "HAP $sql:".sql_error();
-  if ( $zeile = sql_fetch_row($query))
-    $zeile = $zeile[0];
-  sql_free_result($query);
-  if ( ! is_numeric($zeile)) $zeile = -1;
-  if ( ! $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.
-    " WHERE Position=$zeile AND F_Art_id=$Art") ) echo "HAP2: ".sql_error();
-  if ( ! $art = sql_fetch_row($query)) $art[0] = -1;
-  sql_free_result($query);
-  return $art[0];
+  if ( is_numeric($Art))
+  {
+    if ( ! $query = sql_query($sql)) echo "HAP $sql:".sql_error();
+    if ( $zeile = sql_fetch_row($query))
+      $zeile = $zeile[0];
+    sql_free_result($query);
+    if ( ! is_numeric($zeile)) $zeile = -1;
+    if ( ! $query = sql_query('SELECT id FROM '.TABLE_ARTIKEL.
+      " WHERE Position=$zeile AND F_Art_id=$Art") ) echo "HAP2: ".sql_error();
+    if ( ! $art = sql_fetch_row($query)) $art[0] = -1;
+    sql_free_result($query);
+    return $art[0];
+  }
+  else
+    return -1;
 }
 function holeArtikelParentID($id)
 {

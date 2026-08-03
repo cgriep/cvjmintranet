@@ -90,8 +90,15 @@ function sql_field_name($qresult, $nr) {
 
 
 function sql_fetch_array ($qres) {
-        return mysqli_fetch_assoc($qres);
+        if ( $qres === null || $qres === false)
+        {
+                return false;
         }
+        else
+        {
+                return mysqli_fetch_assoc($qres);
+        }
+}
  
 function sql_free_result ($qresult) {
         if ($qresult === null || $qresult === false)
