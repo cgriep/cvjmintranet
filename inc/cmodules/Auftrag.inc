@@ -27,7 +27,7 @@ echo '
 <style>
     #dropzone {
       width: 300px;
-      height: 200px;
+      height: 50px;
       border: 2px dashed #888;
       border-radius: 8px;
       display: flex;
@@ -129,24 +129,24 @@ if ( isset($_REQUEST['Titel']) )
         // INSERT
         $_REQUEST['Auftrag'] = insertAuftrag($_REQUEST['Titel'], $_REQUEST['Beschreibung'], $_REQUEST['Prioritaet'],
           $Betroffen, $BearbeitenBis, $_REQUEST['Ort'], $_REQUEST['Status']);
-      }
-      if ( is_numeric($_REQUEST['Auftrag']))
-      {
-        include(INC_PATH.'misc/cvjmDateien.inc');
-        $subject = 'Auftraege/'.$_REQUEST['Auftrag'].'/';
-        Dateiloeschen($subject, 'DelDatei'); 
-        
-        $uploads = restructureFiles($_FILES);
-        foreach ( $uploads as $file )
-          {
-            $_FILES['uploadTmp'] = $file;
-            Dateihochladen($subject, 'uploadTmp');
-          }                
-      }
+      }      
     }
   }
   else
    echo '<strong>&gt;&gt;&gt; Sie müssen eine gültige Priorität, Status und Ort angeben!</strong><br />';
+}
+if ( is_numeric($_REQUEST['Auftrag']))
+{
+  include(INC_PATH.'misc/cvjmDateien.inc');
+  $subject = 'Auftraege/'.$_REQUEST['Auftrag'].'/';
+  Dateiloeschen($subject, 'DelDatei'); 
+  
+  $uploads = restructureFiles($_FILES);
+  foreach ( $uploads as $file )
+  {
+    $_FILES['uploadTmp'] = $file;
+    Dateihochladen($subject, 'uploadTmp');
+  }
 }
 // Abfrage, ob der Status eines Auftrages geändert werden soll
 if ( isset($_REQUEST['Auftrag']) && isset($_REQUEST['NewStatus']) &&
@@ -444,8 +444,8 @@ if ( is_numeric($_REQUEST["EditAuftrag"]) || isset($_REQUEST["newauf"]))
           $url = 'redirect.php?url='.str_replace(' ', '%20',$subject.$file);
           echo '<a href="'.$url.'" title="'.$file;
           echo ' ('.floor(filesize($subject.$file) / 1024).' KB)">';
-          echo '<img src="'.$url.'" /></a><br />';
-          //[ <a href="?id={$id}&docinput[Artikel_Nr]={$Artikel->Artikel_id}&DelDatei={$file.Name}">Löschen</a>]<br />
+          echo '<img src="'.$url.'" alt="'.$file.'" width="100px" height="100px" /></a> ';
+          echo '[ <a href="?id='.$id.'&Auftrag='.$_REQUEST["EditAuftrag"].'&DelDatei='.$file.'">Löschen</a> ]<br />';
 				}
 			}
 		}

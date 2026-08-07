@@ -24,7 +24,7 @@ function Dateiloeschen($Verzeichnis, $Parameter)
   if ( isset($_REQUEST[$Parameter]))
   {
     $_REQUEST[$Parameter] = str_replace("..","",str_replace("/","",$_REQUEST[$Parameter]));
-      unlink($Verzeichnis.$_REQUEST[$Parameter]);
+    unlink($Verzeichnis.$_REQUEST[$Parameter]);
   }
 }
 
