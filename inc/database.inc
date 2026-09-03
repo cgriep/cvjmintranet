@@ -120,7 +120,7 @@ function sql_real_escape_string($string) {
 }
 
 function sql_error() {
-        return $GLOBALS["dbconnection"]->sql_error;
+        return $GLOBALS["dbconnection"]->error;
 }
 // MySQL Database settings
 $db_host        = "localhost";

@@ -62,11 +62,16 @@ if ( ! isset($_REQUEST['docinput']))
 }
 else
 {
-$docinput = $_REQUEST['docinput'];
+  $docinput = $_REQUEST['docinput'];
 }
 
 switch ($Datenbank )
 {
+  case 'cvjm_Telefonbuch':
+      $Suchen = 'SELECT DISTINCT Name, Vorname, Telefon1, Telefon2 FROM cvjm_Adressen INNER JOIN '.TABLE_BUCHUNGEN.' ON F_Adressen_id=Adressen_id';
+      $Suchen .= " WHERE NOT Geloescht AND BuchungStand >= ".(time() - 60*60*24*365*2);
+      $Suchen .= ' ORDER BY BuchungStand DESC LIMIT 999';
+      break;     
   case 'cvjm_Adressen':
      $Suchen = 'NOT Geloescht';
      if ( $Search != '' )
@@ -95,25 +100,58 @@ switch ($Datenbank )
     $Suchen = '1';
 }
 header('Content-type: application/octet-stream');
-// Es wird downloaded.pdf benannt
-header('Content-Disposition: attachment; filename='.$_REQUEST['db'].date('ymdHi').'.csv');
-if ( ! $query = sql_query('SELECT * FROM '.$Datenbank.' WHERE '.$Suchen))
-  die("Fehler (Datenbank $Datenbank, Suchen: $Suchen): ".sql_error());
-  $anz = sql_num_fields($query);
-for ( $i = 0; $i < $anz-1; $i++)
+if ( $Datenbank == 'cvjm_Telefonbuch' )
 {
-  echo '"'.addslashes(sql_field_name($query, $i)).'";';
-}
-echo '"'.addslashes(sql_field_name($query, $anz-1)).'"'."\n";
-while ( $ds = sql_fetch_row($query) )
-{
-  $felder = array();
-	for ( $i = 0; $i < $anz; $i++)
+  // create phonebook for Fritz Box import
+  header('Content-Disposition: attachment; filename=Telefonbuch_'.date('ymdHi').'.xml');
+  if ( ! $query = sql_query($Suchen))
+    die("Fehler (Datenbank $Datenbank, Suchen: $Suchen): ".sql_error());
+  echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+  echo '<phonebooks>'."\n";
+  echo '<phonebook>'."\n";
+  
+  while ( $ds = sql_fetch_array($query) )
   {
-    $felder[] = schreibeInhalt(sql_field_name($query, $i), $ds[$i]);
+    $ds['Telefon1'] = trim(str_replace(['-', '/', ' '],'',$ds['Telefon1']));
+    $ds['Telefon2'] = trim(str_replace(['-', '/', ' '],'',$ds['Telefon2']));
+    if ( $ds['Telefon1'] != '' || $ds['Telefon2'] != '' )
+    {
+      echo '<contact><category>0</category>'."\n".
+        '<person><realName>' . trim(htmlspecialchars($ds['Vorname'].' '.$ds['Name']))."</realName></person>\n<telephony>\n";
+      if ( $ds['Telefon1'] != '' )
+          echo '<number type="home" prio="1" id="0">' . htmlspecialchars($ds['Telefon1']) . "</number>\n";
+      if ( $ds['Telefon2'] != '' )
+          echo '<number type="work" prio="1" id="1">' . htmlspecialchars($ds['Telefon2']) . "</number>\n";
+        //'<number type="mobile" prio="1" id="2">' . htmlspecialchars($ds['Telefon3']) . '</number>'.
+        //'<number type="fax_work" prio="1" id="3">' . htmlspecialchars($ds['Fax']) . '</number>' .
+      echo "</telephony>\n</contact>\n";    
+    }
   }
-  echo '"'.implode('";"',$felder).'"'."\n";
+  sql_free_result($query);
+  echo '</phonebook>'."\n";
+  echo '</phonebooks>'."\n";
 }
-sql_free_result($query);
-
+else
+{
+  // Es wird *.csv benannt
+  header('Content-Disposition: attachment; filename='.$_REQUEST['db'].date('ymdHi').'.csv');
+  if ( ! $query = sql_query('SELECT * FROM '.$Datenbank.' WHERE '.$Suchen))
+    die("Fehler (Datenbank $Datenbank, Suchen: $Suchen): ".sql_error());
+    $anz = sql_num_fields($query);
+  for ( $i = 0; $i < $anz-1; $i++)
+  {
+    echo '"'.addslashes(sql_field_name($query, $i)).'";';
+  }
+  echo '"'.addslashes(sql_field_name($query, $anz-1)).'"'."\n";
+  while ( $ds = sql_fetch_row($query) )
+  {
+    $felder = array();
+    for ( $i = 0; $i < $anz; $i++)
+    {
+      $felder[] = schreibeInhalt(sql_field_name($query, $i), $ds[$i]);
+    }
+    echo '"'.implode('";"',$felder).'"'."\n";
+  }
+  sql_free_result($query);
+}
 ?>
