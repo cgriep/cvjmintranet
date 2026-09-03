@@ -47,7 +47,7 @@ function schreibeInhalt($feldname, $feld)
 	}
 	return $s;
 }
-if ( $session_userid == '' )
+if ( !isset($session_userid) || $session_userid == ''  )
   die('Unauthorisiert!');
 
 $Datenbank = 'cvjm_'.$_REQUEST['db'];
