@@ -68,9 +68,19 @@ else
 switch ($Datenbank )
 {
   case 'cvjm_Telefonbuch':
-      $Suchen = 'SELECT DISTINCT Name, Vorname, Telefon1, Telefon2 FROM cvjm_Adressen INNER JOIN '.TABLE_BUCHUNGEN.' ON F_Adressen_id=Adressen_id';
-      $Suchen .= " WHERE NOT Geloescht AND BuchungStand >= ".(time() - 60*60*24*365*2);
-      $Suchen .= ' ORDER BY BuchungStand DESC LIMIT 999';
+      $Kategorien = '48,'.   // Personal Aktuell
+        '46,'. // Lieferant
+        '8,'. // Behörde
+        '21,' . // Förderverein
+        '50,' .// Vorstand Trägerverein
+        '10,'. // Vorstand FöVer
+        '1,'. // Ex Zivi
+        '5'; // ehem. Mitarbeiter
+      $Suchen = 'SELECT DISTINCT Name, Vorname, Telefon1, Telefon2 FROM cvjm_Adressen ';
+      $Suchen .= ' LEFT JOIN (SELECT Max(BuchungStand) AS BuchungStand, F_Adressen_id FROM '.TABLE_BUCHUNGEN.' WHERE BuchungStand >= '.(time() - 60*60*24*365*2).' GROUP BY F_Adressen_id) AS B ON B.F_Adressen_id=Adressen_id';
+      $Suchen .= ' LEFT JOIN (SELECT DISTINCT F_Adressen_Id FROM '.TABLE_ADRESSEN_KATEGORIE.' WHERE F_Kategorie_id IN ('.$Kategorien.')) K ON Adressen_id=K.F_Adressen_id';
+      $Suchen .= ' WHERE NOT Geloescht AND (COALESCE(Telefon1, "") <> "" OR COALESCE(Telefon2, "") <> "") AND (NOT Isnull(K.F_Adressen_id) OR Not IsNull(B.BuchungStand))';
+      $Suchen .= ' ORDER BY CASE WHEN IsNull(BuchungStand) THEN 9999999991 ELSE BuchungStand END DESC LIMIT 999';
       break;     
   case 'cvjm_Adressen':
      $Suchen = 'NOT Geloescht';
