@@ -8,7 +8,6 @@
         Last update: 21.08.2003
 */
 
-	$send_message = $_REQUEST['send_message'];
 	if ( isset($_REQUEST['type'])) 
           $type = $_REQUEST['type'];
 	if ( isset($_REQUEST['body']))
@@ -37,15 +36,15 @@
 <meta http-equiv="expires" content="0"/>
 <meta http-equiv="pragma" content="no-cache"/>
 <title><?=SITE_TITLE?> &gt; <?=LANG_INSTANT_MESSAGE?></title>
-<link rel=stylesheet type="text/css" href="css/default.css"/>
+<link rel=stylesheet type="text/css" href="css/feriendorf.css"/>
 </head>
 <body bgcolor="#ffffff" marginheight="0" marginwidth="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" link="#0000ff" vlink="#0000ff" text="#000000">
 <table width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="#ffffff"><tr>
 <td align="left" bgcolor="#dedede" valign="top" class="text">
 <?php
 
-if(isset($send_message) && !isset($type)) {
-	$_profile = get_profile($send_message);
+if(isset($_REQUEST['send_message']) && !isset($type)) {
+	$_profile = get_profile($_REQUEST['send_message']);
 	if(!isset($_profile['im_default']) || $_profile['im_default'] == '') {
                 $type = 'instant';
                 }
@@ -63,14 +62,14 @@ switch($type) {
 	case 'icq'  : $type_long = LANG_ICQ_MESSAGE; break;
 	}
 
-if(SESSION_STATUS != 'ok' && !isset($send_message)) { ?>
+if(SESSION_STATUS != 'ok' && !isset($_REQUEST['send_message'])) { ?>
 
 <p><b>Bye!</b></p>
 </td></tr></table>
 
-<?php } elseif(SESSION_STATUS != 'ok' && isset($send_message) && !isset($body)) { ?>
+<?php } elseif(SESSION_STATUS != 'ok' && isset($_REQUEST['send_message']) && !isset($body)) { ?>
 <b><?=printf(LANG_SEND_MESSAGE,LANG_ANONYMOUS_MESSAGE)?></b><br />
-<span style="font-size:10px"><?=LANG_TO?> <?=get_user_nickname($send_message)?></span>
+<span style="font-size:10px"><?=LANG_TO?> <?=get_user_nickname($_REQUEST['send_message'])?></span>
 </td>
 <td align="right" bgcolor="#dedede" valign="middle">
 <img src="img/icons_32/mail_reply.png" border="0" />
@@ -78,7 +77,7 @@ if(SESSION_STATUS != 'ok' && !isset($send_message)) { ?>
 </tr><tr>
 <td colspan="2" align="left" bgcolor="#ffffff" valign="top" style="text-align: center">
 <form action="<?=$_SERVER['PHP_SELF']?>"?>
-<input type="hidden" name="send_message" value="<?=$send_message?>">
+<input type="hidden" name="send_message" value="<?=$_REQUEST['send_message']?>">
 <input type="hidden" name="type" value="<?=$type?>">
 <textarea wrap="virtual" name="body" cols="25" rows="9"></textarea><br />
 <input type="submit" value="<?=LANG_SEND?>">
@@ -86,11 +85,11 @@ if(SESSION_STATUS != 'ok' && !isset($send_message)) { ?>
 </td></tr></table>
 </p>
 
-<?php } elseif(SESSION_STATUS != 'ok' && isset($send_message) && isset($body)) {
-send_message ($send_message, $body, -1, 'Anonymous User', '['.SITE_TITLE.'] Anonymous Message', $type);
+<?php } elseif(SESSION_STATUS != 'ok' && isset($_REQUEST['send_message']) && isset($body)) {
+send_message ($_REQUEST['send_message'], $body, -1, 'Anonymous User', '['.SITE_TITLE.'] Anonymous Message', $type);
 ?>
 <b><?=printf(LANG_SENT_MESSAGE, LANG_ANONYMOUS_MESSAGE)?></b><br />
-<span style="font-size:10px"><?=LANG_TO?> <?=get_user_nickname($send_message)?></span>
+<span style="font-size:10px"><?=LANG_TO?> <?=get_user_nickname($_REQUEST['send_message'])?></span>
 </td>
 <td align="right" bgcolor="#dedede" valign="middle">
 <img src="img/icons_32/mail_generic.png" border="0" />
@@ -111,7 +110,7 @@ send_message ($send_message, $body, -1, 'Anonymous User', '['.SITE_TITLE.'] Anon
 </table>
 </p>
 
-<?php } elseif(!isset($send_message)) { ?>
+<?php } elseif(!isset($_REQUEST['send_message'])) { ?>
 
 <b><?=$type_long?></b><br />
 <?php $message = get_message($message_id, true); 
@@ -142,14 +141,14 @@ if($message['user_id'] != SESSION_DBID) exit(); ?>
 </td></tr></table>
 </p>
 
-<?php } elseif(isset($send_message) && !isset($body)) { ?>
+<?php } elseif(isset($_REQUEST['send_message']) && !isset($body)) { ?>
 <b><?=printf(LANG_SEND_MESSAGE, $type_long)?></b><br />
 <?php 
 	if(isset($message_id) && $message_id != '') { 
 		$message = get_message($message_id, false); 
 		if($message['user_id'] != SESSION_DBID) exit();
 		}
-	else { $message['sender_id'] = $send_message; }
+	else { $message['sender_id'] = $_REQUEST['send_message']; }
 ?>
 <span style="font-size:10px"><?=LANG_TO?> <?=get_user_nickname($message['sender_id'])?></span>
 </td>
@@ -170,13 +169,13 @@ if($message['user_id'] != SESSION_DBID) exit(); ?>
 </td></tr></table>
 </p>
 
-<?php } elseif(isset($send_message) && isset($body)) { 
+<?php } elseif(isset($_REQUEST['send_message']) && isset($body)) { 
 	if(isset($message_id) && $message_id != '') { 
 		$message = get_message($message_id, false); 
 		if($message['user_id'] != SESSION_DBID) exit();
 		}
-	else { $message['sender_id'] = $send_message; }
-	send_message ($send_message, $body, SESSION_DBID, '', '['.SITE_TITLE.'] Message', $type);
+	else { $message['sender_id'] = $_REQUEST['send_message']; }
+	send_message ($_REQUEST['send_message'], $body, SESSION_DBID, '', '['.SITE_TITLE.'] Message', $type);
 ?>
 <b><?=printf(LANG_SENT_MESSAGE, $type_long)?></b><br />
 <span style="font-size:10px"><?=LANG_TO?> <?=get_user_nickname($message['sender_id'])?></span>

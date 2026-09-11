@@ -38,7 +38,7 @@ if(SESSION_STATUS == 'ok' && $profile['editor'] != '1') {
 
 	$messages = search_messages(SESSION_DBID, '', -1, time(), -1, '', $search, true, 'DESC', time());
 
-	if(count($messages) == 0) echo LANG_NO_MESSAGES;
+	if(!$messages) echo LANG_NO_MESSAGES;
 
 	foreach ( $messages as $key => $value)  { ?>
 		<tr bgcolor="<?=$design['table_row_dark']?>">
