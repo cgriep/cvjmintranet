@@ -147,6 +147,8 @@ if ( is_numeric($_REQUEST['Auftrag']))
     $_FILES['uploadTmp'] = $file;
     Dateihochladen($subject, 'uploadTmp');
   }
+  // wir bleiben im Edit-Modus
+  $_REQUEST['EditAuftrag'] = $_REQUEST['Auftrag'];
 }
 // Abfrage, ob der Status eines Auftrages geändert werden soll
 if ( isset($_REQUEST['Auftrag']) && isset($_REQUEST['NewStatus']) &&
@@ -213,7 +215,7 @@ if ( ! ((isset($_REQUEST['EditAuftrag']) && is_numeric($_REQUEST['EditAuftrag'])
     echo '[ <a href="'.get_url($id).'">Nur Aufträge für mich anzeigen</a> ] ';
   else
     echo '[ <a href="'.get_url($id,'MyWork=1'.$BenutzerURL).'">Auftragsstatus erteilter Aufträge anzeigen</a> ] ';
-echo '</div>';
+  echo '</div>';
   echo $design['table_begin'];
   echo '<table width="100%" border="1" style="border-collapse:collapse;border-color: '.
         $design['table_border'].';" class="drucklinien">';
@@ -453,6 +455,91 @@ if ( is_numeric($_REQUEST["EditAuftrag"]) || isset($_REQUEST["newauf"]))
   echo '<input type="file" id="fileInput" accept="image/*" multiple style="display:none">';
   echo '<div id="preview"></div>';
 
+  echo '<script>
+    const dropzone  = document.getElementById("dropzone");
+    const fileInput = document.getElementById("fileInput");
+    const preview   = document.getElementById("preview");
+    const droppedFiles = []
+
+    // Klick als Fallback
+    dropzone.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", () => handleFiles(fileInput.files));
+
+    // Standardverhalten für Drag&Drop verhindern
+    ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+      dropzone.addEventListener(eventName, e => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
+    });
+
+    // Optik beim Drüberziehen
+    ["dragenter", "dragover"].forEach(eventName => {
+      dropzone.addEventListener(eventName, () => {
+        dropzone.classList.add("highlight");
+      }, false);
+    });
+
+    ["dragleave", "drop"].forEach(eventName => {
+      dropzone.addEventListener(eventName, () => {
+        dropzone.classList.remove("highlight");
+      }, false);
+    });
+
+    // Dateien beim Drop verarbeiten
+    dropzone.addEventListener("drop", e => {
+      const dt    = e.dataTransfer;
+      const files = dt.files;
+
+      [...files].forEach(file => {
+        const safeFile = new File([file], file.name, { type: file.type });
+        droppedFiles.push(safeFile);
+      });
+      handleFiles(files);
+    });
+
+    function handleFiles(files) {
+      preview.innerHTML = ""; // alte Vorschau löschen
+      [...files].forEach(file => {
+        if (!file.type.startsWith("image/")) return; // nur Bilder
+
+        const img = document.createElement("img");
+        const reader = new FileReader();
+
+        reader.onload = ev => {
+          img.src = ev.target.result;
+          preview.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);      
+      });
+    }
+    Auftrag.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const formData = new FormData(Auftrag);
+      const inputFiles = Auftrag.querySelector("input[type=\"file\"]").files;
+      for (const file of inputFiles) {
+        formData.append("fileInput[]", file);
+      }
+      droppedFiles.forEach(file => formData.append("fileInput[]", file));
+
+      fetch("?id='.$id.'", {
+        method: "POST",
+        body: formData
+      }).then(response =>  {
+        if (!response.ok) throw new Error("Upload fehlgeschlagen");
+        // Nach erfolgreichem Upload: echte URL laden
+        window.location.href = "?id='.$id.'&Auftrag='.$_REQUEST["EditAuftrag"].'";
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Upload fehlgeschlagen");
+      });
+    });
+
+  </script>';
+
   if ( ! isset($_REQUEST["newauf"]))
     echo '<strong>'.LANG_BEMERKUNGEN.'</strong><br /><textarea name="Bemerkung" cols="60" rows="5">'.$Bemerkung.'</textarea><br />';
   echo '<input type="Submit" name="saveauf" value="'.LANG_SUBMIT.'">';
@@ -476,78 +563,4 @@ if ( ! isset($profile["AlleAuftraege"]) ) echo get_url($id,'Alle=1'.$BenutzerURL
   else
     echo '[ <a href="'.get_url($id,'MyWork=1'.$BenutzerURL).'">Auftragsstatus erteilter Aufträge anzeigen</a> ] ';
 echo '</div>';
-
-echo '<script>
-  const dropzone  = document.getElementById("dropzone");
-  const fileInput = document.getElementById("fileInput");
-  const preview   = document.getElementById("preview");
-  const droppedFiles = []
-
-  // Klick als Fallback
-  dropzone.addEventListener("click", () => fileInput.click());
-  fileInput.addEventListener("change", () => handleFiles(fileInput.files));
-
-  // Standardverhalten für Drag&Drop verhindern
-  ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
-    dropzone.addEventListener(eventName, e => {
-      e.preventDefault();
-      e.stopPropagation();
-    }, false);
-  });
-
-  // Optik beim Drüberziehen
-  ["dragenter", "dragover"].forEach(eventName => {
-    dropzone.addEventListener(eventName, () => {
-      dropzone.classList.add("highlight");
-    }, false);
-  });
-
-  ["dragleave", "drop"].forEach(eventName => {
-    dropzone.addEventListener(eventName, () => {
-      dropzone.classList.remove("highlight");
-    }, false);
-  });
-
-  // Dateien beim Drop verarbeiten
-  dropzone.addEventListener("drop", e => {
-    const dt    = e.dataTransfer;
-    const files = dt.files;
-    [...files].forEach(file => droppedFiles.push(file));
-    handleFiles(files);
-  });
-
-  function handleFiles(files) {
-    preview.innerHTML = ""; // alte Vorschau löschen
-    [...files].forEach(file => {
-      if (!file.type.startsWith("image/")) return; // nur Bilder
-
-      const img = document.createElement("img");
-      const reader = new FileReader();
-
-      reader.onload = ev => {
-        img.src = ev.target.result;
-        preview.appendChild(img);
-      };
-
-      reader.readAsDataURL(file);      
-    });
-  }
-  Auftrag.addEventListener("submit", e => {
-    e.preventDefault();
-
-    const formData = new FormData(Auftrag);
-    droppedFiles.forEach(file => formData.append("fileInput[]", file));
-
-    fetch("?id='.$id.'", {
-      method: "POST",
-      body: formData
-    }).then(r => r.text()).then(html => {
-      document.open();
-      document.write(html);
-      document.close();
-    });
-  });
-
-</script>'
-
 ?>
