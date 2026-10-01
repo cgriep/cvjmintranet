@@ -1,7 +1,7 @@
 <?php
 /*
         Copyright (C) 2003 TerraNostra www.terra-nostra.de
-        Design created by Jörg Podlinski  12.06.2003
+        Design created by Jï¿½rg Podlinski  12.06.2003
 
         This file is part of the liquidbytes.net Adaptive Website Framework (AWF)
         The author is Michael Mayer (michael@liquidbytes.net)
@@ -49,15 +49,14 @@ $design['bodyleftmargin']       = '0';
 // Tables
 $design['table_begin']          = '<table class="volleTabelle2px">';
 $design['table_end']            = '</table>';
-$design['main_table_begin']     = '<table class="volleTabelle"
-bgcolor="'.$design['default_background'].'"><tr><a id="top" name="top"></a>';
+$design['main_table_begin']     = '<table class="volleTabelle" bgcolor="'.$design['default_background'].'"><tr><a id="top" name="top"></a>';
 $design['main_table_end']       = '</tr></table>';
 
 // Linke Spalte
 $design['left_td_begin']        = '<td class="SpalteLinks noprint">';
 
 $design['left_td_end']          = '<p class="zentriert">
-<a href="http://www.cvjm-feriendorf.de/">
+<a href="https://www.cvjm-feriendorf.de/">
 <img src="img/design/feriendorf/cvlogo1.gif" /></a></p>
 </td>';
 

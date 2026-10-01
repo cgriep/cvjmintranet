@@ -22,7 +22,7 @@ $dirname = dirname($_SERVER['PHP_SELF']).'/';
 if($dirname == '//') $dirname = '/';
 
 ob_start();
-readfile("http://".$_SERVER['SERVER_NAME]'].$dirname."apps/phorum/".$url);
+readfile("https://".$_SERVER['SERVER_NAME]'].$dirname."apps/phorum/".$url);
 $htmlcontent = ob_get_contents();
 ob_end_clean();
 
@@ -36,6 +36,6 @@ $htmlcontent = str_replace('.php?', '.php%3f', $htmlcontent);
 $htmlcontent = str_replace('action="post.php"', 'action="apps/phorum/post.php"', $htmlcontent);
 // $htmlcontent = str_replace('action="search.php"', 'action="index.php"', $htmlcontent);
 echo ereg_replace('<a href="', '<a href="'.get_url($id, 'url='), $htmlcontent);
-// echo("<br /><br />http://$SERVER_NAME".$dirname."phorum/".$url);
+// echo("<br /><br />https://$SERVER_NAME".$dirname."phorum/".$url);
 ?>
 <!-- BTW: Thanks for using AWF! ;-) Do you like the source? -->

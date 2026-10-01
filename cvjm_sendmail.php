@@ -11,6 +11,6 @@ if ( $mail != '' )
 <html>
 <body>
 Ihr Bestellung wurde vermerkt.
-<a href="http://cvjm-feriendorf.de">Zurück</a>
+<a href="https://cvjm-feriendorf.de">Zurï¿½ck</a>
 </body>
 </html>

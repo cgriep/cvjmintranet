@@ -8,6 +8,7 @@
         Last update: 23.06.2002
 */
 
+<div class="footer">
 $doc = get_nodedata (get_cmodule_id('laufschrift'), $flavour);
 ?>
 <marquee class="noprint" scrollamount="<?=$doc['Scrollamount']?>" scrolldelay="<?=$doc['Delay']?>">
@@ -25,3 +26,4 @@ width="16" height="16" border="0" /></a>
 </div>
 <br />
 <div class="lbfooter">&copy; 2003-2026 powered by CVJM Feriendorf Herbstein, Germany</div>
+</div>

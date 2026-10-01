@@ -10,26 +10,24 @@
 
 ?>
 
+<div class="header">
 <table class="volleTabelle noprint">
 <tr>
     <td width="170" height="70" bgcolor="#ffffff" valign="middle" rowspan="2" align="center" >
-        <a href="http://www.cvjm-feriendorf.de/index.php">
-        <img src="../img/design/feriendorf/logodorf_mini.gif" /></a>
+        <a href="https://www.cvjm-feriendorf.de/index.php">
+        <img src="/img/design/feriendorf/logodorf_mini.gif" /></a>
         <div class="linkeSeite" width="20%">
 <?php if($profile['editmode'] === 0) { ?>
-<a href="<?=get_url($id, array('editmode' => 1))?>"><img src="../img/small_edit/editmode_on.gif" style="background:gray" /></a>
+<a href="<?=get_url($id, array('editmode' => 1))?>"><img src="/img/small_edit/editmode_on.gif" style="background:gray" /></a>
 <?php } elseif($profile['editmode'] !== 0 && $profile['editor'] == '1') { ?>
-<a href="<?=get_url($id, array('editmode' => 0))?>"><img src="../img/small_edit/editmode_off.gif" /></a>
+<a href="<?=get_url($id, array('editmode' => 0))?>"><img src="/img/small_edit/editmode_off.gif" /></a>
 <?php } ?>
 </div>
      </td>
 
-    <td height="22"  bgcolor="ffffff" valign="top" align="left" colspan="1"><img src="../img/design/feriendorf/banner_3.jpg" />
+    <td height="22"  bgcolor="ffffff" valign="top" align="left" colspan="1"><img src="/img/design/feriendorf/banner_3.jpg" />
     </td>
     <td height="22"  bgcolor="ffffff" valign="middle" align="center" colspan="0" >
-    <?php
-         if ( $_SERVER["SERVER_NAME"] == "feriendorf.dnsalias.org" ||$_SERVER["SERVER_ADDR"] == "192.168.110.102" || $_SERVER["SERVER_ADDR"] == "192.168.100.102") echo '<strong><font color="red"><big><big>&nbsp;&nbsp; Willkommen im INTRANET</big></big></font></strong>';
-    ?>
     </td>
     <td height="22" width="120" bgcolor="ffffff" valign="top" align="right" colspan="4" >
     <?php
@@ -84,3 +82,4 @@ Code von oben, dann PHP ende: ?>
 </td>
 </tr>
 </table>
+</div>

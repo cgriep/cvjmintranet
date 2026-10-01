@@ -274,11 +274,12 @@ function wrapOnKeypress(e)
 
 events = new class_events;
 
-//if(is.ns)// || is.dom)
+/*if(is.ns)// || is.dom)
 if (document.captureEvents)
 {
     document.captureEvents(Event.MOUSEDOWN | Event.MOUSEMOVE | Event.MOUSEUP | Event.MOUSECLICK);
 }
+*/
 
 // the mousedown event is handled in a different way for DOM
 // but all the other events are registered my way

@@ -148,7 +148,7 @@ elseif($profile['editor']!='1' && !isset($docinput['newmessage'])) {
 	 		<br /><?=LANG_EMAIL_ADDRESS?><br /><input type="text" name="docinput[email]" size="<?=$design['input_size']?>" maxlength="30" >
 	 		<br /><?php
 			}
-		?><?=LANG_URL?><br /><input type="text" name="docinput[url]"  size="<?=$design['input_size']?>" maxlength="60" value="http://">
+		?><?=LANG_URL?><br /><input type="text" name="docinput[url]"  size="<?=$design['input_size']?>" maxlength="60" value="https://">
 	 	<br /><?=LANG_COMMENTS?><br /><textarea name="docinput[posting]" cols="<?=$design['input_size']?>" rows="5"></textarea>
 	 	<br /><input type="submit" value="<?=LANG_GUESTBOOK_SIGNIN?>">
 	 	</form><?php

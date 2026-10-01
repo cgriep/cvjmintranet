@@ -15,7 +15,7 @@ if ( isset($argv[1]) && $argv[1] != '' )
   if ( file_exists($datei))
   {
     rename($datei,VERZEICHNIS.'/'.$newname['dirname'].'/'.$name.'pdf');
-    $loc = 'http://' . $_SERVER['HTTP_HOST']. '/'.$newname['dirname'].'/'.$name.'pdf';    
+    $loc = 'https://' . $_SERVER['HTTP_HOST']. '/'.$newname['dirname'].'/'.$name.'pdf';    
     echo 'Status: 301 Moved Permanently'."\n";
     echo 'Location: '.$loc."\n\n";    
     echo "Content-type: text/html\n\n";
@@ -36,6 +36,6 @@ if ( isset($argv[1]) && $argv[1] != '' )
 else
 {
 	echo "Content-Type: text/html\n\n";
-    echo 'Fehler: Es wurde keine Datei zur Konvertierung übergeben.';
+    echo 'Fehler: Es wurde keine Datei zur Konvertierung ï¿½bergeben.';
 }
 ?>

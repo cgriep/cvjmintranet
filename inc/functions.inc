@@ -1771,7 +1771,7 @@ function include_modules ($position) {
 
 function get_base_url () {
         if(SSL === true) { $result = 'https://'; }
-        else { $result = 'http://'; }
+        else { $result = 'https://'; }
 
         $result .= $_SERVER['SERVER_NAME'];
         if(dirname($_SERVER['SCRIPT_NAME']) != '/') {

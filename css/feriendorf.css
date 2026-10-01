@@ -335,13 +335,15 @@ formtext
  background-color:#ffffff;
 }
 .SpalteRechts {
- height: 560px;
+  grid-area:2 / span 1;
+  height: 560px;
  width: 175px;
  padding-left: 20px;
  vertical-align: top;
  background-color:#ffffff;
 }
 .SpalteLinks {
+grid-area: 2 / span 1;
  height: 560px;
  width: 175px;
  padding-right: 20px;
@@ -408,4 +410,43 @@ table.drucklinien td {
 	margin: 0pt;
 	
 }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'menu'
+    'main'
+    'facts'
+    'footer';
+  background-color: white;
+  gap: 10px;  
+}
+
+.header {
+  grid-area: header;
+}
+
+.footer {
+  grid-area: footer;
+}
+.content {
+  grid-area: content;
+}
+
+@media (min-width: 600px) {
+  .header {display:grid; grid-area: 1 / span 6;}
+  .SpalteLinks {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .SpalteRechts {grid-area: 3 / span 6;}
+  .footer {grid-area: 4 / span 6;}
+}
+
+@media (max-width: 768px) {
+  .header { display: none;}
+  .SpalteLinks {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .SpalteRechts {display: none;}
+  .footer {grid-area: 4 / span 6;}
 }

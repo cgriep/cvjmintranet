@@ -76,7 +76,7 @@ elseif($profile['editor']!='1' && !isset($docinput['newmessage'])) {
 	 	<input type="hidden" name="docinput[newmessage]" value="1">
 	 	<?=LANG_NICKNAME?><br /><input type="text" name="docinput[nick]" size="<?=$design['input_size']?>" maxlength="30" >
 	 	<br /><?=LANG_EMAIL_ADDRESS?><br /><input type="text" name="docinput[email]" size="<?=$design['input_size']?>" maxlength="30" >
-	 	<br /><?=LANG_GUESTBOOK_HOMEPAGE?><br /><input type="text" name="docinput[url]"  size="<?=$design['input_size']?>" maxlength="60" value="http://">
+	 	<br /><?=LANG_GUESTBOOK_HOMEPAGE?><br /><input type="text" name="docinput[url]"  size="<?=$design['input_size']?>" maxlength="60" value="https://">
 	 	<br /><?=LANG_MESSAGE?><br /><textarea name="docinput[posting]" cols="<?=$design['input_size']?>" rows="5"></textarea>
 	 	<br /><input type="submit" value="<?=LANG_GUESTBOOK_SIGNIN?>">
 	 	</form><?php
