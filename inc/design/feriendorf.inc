@@ -1,7 +1,7 @@
 <?php
 /*
         Copyright (C) 2003 TerraNostra www.terra-nostra.de
-        Design created by J�rg Podlinski  12.06.2003
+        Design created by Jörg Podlinski  12.06.2003
 
         This file is part of the liquidbytes.net Adaptive Website Framework (AWF)
         The author is Michael Mayer (michael@liquidbytes.net)
@@ -53,24 +53,25 @@ $design['main_table_begin']     = '<table class="volleTabelle" bgcolor="'.$desig
 $design['main_table_end']       = '</tr></table>';
 
 // Linke Spalte
-$design['left_td_begin']        = '<td class="SpalteLinks noprint">';
+$design['left_td_begin']        = '<div class="SpalteLinks noprint">'; //<td class="SpalteLinks noprint">';
 
-$design['left_td_end']          = '<p class="zentriert">
+$design['left_td_end']          = '</div>';
+/*<p class="zentriert">
 <a href="https://www.cvjm-feriendorf.de/">
 <img src="img/design/feriendorf/cvlogo1.gif" /></a></p>
 </td>';
-
+*/
 // Rechte Spalte
-$design['right_td_begin']        = '<td class="SpalteRechts noprint">';
+$design['right_td_begin']        = '<div class="SpalteRechts noprint">'; //<td class="SpalteRechts noprint">';
 
-$design['right_td_end']                = '</td>';
+$design['right_td_end']                = '</div>'; //'</td>';
 /*<td class="Spalte" width="20">
 <img src="img/design/feriendorf/fd_pixel.gif" width="20" border="0" /></td>';*/
 
 // Mittlerer Block
-$design['center_td_begin']        = '<td width="100%" valign="top" bgcolor="#ffffff">';
+$design['center_td_begin']        = '<div class="content">'; //'<td width="100%" valign="top" bgcolor="#ffffff">';
 
-$design['center_td_end']        = '<br /><br /></td>';
+$design['center_td_end']        = '</div>'; //<br /><br /></td>';
 
 // Modulinhalt linke Spalte
 $design['module_begin']['left'] = '<table class="module_left"><tr>

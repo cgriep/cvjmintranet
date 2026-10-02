@@ -156,7 +156,7 @@ echo " ".$Tag.". $mn";?></div>
   unset($fTermine);
   if ( Count($Termine) == 0 )
   {
-    unset($Termine);
+    $Termine = array(); //unset($Termine);
   }
   else
     $Termine = sortiereTermine($Termine);
@@ -183,7 +183,6 @@ echo " ".$Tag.". $mn";?></div>
     //}
     echo '</td>';
     echo "<td>";
-    reset($Termine);
     $Anz = 0;
     foreach ( $fTermine as $key => $value) {
       if ( ($value['Datum'] >= $zeit && $value['Datum'] < $nextzeit) ||

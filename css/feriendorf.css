@@ -1,5 +1,6 @@
 img {
   border: 0;
+  max-width: 100%;
 }
 body, td, p
         {
@@ -240,6 +241,7 @@ formtext
 }
 .volleTabelle {
   width: 100%;
+  max-width: 100%;
   padding: 0;
   margin: 0;
   border-width: 0;
@@ -335,16 +337,16 @@ formtext
  background-color:#ffffff;
 }
 .SpalteRechts {
-  grid-area:2 / span 1;
-  height: 560px;
+  grid-area: facts;
+  /*height: 560px;*/
  width: 175px;
  padding-left: 20px;
  vertical-align: top;
  background-color:#ffffff;
 }
 .SpalteLinks {
-grid-area: 2 / span 1;
- height: 560px;
+ grid-area: menu;
+ /*height: 560px;*/
  width: 175px;
  padding-right: 20px;
  vertical-align: top;
@@ -420,33 +422,40 @@ table.drucklinien td {
     'main'
     'facts'
     'footer';
+  grid-template-columns: minmax(0, max-content) 1fr minmax(0, max-content);
   background-color: white;
   gap: 10px;  
+  width: 100%;
 }
 
 .header {
   grid-area: header;
+  max-width: 100%;
 }
 
 .footer {
   grid-area: footer;
 }
 .content {
-  grid-area: content;
+  grid-area: main;
 }
 
-@media (min-width: 600px) {
-  .header {display:grid; grid-area: 1 / span 6;}
+@media (min-width: 801px) {
+  .header { grid-area: 1 / span 3;}
   .SpalteLinks {grid-area: 2 / span 1;}
-  .content {grid-area: 2 / span 4;}
-  .SpalteRechts {grid-area: 3 / span 6;}
-  .footer {grid-area: 4 / span 6;}
+  .content {grid-area: 2 / span 1;}
+  .SpalteRechts {grid-area: 2 / span 1;}
+  .footer {grid-area: 3 / span 3;}
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .header { display: none;}
-  .SpalteLinks {grid-area: 2 / span 1;}
-  .content {grid-area: 2 / span 4;}
+  .SpalteLinks {grid-area: 1 / span 3; width: 100%;}
+  .content {grid-area: 2 / span 3;}
   .SpalteRechts {display: none;}
-  .footer {grid-area: 4 / span 6;}
+  .footer {grid-area: 3 / span 3;}
+  .module {width: 100%;}
+  .module_endtitle {width: 100%;}
+  .module_left {width: 100%;}
+
 }

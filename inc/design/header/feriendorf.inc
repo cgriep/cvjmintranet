@@ -11,11 +11,12 @@
 ?>
 
 <div class="header">
+
 <table class="volleTabelle noprint">
 <tr>
-    <td width="170" height="70" bgcolor="#ffffff" valign="middle" rowspan="2" align="center" >
+    <td height="70" bgcolor="#ffffff" valign="middle" rowspan="2" align="center" >
         <a href="https://www.cvjm-feriendorf.de/index.php">
-        <img src="/img/design/feriendorf/logodorf_mini.gif" /></a>
+        <img src="/img/design/feriendorf/logodorf_mini.gif"/></a>
         <div class="linkeSeite" width="20%">
 <?php if($profile['editmode'] === 0) { ?>
 <a href="<?=get_url($id, array('editmode' => 1))?>"><img src="/img/small_edit/editmode_on.gif" style="background:gray" /></a>
@@ -25,11 +26,9 @@
 </div>
      </td>
 
-    <td height="22"  bgcolor="ffffff" valign="top" align="left" colspan="1"><img src="/img/design/feriendorf/banner_3.jpg" />
+    <td height="22"  bgcolor="ffffff" valign="top" align="left"><img src="/img/design/feriendorf/banner_3.jpg" />
     </td>
-    <td height="22"  bgcolor="ffffff" valign="middle" align="center" colspan="0" >
-    </td>
-    <td height="22" width="120" bgcolor="ffffff" valign="top" align="right" colspan="4" >
+    <td height="22" bgcolor="ffffff" valign="top" align="right" >
     <?php
          if(SESSION_STATUS == 'ok') { echo '<br><strong>'.SESSION_EMAIL.'</strong>&nbsp;&nbsp;'; }
     ?>
@@ -66,7 +65,7 @@ Code von oben, dann PHP ende: ?>
 <a href="?id=<?=$ids[4]?>"><?=$titel[4]?></a>
 <a href="?id=<?=$ids[5]?>"><?=$titel[5]?></a>
 </td>
-<td colspan="2">
+<td>
 <div class="rechteSeite"><strong>
 <?php
   init_parents();

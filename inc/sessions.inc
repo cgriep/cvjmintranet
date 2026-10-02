@@ -37,12 +37,9 @@ session_start();
 
 if(isset($docinput['user_id'])) {
         $_SESSION[md5(LICENCE_KEY.'id')] = $docinput['user_id'];
-//        setcookie (md5(LICENCE_KEY.'id'), $docinput['user_id'], 0);
         $session_userid = $docinput['user_id'];
         }
 elseif(isset($_SESSION[md5(LICENCE_KEY.'id')])) {
-//elseif(isset($_COOKIE[md5(LICENCE_KEY.'id')])) {
-        //$session_userid = $HTTP_COOKIE_VARS[md5(LICENCE_KEY.'id')];
         $session_userid = $_SESSION[md5(LICENCE_KEY.'id')];
         }
 elseif(isset($_REQUEST['session_userid'])) {
@@ -50,13 +47,10 @@ elseif(isset($_REQUEST['session_userid'])) {
         }
 
 if(isset($docinput['passwd2'])) {
-//        setcookie (md5(LICENCE_KEY.'passwd'), md5($docinput['passwd2'].$_SERVER['REMOTE_ADDR']), 0);
         $_SESSION[md5(LICENCE_KEY.'passwd')] = md5($docinput['passwd2']); //.$_SERVER['REMOTE_ADDR']);
         $session_passwd = md5($docinput['passwd2']); // .$_SERVER['REMOTE_ADDR']);
         }
-//elseif(isset($_COOKIE[md5(LICENCE_KEY.'passwd')])) {
 elseif(isset($_SESSION[md5(LICENCE_KEY.'passwd')])) {
-//        $session_passwd = $_COOKIE[md5(LICENCE_KEY.'passwd')];
         $session_passwd = $_SESSION[md5(LICENCE_KEY.'passwd')];
         }
 elseif(isset($_REQUEST['session_passwd'])) {
@@ -73,7 +67,6 @@ if(!isset($_SESSION[md5(LICENCE_KEY.'session')])) {
     $session_id = -1;
 }
 else {
-//        $session_id = $_COOKIE[md5(LICENCE_KEY.'session')];
         $session_id = $_SESSION[md5(LICENCE_KEY.'session')];
         }
 
@@ -83,14 +76,11 @@ unset($design);
 
 if(isset($docinput['design'])) {
         if($docinput['design'] != 'Printable') {
-//                setcookie (md5(LICENCE_KEY.'design'), $docinput['design'], 0);
                 $_SESSION[md5(LICENCE_KEY.'design')] = $docinput['design'];
                 }
         $design['name'] = $docinput['design'];
         }
-//elseif(isset($_COOKIE[md5(LICENCE_KEY.'design')])) {
 elseif(isset($_SESSION[md5(LICENCE_KEY.'design')])) {
-//        $design['name'] = $_COOKIE[md5(LICENCE_KEY.'design')];
         $design['name'] = $_SESSION[md5(LICENCE_KEY.'design')];
         }
 else {
@@ -100,26 +90,20 @@ else {
 unset($lang);
 
 if(isset($docinput['lang'])) {
-//        setcookie (md5(LICENCE_KEY.'lang'), $docinput['lang'], 0);
         $_SESSION[md5(LICENCE_KEY.'lang')] = $docinput['lang'];
         $lang = $docinput['lang'];
         }
-//elseif(isset($_COOKIE[md5(LICENCE_KEY.'lang')])) {
 elseif(isset($_SESSION[md5(LICENCE_KEY.'lang')])) {
-//        $lang = $_COOKIE[md5(LICENCE_KEY.'lang')];
         $lang = $_SESSION[md5(LICENCE_KEY.'lang')];
         }
 
 unset($flavour);
 
 if(isset($docinput['flavour'])) {
-//        setcookie (md5(LICENCE_KEY.'flavour'), $docinput['flavour'], 0);
         $_SESSION[md5(LICENCE_KEY.'flavour')] = $docinput['flavour'];
         $flavour = $docinput['flavour'];
         }
-//elseif(isset($_COOKIE[md5(LICENCE_KEY.'flavour')])) {
 elseif(isset($_SESSION[md5(LICENCE_KEY.'flavour')])) {
-//        $flavour = $_COOKIE[md5(LICENCE_KEY.'flavour')];
         $flavour = $_SESSION[md5(LICENCE_KEY.'flavour')];
         }
 else {
@@ -127,8 +111,6 @@ else {
         }
 
 if(isset($docinput['logout']) && $docinput['logout'] == 'true') {
-//        setcookie (md5(LICENCE_KEY.'id'), "", 0);
-//        setcookie (md5(LICENCE_KEY.'passwd'), "", 0);
         $logout_userid = $session_userid;
         $logout_passwd = $session_passwd;
         session_unset();

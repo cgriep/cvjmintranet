@@ -18,21 +18,39 @@ if(isset($document['external']) && $document['external'] != '' && $profile['edit
 else {
 
 $show_all = (!$document['show_doc_only'] || $profile['editor'] == 1);
-
+echo '<div class="grid-container">';
 if($show_all) {
+ 	if ( $document['hide_left_col'] || $document['hide_right_col'] ) 
+	{
+		echo '<style>';
+		echo '.grid-container { 
+			grid-template-columns: '.($document['hide_left_col'] ? '' : 'max-content').' 1fr '.($document['hide_right_col'] ? '' : 'max-content').'; } ';
+		
+		if ( $document['hide_left_col'] ) 
+		{
+			echo '.SpalteLinks { display: none;}';
+		}
+		if ( $document['hide_right_col'] ) 
+		{
+			echo '.SpalteRechts { display: none;}';
+		}
+		echo '</style>';
+}
+
 	// Include header
 	include(INC_PATH.HEADER_INC);
 
 	// Start with main table
-	echo $design['main_table_begin'];
-
-	if($profile['editor'] == 1 || !$document['hide_left_col']) {
-		echo $design['left_td_begin'];
+	//echo $design['main_table_begin'];
+    echo $design['left_td_begin'];
 	
+	if($profile['editor'] == 1 || !$document['hide_left_col']) {
+		
 		// Include modules for the left side
 		include_modules('left');
 		}
 	}
+
 
 // cmodule caching
 if(defined('CACHE_FILENAME') && ( time() - filemtime(CACHE_FILENAME) < $cache_time && $cache_time != 0) )
@@ -40,15 +58,18 @@ if(defined('CACHE_FILENAME') && ( time() - filemtime(CACHE_FILENAME) < $cache_ti
 	readfile(CACHE_FILENAME);
 }
 else {
+		echo $design['left_td_end'];
+
 		if(CACHING != 'on') 	ob_start();
 
 		if($show_all) {
+			/*
 			if($profile['editor'] == 1 || !$document['hide_left_col']) {
 				echo $design['left_td_end'];
 				}
-
+*/
 			echo $design['center_td_begin'];
-			}
+		}
 	
 		if($profile['editor'] == 1) include(INC_PATH.'misc/editor_panel_begin.inc');
 		
@@ -73,8 +94,9 @@ else {
 		if($show_all) {
 			echo $design['center_td_end'];
 
-			if($profile['editor'] == 1 || !$document['hide_right_col']) echo $design['right_td_begin'];
-			}
+			//if($profile['editor'] == 1 || !$document['hide_right_col']) 
+		//	  echo $design['right_td_begin'];
+		}
 
 		if(CACHING != 'on') {
 			caching(ob_get_contents());
@@ -83,21 +105,24 @@ else {
 	}
 
 if($show_all) {
+	echo $design['right_td_begin'];
+	
 	if($profile['editor'] == 1 || !$document['hide_right_col']) {
 		// Include modules for the right side
 		include_modules('right'); 
 
-		echo $design['right_td_end'];
+		//echo $design['right_td_end'];
 		}
-
+	echo $design['right_td_end'];
+	
 	// Close main table
-	echo $design['main_table_end'];
+	//echo $design['main_table_end'];
 
 	// Show footer
 	include(INC_PATH.FOOTER_INC);
 	}
 
-
+echo "</div>";
 }
 
 ?>

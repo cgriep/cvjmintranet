@@ -8,9 +8,9 @@
         Last update: 23.06.2002
 */
 
-<div class="footer">
 $doc = get_nodedata (get_cmodule_id('laufschrift'), $flavour);
 ?>
+<div class="footer">
 <marquee class="noprint" scrollamount="<?=$doc['Scrollamount']?>" scrolldelay="<?=$doc['Delay']?>">
 <b><?=$doc['Laufschrift']?></b>
 </marquee>
