@@ -20,19 +20,24 @@ else {
 $show_all = (!$document['show_doc_only'] || $profile['editor'] == 1);
 echo '<div class="grid-container">';
 if($show_all) {
- 	if ( $document['hide_left_col'] || $document['hide_right_col'] ) 
+ 	if ( $document['hide_left_col'] || $document['hide_right_col'] || SESSION_STATUS != 'ok' ) 
 	{
 		echo '<style>';
 		echo '.grid-container { 
-			grid-template-columns: '.($document['hide_left_col'] ? '' : 'max-content').' 1fr '.($document['hide_right_col'] ? '' : 'max-content').'; } ';
+			grid-template-columns: '.($document['hide_left_col'] ? '' : 'max-content').' 1fr '.($document['hide_right_col'] && SESSION_STATUS == 'ok' ? '' : 'max-content').'; } ';
 		
 		if ( $document['hide_left_col'] ) 
 		{
 			echo '.SpalteLinks { display: none;}';
 		}
-		if ( $document['hide_right_col'] ) 
+		if ( $document['hide_right_col'] && SESSION_STATUS != 'ok' ) 
 		{
 			echo '.SpalteRechts { display: none;}';
+		}
+		else
+		{
+			# Login sichtbar machen 
+			echo '.SpalteRechts { display: inline;}';
 		}
 		echo '</style>';
 }
