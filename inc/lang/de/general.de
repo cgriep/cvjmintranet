@@ -81,9 +81,9 @@ browse_delete		L&ouml;schen
 logged_in		%%email%%<br />Eingeloggt
 logout			Ausloggen
 login			Login
-bad_password		Falsches Passwort.
+bad_password		Falsche email oder Passwort.
 recover_passwd		Hier klicken, um das Passwort per eMail zu erhalten.
-bad_email		Falsche eMail.
+bad_email		Falsche eMail oder Passwort.
 passwd_sent		Das Passwort wurde per eMail versendet.
 
 # user.inc
